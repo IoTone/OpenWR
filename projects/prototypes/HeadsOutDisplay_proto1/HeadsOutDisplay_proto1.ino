@@ -7,17 +7,76 @@
 
 // Example for 5x5 NeoBFF - scrolls a message across the LED matrix.
 // Requires Adafruit_GFX, Adafruit_NeoPixel and Adafruit_NeoMatrix libraries.
+/*
+  HeadsOutDisplay_proto1
 
+  Goal of PoC 1 is to incoporate a BLE device that can display arbitrary logo or text
+  externally on an LED matrix.
+
+  switch characteristic is a toggle switch intended to be multistate to change the matrix display
+  button characteristic is intended to be a physical button on the device, however, it could be written to
+  remotely over ble to turn on off the matrix
+  
+  Blink + BLE Example
+
+``BLE Example: https://wiki.seeedstudio.com/XIAO-BLE-Sense-Bluetooth-Usage/
+
+  Turns an LED on for one second, then off for one second, repeatedly.
+
+  Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO
+  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
+  the correct LED pin independent of which board is used.
+  If you want to know what pin the on-board LED is connected to on your Arduino
+  model, check the Technical Specs of your board at:
+  https://www.arduino.cc/en/Main/Products
+
+  modified 8 May 2014
+  by Scott Fitzgerald
+  modified 2 Sep 2016
+  by Arturo Guadalupi
+  modified 8 Sep 2016
+  by Colby Newman
+
+  This example code is in the public domain.
+
+  http://www.arduino.cc/en/Tutorial/Blink
+*/
 #include <Adafruit_GFX.h>       // Graphics library
 #include <Adafruit_NeoPixel.h>  // NeoPixel library
 #include <Adafruit_NeoMatrix.h> // Bridges GFX and NeoPixel
+#include <ArduinoBLE.h>
 #include <Fonts/TomThumb.h>     // A tiny 3x5 font incl. w/GFX
 
 
 
 #include "RGB.h"
 
+
+
+
+BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1228"); // Bluetooth® Low Energy LED Service
+
+// Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
+BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1228", BLERead | BLEWrite);
+BLEByteCharacteristic buttonCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1229", BLERead | BLEWrite | BLENotify);
+
+
 #define PIN A3
+
+#define HEADSOUT_AVAILABLE      0
+#define HEADSOUT_DONOTDISTURB   1
+#define HEADSOUT_INMEETING      2
+#define HEADSOUT_RELAXING       3
+const int ledPin = LED_BUILTIN; // pin to use for the LED
+
+// const int BUTTON_PIN = 0; // the number of the pushbutton pin
+// int lastState = HIGH; // the previous state from the input pin
+// int currentState;    // the current reading from the input pin
+int matrixIsOn = 1; // Default on
+int matrixBrightness = 32; // What is the scale?
+int matrixHeadsOutMode = HEADSOUT_AVAILABLE;
+
+
 // NeoMatrix declaration for BFF with the power and
 // Neo pins at the top (same edge as QT Py USB port):
 Adafruit_NeoMatrix matrix(5, 5, PIN,
@@ -25,7 +84,6 @@ Adafruit_NeoMatrix matrix(5, 5, PIN,
   NEO_MATRIX_ROWS + NEO_MATRIX_PROGRESSIVE,
   NEO_GRB         + NEO_KHZ800);
 
-int 
 // Fill the pixels one after the other with a color
 void colorWipe(RGB color, uint8_t wait) {
   for(uint16_t row=0; row < 8; row++) {
@@ -108,13 +166,126 @@ void scrollText(String textToDisplay) {
 }
 
 void setup() {
+  // TODO: consider adding an external button or two ... this would help if we want to turn on/off, etc.
+  // set LED pin to output mode
+  // pinMode(ledPin, OUTPUT);
+
+  // initialize digital pin LED_BUILTIN as an output.
+  
+  // pinMode(LED_BUILTIN, OUTPUT);
+  // pinMode(BUTTON_PIN, INPUT_PULLUP);
+  
+  // begin initialization
+  if (!BLE.begin()) {
+    Serial.println("starting Bluetooth® Low Energy module failed!");
+
+    while (1);
+  }
+
+  // set advertised local name and service UUID:
+  BLE.setLocalName("HeadsOut_OpenWR");
+  BLE.setAdvertisedService(ledService);
+
+  // add the characteristic to the service
+  ledService.addCharacteristic(switchCharacteristic);
+  ledService.addCharacteristic(buttonCharacteristic);
+  // add service
+  BLE.addService(ledService);
+
+  // set the initial value for the characeristic:
+  switchCharacteristic.writeValue(0);
+  buttonCharacteristic.writeValue(matrixIsOn); // TODO: we don't really have a button, but maybe this is a VR button
+  
+  // start advertising
+  BLE.advertise();
+
+  Serial.println("BLE NeoMatrix Peripheral");
+
+  // Matrix code
   matrix.begin();
-  matrix.setBrightness(30);
+  matrix.setBrightness(matrixIsOn);
   matrix.setTextColor( matrix.Color(255, 255, 255) );
   matrix.setTextWrap(false);
 }
 
 void loop() {
+  // listen for Bluetooth® Low Energy peripherals to connect:
+  BLEDevice central = BLE.central();
+
+  // if a central is connected to peripheral:
+  if (central) {
+    Serial.print("Connected to central: ");
+    // print the central's MAC address:
+    Serial.println(central.address());
+    // while the central is still connected to peripheral:
+    while (central.connected()) {
+      if (switchCharacteristic.written()) {
+        // Just save the state
+        matrixHeadsOutMode = switchCharacteristic.value();
+        /*
+        if (switchCharacteristic.value() == ) {   
+          Serial.println("LED on");
+
+          // digitalWrite(ledPin, LOW); // changed from HIGH to LOW       
+        } else {                              
+          Serial.println(F("LED off"));
+          // digitalWrite(ledPin, HIGH); // changed from LOW to HIGH     
+        }*/
+      }
+
+      if (buttonCharacteristic.written()) {
+        if (buttonCharacteristic.value()) {   
+          Serial.println("MATRIX on");
+          matrix.show();
+          matrixBrightness = 32;
+          matrix.setBrightness(matrixBrightness);
+        } else {                              
+          Serial.println(F("MATRIX off"));
+          matrixBrightness = 0;
+          matrix.setBrightness(matrixBrightness);
+        }
+      }
+
+      
+
+      // read the state of the switch/button:
+      /*
+      currentState = digitalRead(BUTTON_PIN);
+    
+      if(lastState == LOW && currentState == HIGH) {
+        Serial.println("The state changed from LOW to HIGH");
+        
+      }
+        
+      // save the last state
+      if (currentState != lastState) {
+        buttonCharacteristic.writeValue(lastState);
+      }
+      lastState = currentState;
+      */
+    }
+
+    // when the central disconnects, print it out:
+    Serial.print(F("Disconnected from central: "));
+    Serial.println(central.address());
+  }
+
+  if (matrixIsOn) {
+    if (matrixHeadsOutMode == HEADSOUT_AVAILABLE) {
+      drawLogo();
+    }
+  }
+  delay(100);
+  /*
+  // read the state of the switch/button:
+  currentState = digitalRead(BUTTON_PIN);
+
+  if(lastState == LOW && currentState == HIGH)
+    Serial.println("The state changed from LOW to HIGH");
+
+  // save the last state
+  lastState = currentState;
+  */
   /*
   crossFade(off, white, 50, 5);
   delay(1000);
@@ -138,3 +309,11 @@ void loop() {
   */
   
 }
+
+
+
+
+
+
+
+
