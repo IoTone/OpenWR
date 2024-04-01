@@ -67,6 +67,9 @@ BLEByteCharacteristic buttonCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1229
 #define HEADSOUT_DONOTDISTURB   1
 #define HEADSOUT_INMEETING      2
 #define HEADSOUT_RELAXING       3
+#define MATRIX_W                5
+#define MATRIX_H                5
+
 const int ledPin = LED_BUILTIN; // pin to use for the LED
 
 // const int BUTTON_PIN = 0; // the number of the pushbutton pin
@@ -74,7 +77,7 @@ const int ledPin = LED_BUILTIN; // pin to use for the LED
 // int currentState;    // the current reading from the input pin
 int matrixIsOn = 1; // Default on
 int matrixBrightness = 32; // What is the scale?
-int matrixHeadsOutMode = HEADSOUT_AVAILABLE;
+int matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
 
 
 // NeoMatrix declaration for BFF with the power and
@@ -141,6 +144,26 @@ void drawLogo() {
     for(int column = 0; column < 8; column++) {
      if(logo[row][column] == 1) {
        fadePixel(column, row, red, white, 120, 0);
+     }
+   }
+  }
+}
+
+void drawAvailableIcon() {
+  // This 8x8 array represents the LED matrix pixels. 
+  // A value of 1 means we’ll fade the pixel to white
+  int logo[MATRIX_W][MATRIX_H] = {  
+   {1, 1, 1, 1, 1},
+   {1, 1, 1, 1, 1},
+   {1, 1, 0, 1, 1},
+   {1, 1, 1, 1, 1},
+   {1, 1, 1, 1, 1}
+  };
+   
+  for(int row = 0; row < MATRIX_H; row++) {
+    for(int column = 0; column < MATRIX_W; column++) {
+     if(logo[row][column] == 1) {
+       fadePixel(column, row, white, rgb_green, 120, 0);
      }
    }
   }
@@ -221,16 +244,27 @@ void loop() {
     while (central.connected()) {
       if (switchCharacteristic.written()) {
         // Just save the state
-        matrixHeadsOutMode = switchCharacteristic.value();
+        // switchCharacteristic.readValue(&matrixHeadsOutMode,2);
+        //  matrixHeadsOutMode = switchCharacteristic.read();
         /*
-        if (switchCharacteristic.value() == ) {   
-          Serial.println("LED on");
-
+        const char* buffer = switchCharacteristic.value();
+        matrixHeadsOutMode = *(int*)buffer;
+        Serial.print("HeadsOut Value written:");
+        Serial.print(matrixHeadsOutMode);
+        Serial.print("\n");
+        */
+        if (switchCharacteristic.value()) {   
+          // Available mode
+          matrixHeadsOutMode = HEADSOUT_AVAILABLE;
           // digitalWrite(ledPin, LOW); // changed from HIGH to LOW       
-        } else {                              
-          Serial.println(F("LED off"));
+        } else {             
+           matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;                 
+          // Serial.println(F("LED off"));
           // digitalWrite(ledPin, HIGH); // changed from LOW to HIGH     
-        }*/
+        }
+        Serial.print("HeadsOut Value written:");
+        Serial.print(matrixHeadsOutMode);
+        Serial.print("\n");
       }
 
       if (buttonCharacteristic.written()) {
@@ -272,7 +306,16 @@ void loop() {
 
   if (matrixIsOn) {
     if (matrixHeadsOutMode == HEADSOUT_AVAILABLE) {
-      drawLogo();
+      matrix.show();
+      drawAvailableIcon();
+
+    } else if (matrixHeadsOutMode == HEADSOUT_DONOTDISTURB) {
+      matrix.show();
+      crossFade(off, white, 50, 5);
+      delay(500);
+
+      colorWipe(red, 50);
+      delay(500);
     }
   }
   delay(100);
