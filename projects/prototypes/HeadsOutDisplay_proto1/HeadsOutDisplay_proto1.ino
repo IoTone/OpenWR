@@ -57,7 +57,7 @@
 BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1228"); // Bluetooth® Low Energy LED Service
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
-BLEByteCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1228", BLERead | BLEWrite);
+BLEIntCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1228", BLERead | BLEWrite);
 BLEByteCharacteristic buttonCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1229", BLERead | BLEWrite | BLENotify);
 
 
@@ -77,8 +77,8 @@ const int ledPin = LED_BUILTIN; // pin to use for the LED
 // int currentState;    // the current reading from the input pin
 int matrixIsOn = 1; // Default on
 int matrixBrightness = 32; // What is the scale?
-int matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
-
+int matrixHeadsOutMode = HEADSOUT_RELAXING;
+int lastMatrixHeadsOutMode = matrixHeadsOutMode;
 
 // NeoMatrix declaration for BFF with the power and
 // Neo pins at the top (same edge as QT Py USB port):
@@ -169,6 +169,46 @@ void drawAvailableIcon() {
   }
 }
 
+void drawDoNotDisturbIcon() {
+  // This 8x8 array represents the LED matrix pixels. 
+  // A value of 1 means we’ll fade the pixel to white
+  int logo[MATRIX_W][MATRIX_H] = {  
+   {1, 0, 0, 0, 1},
+   {0, 1, 0, 1, 0},
+   {0, 0, 1, 0, 0},
+   {0, 1, 0, 1, 0},
+   {1, 0, 0, 0, 1}
+  };
+   
+  for(int row = 0; row < MATRIX_H; row++) {
+    for(int column = 0; column < MATRIX_W; column++) {
+     if(logo[row][column] == 1) {
+       fadePixel(column, row, rgb_blue, rgb_red, 25, 0);
+     }
+   }
+  }
+}
+
+void drawInMeetingIcon() {
+  // This 8x8 array represents the LED matrix pixels. 
+  // A value of 1 means we’ll fade the pixel to white
+  int logo[MATRIX_W][MATRIX_H] = {  
+   {1, 1, 1, 0, 0},
+   {0, 1, 1, 0, 0},
+   {0, 1, 1, 0, 0},
+   {0, 1, 1, 0, 0},
+   {1, 1, 1, 0, 0}
+  };
+   
+  for(int row = 0; row < MATRIX_H; row++) {
+    for(int column = 0; column < MATRIX_W; column++) {
+     if(logo[row][column] == 1) {
+       fadePixel(column, row, rgb_green, rgb_yellow, 25, 0);
+     }
+   }
+  }
+}
+
 void scrollText(String textToDisplay) {
   int x = matrix.width();
   
@@ -241,7 +281,8 @@ void loop() {
     // print the central's MAC address:
     Serial.println(central.address());
     // while the central is still connected to peripheral:
-    while (central.connected()) {
+    // If we use the while loop, you can't update anything visually on the device!
+    while(central.connected()) {
       if (switchCharacteristic.written()) {
         // Just save the state
         // switchCharacteristic.readValue(&matrixHeadsOutMode,2);
@@ -253,6 +294,7 @@ void loop() {
         Serial.print(matrixHeadsOutMode);
         Serial.print("\n");
         */
+        /*
         if (switchCharacteristic.value()) {   
           // Available mode
           matrixHeadsOutMode = HEADSOUT_AVAILABLE;
@@ -262,7 +304,38 @@ void loop() {
           // Serial.println(F("LED off"));
           // digitalWrite(ledPin, HIGH); // changed from LOW to HIGH     
         }
+        */
+
+        byte value = 0;
+        switchCharacteristic.readValue(value);
+        
+        lastMatrixHeadsOutMode = matrixHeadsOutMode;
+        if (value == HEADSOUT_AVAILABLE) {
+          matrixHeadsOutMode = HEADSOUT_AVAILABLE;
+        } else if (value == HEADSOUT_DONOTDISTURB) {
+          matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
+        } else if (value == HEADSOUT_INMEETING) {
+          matrixHeadsOutMode = HEADSOUT_INMEETING;
+        } else if (value == HEADSOUT_RELAXING) {
+          matrixHeadsOutMode = HEADSOUT_RELAXING;
+        } else {
+          // Ignore
+        }
+        /*
+        if (value & 0x00) {
+          matrixHeadsOutMode = HEADSOUT_AVAILABLE;
+        } else if (value & 0x01) {
+          matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
+        } else if (value & 0x02) {
+          matrixHeadsOutMode = HEADSOUT_INMEETING;
+        } else if (value & 0x03) {
+          matrixHeadsOutMode = HEADSOUT_RELAXING;
+        } else {
+          // Ignore
+        } */
         Serial.print("HeadsOut Value written:");
+        Serial.print(value);
+        Serial.print(" vs ");
         Serial.print(matrixHeadsOutMode);
         Serial.print("\n");
       }
@@ -305,6 +378,11 @@ void loop() {
   }
 
   if (matrixIsOn) {
+
+    if (lastMatrixHeadsOutMode != matrixHeadsOutMode) {
+      colorWipe(off, 10);
+      lastMatrixHeadsOutMode = matrixHeadsOutMode;
+    }
     if (matrixHeadsOutMode == HEADSOUT_AVAILABLE) {
       matrix.show();
       drawAvailableIcon();
@@ -316,6 +394,17 @@ void loop() {
 
       colorWipe(red, 50);
       delay(500);
+    } else if (matrixHeadsOutMode == HEADSOUT_INMEETING) {
+      matrix.show();
+      drawInMeetingIcon();
+    } else if (matrixHeadsOutMode == HEADSOUT_RELAXING) {
+      matrix.show();
+      // crossFade(off, rgb_pink, 25, 5);
+      colorWipe(rgb_blue, 50);
+      delay(200);
+
+      colorWipe(white, 18);
+      delay(100);
     }
   }
   delay(100);
