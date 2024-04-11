@@ -30,6 +30,7 @@ The archives are where products move to that are no longer supported.  This may 
 - HeadsOut Display proto1
 - Vision Skin proto1
 - Vision Indicator Cam proto1
+- RearViewsion Camera for VisionPro
 
 ### Products
 
