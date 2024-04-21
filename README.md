@@ -43,3 +43,14 @@ TBD
 ## Support
 
 File a bug in the issue tracker.
+
+## How to Help
+
+- File bugs / suggestions / pull requests
+- Donate: $ETH/$POLY: 0x00000001.zil , or $SOL: truedat101.sol ... proceeds make it possible to just do open source!
+
+## Inspirations and Attributions
+
+- One of the truly inspiring projects in recent weeks/months is Meshtastic.  Hurray for open source.  Many have tried proprietary networks, non-open solutions, etc., and Meshtastic found a great use case for LoRa.
+- Ethernet: I had a chance to meet Bob M. and he told me his story of the first ethernet test.  It took place in my office at PARC.  He had my office years before I arrived there.  The ethernet story is worth learning about.  It's why Novell didn't win and Ethernet did win.  Business people might say PARC didn't succeed with Ethernet, but they did spawn what became CISCO and literally every other connected device out there.
+- Apple: Before they were the dog, they were the underdog.  Their stuff had principles but they weren't the best for price or performance.  You could love certain things about the imperfection of a Mac.  Nowadays, they are more like an elite athlete, high performance, high price.  Still, I look backwards at where they came from.
