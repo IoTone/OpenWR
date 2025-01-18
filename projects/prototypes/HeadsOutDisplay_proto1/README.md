@@ -8,7 +8,7 @@ Customization of our computing experience and persionalization is and has always
 
 This uses an RGB LED matrix coupled with a BLE controller.  The entire BOM cost is less than $30.  Currently it is powered by USB-C (3.3V) but could be run from a LiP0 battery.
 
-- SEEED Xiao BLE Sense 52840
+- SEEED Xiao BLE Sense 52840 : https://wiki.seeedstudio.com/XIAO_BLE/
 - Adafruit Neo 5x5 (TODO: add link)
 
 ## References
@@ -18,13 +18,15 @@ This uses an RGB LED matrix coupled with a BLE controller.  The entire BOM cost 
 
 ## Software
 
-Need some notes here ... need to use the nrf52 MBed board, not the non-mbed version.  Won't compile the ArduinoBLE libraries.  
+Need some notes here ... need to use the nrf52 MBed board, not the non-mbed version.  Won't compile the ArduinoBLE libraries.  There aren't great docs on the MBED vs non-MBED version of this board.  To fully understand the naming conventions in the Arduino IDE.
+
+For users of nrf52 based XIAO, it is possible to use ZephyrOS but programming requires a debugger in that case, since the bootloaders aren't compatible.  There is also a MicroPython option.   There is also ESP-IDF.  No plans to support other SDKs at this point.
 
 The Xiao BLE Sense can be swapped out for the ESP32-S3 or ESP32-C3.  However this needs to be verified with testing. 
 
 ### Arduino Side
 
-TODO
+- Install code and attach to power.  Affix to your Vision Pro.
 
 ### Vision Pro
 

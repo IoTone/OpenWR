@@ -51,22 +51,24 @@
 
 #include "RGB.h"
 
-
+#define SWVERSION "0.0.2"
 
 
 BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1228"); // Bluetooth® Low Energy LED Service
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
-BLEIntCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1228", BLERead | BLEWrite);
+BLEIntCharacteristic switchCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1228", BLERead | BLEWrite | BLENotify);
 BLEByteCharacteristic buttonCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1229", BLERead | BLEWrite | BLENotify);
 
 
 #define PIN A3
 
-#define HEADSOUT_AVAILABLE      0
-#define HEADSOUT_DONOTDISTURB   1
-#define HEADSOUT_INMEETING      2
-#define HEADSOUT_RELAXING       3
+#define HEADSOUT_AVAILABLE      0x0
+#define HEADSOUT_DONOTDISTURB   0x1
+#define HEADSOUT_INMEETING      0x2
+#define HEADSOUT_RELAXING       0x3
+#define HEADSOUT_HANDLE         0x4
+#define HEADSOUT_LOGO           0x5
 #define MATRIX_W                5
 #define MATRIX_H                5
 
@@ -228,7 +230,63 @@ void scrollText(String textToDisplay) {
   }
 }
 
+void handleMatrixUpdates(bool shouldUpdate) {
+  if (shouldUpdate) {
+    if (matrixIsOn) {
+
+      if (lastMatrixHeadsOutMode != matrixHeadsOutMode) {
+        colorWipe(off, 10);
+        matrix.show();
+        lastMatrixHeadsOutMode = matrixHeadsOutMode;
+      }
+      if (matrixHeadsOutMode == HEADSOUT_AVAILABLE) {
+        drawAvailableIcon();
+        matrix.show();
+      } else if (matrixHeadsOutMode == HEADSOUT_DONOTDISTURB) {
+        
+        crossFade(off, white, 50, 5);
+        delay(500);
+
+        colorWipe(red, 50);
+        delay(500);
+        matrix.show();
+      } else if (matrixHeadsOutMode == HEADSOUT_INMEETING) {
+        
+        drawInMeetingIcon();
+        matrix.show();
+      } else if (matrixHeadsOutMode == HEADSOUT_RELAXING) {
+        
+        // crossFade(off, rgb_pink, 25, 5);
+        colorWipe(rgb_blue, 50);
+        delay(200);
+
+        colorWipe(white, 18);
+        delay(100);
+        matrix.show();
+      } else if (matrixHeadsOutMode == HEADSOUT_HANDLE) {
+        colorWipe(off, 5);
+        String twitterHandle = "@mynameis";
+        scrollText(twitterHandle);
+        scrollText(twitterHandle);
+        delay(500);
+        matrix.show();
+      } else if (matrixHeadsOutMode == HEADSOUT_LOGO) {
+        drawLogo();
+        delay(500);
+        matrix.show();
+      }
+    } else {
+      colorWipe(off, 10);
+      matrix.show();
+    }
+  }
+}
 void setup() {
+  Serial.begin(115200);
+  // https://forum.arduino.cc/t/serial-print-not-working-in-void-setup/1035791/9
+  // Necessary bug fix for nrf52 mbed
+  while (!Serial) {}
+
   // TODO: consider adding an external button or two ... this would help if we want to turn on/off, etc.
   // set LED pin to output mode
   // pinMode(ledPin, OUTPUT);
@@ -241,7 +299,6 @@ void setup() {
   // begin initialization
   if (!BLE.begin()) {
     Serial.println("starting Bluetooth® Low Energy module failed!");
-
     while (1);
   }
 
@@ -283,6 +340,7 @@ void loop() {
     // while the central is still connected to peripheral:
     // If we use the while loop, you can't update anything visually on the device!
     while(central.connected()) {
+      bool wasUpdated = false;
       if (switchCharacteristic.written()) {
         // Just save the state
         // switchCharacteristic.readValue(&matrixHeadsOutMode,2);
@@ -312,27 +370,26 @@ void loop() {
         lastMatrixHeadsOutMode = matrixHeadsOutMode;
         if (value == HEADSOUT_AVAILABLE) {
           matrixHeadsOutMode = HEADSOUT_AVAILABLE;
+          wasUpdated = true;
         } else if (value == HEADSOUT_DONOTDISTURB) {
           matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
+          wasUpdated = true;
         } else if (value == HEADSOUT_INMEETING) {
           matrixHeadsOutMode = HEADSOUT_INMEETING;
+          wasUpdated = true;
         } else if (value == HEADSOUT_RELAXING) {
           matrixHeadsOutMode = HEADSOUT_RELAXING;
+          wasUpdated = true;
+        } else if (value == HEADSOUT_HANDLE) {
+          matrixHeadsOutMode = HEADSOUT_HANDLE;
+          wasUpdated = true;
+        } else if (value == HEADSOUT_LOGO) {
+          matrixHeadsOutMode = HEADSOUT_LOGO;
+          wasUpdated = true;
         } else {
           // Ignore
         }
-        /*
-        if (value & 0x00) {
-          matrixHeadsOutMode = HEADSOUT_AVAILABLE;
-        } else if (value & 0x01) {
-          matrixHeadsOutMode = HEADSOUT_DONOTDISTURB;
-        } else if (value & 0x02) {
-          matrixHeadsOutMode = HEADSOUT_INMEETING;
-        } else if (value & 0x03) {
-          matrixHeadsOutMode = HEADSOUT_RELAXING;
-        } else {
-          // Ignore
-        } */
+        
         Serial.print("HeadsOut Value written:");
         Serial.print(value);
         Serial.print(" vs ");
@@ -341,6 +398,7 @@ void loop() {
       }
 
       if (buttonCharacteristic.written()) {
+        wasUpdated = true;
         if (buttonCharacteristic.value()) {   
           Serial.println("MATRIX on");
           matrix.show();
@@ -353,60 +411,22 @@ void loop() {
         }
       }
 
+      if (wasUpdated) central.disconnect(); // Bye, we need to update
+
+      // Why can't we update in this loop?
+      // handleMatrixUpdates(false);
       
 
-      // read the state of the switch/button:
-      /*
-      currentState = digitalRead(BUTTON_PIN);
-    
-      if(lastState == LOW && currentState == HIGH) {
-        Serial.println("The state changed from LOW to HIGH");
-        
-      }
-        
-      // save the last state
-      if (currentState != lastState) {
-        buttonCharacteristic.writeValue(lastState);
-      }
-      lastState = currentState;
-      */
     }
 
     // when the central disconnects, print it out:
     Serial.print(F("Disconnected from central: "));
     Serial.println(central.address());
   }
+  // Handle matrixUpdates
+  handleMatrixUpdates(true);
 
-  if (matrixIsOn) {
-
-    if (lastMatrixHeadsOutMode != matrixHeadsOutMode) {
-      colorWipe(off, 10);
-      lastMatrixHeadsOutMode = matrixHeadsOutMode;
-    }
-    if (matrixHeadsOutMode == HEADSOUT_AVAILABLE) {
-      matrix.show();
-      drawAvailableIcon();
-
-    } else if (matrixHeadsOutMode == HEADSOUT_DONOTDISTURB) {
-      matrix.show();
-      crossFade(off, white, 50, 5);
-      delay(500);
-
-      colorWipe(red, 50);
-      delay(500);
-    } else if (matrixHeadsOutMode == HEADSOUT_INMEETING) {
-      matrix.show();
-      drawInMeetingIcon();
-    } else if (matrixHeadsOutMode == HEADSOUT_RELAXING) {
-      matrix.show();
-      // crossFade(off, rgb_pink, 25, 5);
-      colorWipe(rgb_blue, 50);
-      delay(200);
-
-      colorWipe(white, 18);
-      delay(100);
-    }
-  }
+  
   delay(100);
   /*
   // read the state of the switch/button:
