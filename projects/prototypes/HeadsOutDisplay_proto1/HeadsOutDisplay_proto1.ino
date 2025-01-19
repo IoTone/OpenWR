@@ -51,9 +51,9 @@
 
 #include "RGB.h"
 
-#define SWVERSION "0.0.2"
-
-
+#define SWVERSION "0.0.3"
+#define ADVERT "HeadsOut-OpenWR"
+#define ADVERT_SHORT "HeadsOut"
 BLEService ledService("19B10000-E8F2-537E-4F6C-D104768A1228"); // Bluetooth® Low Energy LED Service
 
 // Bluetooth® Low Energy LED Switch Characteristic - custom 128-bit UUID, read and writable by central
@@ -301,16 +301,19 @@ void setup() {
     Serial.println("starting Bluetooth® Low Energy module failed!");
     while (1);
   }
-
-  // set advertised local name and service UUID:
-  BLE.setLocalName("HeadsOut_OpenWR");
-  BLE.setAdvertisedService(ledService);
-
-  // add the characteristic to the service
+   // add the characteristic to the service
   ledService.addCharacteristic(switchCharacteristic);
   ledService.addCharacteristic(buttonCharacteristic);
   // add service
   BLE.addService(ledService);
+
+  BLE.setAdvertisedService(ledService);
+  // set advertised local name and service UUID:
+  BLE.setLocalName(ADVERT);
+  BLE.setDeviceName(ADVERT);
+ 
+
+ 
 
   // set the initial value for the characeristic:
   switchCharacteristic.writeValue(0);
@@ -329,6 +332,20 @@ void setup() {
 }
 
 void loop() {
+  // https://github.com/arduino-libraries/ArduinoBLE/issues/104#issuecomment-857748873
+  static auto timeRef = millis();
+  static auto count = 0;
+
+  BLE.poll();
+  if (millis() - timeRef > 5000) {
+    count++;
+    timeRef = millis();
+    auto idx = count % 3;
+    BLE.setDeviceName(ADVERT);
+    BLE.setLocalName(ADVERT);
+    BLE.advertise();
+  }
+
   // listen for Bluetooth® Low Energy peripherals to connect:
   BLEDevice central = BLE.central();
 
