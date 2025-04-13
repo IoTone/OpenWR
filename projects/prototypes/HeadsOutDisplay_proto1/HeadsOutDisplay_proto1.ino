@@ -71,7 +71,11 @@ BLEByteCharacteristic buttonCharacteristic("19B10001-E8F2-537E-4F6C-D104768A1229
 #define HEADSOUT_LOGO           0x5
 #define MATRIX_W                5
 #define MATRIX_H                5
-
+#ifdef LED_BUILTIN
+  #define LED_PIN     LED_BUILTIN
+#else
+  #define LED_PIN     13
+#endif
 const int ledPin = LED_BUILTIN; // pin to use for the LED
 
 // const int BUTTON_PIN = 0; // the number of the pushbutton pin

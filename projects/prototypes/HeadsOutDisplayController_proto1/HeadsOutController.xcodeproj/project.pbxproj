@@ -322,14 +322,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Blue/Preview Content\"";
-				DEVELOPMENT_TEAM = 65CUCZ558H;
+				DEVELOPMENT_TEAM = PK2HAK5QRW;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Blue/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HeadsOutController;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Fatti miei";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "We seek to steal all of your data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -340,7 +340,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.razortooth.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razortooth.headsout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -357,14 +357,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Blue/Preview Content\"";
-				DEVELOPMENT_TEAM = 65CUCZ558H;
+				DEVELOPMENT_TEAM = PK2HAK5QRW;
 				ENABLE_BITCODE = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Blue/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = HeadsOutController;
+				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Fatti miei";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "We seek to steal all of your data";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -375,7 +375,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.razortooth.-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.razortooth.headsout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
