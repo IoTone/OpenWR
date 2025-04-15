@@ -5,7 +5,7 @@
  * SPDX-License-Identifier: MIT
  */
 /*
- * @Hardwares: M5Core + Unit HEX
+ * @Hardwares: M5Core + Unit HEX (https://shop.m5stack.com/products/hex-rgb-led-board-sk6812)
  * @Platform Version: Arduino M5Stack Board Manager v2.1.3
  * @Dependent Library:
  * M5Stack@^0.4.6: https://github.com/m5stack/M5Stack
