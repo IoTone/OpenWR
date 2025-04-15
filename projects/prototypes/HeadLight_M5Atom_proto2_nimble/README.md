@@ -4,6 +4,10 @@ Headlight allows you to illuminate a dark space while using a VR HMD.  Most VR h
 
 This low cost accessory adds a way to easily illuminate by connecting from within your VR HMD or through an external phone app.
 
+![Image](https://github.com/user-attachments/assets/46f90650-a5bf-43ab-97a6-d09036cfe079)
+![Image](https://github.com/user-attachments/assets/03c7a16b-f6c7-40c2-8667-241dc1d23dc1)
+![Image](https://github.com/user-attachments/assets/52f30634-f6bb-447a-badb-a4c612918ebd)
+
 ## BOM
 
 - https://shop.m5stack.com/products/atom-lite-esp32-development-kit
