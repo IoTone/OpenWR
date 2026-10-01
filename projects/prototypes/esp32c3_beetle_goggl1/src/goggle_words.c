@@ -18,6 +18,7 @@
 #include "driver/spi_master.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "esp_system.h"
 
 #include "forth_core.h"
 #include "pins_beetle_esp32c3.h"
@@ -263,6 +264,7 @@ static void w_oled_height(void)   { forth_push(SSD1309_HEIGHT); }
 
 static void w_led(void)     { gpio_set_level(GOGGL_PIN_LED, POP() != 0); }
 static void w_button(void)  { forth_push(gpio_get_level(GOGGL_PIN_BUTTON) == 0 ? -1 : 0); }
+static void w_reboot(void)  { printf("rebooting\n"); fflush(stdout); vTaskDelay(pdMS_TO_TICKS(100)); esp_restart(); }
 
 /* ------------------------------------------------------------------ */
 /* Timing and maths                                                    */
@@ -334,6 +336,7 @@ void goggle_register_words(void)
 
         { "led",            w_led },
         { "button?",        w_button },
+        { "reboot",         w_reboot },
 
         { "ms",             w_ms },
         { "us",             w_us },

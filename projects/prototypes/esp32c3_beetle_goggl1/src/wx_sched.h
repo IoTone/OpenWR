@@ -8,7 +8,7 @@
  * Words:
  *   theme!   ( n -- )   0 strip, 1 glance, 2 ribbon; persisted
  *   theme@   ( -- n )
- *   hud-now  ( -- )     run hud-tick immediately (debug)
+ *   hud-now  ( -- )     request a hud-tick from the scheduler (within 50 ms)
  *
  * Licensed under the Apache License, Version 2.0
  */

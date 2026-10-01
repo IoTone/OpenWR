@@ -52,6 +52,7 @@
  * Board:
  *   led            ( flag -- )            onboard LED (GPIO10)
  *   button?        ( -- flag )            BOOT button pressed (GPIO9, active low)
+ *   reboot         ( -- )                 restart the chip
  *
  * Timing and maths for the demos:
  *   ms             ( n -- )               delay

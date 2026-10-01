@@ -24,6 +24,7 @@
 #include "net_words.h"
 #include "wx_words.h"
 #include "wx_sched.h"
+#include "bundle.h"
 
 #define CONSOLE_RX_BUF 256
 #define CONSOLE_TX_BUF 256
@@ -64,7 +65,9 @@ static int console_getchar(void)
 {
     uint8_t c;
     int n = usb_serial_jtag_read_bytes(&c, 1, pdMS_TO_TICKS(10));
-    return n <= 0 ? -1 : c;
+    if (n <= 0) return -1;
+    if (bundle_console_char(c)) return -1;   /* swallowed by bundle capture */
+    return c;
 }
 
 static void console_putchar(int c)
@@ -104,6 +107,7 @@ void app_main(void)
     wx_init();
     wx_register_words();
     wx_sched_register_words();
+    bundle_register_words();
     if (derr == ESP_OK) {
         goggle_test_pattern();   /* power-on layout pattern; oled-splash for the logo */
         console_print("Display up, showing the layout test pattern.\r\n");
@@ -114,6 +118,11 @@ void app_main(void)
 
     console_printf("Free heap after init:  %lu bytes\r\n",
                    (unsigned long)heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+
+    /* The hosted use case: re-apply the stored Forth bundle, if there is one.
+     * It ends with hud-tick, so the cached forecast is on the glass before
+     * the network is even up. */
+    if (!bundle_apply_stored()) console_print("No bundle stored; test pattern stays up.\r\n");
 
     wx_sched_start();   /* geolocation, forecast, clock, button, hud-tick */
 

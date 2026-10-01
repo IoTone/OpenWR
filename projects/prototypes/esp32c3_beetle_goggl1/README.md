@@ -209,8 +209,8 @@ needed by "far east OLEDs".
 
 The first use case for this hardware: the next eight hours of weather,
 located by IP, in three themes. Design in
-[`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md); phases 1 and 2
-are implemented.
+[`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md); phases 1 to 3
+are implemented and verified on hardware.
 
 Firmware side (`src/net_words.c`, `src/wx_words.c`, `src/wx_sched.c`): WiFi
 station with credentials in NVS, SNTP, geolocation (ipinfo.io, then
@@ -218,14 +218,20 @@ ip-api.com), Open-Meteo forecast parsed to integers and cached in NVS, a
 scheduler task that refreshes every 15 min and calls `hud-tick`, BOOT button
 cycling the theme. Flash is laid out with two OTA slots from the start.
 
-Use-case side (`forth/weather-hud/`): five Forth files, loaded in order.
+Use-case side (`forth/weather-hud/`): five Forth files that together are
+one **bundle**. Sent once, the bundle is applied all-or-nothing, stored in
+NVS, and re-applied at every boot, so the HUD survives a power cycle with
+no USB attached.
 
 ```bash
 # first time: give the device your network, at the ok> prompt
 ok> s" MySSID" s" MyPassword" wifi!
 
-# load the use case (re-send after every reboot until phase 3 persists it)
-python3 tools/send_forth.py /dev/cu.usbmodem101 forth/weather-hud/*.fs
+# install the use case (once; it persists)
+python3 tools/send_forth.py --bundle /dev/cu.usbmodem101 forth/weather-hud/*.fs
+
+# or, while developing a theme, send files plainly and iterate at the prompt
+python3 tools/send_forth.py /dev/cu.usbmodem101 forth/weather-hud/11-glance.fs
 
 ok> wx-test        \ load the design fixture when there is no network
 ok> 1 theme!       \ 0 strip, 1 glance, 2 ribbon; BOOT button cycles too
@@ -238,7 +244,8 @@ Words added by the HUD firmware, all documented in the headers:
 `geo-ok? geo-lat geo-lon geo-city geo! geo-fetch`,
 `wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow wx-wind
 wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@
-wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`, and
+wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`,
+`bundle-begin bundle-apply bundle-forget bundle-info`, `reboot`, and
 `oled-num oled-num02 oled-numr` for drawing integers.
 
 `tools/hud_mock.py` renders the three themes on the host with the device's
@@ -246,6 +253,7 @@ own driver; its output is in `docs/images/`.
 
 ## Next
 
-- Weather HUD phase 3: bundle manifest, persist the Forth bundle in NVS and
-  re-apply at boot, so no USB is needed after a power cycle.
+- Weather HUD phase 4: BLE provisioning of WiFi, location, units and theme
+  from the mobile app; bundle push; firmware OTA into the second slot.
+- Quieter console: WiFi and TLS logs currently interleave with the REPL.
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.

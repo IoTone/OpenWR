@@ -1,6 +1,6 @@
 # goggl1 Weather HUD — design
 
-**Status:** phases 1 and 2 implemented 2026-10-01; phases 3 and 4 open. Reviewed against hardware findings
+**Status:** phases 1 to 3 implemented and verified on hardware 2026-10-01; phase 4 open. Reviewed against hardware findings
 from 2026-10-01 (full 128×64 drives; rows 56–63 sit over the opaque strip).
 **Scope:** the first *use case* hosted on the goggl1 hardware, and the
 use-case hosting model it establishes for OpenWR devices.
@@ -48,9 +48,12 @@ firmware (C)                            use case (Forth bundle)
 - The firmware calls exactly one Forth entry point, `hud-tick`, and only
   if `forth_word_exists("hud-tick")`. Everything else is the bundle's
   business. A bundle that defines nothing leaves the test pattern on screen.
-- Bundle storage: today, a `.fs` file sent over USB. Phase 3: NVS blob
-  written by the app over BLE, re-applied at boot. The OTA design (separate
-  document) only has to move one blob.
+- Bundle storage: the console has a capture mode. Between the lines
+  `bundle-begin` and `bundle-end` every line is buffered instead of
+  interpreted; at the end the text is applied with rollback and, if it took,
+  written to NVS and re-applied at every boot before the scheduler starts.
+  The weather bundle is 104 lines, 4.2 KB with comments stripped. Phase 4
+  delivers the same text over BLE; the OTA design only has to move one blob.
 - One use case at a time, by construction: installing a bundle rolls back
   to a savepoint taken before the previous one.
 

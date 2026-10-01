@@ -109,7 +109,11 @@ void wx_sched_start(void)
 
 static void w_theme_store(void) { set_theme((int)forth_pop()); }
 static void w_theme_fetch(void) { forth_push(s_theme); }
-static void w_hud_now(void)     { hud_tick(); }
+/* Deferred to the scheduler task on purpose: evaluating hud-tick inline
+ * would re-enter the interpreter from inside the line being interpreted,
+ * and the engine's input cursor is global, so the rest of that line would
+ * be lost. The tick lands within 50 ms. */
+static void w_hud_now(void)     { s_tick_now = true; }
 
 void wx_sched_register_words(void)
 {
