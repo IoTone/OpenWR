@@ -23,6 +23,7 @@
 #define BUNDLE_H
 
 #include <stdbool.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,6 +35,9 @@ bool bundle_console_char(int c);
 
 /* Apply the bundle stored in NVS, if any. Returns true if one was applied. */
 bool bundle_apply_stored(void);
+
+/* Name from the stored bundle's manifest, or "-" if none. */
+void bundle_name(char *out, size_t cap);
 
 void bundle_register_words(void);
 

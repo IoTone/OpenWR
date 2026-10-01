@@ -1,6 +1,6 @@
 # goggl1 Weather HUD — design
 
-**Status:** phases 1 to 3 implemented and verified on hardware 2026-10-01; phase 4 open. Reviewed against hardware findings
+**Status:** all four phases implemented and verified on hardware 2026-10-01. Phase 4 details in DESIGN-provisioning-ota.md. Reviewed against hardware findings
 from 2026-10-01 (full 128×64 drives; rows 56–63 sit over the opaque strip).
 **Scope:** the first *use case* hosted on the goggl1 hardware, and the
 use-case hosting model it establishes for OpenWR devices.

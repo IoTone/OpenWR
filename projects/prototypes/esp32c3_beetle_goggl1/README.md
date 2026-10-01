@@ -209,8 +209,9 @@ needed by "far east OLEDs".
 
 The first use case for this hardware: the next eight hours of weather,
 located by IP, in three themes. Design in
-[`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md); phases 1 to 3
-are implemented and verified on hardware.
+[`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md); all four phases
+are implemented and verified on hardware. Provisioning and OTA are in
+[`docs/DESIGN-provisioning-ota.md`](docs/DESIGN-provisioning-ota.md).
 
 Firmware side (`src/net_words.c`, `src/wx_words.c`, `src/wx_sched.c`): WiFi
 station with credentials in NVS, SNTP, geolocation (ipinfo.io, then
@@ -245,15 +246,41 @@ Words added by the HUD firmware, all documented in the headers:
 `wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow wx-wind
 wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@
 wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`,
-`bundle-begin bundle-apply bundle-forget bundle-info`, `reboot`, and
-`oled-num oled-num02 oled-numr` for drawing integers.
+`bundle-begin bundle-apply bundle-forget bundle-info`, `pair unpair ble-on?`,
+`ota! version status`, `reboot`, and `oled-num oled-num02 oled-numr` for
+drawing integers.
 
 `tools/hud_mock.py` renders the three themes on the host with the device's
 own driver; its output is in `docs/images/`.
 
+### From a phone, or anything with Bluetooth
+
+The same `ok>` prompt is available over BLE as a Nordic UART Service, so
+any BLE terminal app works today and the OpenWR app only has to hide the
+words behind buttons. The radio is off until you open a window:
+
+- **Long-press BOOT** (1 s or more), or type `pair` on USB. The device
+  advertises as `goggl1` for 3 minutes and the status strip shows a `B`.
+- Connect and type what you would type on USB. `status` prints one line
+  the app can parse; `s" ssid" s" pw" wifi!` provisions; `bundle-begin`
+  … `bundle-end` installs a use case.
+- **Firmware update**: serve the image on the local network and send
+  `s" http://<host>:8000/firmware.bin" ota!`. For development:
+  `cd .pio/build/beetle_c3 && python3 -m http.server 8000`. The device
+  writes the other OTA slot, reboots into it, and keeps it once the stored
+  bundle has applied; a broken image rolls back on the next reset.
+
+`tools/ble_console.py` (needs `pip install bleak`) is the stand-in app:
+
+```bash
+python3 tools/ble_console.py status "2 theme!"
+python3 tools/ble_console.py --bundle forth/weather-hud/*.fs
+python3 tools/ble_console.py 's" http://10.0.0.116:8000/firmware.bin" ota!'
+```
+
 ## Next
 
-- Weather HUD phase 4: BLE provisioning of WiFi, location, units and theme
-  from the mobile app; bundle push; firmware OTA into the second slot.
-- Quieter console: WiFi and TLS logs currently interleave with the REPL.
+- The OpenWR mobile app: a BLE terminal with a form in front of it.
+- Passkey pairing with the code shown on the glass (phase 5).
+- Quieter console: WiFi and TLS logs currently interleave with the USB REPL.
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.

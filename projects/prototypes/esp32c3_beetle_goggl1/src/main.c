@@ -25,15 +25,18 @@
 #include "wx_words.h"
 #include "wx_sched.h"
 #include "bundle.h"
+#include "ble_console.h"
+#include "ota_words.h"
+#include "console.h"
 
 #define CONSOLE_RX_BUF 256
 #define CONSOLE_TX_BUF 256
 
 /* Forth dictionary heap. With WiFi + TLS on the C3 (no PSRAM) a TLS handshake
  * needs ~40 KB transiently and free heap is ~85 KB before WiFi even starts,
- * so the dictionary gets 32 KB. The three themes use under 1 KB of it;
+ * so the dictionary gets 16 KB. The three themes use under 1 KB of it;
  * compiled code lives in the engine's own static array. */
-#define FORTH_HEAP_SIZE (32 * 1024)
+#define FORTH_HEAP_SIZE (16 * 1024)
 
 /* ----- Console: raw byte I/O over USB-serial-JTAG ----- */
 
@@ -61,11 +64,16 @@ static void console_printf(const char *fmt, ...)
     console_print(buf);
 }
 
+/* Input is merged from USB and BLE; output goes to both. */
 static int console_getchar(void)
 {
-    uint8_t c;
-    int n = usb_serial_jtag_read_bytes(&c, 1, pdMS_TO_TICKS(10));
-    if (n <= 0) return -1;
+    int c = ble_console_getchar();
+    if (c < 0) {
+        uint8_t b;
+        int n = usb_serial_jtag_read_bytes(&b, 1, pdMS_TO_TICKS(10));
+        if (n <= 0) return -1;
+        c = b;
+    }
     if (bundle_console_char(c)) return -1;   /* swallowed by bundle capture */
     return c;
 }
@@ -74,6 +82,22 @@ static void console_putchar(int c)
 {
     uint8_t ch = (uint8_t)c;
     usb_serial_jtag_write_bytes(&ch, 1, pdMS_TO_TICKS(100));
+    ble_console_putchar(c);
+}
+
+void con_printf(const char *fmt, ...)
+{
+    char buf[256];
+    va_list args;
+    va_start(args, fmt);
+    int n = vsnprintf(buf, sizeof buf, fmt, args);
+    va_end(args);
+    if (n < 0) return;
+    if (n > (int)sizeof buf - 1) n = sizeof buf - 1;
+    for (int i = 0; i < n; i++) {
+        if (buf[i] == '\n') console_putchar('\r');
+        console_putchar(buf[i]);
+    }
 }
 
 void app_main(void)
@@ -84,6 +108,7 @@ void app_main(void)
     console_print("\r\n\r\n");
     console_print("============================================\r\n");
     console_print("  esp32c3_beetle_goggl1 (OpenWR)\r\n");
+    console_printf("  goggl1 v%s\r\n", GOGGL1_VERSION);
     console_printf("  ESPIDFORTH v%s  build %s %s\r\n",
                    ESPIDFORTH_VERSION_STRING, ESPIDFORTH_BUILD_DATE, ESPIDFORTH_BUILD_TIME);
     console_print("  Beetle ESP32-C3 + SSD1309 transparent OLED\r\n");
@@ -108,6 +133,8 @@ void app_main(void)
     wx_register_words();
     wx_sched_register_words();
     bundle_register_words();
+    ota_register_words();
+    if (ble_console_init("goggl1") == ESP_OK) ble_console_register_words();
     if (derr == ESP_OK) {
         goggle_test_pattern();   /* power-on layout pattern; oled-splash for the logo */
         console_print("Display up, showing the layout test pattern.\r\n");
@@ -125,6 +152,7 @@ void app_main(void)
     if (!bundle_apply_stored()) console_print("No bundle stored; test pattern stays up.\r\n");
 
     wx_sched_start();   /* geolocation, forecast, clock, button, hud-tick */
+    ota_mark_boot_ok(); /* this far is far enough: keep this image */
 
     forth_repl(console_getchar, console_putchar);   /* blocks until 'bye' */
     forth_deinit();

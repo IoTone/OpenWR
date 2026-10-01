@@ -62,6 +62,8 @@ void wx_init(void);          /* load cached geo/forecast/units from NVS */
 bool geo_fetch(void);        /* blocking; returns true on success */
 bool wx_fetch(void);         /* blocking; needs a valid geo */
 bool geo_valid(void);
+const char *geo_city_str(void);
+int  units_imperial(void);
 bool wx_valid(void);
 int  wx_age_s(void);         /* -1 if never fetched */
 

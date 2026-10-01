@@ -13,6 +13,7 @@
 #include "cJSON.h"
 
 #include "forth_core.h"
+#include "console.h"
 #include "net_words.h"
 #include "ssd1309.h"
 #include "wx_words.h"
@@ -42,6 +43,8 @@ void wx_init(void)
 }
 
 bool geo_valid(void) { return s_geo.valid; }
+const char *geo_city_str(void) { return s_geo.city; }
+int  units_imperial(void) { return s_imperial; }
 bool wx_valid(void)  { return s_wx.valid; }
 
 int wx_age_s(void)
@@ -349,7 +352,7 @@ static void w_wx_test(void)
         if (!s_geo.valid) { strncpy(s_geo.city, "Fixture", sizeof s_geo.city - 1); s_geo.valid = 1; }
         s_wx.fetched_at = clock_synced() ? clock_unix() : 0;
     }
-    printf("wx-test: %s\n", ok ? "PASS (fixture loaded)" : "FAIL");
+    con_printf("wx-test: %s\n", ok ? "PASS (fixture loaded)" : "FAIL");
     forth_push(ok ? -1 : 0);
 }
 

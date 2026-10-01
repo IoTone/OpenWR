@@ -1,5 +1,5 @@
-\ bundle: weather-hud 0.3
-\ requires: oled-str oled-num wx-temp wx-icon geo-city clock-hm theme@ net-ok?
+\ bundle: weather-hud 0.4
+\ requires: oled-str oled-num wx-temp wx-icon geo-city clock-hm theme@ net-ok? ble-on?
 \ 00-common.fs — shared helpers and the status strip for the weather HUD.
 \ Load order: 00-common, 10-strip, 11-glance, 12-ribbon, 20-hud.
 \ Requires the goggl1 firmware words: oled-*, wx-*, geo-*, clock-*, net-ok?
@@ -38,7 +38,9 @@
   net-ok? 0= if 120 120 57 oled-glyph else
   wx-age dup 0< swap 1800 < or if 90 60 2 oled-disc else 90 60 2 oled-circle then then ;
 
+: hud-ble  ( -- )  ble-on? if 66 78 57 oled-glyph then ;   \ B while pairing
+
 : hud-status  ( -- )
   0 56 128 oled-hline
   geo-ok? if geo-city 10 min 0 57 oled-str else s" no location" 0 57 oled-str then
-  hud-fresh hud-clock ;
+  hud-ble hud-fresh hud-clock ;

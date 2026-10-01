@@ -14,6 +14,7 @@
 #include "net_words.h"
 #include "wx_words.h"
 #include "pins_beetle_esp32c3.h"
+#include "ble_console.h"
 #include "wx_sched.h"
 
 static const char *TAG = "sched";
@@ -56,12 +57,15 @@ static void sched_task(void *arg)
             bool down = gpio_get_level(GOGGL_PIN_BUTTON) == 0;
             if (down) btn_held++;
             else if (btn_held) {
-                if (btn_held >= 2 && btn_held < 20) set_theme(s_theme + 1);   /* 100 ms .. 1 s */
+                if (btn_held >= 2 && btn_held < 20) set_theme(s_theme + 1);   /* 100 ms .. 1 s: theme */
+                else if (btn_held >= 20) { ble_pair_window(180); s_tick_now = true; }  /* 1 s+: pair */
                 btn_held = 0;
             }
+            ble_console_flush();
             if (s_tick_now) { s_tick_now = false; hud_tick(); }
         }
         t++;
+        ble_console_poll();
 
         if (net_just_connected()) {
             clock_start_sntp();
@@ -106,6 +110,8 @@ void wx_sched_start(void)
 }
 
 /* ------------------------------------------------------------------ */
+
+int wx_sched_theme(void) { return s_theme; }
 
 static void w_theme_store(void) { set_theme((int)forth_pop()); }
 static void w_theme_fetch(void) { forth_push(s_theme); }

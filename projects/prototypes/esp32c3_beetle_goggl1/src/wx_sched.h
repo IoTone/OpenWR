@@ -22,6 +22,7 @@ extern "C" {
 
 void wx_sched_start(void);      /* call after forth_init() and all registrations */
 void wx_sched_register_words(void);
+int  wx_sched_theme(void);
 
 #ifdef __cplusplus
 }

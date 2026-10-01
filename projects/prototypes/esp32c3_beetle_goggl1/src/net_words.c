@@ -23,6 +23,7 @@
 #include "nvs.h"
 
 #include "forth_core.h"
+#include "console.h"
 #include "net_words.h"
 
 static const char *TAG = "net";
@@ -174,6 +175,8 @@ bool net_ok(void)
     return s_ev && (xEventGroupGetBits(s_ev) & BIT_CONNECTED);
 }
 
+uint32_t net_ip4(void) { return net_ok() ? s_ip.addr : 0; }
+
 bool net_just_connected(void)
 {
     bool j = s_just_connected;
@@ -296,11 +299,11 @@ static void w_wifi_store(void)
     int plen = (int)forth_pop(); const char *p = (const char *)forth_pop();
     int slen = (int)forth_pop(); const char *s = (const char *)forth_pop();
     char ssid[33] = "", pass[65] = "";
-    if (!s || slen <= 0 || slen > 32 || plen < 0 || plen > 64) { printf("? wifi! bad args\n"); return; }
+    if (!s || slen <= 0 || slen > 32 || plen < 0 || plen > 64) { con_printf("? wifi! bad args\n"); return; }
     memcpy(ssid, s, slen);
     if (p && plen > 0) memcpy(pass, p, plen);
     net_set_credentials(ssid, pass);
-    printf("wifi: stored, connecting to %s\n", ssid);
+    con_printf("wifi: stored, connecting to %s\n", ssid);
 }
 
 void net_register_words(void)

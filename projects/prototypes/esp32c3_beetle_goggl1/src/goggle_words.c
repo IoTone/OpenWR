@@ -21,6 +21,7 @@
 #include "esp_system.h"
 
 #include "forth_core.h"
+#include "console.h"
 #include "pins_beetle_esp32c3.h"
 #include "ssd1309.h"
 #include "goggle_words.h"
@@ -264,7 +265,7 @@ static void w_oled_height(void)   { forth_push(SSD1309_HEIGHT); }
 
 static void w_led(void)     { gpio_set_level(GOGGL_PIN_LED, POP() != 0); }
 static void w_button(void)  { forth_push(gpio_get_level(GOGGL_PIN_BUTTON) == 0 ? -1 : 0); }
-static void w_reboot(void)  { printf("rebooting\n"); fflush(stdout); vTaskDelay(pdMS_TO_TICKS(100)); esp_restart(); }
+static void w_reboot(void)  { con_printf("rebooting\n");  vTaskDelay(pdMS_TO_TICKS(100)); esp_restart(); }
 
 /* ------------------------------------------------------------------ */
 /* Timing and maths                                                    */

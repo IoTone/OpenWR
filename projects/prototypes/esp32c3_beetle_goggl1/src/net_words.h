@@ -30,6 +30,7 @@ extern "C" {
 
 esp_err_t net_init(void);                 /* nvs + netif + wifi; connects if creds stored */
 bool      net_ok(void);
+uint32_t  net_ip4(void);                  /* 0 when down */
 bool      net_just_connected(void);       /* true once per (re)association; clears on read */
 void      net_set_credentials(const char *ssid, const char *pass);
 

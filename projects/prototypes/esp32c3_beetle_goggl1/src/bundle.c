@@ -13,6 +13,7 @@
 #include "nvs.h"
 
 #include "forth_core.h"
+#include "console.h"
 #include "net_words.h"
 #include "bundle.h"
 
@@ -68,7 +69,7 @@ static bool apply_text(const char *text, size_t len, const char *what)
 {
     char missing[64] = "";
     if (!requirements_met(text, missing, sizeof missing)) {
-        printf("bundle: %s needs word '%s' which this firmware lacks\n", what, missing);
+        con_printf("bundle: %s needs word '%s' which this firmware lacks\n", what, missing);
         return false;
     }
     char fail[160] = "";
@@ -76,11 +77,11 @@ static bool apply_text(const char *text, size_t len, const char *what)
     if (rc == 0) {
         char name[48] = "(unnamed)";
         manifest_field(text, "bundle", name, sizeof name);
-        printf("bundle: %s applied: %s, %u bytes\n", what, name, (unsigned)len);
+        con_printf("bundle: %s applied: %s, %u bytes\n", what, name, (unsigned)len);
         return true;
     }
-    if (rc == 1) printf("bundle: %s rejected, rolled back. Failing line:\n  %s\n", what, fail);
-    else         printf("bundle: %s could not be evaluated (rc=%d)\n", what, rc);
+    if (rc == 1) con_printf("bundle: %s rejected, rolled back. Failing line:\n  %s\n", what, fail);
+    else         con_printf("bundle: %s could not be evaluated (rc=%d)\n", what, rc);
     return false;
 }
 
@@ -110,8 +111,8 @@ static void store(const char *text, size_t len)
     esp_err_t err = nvs_set_blob(h, NVS_KEY, text, len);
     if (err == ESP_OK) err = nvs_commit(h);
     nvs_close(h);
-    if (err != ESP_OK) printf("bundle: stored copy failed: %s\n", esp_err_to_name(err));
-    else               printf("bundle: stored, will re-apply at boot\n");
+    if (err != ESP_OK) con_printf("bundle: stored copy failed: %s\n", esp_err_to_name(err));
+    else               con_printf("bundle: stored, will re-apply at boot\n");
 }
 
 /* ------------------------------------------------------------------ */
@@ -128,9 +129,9 @@ static void capture_begin(void)
 {
     if (s_buf) return;
     s_buf = malloc(BUNDLE_MAX + 1);
-    if (!s_buf) { printf("bundle: no memory for capture\n"); return; }
+    if (!s_buf) { con_printf("bundle: no memory for capture\n"); return; }
     s_len = 0; s_line_start = 0; s_lines = 0; s_overflow = false;
-    printf("bundle: capturing until a line reading '%s'\n", END_MARK);
+    con_printf("bundle: capturing until a line reading '%s'\n", END_MARK);
 }
 
 static void capture_finish(void)
@@ -139,15 +140,15 @@ static void capture_finish(void)
     size_t len = s_len;
     s_buf = NULL;
     if (s_overflow) {
-        printf("bundle: too large (limit %u bytes), discarded\n", (unsigned)BUNDLE_MAX);
+        con_printf("bundle: too large (limit %u bytes), discarded\n", (unsigned)BUNDLE_MAX);
     } else {
         text[len] = '\0';
-        printf("bundle: %d lines, %u bytes\n", s_lines, (unsigned)len);
+        con_printf("bundle: %d lines, %u bytes\n", s_lines, (unsigned)len);
         if (apply_text(text, len, "new")) store(text, len);
     }
     free(text);
-    printf("ok> ");
-    fflush(stdout);
+    con_printf("ok> ");
+    
 }
 
 bool bundle_console_char(int c)
@@ -165,7 +166,7 @@ bool bundle_console_char(int c)
         if (s_len < BUNDLE_MAX) s_buf[s_len++] = '\n';
         s_line_start = s_len;
         s_lines++;
-        if ((s_lines % 10) == 0) { putchar('.'); fflush(stdout); }
+        if ((s_lines % 10) == 0) { putchar('.');  }
         return true;
     }
     if (s_len < BUNDLE_MAX) s_buf[s_len++] = (char)c;
@@ -178,7 +179,7 @@ bool bundle_console_char(int c)
 /* ------------------------------------------------------------------ */
 
 static void w_bundle_begin(void)  { capture_begin(); }
-static void w_bundle_apply(void)  { if (!bundle_apply_stored()) printf("bundle: nothing stored\n"); }
+static void w_bundle_apply(void)  { if (!bundle_apply_stored()) con_printf("bundle: nothing stored\n"); }
 
 static void w_bundle_forget(void)
 {
@@ -186,7 +187,7 @@ static void w_bundle_forget(void)
     if (nvs_open(GOGGL_NVS_NS, NVS_READWRITE, &h) == ESP_OK) {
         nvs_erase_key(h, NVS_KEY); nvs_commit(h); nvs_close(h);
     }
-    printf("bundle: erased; the current definitions stay until reboot\n");
+    con_printf("bundle: erased; the current definitions stay until reboot\n");
 }
 
 static void w_bundle_info(void)
@@ -202,13 +203,30 @@ static void w_bundle_info(void)
                 char name[48] = "(unnamed)", req[200] = "";
                 manifest_field(text, "bundle", name, sizeof name);
                 manifest_field(text, "requires", req, sizeof req);
-                printf("bundle: %s, %u bytes stored\n  requires: %s\n", name, (unsigned)len, req);
+                con_printf("bundle: %s, %u bytes stored\n  requires: %s\n", name, (unsigned)len, req);
                 free(text);
             }
-        } else printf("bundle: nothing stored\n");
+        } else con_printf("bundle: nothing stored\n");
         nvs_close(h);
     }
-    printf("  hud-tick %s defined\n", forth_word_exists("hud-tick") ? "is" : "is not");
+    con_printf("  hud-tick %s defined\n", forth_word_exists("hud-tick") ? "is" : "is not");
+}
+
+void bundle_name(char *out, size_t cap)
+{
+    strncpy(out, "-", cap); out[cap - 1] = '\0';
+    nvs_handle_t h; size_t len = 0;
+    if (nvs_open(GOGGL_NVS_NS, NVS_READONLY, &h) != ESP_OK) return;
+    if (nvs_get_blob(h, NVS_KEY, NULL, &len) == ESP_OK && len && len <= BUNDLE_MAX) {
+        char *text = malloc(len + 1);
+        if (text) {
+            nvs_get_blob(h, NVS_KEY, text, &len); text[len] = '\0';
+            if (!manifest_field(text, "bundle", out, cap)) strncpy(out, "(unnamed)", cap);
+            free(text);
+        }
+    }
+    nvs_close(h);
+    for (char *p = out; *p; p++) if (*p == ' ') *p = '_';   /* keep status splittable */
 }
 
 void bundle_register_words(void)
