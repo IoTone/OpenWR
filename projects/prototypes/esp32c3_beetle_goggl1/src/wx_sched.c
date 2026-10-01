@@ -11,6 +11,7 @@
 #include "esp_log.h"
 
 #include "forth_core.h"
+#include "console.h"
 #include "net_words.h"
 #include "wx_words.h"
 #include "pins_beetle_esp32c3.h"
@@ -28,6 +29,11 @@ static const char *TAG = "sched";
 
 static int  s_theme;
 static volatile bool s_tick_now;
+
+/* loop state, exposed by sched-info for the bench */
+static volatile uint32_t s_t, s_next_wx;
+static volatile int s_wx_failures;
+static volatile bool s_geo_pending;
 
 /* ------------------------------------------------------------------ */
 
@@ -61,6 +67,7 @@ static void sched_task(void *arg)
             if (s_tick_now) { s_tick_now = false; hud_tick(); }
         }
         t++;
+        s_t = t; s_next_wx = next_wx; s_wx_failures = wx_failures; s_geo_pending = geo_pending;
         ble_console_poll();
 
         if (net_just_connected()) {
@@ -144,10 +151,17 @@ static void w_theme_fetch(void) { forth_push(s_theme); }
  * and the engine's input cursor is global, so the rest of that line would
  * be lost. The tick lands within 50 ms. */
 static void w_hud_now(void)     { s_tick_now = true; }
+static void w_sched_info(void)
+{
+    con_printf("sched: t=%lu next_wx=%lu (in %ld s) geo_pending=%d wx_failures=%d net=%d geo=%d\n",
+               (unsigned long)s_t, (unsigned long)s_next_wx, (long)((int32_t)s_next_wx - (int32_t)s_t),
+               s_geo_pending, s_wx_failures, net_ok(), geo_valid());
+}
 
 void wx_sched_register_words(void)
 {
     forth_register_word("theme!",  w_theme_store);
     forth_register_word("theme@",  w_theme_fetch);
     forth_register_word("hud-now", w_hud_now);
+    forth_register_word("sched-info", w_sched_info);
 }
