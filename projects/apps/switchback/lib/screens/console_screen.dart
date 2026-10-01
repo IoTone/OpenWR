@@ -104,7 +104,7 @@ class _ConsoleScreenState extends State<ConsoleScreen> {
               itemCount: g.transcript.length,
               itemBuilder: (BuildContext c, int i) {
                 final ConsoleEntry e = g.transcript[i];
-                return SelectableText(
+                return Text(
                   e.sent ? 'ok> ${e.text}' : e.text,
                   style: e.sent ? mono.copyWith(color: cs.primary, fontWeight: FontWeight.w500) : mono,
                 );

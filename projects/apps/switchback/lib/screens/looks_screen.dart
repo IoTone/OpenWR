@@ -161,7 +161,7 @@ class _GlassChoice extends StatelessWidget {
               Container(
                 color: const Color(0xFF0C0C10),
                 padding: const EdgeInsets.all(10),
-                child: Image.asset(theme.asset, fit: BoxFit.fitWidth, filterQuality: FilterQuality.none),
+                child: Image.asset(theme.asset, fit: BoxFit.fitWidth, filterQuality: FilterQuality.none, cacheWidth: 536, gaplessPlayback: true),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(14, 10, 14, 12),

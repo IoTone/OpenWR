@@ -72,7 +72,11 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FlutterNativeSplash.remove();
-      context.read<GoggleConsole>().reconnectIfNeeded();
+      final GoggleConsole g = context.read<GoggleConsole>();
+      final ThemeController tc = context.read<ThemeController>();
+      // The one place the goggle's weather reaches the app's look.
+      g.addListener(() => tc.setFromGoggle(status: g.status, forecast: g.forecast));
+      g.reconnectIfNeeded();
     });
     Future<void>.delayed(const Duration(milliseconds: 1600), () {
       if (mounted) setState(() => _minSplashElapsed = true);
@@ -104,11 +108,6 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
     final ThemeController tc = context.watch<ThemeController>();
     final FirstRunController fr = context.watch<FirstRunController>();
     final LocaleController lc = context.watch<LocaleController>();
-    final GoggleConsole g = context.watch<GoggleConsole>();
-
-    // The one place the goggle's weather reaches the app's look.
-    tc.setFromGoggle(status: g.status, forecast: g.forecast);
-
     if (!fr.loaded || !_minSplashElapsed) {
       return MaterialApp(
         theme: tc.theme,

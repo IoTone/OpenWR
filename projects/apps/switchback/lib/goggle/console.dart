@@ -51,7 +51,18 @@ class GoggleConsole extends ChangeNotifier {
   GoggleStatus? _status;
   List<ForecastHour> _forecast = const <ForecastHour>[];
   final List<ConsoleEntry> _transcript = <ConsoleEntry>[];
-  static const int _transcriptCap = 400;
+  static const int _transcriptCap = 150;
+
+  // Notifications are coalesced: a wx-dump arrives as a dozen BLE chunks in
+  // a few ms, and every notify rebuilds every live tab. Cheap phones ANR.
+  Timer? _notifyTimer;
+  void _notifySoon() {
+    if (_notifyTimer != null) return;
+    _notifyTimer = Timer(const Duration(milliseconds: 120), () {
+      _notifyTimer = null;
+      notifyListeners();
+    });
+  }
 
   // Reply assembly for the command in flight.
   final StringBuffer _pending = StringBuffer();
@@ -325,7 +336,7 @@ class GoggleConsole extends ChangeNotifier {
     if (text.isEmpty) return;
     _transcript.add(ConsoleEntry(at: DateTime.now(), text: text, sent: sent));
     if (_transcript.length > _transcriptCap) _transcript.removeAt(0);
-    notifyListeners();
+    _notifySoon();
   }
 
   void clearTranscript() {
@@ -335,6 +346,7 @@ class GoggleConsole extends ChangeNotifier {
 
   @override
   void dispose() {
+    _notifyTimer?.cancel();
     _statusTimer?.cancel();
     _replyTimeout?.cancel();
     _inSub?.cancel();
