@@ -13,7 +13,7 @@
 #ifndef OTA_WORDS_H
 #define OTA_WORDS_H
 
-#define GOGGL1_VERSION "0.4.1"
+#define GOGGL1_VERSION "0.4.2"
 
 #ifdef __cplusplus
 extern "C" {

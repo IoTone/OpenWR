@@ -342,6 +342,21 @@ static void w_wx_uv(void)    { forth_push(slot()->uv10); }
 static void w_wx_day(void)   { forth_push(slot()->is_day ? -1 : 0); }
 static void w_wx_fetch(void) { forth_push(wx_fetch() ? -1 : 0); }
 
+/* ( -- ) nine lines, one per slot, for the phone app:
+ *   hour temp10 feels10 pop precip10 snow10 wind gust wdir code day
+ * temperatures and speeds in the current units, like the wx-* words */
+static void w_wx_dump(void)
+{
+    if (!s_wx.valid) { con_printf("no forecast\n"); return; }
+    for (int i = 0; i < WX_HOURS; i++) {
+        const wx_hour_t *h = &s_wx.h[i];
+        con_printf("%d %d %d %u %u %u %d %d %u %u %u\n",
+                   (s_wx.hour0 + i) % 24, to_units_temp(h->temp10), to_units_temp(h->feels10),
+                   h->pop, h->precip10, h->snow10, to_units_speed(h->wind), to_units_speed(h->gust),
+                   h->wdir, h->code, h->is_day);
+    }
+}
+
 /* ( -- flag ) load the fixture; also a parser self-test */
 static void w_wx_test(void)
 {
@@ -381,7 +396,7 @@ void wx_register_words(void)
         { "wx-precip", w_wx_precip },{ "wx-snow",  w_wx_snow },  { "wx-wind", w_wx_wind },
         { "wx-gust",   w_wx_gust },  { "wx-wdir",  w_wx_wdir },  { "wx-code", w_wx_code },
         { "wx-cloud",  w_wx_cloud }, { "wx-uv",    w_wx_uv },    { "wx-day?", w_wx_day },
-        { "wx-fetch",  w_wx_fetch }, { "wx-test",  w_wx_test },
+        { "wx-fetch",  w_wx_fetch }, { "wx-test",  w_wx_test },  { "wx-dump", w_wx_dump },
         { "units!",   w_units_store }, { "units@", w_units_fetch },
         { "wx-icon",   w_wx_icon },  { "wx-icon2", w_wx_icon2 }, { "wx-arrow", w_wx_arrow },
     };

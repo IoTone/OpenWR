@@ -1,0 +1,251 @@
+// Copyright (c) 2026 IoTone, Inc.
+// SPDX-License-Identifier: MIT
+//
+// The goggle console: one connection, a transcript, and `send()` which
+// writes a line and collects what the device prints until its `ok>` prompt.
+// Every screen in the app is a form over this.
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+
+import 'nus_transport.dart';
+import 'status.dart';
+
+enum GoggleLink { disconnected, connecting, connected }
+
+/// One entry in the transcript: what we sent or what the glass said.
+class ConsoleEntry {
+  const ConsoleEntry({required this.at, required this.text, required this.sent});
+  final DateTime at;
+  final String text;
+  final bool sent;
+}
+
+class GoggleConsole extends ChangeNotifier {
+  GoggleConsole({required ConsoleTransport transport}) : _t = transport {
+    _inSub = _t.incoming.listen(_onIncoming);
+    _connSub = _t.connected.listen(_onConnected);
+  }
+
+  final ConsoleTransport _t;
+  StreamSubscription<String>? _inSub;
+  StreamSubscription<bool>? _connSub;
+
+  GoggleLink _link = GoggleLink.disconnected;
+  String? _deviceId;
+  String? _deviceName;
+  String? _lastError;
+  GoggleStatus? _status;
+  List<ForecastHour> _forecast = const <ForecastHour>[];
+  final List<ConsoleEntry> _transcript = <ConsoleEntry>[];
+  static const int _transcriptCap = 400;
+
+  // Reply assembly for the command in flight.
+  final StringBuffer _pending = StringBuffer();
+  String _inFlight = '';
+  Completer<String>? _reply;
+  Timer? _replyTimeout;
+  Timer? _statusTimer;
+
+  GoggleLink get link => _link;
+  bool get isConnected => _link == GoggleLink.connected;
+  String? get deviceId => _deviceId;
+  String? get deviceName => _deviceName;
+  String? get lastError => _lastError;
+  GoggleStatus? get status => _status;
+  List<ForecastHour> get forecast => _forecast;
+  List<ConsoleEntry> get transcript => List<ConsoleEntry>.unmodifiable(_transcript);
+
+  /// Connect, then read the first `status` so Trailhead has something to say.
+  Future<void> connect(String deviceId, {String? name}) async {
+    if (_link == GoggleLink.connecting) return;
+    _link = GoggleLink.connecting;
+    _deviceId = deviceId;
+    _deviceName = name;
+    _lastError = null;
+    notifyListeners();
+    try {
+      await _t.connect(deviceId);
+      _link = GoggleLink.connected;
+      notifyListeners();
+      await refresh();
+      _statusTimer?.cancel();
+      _statusTimer = Timer.periodic(const Duration(seconds: 30), (_) => refresh());
+    } catch (e) {
+      _link = GoggleLink.disconnected;
+      _lastError = e.toString();
+      notifyListeners();
+    }
+  }
+
+  Future<void> disconnect() async {
+    _statusTimer?.cancel();
+    _statusTimer = null;
+    await _t.disconnect();
+    _onConnected(false);
+  }
+
+  /// Send one line and return everything printed before the next prompt
+  /// (without the prompt). Lines the engine rejects come back with `?`.
+  Future<String> send(String line, {Duration timeout = const Duration(seconds: 20)}) async {
+    if (!isConnected) throw StateError('Not connected');
+    // One command at a time: the device has one prompt.
+    while (_reply != null) {
+      await _reply!.future.catchError((_) => '');
+    }
+    _record(line, sent: true);
+    _pending.clear();
+    _inFlight = line.trim();
+    final Completer<String> c = Completer<String>();
+    _reply = c;
+    _replyTimeout = Timer(timeout, () {
+      if (!c.isCompleted) c.completeError(TimeoutException('no ok> within $timeout'));
+      _reply = null;
+    });
+    try {
+      await _t.writeLine(line);
+      return await c.future;
+    } finally {
+      _replyTimeout?.cancel();
+      _replyTimeout = null;
+    }
+  }
+
+  /// `status` and the forecast, which Trailhead and the experience need.
+  Future<void> refresh() async {
+    if (!isConnected) return;
+    try {
+      final String s = await send('status');
+      for (final String l in s.split('\n')) {
+        final GoggleStatus? st = GoggleStatus.parse(l);
+        if (st != null) _status = st;
+      }
+      if (_status?.forecastOk == true) {
+        final String d = await send('wx-dump');
+        final List<ForecastHour> f = parseForecastDump(d);
+        if (f.isNotEmpty) _forecast = f;
+      }
+      notifyListeners();
+    } catch (e) {
+      _lastError = e.toString();
+      notifyListeners();
+    }
+  }
+
+  // --- the forms' verbs -----------------------------------------------
+
+  Future<void> setTheme(GlassTheme t) async {
+    await send('${t.index} theme!');
+    await refresh();
+  }
+
+  Future<void> setAnimation(bool on) => send('${on ? -1 : 0} anim-on !');
+
+  Future<void> setContrast(int v) => send('${v.clamp(0, 255)} oled-contrast');
+
+  Future<void> setUnits({required bool imperial}) async {
+    await send('${imperial ? 1 : 0} units!');
+    await refresh();
+  }
+
+  Future<void> setWifi(String ssid, String password) async {
+    await send('s" ${_q(ssid)}" s" ${_q(password)}" wifi!');
+  }
+
+  Future<void> setLocation(double lat, double lon) async {
+    await send('${(lat * 10000).round()} ${(lon * 10000).round()} geo!');
+    await send('wx-fetch');
+    await refresh();
+  }
+
+  Future<void> openPairingWindow() => send('pair');
+
+  /// Install a use-case bundle: the lines are captured by the device and
+  /// applied all or nothing. Returns the device's verdict text.
+  Future<String> installBundle(List<String> lines) async {
+    await send('bundle-begin', timeout: const Duration(seconds: 5))
+        .catchError((_) => '');
+    for (final String l in lines) {
+      await _t.writeLine(l);
+      _record(l, sent: true);
+      await Future<void>.delayed(const Duration(milliseconds: 30));
+    }
+    _pending.clear();
+    final Completer<String> c = Completer<String>();
+    _reply = c;
+    _replyTimeout = Timer(const Duration(seconds: 60), () {
+      if (!c.isCompleted) c.completeError(TimeoutException('bundle apply timed out'));
+      _reply = null;
+    });
+    await _t.writeLine('bundle-end');
+    _record('bundle-end', sent: true);
+    try {
+      return await c.future;
+    } finally {
+      _replyTimeout?.cancel();
+    }
+  }
+
+  /// A Forth string literal cannot contain a double quote.
+  static String _q(String s) => s.replaceAll('"', '');
+
+  // --- plumbing ---------------------------------------------------------
+
+  void _onIncoming(String chunk) {
+    _pending.write(chunk);
+    final String text = _pending.toString();
+    // The engine ends every reply with "ok> " (prompt, no newline).
+    final int at = text.lastIndexOf('ok>');
+    if (at >= 0 && _reply != null) {
+      String body = text.substring(0, at).replaceAll('\r', '').trim();
+      // The console echoes the line we sent; the transcript already has it.
+      if (_inFlight.isNotEmpty && body.startsWith(_inFlight)) {
+        body = body.substring(_inFlight.length).trimLeft();
+      }
+      final Completer<String> c = _reply!;
+      _reply = null;
+      _inFlight = '';
+      _pending.clear();
+      _record(body, sent: false);
+      if (!c.isCompleted) c.complete(body);
+    } else if (_reply == null && text.contains('\n')) {
+      // Unsolicited output (fetch logs, animation chatter): show it.
+      _record(text.replaceAll('\r', '').trim(), sent: false);
+      _pending.clear();
+    }
+  }
+
+  void _onConnected(bool up) {
+    if (up) return;
+    final bool was = _link != GoggleLink.disconnected;
+    _link = GoggleLink.disconnected;
+    _statusTimer?.cancel();
+    _statusTimer = null;
+    final Completer<String>? c = _reply;
+    _reply = null;
+    if (c != null && !c.isCompleted) c.completeError(StateError('disconnected'));
+    if (was) notifyListeners();
+  }
+
+  void _record(String text, {required bool sent}) {
+    if (text.isEmpty) return;
+    _transcript.add(ConsoleEntry(at: DateTime.now(), text: text, sent: sent));
+    if (_transcript.length > _transcriptCap) _transcript.removeAt(0);
+    notifyListeners();
+  }
+
+  void clearTranscript() {
+    _transcript.clear();
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _statusTimer?.cancel();
+    _replyTimeout?.cancel();
+    _inSub?.cancel();
+    _connSub?.cancel();
+    _t.dispose();
+    super.dispose();
+  }
+}

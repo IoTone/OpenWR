@@ -8,7 +8,7 @@
  * Words:
  *   geo-ok? geo-lat geo-lon geo-city geo! geo-fetch
  *   wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow
- *   wx-wind wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch
+ *   wx-wind wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-dump
  *   units!  units@
  *   wx-icon wx-icon2 wx-arrow
  *

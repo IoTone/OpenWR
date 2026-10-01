@@ -1,0 +1,35 @@
+{
+    "name": "Switchback",
+    "short_name": "Switchback",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#F3F4F1",
+    "theme_color": "#F3F4F1",
+    "description": "Switchback — the OpenWR app. Pair, set up, dress and update your goggl1 over Bluetooth, and run sessions with the glass in front of your eye.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}

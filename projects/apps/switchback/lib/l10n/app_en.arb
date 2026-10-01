@@ -1,0 +1,299 @@
+{
+  "@@locale": "en",
+  "appTitle": "Switchback",
+  "aboutSubtitle": "the OpenWR app",
+  "aboutVersion": "Version {version}",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "aboutDescription": "Pair, set up, dress and update your goggl1 over Bluetooth, and run sessions with the glass in front of your eye. Open. Weird. Wild. Strong. #PNWbuilt",
+  "aboutCopyright": "© 2024–2026 IoTone, Inc.",
+  "aboutLicense": "MIT License",
+  "aboutLicensesButton": "Open-source licenses",
+  "aboutMadeWith": "Built with Flutter.",
+  "quickNav": "Quick navigation",
+  "commonCancel": "Cancel",
+  "commonClose": "Close",
+  "commonRetry": "Retry",
+  "commonCopy": "Copy",
+  "commonCopied": "Copied",
+  "scanStart": "Start scan",
+  "scanStop": "Stop scan",
+  "scanScanning": "Scanning…",
+  "scanIdle": "Idle",
+  "bluetoothOn": "Bluetooth ready",
+  "bluetoothOff": "Bluetooth is off",
+  "bluetoothUnauthorized": "Bluetooth permission needed",
+  "bluetoothUnknown": "Bluetooth state unknown",
+  "radarEmpty": "No devices in range yet.",
+  "radarSelf": "You",
+  "radarLegendBle": "Bluetooth device",
+  "radarLegendWifi": "WiFi network",
+  "radarLegendRings": "Rings = approximate signal distance (rough).",
+  "rssiDbm": "{rssi} dBm",
+  "@rssiDbm": {
+    "placeholders": {
+      "rssi": {
+        "type": "int"
+      }
+    }
+  },
+  "metersApprox": "≈ {meters} m",
+  "@metersApprox": {
+    "placeholders": {
+      "meters": {
+        "type": "String"
+      }
+    }
+  },
+  "signalStrong": "Strong",
+  "signalMedium": "Medium",
+  "signalWeak": "Weak",
+  "deviceConnect": "Connect",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsFontScale": "Text size",
+  "settingsReduceMotion": "Reduce motion",
+  "settingsHighContrast": "High contrast",
+  "settingsLanguage": "Language",
+  "settingsLanguageSystem": "System default",
+  "settingsPermissions": "Permissions",
+  "settingsDiagnostics": "Diagnostics",
+  "settingsDiagnosticsSub": "Scan event log",
+  "settingsAbout": "About",
+  "settingsScanner": "Scanner",
+  "settingsRssiFloor": "Signal floor",
+  "settingsRssiFloorValue": "Hide signals weaker than {dbm} dBm",
+  "@settingsRssiFloorValue": {
+    "placeholders": {
+      "dbm": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsRssiFloorOff": "Show all signals",
+  "permBle": "Bluetooth",
+  "permLocation": "Location",
+  "permLocationWhy": "Android requires location permission to scan for nearby devices.",
+  "permGranted": "Granted",
+  "permDenied": "Denied",
+  "permRequest": "Request",
+  "permOpenSettings": "Open settings",
+  "diagEmpty": "No scan activity yet.",
+  "diagClear": "Clear",
+  "diagCopy": "Copy log",
+  "firstRunTitle": "Welcome to Switchback",
+  "firstRunBody": "This app talks to your goggl1 over Bluetooth. It needs a couple of permissions to find it.",
+  "firstRunPermBle": "Bluetooth — to find and talk to the goggle.",
+  "firstRunPermLocation": "Location — Android requires it for Bluetooth scanning.",
+  "firstRunGrant": "Grant permissions",
+  "firstRunSkip": "Skip for now",
+  "langEnglish": "English",
+  "langJapanese": "日本語",
+  "settingsTitle": "Settings",
+  "settingsExperience": "Experience",
+  "tabTrailhead": "Trailhead",
+  "tabSession": "Session",
+  "tabLooks": "Looks",
+  "tabConsole": "Console",
+  "tabUpdate": "Update",
+  "experiencePinned": "Pinned",
+  "experienceAuto": "Auto",
+  "experienceNow": "Right now: {name}",
+  "@experienceNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feelsLike": "feels {t}",
+  "@feelsLike": {
+    "placeholders": {
+      "t": {
+        "type": "int"
+      }
+    }
+  },
+  "hiLo": "hi {hi} · lo {lo}",
+  "@hiLo": {
+    "placeholders": {
+      "hi": {
+        "type": "int"
+      },
+      "lo": {
+        "type": "int"
+      }
+    }
+  },
+  "windNow": "wind {v} {unit} {dir}",
+  "@windNow": {
+    "placeholders": {
+      "v": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "chipDry8h": "dry 8h",
+  "chipRainAt": "rain {t}",
+  "@chipRainAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "chipUnits": "{u}",
+  "@chipUnits": {
+    "placeholders": {
+      "u": {
+        "type": "String"
+      }
+    }
+  },
+  "trailheadNoForecastTitle": "No forecast yet",
+  "trailheadWaitingForecast": "The goggle is connected and fetching. Give it a few seconds, or check it has WiFi in Console.",
+  "trailheadNotConnected": "Pair your goggle to see what it sees.",
+  "startSession": "Start a session",
+  "pairGoggle": "Pair goggle",
+  "headlineStormNow": "Thunderstorm now. Stay in.",
+  "headlineWetAllWindow": "Wet for the next eight hours.",
+  "headlineClearsAt": "Clears around {t}.",
+  "@headlineClearsAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "headlineRainAt": "Rain from {t}, {pop}% likely. Go before it.",
+  "@headlineRainAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      },
+      "pop": {
+        "type": "int"
+      }
+    }
+  },
+  "headlineWindy": "Dry, but gusts to {g}. Pick a sheltered route.",
+  "@headlineWindy": {
+    "placeholders": {
+      "g": {
+        "type": "int"
+      }
+    }
+  },
+  "headlineDryDay": "Dry for the next eight hours. Go.",
+  "headlineDryNight": "Clear and dry tonight. Headlamp on.",
+  "squallWarning": "Rain {t} · {pop}% · gusts {gust} {unit}",
+  "@squallWarning": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      },
+      "pop": {
+        "type": "int"
+      },
+      "gust": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "goggleNotConnected": "Not connected",
+  "goggleConnecting": "Connecting…",
+  "goggleConnected": "Connected",
+  "ageUnknown": "no clock",
+  "ageJustNow": "just now",
+  "ageMinutes": "{n} min ago",
+  "@ageMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ageHours": "{n} h ago",
+  "@ageHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairTitle": "Pair",
+  "pairHeadline": "Hold BOOT for a second.",
+  "pairBody": "The glass shows a B and the goggle listens for three minutes. Switchback finds it and connects.",
+  "pairScanning": "Looking for goggl1…",
+  "pairFailed": "Could not connect. Hold BOOT again and retry.",
+  "pairNothingYet": "Nothing yet. Is the B showing on the glass?",
+  "pairFindRadar": "Find it on the radar",
+  "radarLegendGoggle": "goggl1",
+  "looksGlassTitle": "On the glass",
+  "looksGlassBody": "Previews are the goggle's own renderer. Tap one to switch.",
+  "looksNotConnected": "Pair the goggle to change what it shows.",
+  "looksAnimation": "Animation",
+  "looksAnimationSub": "Rain falls, snow drifts, storms flash, stars twinkle",
+  "looksBrightness": "Glass brightness",
+  "looksAppTitle": "This app",
+  "looksAppBody": "The look follows the weather the goggle sees. Pin one to keep it.",
+  "looksRedShift": "Red shift",
+  "looksRedShiftSub": "Headlamp goes deep red for night vision",
+  "glassStripBlurb": "A chart. The shape of the next eight hours.",
+  "glassGlanceBlurb": "Big numbers and one sentence.",
+  "glassRibbonBlurb": "Every hour as a column.",
+  "consoleNotConnected": "The console needs a goggle.",
+  "consoleHistory": "Previous line",
+  "consoleSend": "Send",
+  "sessionTitle": "Session",
+  "sessionBody": "The phone is the sensor hub, the glass is the display. Pick a sport; Switchback will stream time, pace and heart rate to the goggle.",
+  "sportRun": "Run",
+  "sportRide": "Ride",
+  "sportSki": "Ski",
+  "sportPaddle": "Paddle",
+  "sportClimb": "Climb",
+  "sessionComingSoon": "Sessions arrive in the next build.",
+  "sessionPhaseNote": "Coming: the session-hud bundle, GPS pace and distance, a heart-rate strap.",
+  "updateTitle": "Update",
+  "updateRunning": "Running v{v} with {b}.",
+  "@updateRunning": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "updateReadDetails": "Read details",
+  "updateOtaTitle": "Firmware over the air",
+  "updateOtaBody": "Serve the image on the same WiFi as the goggle and paste its URL. The goggle writes the spare slot and reboots; a bad image rolls back.",
+  "updateUrlLabel": "Image URL",
+  "updateStart": "Update",
+  "updateConfirmTitle": "Update firmware?",
+  "updateConfirmBody": "The goggle will fetch {url}, write it, and reboot.",
+  "@updateConfirmBody": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "updateStarted": "Update started. Progress shows in Console.",
+  "updatePhaseNote": "Coming: Switchback serves the image itself, and pushes use-case bundles."
+}

@@ -1,0 +1,299 @@
+{
+  "@@locale": "ja",
+  "appTitle": "Switchback",
+  "aboutSubtitle": "OpenWR のアプリ",
+  "aboutVersion": "バージョン {version}",
+  "aboutDescription": "goggl1 を Bluetooth でペアリング・設定・着せ替え・更新し、目の前のガラスでセッションを走る。Open. Weird. Wild. Strong. #PNWbuilt",
+  "aboutCopyright": "© 2024–2026 IoTone, Inc.",
+  "aboutLicense": "MIT ライセンス",
+  "aboutLicensesButton": "オープンソースライセンス",
+  "aboutMadeWith": "Flutter で構築。",
+  "quickNav": "クイックナビ",
+  "commonCancel": "キャンセル",
+  "commonClose": "閉じる",
+  "commonRetry": "再試行",
+  "commonCopy": "コピー",
+  "commonCopied": "コピーしました",
+  "scanStart": "スキャン開始",
+  "scanStop": "スキャン停止",
+  "scanScanning": "スキャン中…",
+  "scanIdle": "待機中",
+  "bluetoothOn": "Bluetooth 準備完了",
+  "bluetoothOff": "Bluetooth がオフです",
+  "bluetoothUnauthorized": "Bluetooth の許可が必要です",
+  "bluetoothUnknown": "Bluetooth の状態は不明です",
+  "radarEmpty": "範囲内にデバイスがありません。",
+  "radarSelf": "自分",
+  "radarLegendBle": "Bluetooth デバイス",
+  "radarLegendWifi": "WiFi ネットワーク",
+  "radarLegendRings": "リング = おおよその信号距離（目安）。",
+  "rssiDbm": "{rssi} dBm",
+  "metersApprox": "≈ {meters} m",
+  "signalStrong": "強",
+  "signalMedium": "中",
+  "signalWeak": "弱",
+  "deviceConnect": "接続",
+  "settingsAppearance": "外観",
+  "settingsTheme": "テーマ",
+  "settingsFontScale": "文字サイズ",
+  "settingsReduceMotion": "動きを減らす",
+  "settingsHighContrast": "ハイコントラスト",
+  "settingsLanguage": "言語",
+  "settingsLanguageSystem": "システム既定",
+  "settingsPermissions": "権限",
+  "settingsDiagnostics": "診断",
+  "settingsDiagnosticsSub": "スキャンイベントログ",
+  "settingsAbout": "情報",
+  "settingsScanner": "スキャナー",
+  "settingsRssiFloor": "信号フロア",
+  "settingsRssiFloorValue": "{dbm} dBm より弱い信号を非表示",
+  "settingsRssiFloorOff": "すべての信号を表示",
+  "permBle": "Bluetooth",
+  "permLocation": "位置情報",
+  "permLocationWhy": "Android では近くのデバイスのスキャンに位置情報の許可が必要です。",
+  "permGranted": "許可済み",
+  "permDenied": "拒否",
+  "permRequest": "リクエスト",
+  "permOpenSettings": "設定を開く",
+  "diagEmpty": "スキャン活動はまだありません。",
+  "diagClear": "クリア",
+  "diagCopy": "ログをコピー",
+  "firstRunTitle": "Switchback へようこそ",
+  "firstRunBody": "このアプリは goggl1 と Bluetooth で通信します。見つけるために権限が必要です。",
+  "firstRunPermBle": "Bluetooth — ゴーグルを見つけて通信するため。",
+  "firstRunPermLocation": "位置情報 — Android では Bluetooth スキャンに必要です。",
+  "firstRunGrant": "権限を許可",
+  "firstRunSkip": "後で",
+  "langEnglish": "English",
+  "langJapanese": "日本語",
+  "settingsTitle": "設定",
+  "settingsExperience": "エクスペリエンス",
+  "tabTrailhead": "登山口",
+  "tabSession": "セッション",
+  "tabLooks": "見た目",
+  "tabConsole": "コンソール",
+  "tabUpdate": "更新",
+  "experiencePinned": "固定中",
+  "experienceAuto": "自動",
+  "experienceNow": "現在: {name}",
+  "@experienceNow": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "feelsLike": "体感 {t}",
+  "@feelsLike": {
+    "placeholders": {
+      "t": {
+        "type": "int"
+      }
+    }
+  },
+  "hiLo": "最高 {hi} · 最低 {lo}",
+  "@hiLo": {
+    "placeholders": {
+      "hi": {
+        "type": "int"
+      },
+      "lo": {
+        "type": "int"
+      }
+    }
+  },
+  "windNow": "風 {v} {unit} {dir}",
+  "@windNow": {
+    "placeholders": {
+      "v": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      },
+      "dir": {
+        "type": "String"
+      }
+    }
+  },
+  "chipDry8h": "8時間 乾燥",
+  "chipRainAt": "雨 {t}",
+  "@chipRainAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "chipUnits": "{u}",
+  "@chipUnits": {
+    "placeholders": {
+      "u": {
+        "type": "String"
+      }
+    }
+  },
+  "trailheadNoForecastTitle": "予報はまだありません",
+  "trailheadWaitingForecast": "ゴーグルは接続済みで取得中です。数秒待つか、コンソールで WiFi を確認してください。",
+  "trailheadNotConnected": "ゴーグルをペアリングすると、同じ景色が見えます。",
+  "startSession": "セッション開始",
+  "pairGoggle": "ゴーグルをペアリング",
+  "headlineStormNow": "雷雨です。屋内にいてください。",
+  "headlineWetAllWindow": "今後8時間は雨です。",
+  "headlineClearsAt": "{t} ごろに上がります。",
+  "@headlineClearsAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      }
+    }
+  },
+  "headlineRainAt": "{t} から雨、{pop}% の確率。その前に出発を。",
+  "@headlineRainAt": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      },
+      "pop": {
+        "type": "int"
+      }
+    }
+  },
+  "headlineWindy": "乾燥していますが突風 {g}。風を避けるルートを。",
+  "@headlineWindy": {
+    "placeholders": {
+      "g": {
+        "type": "int"
+      }
+    }
+  },
+  "headlineDryDay": "今後8時間は乾燥。行きましょう。",
+  "headlineDryNight": "今夜は晴れて乾燥。ヘッドランプを。",
+  "squallWarning": "雨 {t} · {pop}% · 突風 {gust} {unit}",
+  "@squallWarning": {
+    "placeholders": {
+      "t": {
+        "type": "String"
+      },
+      "pop": {
+        "type": "int"
+      },
+      "gust": {
+        "type": "int"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "goggleNotConnected": "未接続",
+  "goggleConnecting": "接続中…",
+  "goggleConnected": "接続済み",
+  "ageUnknown": "時計なし",
+  "ageJustNow": "たった今",
+  "ageMinutes": "{n} 分前",
+  "@ageMinutes": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "ageHours": "{n} 時間前",
+  "@ageHours": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairTitle": "ペアリング",
+  "pairHeadline": "BOOT を1秒長押し。",
+  "pairBody": "ガラスに B が表示され、ゴーグルは3分間待ち受けます。Switchback が見つけて接続します。",
+  "pairScanning": "goggl1 を探しています…",
+  "pairFailed": "接続できませんでした。もう一度 BOOT を長押ししてください。",
+  "pairNothingYet": "まだ見つかりません。ガラスに B は出ていますか？",
+  "pairFindRadar": "レーダーで探す",
+  "radarLegendGoggle": "goggl1",
+  "looksGlassTitle": "ガラスの表示",
+  "looksGlassBody": "プレビューはゴーグル自身の描画です。タップで切り替え。",
+  "looksNotConnected": "表示を変えるにはゴーグルをペアリングしてください。",
+  "looksAnimation": "アニメーション",
+  "looksAnimationSub": "雨が降り、雪が舞い、嵐が光り、星がまたたく",
+  "looksBrightness": "ガラスの明るさ",
+  "looksAppTitle": "このアプリ",
+  "looksAppBody": "見た目はゴーグルが見ている天気に従います。固定もできます。",
+  "looksRedShift": "レッドシフト",
+  "looksRedShiftSub": "暗視のため Headlamp を深い赤に",
+  "glassStripBlurb": "チャート。今後8時間の形。",
+  "glassGlanceBlurb": "大きな数字と一文。",
+  "glassRibbonBlurb": "毎時を列で。",
+  "consoleNotConnected": "コンソールにはゴーグルが必要です。",
+  "consoleHistory": "前の行",
+  "consoleSend": "送信",
+  "sessionTitle": "セッション",
+  "sessionBody": "スマホがセンサーハブ、ガラスがディスプレイ。種目を選ぶと、時間・ペース・心拍をゴーグルへ送ります。",
+  "sportRun": "ラン",
+  "sportRide": "ライド",
+  "sportSki": "スキー",
+  "sportPaddle": "パドル",
+  "sportClimb": "クライム",
+  "sessionComingSoon": "セッションは次のビルドで。",
+  "sessionPhaseNote": "予定: session-hud バンドル、GPS ペースと距離、心拍ストラップ。",
+  "updateTitle": "更新",
+  "updateRunning": "v{v}、{b} を実行中。",
+  "@updateRunning": {
+    "placeholders": {
+      "v": {
+        "type": "String"
+      },
+      "b": {
+        "type": "String"
+      }
+    }
+  },
+  "updateReadDetails": "詳細を読む",
+  "updateOtaTitle": "ファームウェアを無線で更新",
+  "updateOtaBody": "ゴーグルと同じ WiFi でイメージを配信し、URL を貼り付けます。ゴーグルは予備スロットに書き込んで再起動。不良イメージはロールバックします。",
+  "updateUrlLabel": "イメージの URL",
+  "updateStart": "更新",
+  "updateConfirmTitle": "ファームウェアを更新しますか？",
+  "updateConfirmBody": "ゴーグルが {url} を取得して書き込み、再起動します。",
+  "@updateConfirmBody": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "updateStarted": "更新を開始しました。進行はコンソールに表示されます。",
+  "updatePhaseNote": "予定: Switchback 自身がイメージを配信し、ユースケースのバンドルを送ります。",
+  "@aboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "@rssiDbm": {
+    "placeholders": {
+      "rssi": {
+        "type": "int"
+      }
+    }
+  },
+  "@metersApprox": {
+    "placeholders": {
+      "meters": {
+        "type": "String"
+      }
+    }
+  },
+  "@settingsRssiFloorValue": {
+    "placeholders": {
+      "dbm": {
+        "type": "int"
+      }
+    }
+  }
+}
