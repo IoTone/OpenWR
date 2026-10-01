@@ -1,6 +1,7 @@
 // Copyright (c) 2026 IoTone, Inc.
 // SPDX-License-Identifier: MIT
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../gen/app_localizations.dart';
@@ -35,9 +36,24 @@ class _LooksScreenState extends State<LooksScreen> {
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
       children: <Widget>[
+        if (!g.isConnected) ...<Widget>[
+          Container(
+            padding: const EdgeInsets.fromLTRB(14, 10, 8, 10),
+            decoration: BoxDecoration(color: cs.surfaceContainerHigh, borderRadius: BorderRadius.circular(10), border: Border.all(color: cs.outline)),
+            child: Row(
+              children: <Widget>[
+                Icon(Icons.bluetooth_disabled, color: cs.onSurfaceVariant),
+                const SizedBox(width: 10),
+                Expanded(child: Text(l.looksNotConnected, style: t.textTheme.bodyMedium)),
+                TextButton(onPressed: () => context.push('/pair'), child: Text(l.pairGoggle)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 14),
+        ],
         Text(l.looksGlassTitle, style: t.textTheme.headlineMedium),
         const SizedBox(height: 4),
-        Text(g.isConnected ? l.looksGlassBody : l.looksNotConnected, style: t.textTheme.bodySmall),
+        Text(l.looksGlassBody, style: t.textTheme.bodySmall),
         const SizedBox(height: 14),
         for (final GlassTheme gt in GlassTheme.values) ...<Widget>[
           _GlassChoice(

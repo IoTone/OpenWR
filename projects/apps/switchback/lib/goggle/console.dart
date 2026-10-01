@@ -7,6 +7,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'nus_transport.dart';
 import 'status.dart';
@@ -38,7 +39,12 @@ class GoggleConsole extends ChangeNotifier {
   StreamSubscription<String>? _inSub;
   StreamSubscription<bool>? _connSub;
 
+  static const String _kLastId = 'goggle.lastId';
+  static const String _kLastName = 'goggle.lastName';
+
   GoggleLink _link = GoggleLink.disconnected;
+  String _phase = '';
+  int _attempt = 0;
   String? _deviceId;
   String? _deviceName;
   String? _lastError;
@@ -55,6 +61,10 @@ class GoggleConsole extends ChangeNotifier {
   Timer? _statusTimer;
 
   GoggleLink get link => _link;
+
+  /// What the link is doing right now, for the Pair screen.
+  String get phase => _phase;
+  int get attempt => _attempt;
   bool get isConnected => _link == GoggleLink.connected;
   String? get deviceId => _deviceId;
   String? get deviceName => _deviceName;
@@ -64,25 +74,75 @@ class GoggleConsole extends ChangeNotifier {
   List<ConsoleEntry> get transcript => List<ConsoleEntry>.unmodifiable(_transcript);
 
   /// Connect, then read the first `status` so Trailhead has something to say.
-  Future<void> connect(String deviceId, {String? name}) async {
+  /// Two attempts: the first link after the goggle starts advertising tends
+  /// to drop within a second on Android, the second holds.
+  Future<void> connect(String deviceId, {String? name, int attempts = 2}) async {
     if (_link == GoggleLink.connecting) return;
-    _link = GoggleLink.connecting;
     _deviceId = deviceId;
     _deviceName = name;
     _lastError = null;
-    notifyListeners();
-    try {
-      await _t.connect(deviceId);
-      _link = GoggleLink.connected;
+    for (int i = 1; i <= attempts; i++) {
+      _attempt = i;
+      _link = GoggleLink.connecting;
+      _phase = 'connecting';
       notifyListeners();
-      await refresh();
-      _statusTimer?.cancel();
-      _statusTimer = Timer.periodic(const Duration(seconds: 30), (_) => refresh());
-    } catch (e) {
-      _link = GoggleLink.disconnected;
-      _lastError = e.toString();
-      notifyListeners();
+      try {
+        await _t.connect(deviceId);
+        _link = GoggleLink.connected;
+        _phase = 'reading status';
+        notifyListeners();
+        await refresh();
+        if (_link != GoggleLink.connected) {
+          _lastError = 'link dropped while reading status';
+          throw StateError(_lastError!);
+        }
+        _phase = 'connected';
+        _lastError = null;
+        _statusTimer?.cancel();
+        _statusTimer = Timer.periodic(const Duration(seconds: 30), (_) => refresh());
+        notifyListeners();
+        unawaited(_remember(deviceId, name));
+        return;
+      } catch (e) {
+        _link = GoggleLink.disconnected;
+        _lastError = _shortError(e);
+        _phase = i < attempts ? 'retrying' : 'failed';
+        notifyListeners();
+        await _t.disconnect();
+        if (i < attempts) await Future<void>.delayed(const Duration(milliseconds: 900));
+      }
     }
+  }
+
+  static String _shortError(Object e) {
+    final String s = e.toString();
+    if (s.contains('133')) return 'Android GATT error 133 (first-connect glitch)';
+    if (s.contains('TimeoutException') || s.contains('timeout')) return 'timed out: is the goggle advertising? (B on the glass)';
+    if (s.contains('No Nordic UART')) return 'that device is not a goggle';
+    return s.replaceFirst('StateError: ', '').replaceFirst('Exception: ', '');
+  }
+
+  Future<void> _remember(String id, String? name) async {
+    final SharedPreferences p = await SharedPreferences.getInstance();
+    await p.setString(_kLastId, id);
+    if (name != null) await p.setString(_kLastName, name);
+  }
+
+  /// The goggle paired last time, if any.
+  Future<(String, String?)?> remembered() async {
+    final SharedPreferences p = await SharedPreferences.getInstance();
+    final String? id = p.getString(_kLastId);
+    return id == null ? null : (id, p.getString(_kLastName));
+  }
+
+  /// Quietly try the remembered goggle (app start, app resumed). One attempt;
+  /// the goggle re-advertises for three minutes after any drop, so this
+  /// usually lands without anyone touching anything.
+  Future<void> reconnectIfNeeded() async {
+    if (_link != GoggleLink.disconnected) return;
+    final (String, String?)? r = await remembered();
+    if (r == null) return;
+    await connect(r.$1, name: r.$2, attempts: 1);
   }
 
   Future<void> disconnect() async {
@@ -251,6 +311,7 @@ class GoggleConsole extends ChangeNotifier {
   void _onConnected(bool up) {
     if (up) return;
     final bool was = _link != GoggleLink.disconnected;
+    if (was && _phase == 'connected') _phase = 'dropped';
     _link = GoggleLink.disconnected;
     _statusTimer?.cancel();
     _statusTimer = null;

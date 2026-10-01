@@ -1261,6 +1261,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pushing bundle…'**
   String get updateBundleSending;
+
+  /// No description provided for @pairFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Found {n} goggle(s)'**
+  String pairFound(int n);
+
+  /// No description provided for @pairPhaseConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting, attempt {n} of 2…'**
+  String pairPhaseConnecting(int n);
+
+  /// No description provided for @pairPhaseReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected, reading status…'**
+  String get pairPhaseReading;
+
+  /// No description provided for @pairPhaseRetrying.
+  ///
+  /// In en, this message translates to:
+  /// **'First link dropped, retrying (attempt {n})…'**
+  String pairPhaseRetrying(int n);
+
+  /// No description provided for @pairPhaseConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get pairPhaseConnected;
+
+  /// No description provided for @pairPhaseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not connect'**
+  String get pairPhaseFailed;
+
+  /// No description provided for @pairPhaseDropped.
+  ///
+  /// In en, this message translates to:
+  /// **'The goggle disconnected'**
+  String get pairPhaseDropped;
+
+  /// No description provided for @pairFailedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect.'**
+  String get pairFailedHint;
 }
 
 class _AppLocalizationsDelegate

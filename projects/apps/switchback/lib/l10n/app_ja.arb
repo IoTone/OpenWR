@@ -411,5 +411,34 @@
   "updateBundleTitle": "このアプリ内のユースケース",
   "updateBundleBody": "このビルドに同梱の天気 HUD バンドル。送るとゴーグルのものを置き換え、再起動後も保持されます。",
   "updateBundlePush": "天気 HUD を送る",
-  "updateBundleSending": "バンドル送信中…"
+  "updateBundleSending": "バンドル送信中…",
+  "pairFound": "ゴーグルが {n} 台見つかりました",
+  "@pairFound": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseConnecting": "接続中、{n}/2 回目…",
+  "@pairPhaseConnecting": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseReading": "接続済み、状態を読み取り中…",
+  "pairPhaseRetrying": "最初の接続が切れました。再試行中（{n} 回目）…",
+  "@pairPhaseRetrying": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseConnected": "接続済み",
+  "pairPhaseFailed": "接続できませんでした",
+  "pairPhaseDropped": "ゴーグルが切断されました",
+  "pairFailedHint": "ゴーグルは電源投入後と切断後の3分間だけ待ち受けます。ガラスの B が消えていたら挿し直してから、接続をタップしてください。"
 }

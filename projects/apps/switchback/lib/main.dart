@@ -63,16 +63,33 @@ class SwitchbackApp extends StatefulWidget {
   State<SwitchbackApp> createState() => _SwitchbackAppState();
 }
 
-class _SwitchbackAppState extends State<SwitchbackApp> {
+class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserver {
   bool _minSplashElapsed = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => FlutterNativeSplash.remove());
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FlutterNativeSplash.remove();
+      context.read<GoggleConsole>().reconnectIfNeeded();
+    });
     Future<void>.delayed(const Duration(milliseconds: 1600), () {
       if (mounted) setState(() => _minSplashElapsed = true);
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<GoggleConsole>().reconnectIfNeeded();
+    }
   }
 
   static const List<LocalizationsDelegate<Object>> _localeDelegates = <LocalizationsDelegate<Object>>[

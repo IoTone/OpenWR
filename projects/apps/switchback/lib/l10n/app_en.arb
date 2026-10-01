@@ -411,5 +411,34 @@
   "updateBundleTitle": "Use case in this app",
   "updateBundleBody": "The weather HUD bundle as shipped with this build. Pushing it replaces what the goggle has and keeps it across reboots.",
   "updateBundlePush": "Push weather HUD",
-  "updateBundleSending": "Pushing bundle…"
+  "updateBundleSending": "Pushing bundle…",
+  "pairFound": "Found {n} goggle(s)",
+  "@pairFound": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseConnecting": "Connecting, attempt {n} of 2…",
+  "@pairPhaseConnecting": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseReading": "Connected, reading status…",
+  "pairPhaseRetrying": "First link dropped, retrying (attempt {n})…",
+  "@pairPhaseRetrying": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "pairPhaseConnected": "Connected",
+  "pairPhaseFailed": "Could not connect",
+  "pairPhaseDropped": "The goggle disconnected",
+  "pairFailedHint": "The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect."
 }

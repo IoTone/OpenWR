@@ -268,11 +268,14 @@ static void w_led(void)     { gpio_set_level(GOGGL_PIN_LED, POP() != 0); }
 static void w_button(void)  { forth_push(gpio_get_level(GOGGL_PIN_BUTTON) == 0 ? -1 : 0); }
 /* ( n -- r )  0 <= r < n, hardware RNG */
 static void w_random(void)  { int n = POP(); forth_push(n > 0 ? (intptr_t)(esp_random() % (uint32_t)n) : 0); }
-/* ( n -- level )  read any GPIO as an input with pull-up; -1 for a bad pin */
+/* ( n -- level )  read a GPIO as an input with pull-up; -1 for a bad pin.
+ * GPIO18 and GPIO19 are the USB D-/D+ pins on the ESP32-C3: touching their
+ * configuration cuts the USB console off until a power cycle, so they are
+ * refused outright. Display and LED pins are read without reconfiguring. */
 static void w_gpio_fetch(void)
 {
     int n = POP();
-    if (n < 0 || n > 21) { forth_push(-1); return; }
+    if (n < 0 || n > 21 || n == 18 || n == 19) { forth_push(-1); return; }
     gpio_config_t io = { .pin_bit_mask = 1ULL << n, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE };
     if (n != GOGGL_PIN_SCLK && n != GOGGL_PIN_MOSI && n != GOGGL_PIN_DC && n != GOGGL_PIN_RST && n != GOGGL_PIN_CS && n != GOGGL_PIN_LED)
         gpio_config(&io);

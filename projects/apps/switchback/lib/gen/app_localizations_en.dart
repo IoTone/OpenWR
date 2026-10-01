@@ -664,4 +664,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateBundleSending => 'Pushing bundle…';
+
+  @override
+  String pairFound(int n) {
+    return 'Found $n goggle(s)';
+  }
+
+  @override
+  String pairPhaseConnecting(int n) {
+    return 'Connecting, attempt $n of 2…';
+  }
+
+  @override
+  String get pairPhaseReading => 'Connected, reading status…';
+
+  @override
+  String pairPhaseRetrying(int n) {
+    return 'First link dropped, retrying (attempt $n)…';
+  }
+
+  @override
+  String get pairPhaseConnected => 'Connected';
+
+  @override
+  String get pairPhaseFailed => 'Could not connect';
+
+  @override
+  String get pairPhaseDropped => 'The goggle disconnected';
+
+  @override
+  String get pairFailedHint =>
+      'The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect.';
 }

@@ -647,4 +647,35 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get updateBundleSending => 'バンドル送信中…';
+
+  @override
+  String pairFound(int n) {
+    return 'ゴーグルが $n 台見つかりました';
+  }
+
+  @override
+  String pairPhaseConnecting(int n) {
+    return '接続中、$n/2 回目…';
+  }
+
+  @override
+  String get pairPhaseReading => '接続済み、状態を読み取り中…';
+
+  @override
+  String pairPhaseRetrying(int n) {
+    return '最初の接続が切れました。再試行中（$n 回目）…';
+  }
+
+  @override
+  String get pairPhaseConnected => '接続済み';
+
+  @override
+  String get pairPhaseFailed => '接続できませんでした';
+
+  @override
+  String get pairPhaseDropped => 'ゴーグルが切断されました';
+
+  @override
+  String get pairFailedHint =>
+      'ゴーグルは電源投入後と切断後の3分間だけ待ち受けます。ガラスの B が消えていたら挿し直してから、接続をタップしてください。';
 }

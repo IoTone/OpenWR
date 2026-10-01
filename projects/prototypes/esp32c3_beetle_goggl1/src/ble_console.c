@@ -130,7 +130,11 @@ static int gap_event(struct ble_gap_event *ev, void *arg)
         s_conn = BLE_HS_CONN_HANDLE_NONE;
         s_subscribed = false;
         s_mtu = 23;
-        if (window_open()) adv_start();
+        /* A phone that was connected gets three minutes to come back (it
+         * slept, walked out of range, the app was restarted) without anyone
+         * touching the goggle. The window is still a window: it closes. */
+        s_window_until_us = esp_timer_get_time() + 180LL * 1000000LL;
+        adv_start();
         return 0;
     case BLE_GAP_EVENT_ADV_COMPLETE:
         s_advertising = false;
