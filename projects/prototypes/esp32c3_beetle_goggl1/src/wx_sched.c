@@ -49,7 +49,6 @@ static void sched_task(void *arg)
     uint32_t next_wx = 0, next_sntp = 0, next_tick = 0;
     int      wx_failures = 0;
     bool     geo_pending = false;
-    int      btn_held = 0;
     bool     have_anim = false;
 
     for (;;) {
@@ -58,13 +57,6 @@ static void sched_task(void *arg)
         for (int i = 0; i < 20; i++) {
             vTaskDelay(pdMS_TO_TICKS(50));
             if (have_anim && (i % (ANIM_PERIOD_MS / 50)) == 0) forth_eval("hud-anim");
-            bool down = gpio_get_level(GOGGL_PIN_BUTTON) == 0;
-            if (down) btn_held++;
-            else if (btn_held) {
-                if (btn_held >= 2 && btn_held < 20) set_theme(s_theme + 1);   /* 100 ms .. 1 s: theme */
-                else if (btn_held >= 20) { ble_pair_window(180); s_tick_now = true; }  /* 1 s+: pair */
-                btn_held = 0;
-            }
             ble_console_flush();
             if (s_tick_now) { s_tick_now = false; hud_tick(); }
         }
@@ -105,11 +97,39 @@ static void sched_task(void *arg)
     }
 }
 
+/* The BOOT button gets its own task so a forecast fetch (seconds of TLS)
+ * can never swallow a press. Sampled every 20 ms with a debounce; a short
+ * press (60 ms .. 800 ms) cycles the theme on release; holding for 1 s
+ * opens the pairing window at once, while the thumb is still down, so the
+ * B appears as feedback. */
+static void button_task(void *arg)
+{
+    int held = 0;
+    bool fired = false;
+    for (;;) {
+        vTaskDelay(pdMS_TO_TICKS(20));
+        bool down = gpio_get_level(GOGGL_PIN_BUTTON) == 0;
+        if (down) {
+            held++;
+            if (held == 50 && !fired) {          /* 1 s */
+                fired = true;
+                ble_pair_window(180);
+                s_tick_now = true;
+            }
+        } else {
+            if (held >= 3 && held < 40 && !fired) set_theme(s_theme + 1);   /* 60 .. 800 ms */
+            held = 0;
+            fired = false;
+        }
+    }
+}
+
 void wx_sched_start(void)
 {
     int32_t th = 0;
     if (kv_get_i32("theme", &th)) s_theme = ((th % THEMES) + THEMES) % THEMES;
     xTaskCreate(sched_task, "wx_sched", 6144, NULL, tskIDLE_PRIORITY + 1, NULL);
+    xTaskCreate(button_task, "button", 2048, NULL, tskIDLE_PRIORITY + 2, NULL);
     ESP_LOGI(TAG, "started, theme %d", s_theme);
 }
 
