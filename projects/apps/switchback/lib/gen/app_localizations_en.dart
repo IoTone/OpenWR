@@ -432,7 +432,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionBody =>
-      'The phone is the sensor hub, the glass is the display. Pick a sport; Switchback will stream time, pace and heart rate to the goggle.';
+      'The phone is the sensor hub, the glass is the display. Pick a sport and start: time, pace and distance go to the goggle once a second.';
 
   @override
   String get sportRun => 'Run';
@@ -703,4 +703,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String looksSendFailed(String e) {
     return 'The goggle did not answer: $e';
   }
+
+  @override
+  String get sessionGlassReady =>
+      'The goggle is connected; it will show the session.';
+
+  @override
+  String get sessionNoGlass =>
+      'No goggle connected. The session runs on the phone alone.';
+
+  @override
+  String sessionPace(String unit) {
+    return 'min/$unit';
+  }
+
+  @override
+  String get sessionStop => 'Stop';
+
+  @override
+  String sessionDone(String time, String dist, String unit) {
+    return 'Done: $time, $dist $unit.';
+  }
+
+  @override
+  String get sessionLogTitle => 'Recent sessions';
 }

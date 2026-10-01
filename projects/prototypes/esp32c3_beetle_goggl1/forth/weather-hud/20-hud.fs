@@ -9,7 +9,8 @@
   else s" no wifi" 8 28 oled-str s" set with wifi! at ok>" 8 40 oled-str then ;
 
 : hud-draw  ( -- )
-  theme@ dup 0 = if drop strip else dup 1 = if drop glance else drop ribbon then then ;
+  sess-on? @ if session-draw else
+  theme@ dup 0 = if drop strip else dup 1 = if drop glance else drop ribbon then then then ;
 
 \ a forecast older than 3 h is not shown as current
 : hud-fresh?  ( -- flag )  wx-ok? wx-age 10800 < and ;

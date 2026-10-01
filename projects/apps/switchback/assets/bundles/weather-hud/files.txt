@@ -2,5 +2,6 @@
 10-strip.fs
 11-glance.fs
 12-ribbon.fs
+15-session.fs
 20-hud.fs
 30-anim.fs

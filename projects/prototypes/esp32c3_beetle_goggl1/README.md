@@ -219,8 +219,9 @@ ip-api.com), Open-Meteo forecast parsed to integers and cached in NVS, a
 scheduler task that refreshes every 15 min and calls `hud-tick`, BOOT button
 cycling the theme. Flash is laid out with two OTA slots from the start.
 
-Use-case side (`forth/weather-hud/`): six Forth files that together are
-one **bundle**. Sent once, the bundle is applied all-or-nothing, stored in
+Use-case side (`forth/weather-hud/`): seven Forth files that together are
+one **bundle**, including the session HUD (`15-session.fs`: `sess!`,
+`sess-on`, `sess-off`) that Switchback streams into during a run or ride. Sent once, the bundle is applied all-or-nothing, stored in
 NVS, and re-applied at every boot, so the HUD survives a power cycle with
 no USB attached.
 

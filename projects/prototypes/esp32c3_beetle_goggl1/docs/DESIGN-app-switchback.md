@@ -77,7 +77,9 @@ phase A.
 ## Phasing
 
 A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
-C setup and looks ✓ · D update (phone-hosted `.mnpkg`, see DESIGN-provisioning-ota.md §4) ✓ · E session.
+C setup and looks ✓ · D update (phone-hosted `.mnpkg`, see DESIGN-provisioning-ota.md §4) ✓ ·
+E session ✓ 2026-10-02 (as a mode in the weather bundle, `15-session.fs`, not a
+second bundle: one word to switch instead of an 8 KB push; heart-rate strap still open).
 
 ## Open questions
 

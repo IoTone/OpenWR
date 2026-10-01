@@ -260,7 +260,7 @@
   "consoleHistory": "Previous line",
   "consoleSend": "Send",
   "sessionTitle": "Session",
-  "sessionBody": "The phone is the sensor hub, the glass is the display. Pick a sport; Switchback will stream time, pace and heart rate to the goggle.",
+  "sessionBody": "The phone is the sensor hub, the glass is the display. Pick a sport and start: time, pace and distance go to the goggle once a second.",
   "sportRun": "Run",
   "sportRide": "Ride",
   "sportSki": "Ski",
@@ -449,5 +449,31 @@
         "type": "String"
       }
     }
-  }
+  },
+  "sessionGlassReady": "The goggle is connected; it will show the session.",
+  "sessionNoGlass": "No goggle connected. The session runs on the phone alone.",
+  "sessionPace": "min/{unit}",
+  "@sessionPace": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionStop": "Stop",
+  "sessionDone": "Done: {time}, {dist} {unit}.",
+  "@sessionDone": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dist": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionLogTitle": "Recent sessions"
 }

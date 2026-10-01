@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @sessionBody.
   ///
   /// In en, this message translates to:
-  /// **'The phone is the sensor hub, the glass is the display. Pick a sport; Switchback will stream time, pace and heart rate to the goggle.'**
+  /// **'The phone is the sensor hub, the glass is the display. Pick a sport and start: time, pace and distance go to the goggle once a second.'**
   String get sessionBody;
 
   /// No description provided for @sportRun.
@@ -1321,6 +1321,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The goggle did not answer: {e}'**
   String looksSendFailed(String e);
+
+  /// No description provided for @sessionGlassReady.
+  ///
+  /// In en, this message translates to:
+  /// **'The goggle is connected; it will show the session.'**
+  String get sessionGlassReady;
+
+  /// No description provided for @sessionNoGlass.
+  ///
+  /// In en, this message translates to:
+  /// **'No goggle connected. The session runs on the phone alone.'**
+  String get sessionNoGlass;
+
+  /// No description provided for @sessionPace.
+  ///
+  /// In en, this message translates to:
+  /// **'min/{unit}'**
+  String sessionPace(String unit);
+
+  /// No description provided for @sessionStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get sessionStop;
+
+  /// No description provided for @sessionDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done: {time}, {dist} {unit}.'**
+  String sessionDone(String time, String dist, String unit);
+
+  /// No description provided for @sessionLogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent sessions'**
+  String get sessionLogTitle;
 }
 
 class _AppLocalizationsDelegate

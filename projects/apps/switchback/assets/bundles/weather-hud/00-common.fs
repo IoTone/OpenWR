@@ -1,4 +1,4 @@
-\ bundle: weather-hud 0.5
+\ bundle: weather-hud 0.6
 \ requires: oled-str oled-num wx-temp wx-icon geo-city clock-hm theme@ net-ok? ble-on? random
 \ 00-common.fs — shared helpers and the status strip for the weather HUD.
 \ Load order: 00-common, 10-strip, 11-glance, 12-ribbon, 20-hud.

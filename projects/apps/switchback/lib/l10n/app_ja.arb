@@ -232,7 +232,7 @@
   "consoleHistory": "前の行",
   "consoleSend": "送信",
   "sessionTitle": "セッション",
-  "sessionBody": "スマホがセンサーハブ、ガラスがディスプレイ。種目を選ぶと、時間・ペース・心拍をゴーグルへ送ります。",
+  "sessionBody": "スマホがセンサーハブ、ガラスがディスプレイ。種目を選んで開始すると、時間・ペース・距離が毎秒ゴーグルへ送られます。",
   "sportRun": "ラン",
   "sportRide": "ライド",
   "sportSki": "スキー",
@@ -449,5 +449,31 @@
         "type": "String"
       }
     }
-  }
+  },
+  "sessionGlassReady": "ゴーグルは接続済み。セッションを表示します。",
+  "sessionNoGlass": "ゴーグル未接続。セッションはスマホだけで動きます。",
+  "sessionPace": "分/{unit}",
+  "@sessionPace": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionStop": "停止",
+  "sessionDone": "完了: {time}、{dist} {unit}。",
+  "@sessionDone": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "dist": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "sessionLogTitle": "最近のセッション"
 }

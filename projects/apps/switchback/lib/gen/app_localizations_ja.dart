@@ -424,7 +424,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sessionTitle => 'セッション';
 
   @override
-  String get sessionBody => 'スマホがセンサーハブ、ガラスがディスプレイ。種目を選ぶと、時間・ペース・心拍をゴーグルへ送ります。';
+  String get sessionBody =>
+      'スマホがセンサーハブ、ガラスがディスプレイ。種目を選んで開始すると、時間・ペース・距離が毎秒ゴーグルへ送られます。';
 
   @override
   String get sportRun => 'ラン';
@@ -686,4 +687,26 @@ class AppLocalizationsJa extends AppLocalizations {
   String looksSendFailed(String e) {
     return 'ゴーグルが応答しません: $e';
   }
+
+  @override
+  String get sessionGlassReady => 'ゴーグルは接続済み。セッションを表示します。';
+
+  @override
+  String get sessionNoGlass => 'ゴーグル未接続。セッションはスマホだけで動きます。';
+
+  @override
+  String sessionPace(String unit) {
+    return '分/$unit';
+  }
+
+  @override
+  String get sessionStop => '停止';
+
+  @override
+  String sessionDone(String time, String dist, String unit) {
+    return '完了: $time、$dist $unit。';
+  }
+
+  @override
+  String get sessionLogTitle => '最近のセッション';
 }

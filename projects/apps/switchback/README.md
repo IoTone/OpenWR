@@ -18,7 +18,7 @@ already understands. The Console tab is the whole app with the forms removed.
 | Tab | Reads | Writes |
 |---|---|---|
 | **Trailhead** | `status`, `wx-dump` | |
-| **Session** | | (phase E) `bundle-begin … bundle-end`, `sess!` |
+| **Session** | | `sess-on`, `secs pace10 dist100 hr sess!` once a second, `sess-off` |
 | **Looks** | `status` | `n theme!`, `anim-on !`, `oled-contrast` |
 | **Console** | everything | anything |
 | **Update** | `version`, `bundle-info` | `s" http://<phone>:8777/<pkg>.mnpkg" ota!`, `bundle-begin … bundle-end` |
@@ -95,5 +95,7 @@ tool/gen_icon.py          the switchback mark → launcher icon and splash
 
 A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
 C setup cards (WiFi, location, units) ✓ · D on-phone `.mnpkg` server, OTA, bundle push ✓ ·
-E session. Verified 2026-10-01: a 1.1 MB release served from the phone
-installed on the goggle and came back as 0.5.3 with the bundle intact.
+E session ✓ (phone GPS for distance and pace, elapsed time, a session log;
+heart rate shows `--` until a strap is wired in). The session HUD is a mode
+inside the weather bundle (`15-session.fs`) rather than a second bundle:
+switching costs one word instead of an 8 KB push.
