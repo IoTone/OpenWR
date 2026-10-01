@@ -3,7 +3,8 @@
  *
  * One task. Geolocation once per network join, forecast every 15 min with
  * backoff on failure, SNTP hourly, `hud-tick` every 60 s and after any
- * change. BOOT button short press cycles the theme.
+ * change, `hud-anim` every 200 ms when the bundle defines it. BOOT button
+ * short press cycles the theme, long press opens the BLE pairing window.
  *
  * Words:
  *   theme!   ( n -- )   0 strip, 1 glance, 2 ribbon; persisted

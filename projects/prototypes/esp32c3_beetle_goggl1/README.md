@@ -219,7 +219,7 @@ ip-api.com), Open-Meteo forecast parsed to integers and cached in NVS, a
 scheduler task that refreshes every 15 min and calls `hud-tick`, BOOT button
 cycling the theme. Flash is laid out with two OTA slots from the start.
 
-Use-case side (`forth/weather-hud/`): five Forth files that together are
+Use-case side (`forth/weather-hud/`): six Forth files that together are
 one **bundle**. Sent once, the bundle is applied all-or-nothing, stored in
 NVS, and re-applied at every boot, so the HUD survives a power cycle with
 no USB attached.
@@ -247,8 +247,8 @@ Words added by the HUD firmware, all documented in the headers:
 wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@
 wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`,
 `bundle-begin bundle-apply bundle-forget bundle-info`, `pair unpair ble-on?`,
-`ota! version status`, `reboot`, and `oled-num oled-num02 oled-numr` for
-drawing integers.
+`ota! version status`, `reboot random`, and `oled-num oled-num02 oled-numr`
+for drawing integers.
 
 `tools/hud_mock.py` renders the three themes on the host with the device's
 own driver; its output is in `docs/images/`.

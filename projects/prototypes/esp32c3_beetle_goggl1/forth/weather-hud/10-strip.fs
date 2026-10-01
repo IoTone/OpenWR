@@ -29,7 +29,7 @@ variable thi
 
 : strip-hours  ( -- )
   5 0 do i 2 * dup hour swap sx 5 - 49 oled-num02 loop
-  55 0 do 0 sx i oled-pixel 2 +loop ;
+  55 frame @ 2 mod do 0 sx i oled-pixel 2 +loop ;   \ dots march with the frame
 
 : strip  ( -- )
   tmin tlo ! tmax thi !

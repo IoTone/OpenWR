@@ -23,6 +23,7 @@ static const char *TAG = "sched";
 #define FORECAST_RETRY_S    (2 * 60)
 #define SNTP_PERIOD_S       (60 * 60)
 #define TICK_PERIOD_S       60
+#define ANIM_PERIOD_MS      200     /* hud-anim at 5 fps, if the bundle defines it */
 #define THEMES              3
 
 static int  s_theme;
@@ -49,11 +50,14 @@ static void sched_task(void *arg)
     int      wx_failures = 0;
     bool     geo_pending = false;
     int      btn_held = 0;
+    bool     have_anim = false;
 
     for (;;) {
+        have_anim = forth_word_exists("hud-anim");   /* once a second is plenty */
         /* 50 ms button poll, 20 per second */
         for (int i = 0; i < 20; i++) {
             vTaskDelay(pdMS_TO_TICKS(50));
+            if (have_anim && (i % (ANIM_PERIOD_MS / 50)) == 0) forth_eval("hud-anim");
             bool down = gpio_get_level(GOGGL_PIN_BUTTON) == 0;
             if (down) btn_held++;
             else if (btn_held) {

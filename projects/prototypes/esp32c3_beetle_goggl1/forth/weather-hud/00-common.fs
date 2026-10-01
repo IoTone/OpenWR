@@ -1,8 +1,12 @@
-\ bundle: weather-hud 0.4
-\ requires: oled-str oled-num wx-temp wx-icon geo-city clock-hm theme@ net-ok? ble-on?
+\ bundle: weather-hud 0.5
+\ requires: oled-str oled-num wx-temp wx-icon geo-city clock-hm theme@ net-ok? ble-on? random
 \ 00-common.fs — shared helpers and the status strip for the weather HUD.
 \ Load order: 00-common, 10-strip, 11-glance, 12-ribbon, 20-hud.
 \ Requires the goggl1 firmware words: oled-*, wx-*, geo-*, clock-*, net-ok?
+
+\ animation frame counter, advanced by hud-anim; themes may use it for
+\ phase (marching dots and the like) and are still correct when it is 0
+variable frame
 
 \ round a x10 value to the nearest whole unit (C division truncates to 0)
 : r10  ( t10 -- t )  dup 0< if 5 - else 5 + then 10 / ;

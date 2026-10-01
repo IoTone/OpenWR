@@ -14,9 +14,14 @@
 \ a forecast older than 3 h is not shown as current
 : hud-fresh?  ( -- flag )  wx-ok? wx-age 10800 < and ;
 
-: hud-tick  ( -- )
+: hud-frame  ( -- )
   oled-clear 1 oled-color 0 oled-dir 1 oled-scale
   hud-fresh? if hud-draw else hud-wait then
-  hud-status oled-show ;
+  hud-status ;
+
+\ dim the glass at night: the panel is in front of an eye
+: hud-dim  ( -- )  wx-ok? if 0 wx-day? if 255 else 48 then oled-contrast then ;
+
+: hud-tick  ( -- )  hud-frame oled-show hud-dim ;
 
 hud-tick

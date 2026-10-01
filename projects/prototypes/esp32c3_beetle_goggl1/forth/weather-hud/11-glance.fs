@@ -29,8 +29,10 @@
   8 0 do i 16 * i wx-temp ty2 i 1 + 16 * i 1 + wx-temp ty2 oled-line loop
   9 0 do
     i wx-pop dup 50 >= if drop i 16 * 52 16 oled-hline i 16 * 53 16 oled-hline
-    else 20 >= if 8 0 do j 16 * i 2 * + 52 oled-pixel loop then then
-  loop ;
+    else 20 >= if 8 0 do j 16 * i 2 * + frame @ 2 mod + 52 oled-pixel loop then then
+  loop
+  \ live marker: the current-hour end of the sparkline pulses
+  frame @ 2 mod 0= if 0 wx-temp ty2 1 - 0 swap 2 3 oled-box then ;
 
 : glance  ( -- )
   tmin tlo ! tmax thi !

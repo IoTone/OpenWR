@@ -19,6 +19,7 @@
 #include "esp_log.h"
 #include "esp_timer.h"
 #include "esp_system.h"
+#include "esp_random.h"
 
 #include "forth_core.h"
 #include "console.h"
@@ -265,6 +266,8 @@ static void w_oled_height(void)   { forth_push(SSD1309_HEIGHT); }
 
 static void w_led(void)     { gpio_set_level(GOGGL_PIN_LED, POP() != 0); }
 static void w_button(void)  { forth_push(gpio_get_level(GOGGL_PIN_BUTTON) == 0 ? -1 : 0); }
+/* ( n -- r )  0 <= r < n, hardware RNG */
+static void w_random(void)  { int n = POP(); forth_push(n > 0 ? (intptr_t)(esp_random() % (uint32_t)n) : 0); }
 static void w_reboot(void)  { con_printf("rebooting\n");  vTaskDelay(pdMS_TO_TICKS(100)); esp_restart(); }
 
 /* ------------------------------------------------------------------ */
@@ -338,6 +341,7 @@ void goggle_register_words(void)
         { "led",            w_led },
         { "button?",        w_button },
         { "reboot",         w_reboot },
+        { "random",         w_random },
 
         { "ms",             w_ms },
         { "us",             w_us },

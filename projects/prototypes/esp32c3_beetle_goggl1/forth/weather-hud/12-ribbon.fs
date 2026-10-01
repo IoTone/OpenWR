@@ -22,4 +22,4 @@
 
 : ribbon  ( -- )
   9 0 do i ribbon-col loop
-  0 7 13 oled-hline ;
+  13 frame @ 3 mod do i 7 2 oled-hline 3 +loop ;   \ marching underline on the current hour

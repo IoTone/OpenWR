@@ -331,7 +331,29 @@ Two layout corrections came out of these: Glance now writes wind as
 `7/11` (speed/gust) because the `g` glyph read as a zero, and Strip's wind
 and hour rows were separated by one pixel.
 
-### 7.5 Why three, and why these three
+### 7.5 Motion
+
+Added 2026-10-01. A fourth file, `30-anim.fs`, defines `hud-anim`; the
+scheduler calls it every 200 ms when it exists. A frame is the theme redrawn
+plus a particle layer picked from the current hour's conditions:
+
+| Condition (WMO code) | Effect |
+|---|---|
+| drizzle, rain, showers (51–67, 80–82) | up to 10 drops fall 3 px a frame, leaning with the wind; count rises with probability |
+| snow (71–77, 85, 86) | flakes drift down 1 px and wander sideways |
+| thunderstorm (95+) | rain, and one frame in twenty inverts the panel |
+| fog (45, 48) | three dotted bands whose phase slides |
+| clear (0, 1) at night | eight stars, each lit three frames in four |
+| wind 20 km/h or more, otherwise | six streaks blow right to left, faster in more wind |
+
+Each theme adds one flourish of its own driven by the frame counter: Strip's
+now-line marches, Glance's sparkline endpoint pulses and its rain band
+crawls, Ribbon's current-hour underline runs. The panel dims to contrast 48
+after dark. Measured: 4.7 ms per animated frame; the layer is 70 words and
+2.4 KB of the 6.7 KB bundle. `fx-code` forces a condition for demos and
+`anim-on` switches the layer off.
+
+### 7.6 Why three, and why these three
 
 They answer three different questions with the same data: *what is the
 shape of the next eight hours* (Strip), *what do I need to know right now*
