@@ -280,7 +280,10 @@ python3 tools/ble_console.py 's" http://10.0.0.116:8000/firmware.bin" ota!'
 
 ## Next
 
-- The OpenWR mobile app: a BLE terminal with a form in front of it.
+- The OpenWR mobile app, Switchback: proposal in
+  [`docs/DESIGN-app-switchback.md`](docs/DESIGN-app-switchback.md), mockups at
+  https://claude.ai/artifact/XiEBJqZLtTHHxt1zpvuQmN. Starts from
+  ProjectMagNET/magnet_app.
 - Passkey pairing with the code shown on the glass (phase 5).
 - Quieter console: WiFi and TLS logs currently interleave with the USB REPL.
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.
