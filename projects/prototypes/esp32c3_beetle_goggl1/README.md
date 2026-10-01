@@ -205,8 +205,15 @@ needed by "far east OLEDs".
   allows 10 MHz. Raise `clock_hz` in `goggle_words.c` once the ribbon is
   known to be clean.
 
+## Design
+
+The first use case for this hardware, a realtime weather HUD with three
+themes, is designed in [`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md).
+`tools/hud_mock.py` renders the themes on the host with the device's own
+driver; its output is in `docs/images/`.
+
 ## Next
 
-- A `hud.fs` with the real goggle layout, once there is a sensor or a link
-  to put on it (see the OpenWR README on wearables that link up).
+- Implement the weather HUD design, phase 1 (network, clock, geolocation,
+  forecast words) first.
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.
