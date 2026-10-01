@@ -31,6 +31,9 @@
  * Text — built-in 5x7 font, 6 px advance, top-left anchored:
  *   oled-str       ( c-addr u x y -- )    draw a string (drawStr)
  *   oled-glyph     ( c x y -- )           draw one character
+ *   oled-num       ( n x y -- )           draw an integer
+ *   oled-num02     ( n x y -- )           two digits, zero padded
+ *   oled-numr      ( n x y -- )           integer right-aligned ending at x
  *   oled-scale     ( n -- )               text scale 1..4, both axes
  *   oled-scale-xy  ( sx sy -- )           independent x / y scale, 1..4 each
  *   oled-dir       ( n -- )               0 → 1 ↓ 2 ← 3 ↑ (setFontDirection)

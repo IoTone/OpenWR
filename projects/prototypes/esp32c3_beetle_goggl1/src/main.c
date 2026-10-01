@@ -21,12 +21,18 @@
 #include "forth_core.h"
 #include "forth_version.h"
 #include "goggle_words.h"
+#include "net_words.h"
+#include "wx_words.h"
+#include "wx_sched.h"
 
 #define CONSOLE_RX_BUF 256
 #define CONSOLE_TX_BUF 256
 
-/* Forth dictionary heap. The C3 has no PSRAM; 100 KB leaves ~150 KB free. */
-#define FORTH_HEAP_SIZE (100 * 1024)
+/* Forth dictionary heap. With WiFi + TLS on the C3 (no PSRAM) a TLS handshake
+ * needs ~40 KB transiently and free heap is ~85 KB before WiFi even starts,
+ * so the dictionary gets 32 KB. The three themes use under 1 KB of it;
+ * compiled code lives in the engine's own static array. */
+#define FORTH_HEAP_SIZE (32 * 1024)
 
 /* ----- Console: raw byte I/O over USB-serial-JTAG ----- */
 
@@ -91,6 +97,13 @@ void app_main(void)
 
     esp_err_t derr = goggle_init();
     goggle_register_words();
+
+    esp_err_t nerr = net_init();
+    if (nerr != ESP_OK) console_printf("net_init failed: %s\r\n", esp_err_to_name(nerr));
+    net_register_words();
+    wx_init();
+    wx_register_words();
+    wx_sched_register_words();
     if (derr == ESP_OK) {
         goggle_test_pattern();   /* power-on layout pattern; oled-splash for the logo */
         console_print("Display up, showing the layout test pattern.\r\n");
@@ -101,6 +114,8 @@ void app_main(void)
 
     console_printf("Free heap after init:  %lu bytes\r\n",
                    (unsigned long)heap_caps_get_free_size(MALLOC_CAP_INTERNAL));
+
+    wx_sched_start();   /* geolocation, forecast, clock, button, hud-tick */
 
     forth_repl(console_getchar, console_putchar);   /* blocks until 'bye' */
     forth_deinit();

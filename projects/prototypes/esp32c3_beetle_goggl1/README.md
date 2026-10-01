@@ -205,15 +205,47 @@ needed by "far east OLEDs".
   allows 10 MHz. Raise `clock_hz` in `goggle_words.c` once the ribbon is
   known to be clean.
 
-## Design
+## Weather HUD
 
-The first use case for this hardware, a realtime weather HUD with three
-themes, is designed in [`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md).
-`tools/hud_mock.py` renders the themes on the host with the device's own
-driver; its output is in `docs/images/`.
+The first use case for this hardware: the next eight hours of weather,
+located by IP, in three themes. Design in
+[`docs/DESIGN-weather-hud.md`](docs/DESIGN-weather-hud.md); phases 1 and 2
+are implemented.
+
+Firmware side (`src/net_words.c`, `src/wx_words.c`, `src/wx_sched.c`): WiFi
+station with credentials in NVS, SNTP, geolocation (ipinfo.io, then
+ip-api.com), Open-Meteo forecast parsed to integers and cached in NVS, a
+scheduler task that refreshes every 15 min and calls `hud-tick`, BOOT button
+cycling the theme. Flash is laid out with two OTA slots from the start.
+
+Use-case side (`forth/weather-hud/`): five Forth files, loaded in order.
+
+```bash
+# first time: give the device your network, at the ok> prompt
+ok> s" MySSID" s" MyPassword" wifi!
+
+# load the use case (re-send after every reboot until phase 3 persists it)
+python3 tools/send_forth.py /dev/cu.usbmodem101 forth/weather-hud/*.fs
+
+ok> wx-test        \ load the design fixture when there is no network
+ok> 1 theme!       \ 0 strip, 1 glance, 2 ribbon; BOOT button cycles too
+ok> hud-now        \ redraw immediately
+ok> wx-fetch .     \ force a forecast fetch, -1 on success
+```
+
+Words added by the HUD firmware, all documented in the headers:
+`net-ok? wifi! net-ip clock-ok? clock-hm clock-s`,
+`geo-ok? geo-lat geo-lon geo-city geo! geo-fetch`,
+`wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow wx-wind
+wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@
+wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`, and
+`oled-num oled-num02 oled-numr` for drawing integers.
+
+`tools/hud_mock.py` renders the three themes on the host with the device's
+own driver; its output is in `docs/images/`.
 
 ## Next
 
-- Implement the weather HUD design, phase 1 (network, clock, geolocation,
-  forecast words) first.
+- Weather HUD phase 3: bundle manifest, persist the Forth bundle in NVS and
+  re-apply at boot, so no USB is needed after a power cycle.
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.

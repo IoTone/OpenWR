@@ -217,6 +217,27 @@ static void w_oled_str(void)
     const char *s = (const char *)forth_pop();
     if (s && len > 0) oled_str(x, y, s, len);
 }
+/* ( n x y -- )  draw a signed integer, left-aligned at x,y */
+static void w_oled_num(void)
+{
+    int y = POP(), x = POP(), n = POP();
+    char b[16]; int len = snprintf(b, sizeof b, "%d", n);
+    oled_str(x, y, b, len);
+}
+/* ( n x y -- )  two digits, zero padded: hours, minutes */
+static void w_oled_num02(void)
+{
+    int y = POP(), x = POP(), n = POP();
+    char b[16]; int len = snprintf(b, sizeof b, "%02d", n);
+    oled_str(x, y, b, len);
+}
+/* ( n x y -- )  draw n right-aligned so its last digit ends at x */
+static void w_oled_numr(void)
+{
+    int y = POP(), x = POP(), n = POP();
+    char b[16]; int len = snprintf(b, sizeof b, "%d", n);
+    oled_str(x - oled_str_width(len), y, b, len);
+}
 static void w_oled_glyph(void)  { int y = POP(), x = POP(), c = POP(); oled_glyph(x, y, (char)c); }
 static void w_oled_scale(void)  { oled_set_scale(POP()); }
 static void w_oled_scale_xy(void) { int sy = POP(), sx = POP(); oled_set_scale_xy(sx, sy); }
@@ -294,6 +315,9 @@ void goggle_register_words(void)
 
         { "oled-str",       w_oled_str },
         { "oled-glyph",     w_oled_glyph },
+        { "oled-num",       w_oled_num },
+        { "oled-num02",     w_oled_num02 },
+        { "oled-numr",      w_oled_numr },
         { "oled-scale",     w_oled_scale },
         { "oled-scale-xy",  w_oled_scale_xy },
         { "oled-dir",       w_oled_dir },
