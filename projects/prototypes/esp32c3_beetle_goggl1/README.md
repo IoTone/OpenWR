@@ -259,8 +259,10 @@ The same `ok>` prompt is available over BLE as a Nordic UART Service, so
 any BLE terminal app works today and the OpenWR app only has to hide the
 words behind buttons. The radio is off until you open a window:
 
-- **Long-press BOOT** (1 s or more), or type `pair` on USB. The device
-  advertises as `goggl1` for 3 minutes and the status strip shows a `B`.
+- **Plug it in.** For three minutes after power-up the device advertises as
+  `goggl1` and the status strip shows a `B`. A long press of BOOT (1 s) does
+  the same on Beetle V2.0.0 boards, which have the button; V1.0.0 boards do
+  not. `pair` on the USB console also opens it.
 - Connect and type what you would type on USB. `status` prints one line
   the app can parse; `s" ssid" s" pw" wifi!` provisions; `bundle-begin`
   … `bundle-end` installs a use case.

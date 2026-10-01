@@ -153,6 +153,12 @@ void app_main(void)
     if (!bundle_apply_stored()) console_print("No bundle stored; test pattern stays up.\r\n");
 
     wx_sched_start();   /* geolocation, forecast, clock, button, hud-tick */
+
+    /* Pairing window at power-up. The Beetle ESP32-C3 V1.0.0 has no BOOT
+     * button (only V2.0.0 does), so a power cycle is the physical gesture
+     * that opens the door: three minutes of advertising, then quiet. The
+     * long press and the `pair` word still work where they exist. */
+    ble_pair_window(180);
     ota_mark_boot_ok(); /* this far is far enough: keep this image */
     console_print("OTA release keys:\r\n");
     mnpkg_print_keys();

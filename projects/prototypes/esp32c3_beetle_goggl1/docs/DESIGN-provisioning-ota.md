@@ -50,7 +50,11 @@ Not by default. A HUD that beacons continuously is a tracking device, and
 NimBLE's host and controller cost RAM the forecast fetch would like to
 have. So:
 
-- **Long press of BOOT (1 s or more)** opens a **3-minute pairing window**:
+- **Power-up** opens a **3-minute pairing window**. The Beetle ESP32-C3
+  V1.0.0 has no BOOT button (DFRobot's FAQ: ground pin 9 by hand; only
+  V2.0.0 has the button), so plugging the goggle in is the gesture that
+  works on every unit. After three minutes it goes quiet.
+- **Long press of BOOT (1 s or more)**, on boards that have one, opens the same window:
   advertising starts, the status strip shows a `B`, and a connection
   extends the window for as long as it lasts.
 - **`pair`** at the USB prompt does the same, for testing without a thumb.
