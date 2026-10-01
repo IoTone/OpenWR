@@ -1,0 +1,17 @@
+# esp32c3_beetle_goggl1 — merged from ESPIDFORTH's sdkconfig.defaults and
+# sdkconfig.defaults.esp32c3, plus what this board needs.
+
+CONFIG_ESP_MAIN_TASK_STACK_SIZE=8192
+CONFIG_FREERTOS_HZ=1000
+CONFIG_COMPILER_OPTIMIZATION_SIZE=y
+CONFIG_PARTITION_TABLE_SINGLE_APP=y
+
+# Beetle ESP32-C3 has 4 MB flash
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# No PSRAM; radios off for now (the goggle has no network role yet)
+CONFIG_ESP_WIFI_ENABLED=n
+CONFIG_BT_ENABLED=n
+
+# The Beetle's Type-C is wired straight to the C3's USB-serial-JTAG
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
