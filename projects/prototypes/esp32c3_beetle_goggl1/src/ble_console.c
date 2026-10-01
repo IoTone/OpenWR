@@ -236,6 +236,11 @@ int ble_console_getchar(void)
     return c;
 }
 
+static uint32_t s_tx_dropped;
+
+/* Notifications fail with ENOMEM when the host's mbuf pool is momentarily
+ * empty (a wx-dump is a dozen chunks in a few ms). Dropping the chunk loses
+ * the ok> prompt and the phone waits out its timeout, so wait and retry. */
 static void tx_send_locked(void)
 {
     if (s_tx_len == 0) return;
@@ -244,9 +249,13 @@ static void tx_send_locked(void)
         if (chunk > TX_CHUNK) chunk = TX_CHUNK;
         for (uint16_t off = 0; off < s_tx_len; off += chunk) {
             uint16_t n = s_tx_len - off < chunk ? s_tx_len - off : chunk;
-            struct os_mbuf *om = ble_hs_mbuf_from_flat(s_tx + off, n);
-            if (!om) break;
-            if (ble_gatts_notify_custom(s_conn, s_tx_handle, om) != 0) break;
+            int rc = -1;
+            for (int tries = 0; tries < 40 && rc != 0; tries++) {
+                struct os_mbuf *om = ble_hs_mbuf_from_flat(s_tx + off, n);
+                rc = om ? ble_gatts_notify_custom(s_conn, s_tx_handle, om) : BLE_HS_ENOMEM;
+                if (rc != 0) vTaskDelay(pdMS_TO_TICKS(5));
+            }
+            if (rc != 0) { s_tx_dropped++; ESP_LOGW(TAG, "notify dropped rc=%d (total %lu)", rc, (unsigned long)s_tx_dropped); }
         }
     }
     s_tx_len = 0;
@@ -255,7 +264,7 @@ static void tx_send_locked(void)
 void ble_console_putchar(int c)
 {
     if (s_conn == BLE_HS_CONN_HANDLE_NONE) return;      /* nobody listening */
-    if (!s_tx_lock || xSemaphoreTake(s_tx_lock, pdMS_TO_TICKS(20)) != pdTRUE) return;
+    if (!s_tx_lock || xSemaphoreTake(s_tx_lock, pdMS_TO_TICKS(500)) != pdTRUE) { s_tx_dropped++; return; }
     s_tx[s_tx_len++] = (uint8_t)c;
     if (s_tx_len >= TX_CHUNK || c == '\n') tx_send_locked();
     xSemaphoreGive(s_tx_lock);
@@ -295,6 +304,8 @@ void ble_pair_close(void)
     if (s_conn != BLE_HS_CONN_HANDLE_NONE)
         ble_gap_terminate(s_conn, BLE_ERR_REM_USER_CONN_TERM);
 }
+
+uint32_t ble_console_dropped(void) { return s_tx_dropped; }
 
 int ble_console_state(void)
 {

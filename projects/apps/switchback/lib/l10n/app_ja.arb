@@ -440,5 +440,14 @@
   "pairPhaseConnected": "接続済み",
   "pairPhaseFailed": "接続できませんでした",
   "pairPhaseDropped": "ゴーグルが切断されました",
-  "pairFailedHint": "ゴーグルは電源投入後と切断後の3分間だけ待ち受けます。ガラスの B が消えていたら挿し直してから、接続をタップしてください。"
+  "pairFailedHint": "ゴーグルは電源投入後と切断後の3分間だけ待ち受けます。ガラスの B が消えていたら挿し直してから、接続をタップしてください。",
+  "looksSending": "送信中…",
+  "looksSendFailed": "ゴーグルが応答しません: {e}",
+  "@looksSendFailed": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  }
 }

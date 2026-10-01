@@ -73,6 +73,12 @@ class GoggleConsole extends ChangeNotifier {
 
   GoggleLink get link => _link;
 
+  /// A command is in flight (the app bar shows a spinner).
+  bool get busy => _reply != null;
+
+  /// Round-trip time of the last command, for the Console footer.
+  int lastRttMs = 0;
+
   /// What the link is doing right now, for the Pair screen.
   String get phase => _phase;
   int get attempt => _attempt;
@@ -110,7 +116,7 @@ class GoggleConsole extends ChangeNotifier {
         _phase = 'connected';
         _lastError = null;
         _statusTimer?.cancel();
-        _statusTimer = Timer.periodic(const Duration(seconds: 30), (_) => refresh());
+        _statusTimer = Timer.periodic(const Duration(seconds: 45), (_) => refresh());
         notifyListeners();
         unawaited(_remember(deviceId, name));
         return;
@@ -165,12 +171,29 @@ class GoggleConsole extends ChangeNotifier {
 
   /// Send one line and return everything printed before the next prompt
   /// (without the prompt). Lines the engine rejects come back with `?`.
-  Future<String> send(String line, {Duration timeout = const Duration(seconds: 20)}) async {
+  int _userPending = 0;
+
+  Future<String> send(String line, {Duration timeout = const Duration(seconds: 8), bool background = false}) async {
     if (!isConnected) throw StateError('Not connected');
-    // One command at a time: the device has one prompt.
-    while (_reply != null) {
-      await _reply!.future.catchError((_) => '');
+    if (!background) _userPending++;
+    try {
+      // One command at a time: the device has one prompt. Background polls
+      // step aside while a user command is waiting.
+      while (_reply != null || (background && _userPending > 0)) {
+        if (_reply != null) {
+          await _reply!.future.catchError((_) => '');
+        } else {
+          await Future<void>.delayed(const Duration(milliseconds: 50));
+        }
+      }
+      return await _sendNow(line, timeout);
+    } finally {
+      if (!background) _userPending--;
     }
+  }
+
+  Future<String> _sendNow(String line, Duration timeout) async {
+    final Stopwatch sw = Stopwatch()..start();
     _record(line, sent: true);
     _pending.clear();
     _inFlight = line.trim();
@@ -180,12 +203,21 @@ class GoggleConsole extends ChangeNotifier {
       if (!c.isCompleted) c.completeError(TimeoutException('no ok> within $timeout'));
       _reply = null;
     });
+    notifyListeners();
     try {
       await _t.writeLine(line);
-      return await c.future;
+      final String r = await c.future;
+      lastRttMs = sw.elapsedMilliseconds;
+      debugPrint('[goggle] $line -> $lastRttMs ms');
+      return r;
+    } catch (e) {
+      debugPrint('[goggle] $line -> FAILED after ${sw.elapsedMilliseconds} ms: $e');
+      _pending.clear();
+      rethrow;
     } finally {
       _replyTimeout?.cancel();
       _replyTimeout = null;
+      _notifySoon();
     }
   }
 
@@ -193,13 +225,13 @@ class GoggleConsole extends ChangeNotifier {
   Future<void> refresh() async {
     if (!isConnected) return;
     try {
-      final String s = await send('status');
+      final String s = await send('status', background: true, timeout: const Duration(seconds: 4));
       for (final String l in s.split('\n')) {
         final GoggleStatus? st = GoggleStatus.parse(l);
         if (st != null) _status = st;
       }
       if (_status?.forecastOk == true) {
-        final String d = await send('wx-dump');
+        final String d = await send('wx-dump', background: true, timeout: const Duration(seconds: 6));
         final List<ForecastHour> f = parseForecastDump(d);
         if (f.isNotEmpty) _forecast = f;
       }
@@ -214,7 +246,16 @@ class GoggleConsole extends ChangeNotifier {
 
   Future<void> setTheme(GlassTheme t) async {
     await send('${t.index} theme!');
-    await refresh();
+    // The goggle has it; reflect it now, and let the next poll confirm.
+    final GoggleStatus? st = _status;
+    if (st != null) {
+      _status = GoggleStatus(
+        version: st.version, netOk: st.netOk, ip: st.ip, city: st.city, forecastOk: st.forecastOk,
+        forecastAgeS: st.forecastAgeS, clockOk: st.clockOk, localTime: st.localTime, theme: t,
+        imperial: st.imperial, bundle: st.bundle, freeHeap: st.freeHeap, ble: st.ble, receivedAt: DateTime.now(),
+      );
+      notifyListeners();
+    }
   }
 
   Future<void> setAnimation(bool on) => send('${on ? -1 : 0} anim-on !');

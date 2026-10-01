@@ -695,4 +695,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get pairFailedHint =>
       'The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect.';
+
+  @override
+  String get looksSending => 'Sending…';
+
+  @override
+  String looksSendFailed(String e) {
+    return 'The goggle did not answer: $e';
+  }
 }

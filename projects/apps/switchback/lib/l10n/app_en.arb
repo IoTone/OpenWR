@@ -440,5 +440,14 @@
   "pairPhaseConnected": "Connected",
   "pairPhaseFailed": "Could not connect",
   "pairPhaseDropped": "The goggle disconnected",
-  "pairFailedHint": "The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect."
+  "pairFailedHint": "The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect.",
+  "looksSending": "Sending…",
+  "looksSendFailed": "The goggle did not answer: {e}",
+  "@looksSendFailed": {
+    "placeholders": {
+      "e": {
+        "type": "String"
+      }
+    }
+  }
 }

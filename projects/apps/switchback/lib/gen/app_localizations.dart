@@ -1309,6 +1309,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The goggle advertises for 3 minutes after power-up and after any drop. Plug it in again if the B is gone from the glass, then tap Connect.'**
   String get pairFailedHint;
+
+  /// No description provided for @looksSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending…'**
+  String get looksSending;
+
+  /// No description provided for @looksSendFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The goggle did not answer: {e}'**
+  String looksSendFailed(String e);
 }
 
 class _AppLocalizationsDelegate

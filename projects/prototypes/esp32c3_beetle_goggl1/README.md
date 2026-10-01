@@ -290,4 +290,10 @@ python3 tools/ble_console.py 's" http://10.0.0.116:8000/firmware.bin" ota!'
   ProjectMagNET/magnet_app.
 - Passkey pairing with the code shown on the glass (phase 5).
 - Quieter console: WiFi and TLS logs currently interleave with the USB REPL.
+
+A lesson worth keeping: the USB-serial-JTAG console must never block. With
+no host reading the port its TX buffer fills and each write waits out its
+timeout, so a 160-character `status` line cost 16 s and every BLE client
+saw the goggle as sluggish. The console now skips USB when nothing is
+attached and waits at most 2 ms for room (v0.5.9).
 - Pulling this vocabulary back into ESPIDFORTH as `examples/beetle-oled/`.

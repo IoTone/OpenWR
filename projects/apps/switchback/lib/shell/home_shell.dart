@@ -169,7 +169,9 @@ class _LinkIndicator extends StatelessWidget {
     };
     return IconButton(
       tooltip: v.$3,
-      icon: Icon(v.$2, color: v.$1),
+      icon: g.busy
+          ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: v.$1))
+          : Icon(v.$2, color: v.$1),
       onPressed: () => context.push(g.isConnected ? '/console' : '/pair'),
     );
   }

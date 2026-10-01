@@ -133,12 +133,12 @@ static void w_status(void)
     uint32_t a = net_ip4();
     int h = 0, m = 0; clock_local_hm(&h, &m);
     char bname[48]; bundle_name(bname, sizeof bname);
-    con_printf("goggl1 v%s net=%d ip=%u.%u.%u.%u geo=%s wx=%d age=%d clock=%d %02d:%02d theme=%d units=%d bundle=%s heap=%u ble=%d\n",
+    con_printf("goggl1 v%s net=%d ip=%u.%u.%u.%u geo=%s wx=%d age=%d clock=%d %02d:%02d theme=%d units=%d bundle=%s heap=%u ble=%d bledrop=%lu\n",
            GOGGL1_VERSION, net_ok() ? 1 : 0,
            (unsigned)(a & 0xFF), (unsigned)((a >> 8) & 0xFF), (unsigned)((a >> 16) & 0xFF), (unsigned)(a >> 24),
            geo_valid() ? geo_city_str() : "-",
            wx_valid() ? 1 : 0, wx_age_s(), clock_ok() ? 1 : 0, h, m, wx_sched_theme(), units_imperial(), bname,
-           (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL), ble_console_state());
+           (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL), ble_console_state(), (unsigned long)ble_console_dropped());
 }
 
 void ota_register_words(void)

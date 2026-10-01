@@ -37,6 +37,7 @@ class GoggleStatus {
     required this.freeHeap,
     required this.ble,
     required this.receivedAt,
+    this.bleDropped = 0,
   });
 
   final String version;
@@ -53,6 +54,7 @@ class GoggleStatus {
   final int freeHeap;
   final int ble; // 0 off, 1 advertising, 2 connected
   final DateTime receivedAt;
+  final int bleDropped;
 
   bool get forecastFresh =>
       forecastOk && forecastAgeS >= 0 && forecastAgeS < 30 * 60;
@@ -89,6 +91,7 @@ class GoggleStatus {
       freeHeap: intOf('heap'),
       ble: intOf('ble'),
       receivedAt: now ?? DateTime.now(),
+      bleDropped: intOf('bledrop'),
     );
   }
 }

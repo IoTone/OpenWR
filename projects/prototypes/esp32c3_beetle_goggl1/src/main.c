@@ -50,9 +50,20 @@ static void console_install(void)
     usb_serial_jtag_driver_install(&cfg);
 }
 
+/* USB output must never stall the console. With no host draining the port
+ * the 256-byte TX buffer fills and every write blocks for its timeout: a
+ * 160-character status line then costs seconds, and a BLE client sees the
+ * goggle as sluggish. Skip USB when nothing is attached, and never wait more
+ * than a couple of milliseconds for room. */
+static bool usb_listening(void)
+{
+    return usb_serial_jtag_is_connected();
+}
+
 static void console_print(const char *s)
 {
-    usb_serial_jtag_write_bytes((const uint8_t *)s, strlen(s), pdMS_TO_TICKS(500));
+    if (!usb_listening()) return;
+    usb_serial_jtag_write_bytes((const uint8_t *)s, strlen(s), pdMS_TO_TICKS(20));
 }
 
 static void console_printf(const char *fmt, ...)
@@ -82,7 +93,7 @@ static int console_getchar(void)
 static void console_putchar(int c)
 {
     uint8_t ch = (uint8_t)c;
-    usb_serial_jtag_write_bytes(&ch, 1, pdMS_TO_TICKS(100));
+    if (usb_listening()) usb_serial_jtag_write_bytes(&ch, 1, pdMS_TO_TICKS(2));
     ble_console_putchar(c);
 }
 

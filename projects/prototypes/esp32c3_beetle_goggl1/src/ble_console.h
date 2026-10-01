@@ -37,6 +37,7 @@ void ble_console_poll(void);             /* call every second: window expiry */
 void ble_pair_window(int seconds);
 void ble_pair_close(void);
 int  ble_console_state(void);            /* 0 off, 1 advertising, 2 connected */
+uint32_t ble_console_dropped(void);      /* notifications lost since boot */
 
 void ble_console_register_words(void);
 

@@ -678,4 +678,12 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get pairFailedHint =>
       'ゴーグルは電源投入後と切断後の3分間だけ待ち受けます。ガラスの B が消えていたら挿し直してから、接続をタップしてください。';
+
+  @override
+  String get looksSending => '送信中…';
+
+  @override
+  String looksSendFailed(String e) {
+    return 'ゴーグルが応答しません: $e';
+  }
 }

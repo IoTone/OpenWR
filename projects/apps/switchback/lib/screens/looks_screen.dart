@@ -23,6 +23,22 @@ class LooksScreen extends StatefulWidget {
 class _LooksScreenState extends State<LooksScreen> {
   bool _anim = true;
   double _contrast = 255;
+  GlassTheme? _sending;
+
+  Future<void> _pick(GlassTheme gt) async {
+    final GoggleConsole g = context.read<GoggleConsole>();
+    final AppLocalizations l = AppLocalizations.of(context);
+    setState(() => _sending = gt);
+    try {
+      await g.setTheme(gt);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.looksSendFailed(e.toString()))));
+      }
+    } finally {
+      if (mounted) setState(() => _sending = null);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +47,8 @@ class _LooksScreenState extends State<LooksScreen> {
     final AppLocalizations l = AppLocalizations.of(context);
     final ThemeData t = Theme.of(context);
     final ColorScheme cs = t.colorScheme;
-    final GlassTheme? current = g.status?.theme;
+    // While a tap is in flight, show the tapped card as chosen with a spinner.
+    final GlassTheme? current = _sending ?? g.status?.theme;
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
@@ -59,8 +76,9 @@ class _LooksScreenState extends State<LooksScreen> {
           _GlassChoice(
             theme: gt,
             selected: current == gt,
-            enabled: g.isConnected,
-            onTap: () => g.setTheme(gt),
+            sending: _sending == gt,
+            enabled: g.isConnected && _sending == null,
+            onTap: () => _pick(gt),
           ),
           const SizedBox(height: 10),
         ],
@@ -128,9 +146,10 @@ class _LooksScreenState extends State<LooksScreen> {
 }
 
 class _GlassChoice extends StatelessWidget {
-  const _GlassChoice({required this.theme, required this.selected, required this.enabled, required this.onTap});
+  const _GlassChoice({required this.theme, required this.selected, required this.sending, required this.enabled, required this.onTap});
   final GlassTheme theme;
   final bool selected;
+  final bool sending;
   final bool enabled;
   final VoidCallback onTap;
 
@@ -176,7 +195,14 @@ class _GlassChoice extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (selected) Icon(Icons.check_circle, color: cs.primary),
+                    if (sending)
+                      Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                        Text(l.looksSending, style: t.textTheme.labelMedium?.copyWith(color: cs.primary)),
+                        const SizedBox(width: 8),
+                        SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: cs.primary)),
+                      ])
+                    else if (selected)
+                      Icon(Icons.check_circle, color: cs.primary),
                   ],
                 ),
               ),
