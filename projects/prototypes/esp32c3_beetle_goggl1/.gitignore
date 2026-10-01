@@ -11,3 +11,4 @@ dependencies.lock
 .vscode/launch.json
 .vscode/ipch
 .DS_Store
+releases/*.mnpkg

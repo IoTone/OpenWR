@@ -36,7 +36,7 @@ class GoggleCard extends StatelessWidget {
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => context.push(g.isConnected ? '/console' : '/pair'),
+        onTap: () => context.push(g.isConnected ? '/setup' : '/pair'),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           child: Row(

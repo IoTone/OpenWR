@@ -13,6 +13,13 @@ import 'status.dart';
 
 enum GoggleLink { disconnected, connecting, connected }
 
+class GoggleLocation {
+  const GoggleLocation({required this.lat, required this.lon, required this.manual});
+  final double lat;
+  final double lon;
+  final bool manual;
+}
+
 /// One entry in the transcript: what we sent or what the glass said.
 class ConsoleEntry {
   const ConsoleEntry({required this.at, required this.text, required this.sent});
@@ -159,6 +166,32 @@ class GoggleConsole extends ChangeNotifier {
   }
 
   Future<void> openPairingWindow() => send('pair');
+
+  /// Where the goggle thinks it is, and whether that was set by hand.
+  Future<GoggleLocation?> readLocation() async {
+    final String r = await send('geo-lat . geo-lon . geo-manual? .');
+    final List<int> n = r.trim().split(RegExp(r'\s+')).map((String s) => int.tryParse(s)).whereType<int>().toList();
+    if (n.length < 3) return null;
+    return GoggleLocation(lat: n[0] / 10000, lon: n[1] / 10000, manual: n[2] != 0);
+  }
+
+  /// Back to IP geolocation; true if the lookup and the forecast both came in.
+  Future<bool> setAutoLocation() async {
+    final String r = await send('geo-auto .', timeout: const Duration(seconds: 40));
+    await refresh();
+    return r.trim().endsWith('-1');
+  }
+
+  /// Poll status until the goggle reports an IP, or give up.
+  Future<bool> waitForNetwork(Duration limit) async {
+    final DateTime end = DateTime.now().add(limit);
+    while (DateTime.now().isBefore(end)) {
+      await Future<void>.delayed(const Duration(seconds: 3));
+      await refresh();
+      if (_status?.netOk == true) return true;
+    }
+    return false;
+  }
 
   /// Install a use-case bundle: the lines are captured by the device and
   /// applied all or nothing. Returns the device's verdict text.

@@ -247,8 +247,8 @@ Words added by the HUD firmware, all documented in the headers:
 wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@
 wx-icon wx-icon2 wx-arrow`, `theme! theme@ hud-now`,
 `bundle-begin bundle-apply bundle-forget bundle-info`, `pair unpair ble-on?`,
-`ota! version status`, `reboot random`, and `oled-num oled-num02 oled-numr`
-for drawing integers.
+`ota! ota-keys version status`, `geo-auto geo-manual? wx-dump`, `reboot random`,
+and `oled-num oled-num02 oled-numr` for drawing integers.
 
 `tools/hud_mock.py` renders the three themes on the host with the device's
 own driver; its output is in `docs/images/`.
@@ -264,11 +264,13 @@ words behind buttons. The radio is off until you open a window:
 - Connect and type what you would type on USB. `status` prints one line
   the app can parse; `s" ssid" s" pw" wifi!` provisions; `bundle-begin`
   … `bundle-end` installs a use case.
-- **Firmware update**: serve the image on the local network and send
-  `s" http://<host>:8000/firmware.bin" ota!`. For development:
-  `cd .pio/build/beetle_c3 && python3 -m http.server 8000`. The device
-  writes the other OTA slot, reboots into it, and keeps it once the stored
-  bundle has applied; a broken image rolls back on the next reset.
+- **Firmware update**: releases are signed `.mnpkg` packages (the MagNET
+  OTA package format; see `docs/DESIGN-provisioning-ota.md` §4). Build one
+  with `tools/mnpkg/mnpkg.py`, serve it on the local network, and send
+  `s" http://<host>/goggl1-x.y.z.mnpkg" ota!`. The goggle checks format,
+  key, signature, target, size, hash, image and version before it boots it,
+  writes the other OTA slot, reboots, and rolls back if the new image does
+  not confirm itself. Switchback does all of this from the phone.
 
 `tools/ble_console.py` (needs `pip install bleak`) is the stand-in app:
 

@@ -6,7 +6,7 @@
  * Forecast: Open-Meteo, 9 hourly slots from the current hour.
  *
  * Words:
- *   geo-ok? geo-lat geo-lon geo-city geo! geo-fetch
+ *   geo-ok? geo-lat geo-lon geo-city geo! geo-fetch geo-auto geo-manual?
  *   wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow
  *   wx-wind wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-dump
  *   units!  units@

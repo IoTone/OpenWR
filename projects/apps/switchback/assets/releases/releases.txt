@@ -1,0 +1,2 @@
+# one embedded release per line, built with goggl1/tools/mnpkg/mnpkg.py
+assets/releases/goggl1-0.5.3-dev-weather.mnpkg

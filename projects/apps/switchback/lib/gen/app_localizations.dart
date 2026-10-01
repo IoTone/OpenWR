@@ -973,6 +973,294 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming: Switchback serves the image itself, and pushes use-case bundles.'**
   String get updatePhaseNote;
+
+  /// No description provided for @setupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Goggle setup'**
+  String get setupTitle;
+
+  /// No description provided for @setupSettingsSub.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi, location, units'**
+  String get setupSettingsSub;
+
+  /// No description provided for @setupNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair the goggle first; the cards send as you go.'**
+  String get setupNotConnected;
+
+  /// No description provided for @setupWifiTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WiFi'**
+  String get setupWifiTitle;
+
+  /// No description provided for @setupWifiBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The goggle fetches its own forecast, so it needs a network. 2.4 GHz only.'**
+  String get setupWifiBody;
+
+  /// No description provided for @setupWifiPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a network'**
+  String get setupWifiPick;
+
+  /// No description provided for @setupWifiSsid.
+  ///
+  /// In en, this message translates to:
+  /// **'Network name'**
+  String get setupWifiSsid;
+
+  /// No description provided for @setupWifiPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get setupWifiPassword;
+
+  /// No description provided for @setupWifiSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to goggle'**
+  String get setupWifiSend;
+
+  /// No description provided for @setupWifiSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending, waiting for an address…'**
+  String get setupWifiSending;
+
+  /// No description provided for @setupWifiUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected, {ip}.'**
+  String setupWifiUp(String ip);
+
+  /// No description provided for @setupWifiNotYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No address after 30 s. Check the password, or it may still be joining.'**
+  String get setupWifiNotYet;
+
+  /// No description provided for @setupWifiState.
+  ///
+  /// In en, this message translates to:
+  /// **'on {ip}'**
+  String setupWifiState(String ip);
+
+  /// No description provided for @setupWifiOff.
+  ///
+  /// In en, this message translates to:
+  /// **'no network'**
+  String get setupWifiOff;
+
+  /// No description provided for @setupLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get setupLocationTitle;
+
+  /// No description provided for @setupLocationBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Left alone, the goggle places itself by its IP address, to the city. Set it by hand or from this phone for the exact spot, which also stops the IP lookup.'**
+  String get setupLocationBody;
+
+  /// No description provided for @setupLocationUsePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Use phone location'**
+  String get setupLocationUsePhone;
+
+  /// No description provided for @setupLocationSetManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get setupLocationSetManual;
+
+  /// No description provided for @setupLocationBackToAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to automatic'**
+  String get setupLocationBackToAuto;
+
+  /// No description provided for @setupLocationReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading the phone\'s position…'**
+  String get setupLocationReading;
+
+  /// No description provided for @setupLocationDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied.'**
+  String get setupLocationDenied;
+
+  /// No description provided for @setupLocationInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude and longitude please, in degrees.'**
+  String get setupLocationInvalid;
+
+  /// No description provided for @setupLocationSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending and fetching the forecast…'**
+  String get setupLocationSending;
+
+  /// No description provided for @setupLocationSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Set. Forecast for {city}.'**
+  String setupLocationSet(String city);
+
+  /// No description provided for @setupLocationLookingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking the IP up…'**
+  String get setupLocationLookingUp;
+
+  /// No description provided for @setupLocationLookupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Lookup failed; the old location stays.'**
+  String get setupLocationLookupFailed;
+
+  /// No description provided for @setupLocationManual.
+  ///
+  /// In en, this message translates to:
+  /// **'{city}, by hand'**
+  String setupLocationManual(String city);
+
+  /// No description provided for @setupLocationAuto.
+  ///
+  /// In en, this message translates to:
+  /// **'{city}, from IP'**
+  String setupLocationAuto(String city);
+
+  /// No description provided for @setupUnitsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get setupUnitsTitle;
+
+  /// No description provided for @setupUnitsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Picked from the country by default. The glass and this app follow.'**
+  String get setupUnitsBody;
+
+  /// No description provided for @setupUnitsMetric.
+  ///
+  /// In en, this message translates to:
+  /// **'°C · km/h'**
+  String get setupUnitsMetric;
+
+  /// No description provided for @setupUnitsImperial.
+  ///
+  /// In en, this message translates to:
+  /// **'°F · mph'**
+  String get setupUnitsImperial;
+
+  /// No description provided for @updateNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair the goggle to see what it is running.'**
+  String get updateNotConnected;
+
+  /// No description provided for @updateEmbeddedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Releases in this app'**
+  String get updateEmbeddedTitle;
+
+  /// No description provided for @updateEmbeddedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Signed .mnpkg packages built into Switchback. The phone serves one over your WiFi and the goggle checks the signature, hash and target before it writes a byte.'**
+  String get updateEmbeddedBody;
+
+  /// No description provided for @updateNoReleases.
+  ///
+  /// In en, this message translates to:
+  /// **'This build carries no releases.'**
+  String get updateNoReleases;
+
+  /// No description provided for @updateInstall.
+  ///
+  /// In en, this message translates to:
+  /// **'Install'**
+  String get updateInstall;
+
+  /// No description provided for @updateInstalled.
+  ///
+  /// In en, this message translates to:
+  /// **'running'**
+  String get updateInstalled;
+
+  /// No description provided for @updateServing.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving…'**
+  String get updateServing;
+
+  /// No description provided for @updateServingAt.
+  ///
+  /// In en, this message translates to:
+  /// **'serving on {ip}:{port}, {n} fetched'**
+  String updateServingAt(String ip, int port, int n);
+
+  /// No description provided for @updateInstallBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Install goggl1 {fw} ({version}, {variant})? The goggle fetches it from this phone, verifies it, and reboots into it.'**
+  String updateInstallBody(String fw, String version, String variant);
+
+  /// No description provided for @updateProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Writing… {pct}%'**
+  String updateProgress(int pct);
+
+  /// No description provided for @updateRebooting.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified and staged. The goggle is rebooting into it; pair again in a few seconds.'**
+  String get updateRebooting;
+
+  /// No description provided for @updateNoVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'No verdict within 150 s. Check the Console.'**
+  String get updateNoVerdict;
+
+  /// No description provided for @updateBundleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use case in this app'**
+  String get updateBundleTitle;
+
+  /// No description provided for @updateBundleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The weather HUD bundle as shipped with this build. Pushing it replaces what the goggle has and keeps it across reboots.'**
+  String get updateBundleBody;
+
+  /// No description provided for @updateBundlePush.
+  ///
+  /// In en, this message translates to:
+  /// **'Push weather HUD'**
+  String get updateBundlePush;
+
+  /// No description provided for @updateBundleSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pushing bundle…'**
+  String get updateBundleSending;
 }
 
 class _AppLocalizationsDelegate

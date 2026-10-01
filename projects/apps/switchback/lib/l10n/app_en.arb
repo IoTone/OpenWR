@@ -295,5 +295,121 @@
     }
   },
   "updateStarted": "Update started. Progress shows in Console.",
-  "updatePhaseNote": "Coming: Switchback serves the image itself, and pushes use-case bundles."
+  "updatePhaseNote": "Coming: Switchback serves the image itself, and pushes use-case bundles.",
+  "setupTitle": "Goggle setup",
+  "setupSettingsSub": "WiFi, location, units",
+  "setupNotConnected": "Pair the goggle first; the cards send as you go.",
+  "setupWifiTitle": "WiFi",
+  "setupWifiBody": "The goggle fetches its own forecast, so it needs a network. 2.4 GHz only.",
+  "setupWifiPick": "Pick a network",
+  "setupWifiSsid": "Network name",
+  "setupWifiPassword": "Password",
+  "setupWifiSend": "Send to goggle",
+  "setupWifiSending": "Sending, waiting for an address…",
+  "setupWifiUp": "Connected, {ip}.",
+  "@setupWifiUp": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      }
+    }
+  },
+  "setupWifiNotYet": "No address after 30 s. Check the password, or it may still be joining.",
+  "setupWifiState": "on {ip}",
+  "@setupWifiState": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      }
+    }
+  },
+  "setupWifiOff": "no network",
+  "setupLocationTitle": "Location",
+  "setupLocationBody": "Left alone, the goggle places itself by its IP address, to the city. Set it by hand or from this phone for the exact spot, which also stops the IP lookup.",
+  "setupLocationUsePhone": "Use phone location",
+  "setupLocationSetManual": "Set",
+  "setupLocationBackToAuto": "Back to automatic",
+  "setupLocationReading": "Reading the phone's position…",
+  "setupLocationDenied": "Location permission denied.",
+  "setupLocationInvalid": "Latitude and longitude please, in degrees.",
+  "setupLocationSending": "Sending and fetching the forecast…",
+  "setupLocationSet": "Set. Forecast for {city}.",
+  "@setupLocationSet": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLocationLookingUp": "Looking the IP up…",
+  "setupLocationLookupFailed": "Lookup failed; the old location stays.",
+  "setupLocationManual": "{city}, by hand",
+  "@setupLocationManual": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLocationAuto": "{city}, from IP",
+  "@setupLocationAuto": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupUnitsTitle": "Units",
+  "setupUnitsBody": "Picked from the country by default. The glass and this app follow.",
+  "setupUnitsMetric": "°C · km/h",
+  "setupUnitsImperial": "°F · mph",
+  "updateNotConnected": "Pair the goggle to see what it is running.",
+  "updateEmbeddedTitle": "Releases in this app",
+  "updateEmbeddedBody": "Signed .mnpkg packages built into Switchback. The phone serves one over your WiFi and the goggle checks the signature, hash and target before it writes a byte.",
+  "updateNoReleases": "This build carries no releases.",
+  "updateInstall": "Install",
+  "updateInstalled": "running",
+  "updateServing": "Serving…",
+  "updateServingAt": "serving on {ip}:{port}, {n} fetched",
+  "@updateServingAt": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      },
+      "port": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "updateInstallBody": "Install goggl1 {fw} ({version}, {variant})? The goggle fetches it from this phone, verifies it, and reboots into it.",
+  "@updateInstallBody": {
+    "placeholders": {
+      "fw": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "variant": {
+        "type": "String"
+      }
+    }
+  },
+  "updateProgress": "Writing… {pct}%",
+  "@updateProgress": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "updateRebooting": "Verified and staged. The goggle is rebooting into it; pair again in a few seconds.",
+  "updateNoVerdict": "No verdict within 150 s. Check the Console.",
+  "updateBundleTitle": "Use case in this app",
+  "updateBundleBody": "The weather HUD bundle as shipped with this build. Pushing it replaces what the goggle has and keeps it across reboots.",
+  "updateBundlePush": "Push weather HUD",
+  "updateBundleSending": "Pushing bundle…"
 }

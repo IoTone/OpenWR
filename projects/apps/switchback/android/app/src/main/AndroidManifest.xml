@@ -21,6 +21,7 @@
     <!-- WiFi scanning. ACCESS_WIFI_STATE reads results; CHANGE_WIFI_STATE
          lets the app trigger a scan; NEARBY_WIFI_DEVICES is the API 33+
          runtime permission for nearby WiFi without location. -->
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.NEARBY_WIFI_DEVICES" />

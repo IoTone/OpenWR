@@ -325,6 +325,17 @@ static void w_geo_store(void)
     kv_set_blob("geo", &s_geo, sizeof s_geo);
 }
 
+/* ( -- flag ) drop a manual location and look the IP up again */
+static void w_geo_auto(void)
+{
+    s_geo.manual = 0;
+    bool ok = geo_fetch();
+    if (ok) ok = wx_fetch();
+    forth_push(ok ? -1 : 0);
+}
+/* ( -- flag ) is the location set by hand? */
+static void w_geo_manual(void) { forth_push(s_geo.manual ? -1 : 0); }
+
 static void w_wx_ok(void)    { forth_push(s_wx.valid ? -1 : 0); }
 static void w_wx_age(void)   { forth_push(wx_age_s()); }
 static void w_wx_hour0(void) { forth_push(s_wx.hour0); }
@@ -391,6 +402,7 @@ void wx_register_words(void)
     static const struct { const char *n; forth_word_fn f; } w[] = {
         { "geo-ok?",   w_geo_ok },   { "geo-lat",  w_geo_lat },  { "geo-lon", w_geo_lon },
         { "geo-city",  w_geo_city }, { "geo!",     w_geo_store }, { "geo-fetch", w_geo_fetch },
+        { "geo-auto",  w_geo_auto }, { "geo-manual?", w_geo_manual },
         { "wx-ok?",    w_wx_ok },    { "wx-age",   w_wx_age },   { "wx-hour0", w_wx_hour0 },
         { "wx-temp",   w_wx_temp },  { "wx-feels", w_wx_feels }, { "wx-pop", w_wx_pop },
         { "wx-precip", w_wx_precip },{ "wx-snow",  w_wx_snow },  { "wx-wind", w_wx_wind },

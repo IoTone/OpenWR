@@ -27,6 +27,7 @@
 #include "bundle.h"
 #include "ble_console.h"
 #include "ota_words.h"
+#include "ota_mnpkg.h"
 #include "console.h"
 
 #define CONSOLE_RX_BUF 256
@@ -153,6 +154,8 @@ void app_main(void)
 
     wx_sched_start();   /* geolocation, forecast, clock, button, hud-tick */
     ota_mark_boot_ok(); /* this far is far enough: keep this image */
+    console_print("OTA release keys:\r\n");
+    mnpkg_print_keys();
 
     forth_repl(console_getchar, console_putchar);   /* blocks until 'bye' */
     forth_deinit();

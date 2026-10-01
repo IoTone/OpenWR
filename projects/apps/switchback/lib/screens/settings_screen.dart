@@ -58,6 +58,14 @@ class SettingsScreen extends StatelessWidget {
         SwitchListTile(title: Text(l.settingsReduceMotion), value: tc.reduceMotion, onChanged: tc.setReduceMotion),
         SwitchListTile(title: Text(l.settingsHighContrast), value: tc.highContrast, onChanged: tc.setHighContrast),
         SwitchListTile(title: Text(l.looksRedShift), subtitle: Text(l.looksRedShiftSub), value: tc.redShift, onChanged: tc.setRedShift),
+        _Header(l.setupTitle, cs: cs),
+        ListTile(
+          leading: const Icon(Icons.tune),
+          title: Text(l.setupTitle),
+          subtitle: Text(l.setupSettingsSub),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => context.push('/setup'),
+        ),
         _Header(l.settingsScanner, cs: cs),
         ListTile(
           title: Text(l.settingsRssiFloor),

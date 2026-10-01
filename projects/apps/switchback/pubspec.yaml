@@ -37,6 +37,7 @@ dependencies:
 
   # --- WiFi scanning (Android full; iOS connected-network only) ---
   wifi_scan: ^0.4.1+2
+  geolocator: ^13.0.2        # one-shot phone position for the Location card
   network_info_plus: ^6.1.1
 
   # --- Settings persistence ---
@@ -57,6 +58,8 @@ flutter:
   generate: true
 
   assets:
+    - assets/releases/
+    - assets/bundles/weather-hud/
     - assets/images/glass/theme-strip.png
     - assets/images/glass/theme-glance.png
     - assets/images/glass/theme-ribbon.png

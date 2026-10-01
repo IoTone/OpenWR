@@ -3,7 +3,8 @@
  * the one-line `status` report. See docs/DESIGN-provisioning-ota.md §4, §5.
  *
  * Words:
- *   ota!      ( url u -- )   fetch the image, write it, reboot into it
+ *   ota!      ( url u -- )   fetch a .mnpkg (or a raw image), verify, write, reboot into it
+ *   ota-keys  ( -- )         print the compiled-in release keys
  *   version   ( -- )         print firmware version and running slot
  *   status    ( -- )         one line: net, geo, forecast age, theme, heap…
  *
@@ -13,7 +14,7 @@
 #ifndef OTA_WORDS_H
 #define OTA_WORDS_H
 
-#define GOGGL1_VERSION "0.4.2"
+#define GOGGL1_VERSION "0.5.3"
 
 #ifdef __cplusplus
 extern "C" {

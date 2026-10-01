@@ -494,4 +494,174 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get updatePhaseNote =>
       'Coming: Switchback serves the image itself, and pushes use-case bundles.';
+
+  @override
+  String get setupTitle => 'Goggle setup';
+
+  @override
+  String get setupSettingsSub => 'WiFi, location, units';
+
+  @override
+  String get setupNotConnected =>
+      'Pair the goggle first; the cards send as you go.';
+
+  @override
+  String get setupWifiTitle => 'WiFi';
+
+  @override
+  String get setupWifiBody =>
+      'The goggle fetches its own forecast, so it needs a network. 2.4 GHz only.';
+
+  @override
+  String get setupWifiPick => 'Pick a network';
+
+  @override
+  String get setupWifiSsid => 'Network name';
+
+  @override
+  String get setupWifiPassword => 'Password';
+
+  @override
+  String get setupWifiSend => 'Send to goggle';
+
+  @override
+  String get setupWifiSending => 'Sending, waiting for an address…';
+
+  @override
+  String setupWifiUp(String ip) {
+    return 'Connected, $ip.';
+  }
+
+  @override
+  String get setupWifiNotYet =>
+      'No address after 30 s. Check the password, or it may still be joining.';
+
+  @override
+  String setupWifiState(String ip) {
+    return 'on $ip';
+  }
+
+  @override
+  String get setupWifiOff => 'no network';
+
+  @override
+  String get setupLocationTitle => 'Location';
+
+  @override
+  String get setupLocationBody =>
+      'Left alone, the goggle places itself by its IP address, to the city. Set it by hand or from this phone for the exact spot, which also stops the IP lookup.';
+
+  @override
+  String get setupLocationUsePhone => 'Use phone location';
+
+  @override
+  String get setupLocationSetManual => 'Set';
+
+  @override
+  String get setupLocationBackToAuto => 'Back to automatic';
+
+  @override
+  String get setupLocationReading => 'Reading the phone\'s position…';
+
+  @override
+  String get setupLocationDenied => 'Location permission denied.';
+
+  @override
+  String get setupLocationInvalid =>
+      'Latitude and longitude please, in degrees.';
+
+  @override
+  String get setupLocationSending => 'Sending and fetching the forecast…';
+
+  @override
+  String setupLocationSet(String city) {
+    return 'Set. Forecast for $city.';
+  }
+
+  @override
+  String get setupLocationLookingUp => 'Looking the IP up…';
+
+  @override
+  String get setupLocationLookupFailed =>
+      'Lookup failed; the old location stays.';
+
+  @override
+  String setupLocationManual(String city) {
+    return '$city, by hand';
+  }
+
+  @override
+  String setupLocationAuto(String city) {
+    return '$city, from IP';
+  }
+
+  @override
+  String get setupUnitsTitle => 'Units';
+
+  @override
+  String get setupUnitsBody =>
+      'Picked from the country by default. The glass and this app follow.';
+
+  @override
+  String get setupUnitsMetric => '°C · km/h';
+
+  @override
+  String get setupUnitsImperial => '°F · mph';
+
+  @override
+  String get updateNotConnected => 'Pair the goggle to see what it is running.';
+
+  @override
+  String get updateEmbeddedTitle => 'Releases in this app';
+
+  @override
+  String get updateEmbeddedBody =>
+      'Signed .mnpkg packages built into Switchback. The phone serves one over your WiFi and the goggle checks the signature, hash and target before it writes a byte.';
+
+  @override
+  String get updateNoReleases => 'This build carries no releases.';
+
+  @override
+  String get updateInstall => 'Install';
+
+  @override
+  String get updateInstalled => 'running';
+
+  @override
+  String get updateServing => 'Serving…';
+
+  @override
+  String updateServingAt(String ip, int port, int n) {
+    return 'serving on $ip:$port, $n fetched';
+  }
+
+  @override
+  String updateInstallBody(String fw, String version, String variant) {
+    return 'Install goggl1 $fw ($version, $variant)? The goggle fetches it from this phone, verifies it, and reboots into it.';
+  }
+
+  @override
+  String updateProgress(int pct) {
+    return 'Writing… $pct%';
+  }
+
+  @override
+  String get updateRebooting =>
+      'Verified and staged. The goggle is rebooting into it; pair again in a few seconds.';
+
+  @override
+  String get updateNoVerdict => 'No verdict within 150 s. Check the Console.';
+
+  @override
+  String get updateBundleTitle => 'Use case in this app';
+
+  @override
+  String get updateBundleBody =>
+      'The weather HUD bundle as shipped with this build. Pushing it replaces what the goggle has and keeps it across reboots.';
+
+  @override
+  String get updateBundlePush => 'Push weather HUD';
+
+  @override
+  String get updateBundleSending => 'Pushing bundle…';
 }

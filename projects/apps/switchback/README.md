@@ -21,8 +21,9 @@ already understands. The Console tab is the whole app with the forms removed.
 | **Session** | | (phase E) `bundle-begin … bundle-end`, `sess!` |
 | **Looks** | `status` | `n theme!`, `anim-on !`, `oled-contrast` |
 | **Console** | everything | anything |
-| **Update** | `version`, `bundle-info` | `s" url" ota!` |
+| **Update** | `version`, `bundle-info` | `s" http://<phone>:8777/<pkg>.mnpkg" ota!`, `bundle-begin … bundle-end` |
 | Pair (from Trailhead) | scan for `goggl1` | |
+| Setup (after pairing, or from the device card) | `geo-lat geo-lon geo-manual?` | `wifi!`, `geo!`, `geo-auto`, `units!` |
 
 ### Three experiences
 
@@ -40,6 +41,21 @@ the Pair screen finds `goggl1` and connects by itself, Trailhead fills from
 one `status` and one `wx-dump`, the theme picker shows the goggle's own
 renders and switches the glass, and the experience moved from Dawn Patrol
 to Headlamp when the goggle reported night.
+
+### Updates from the phone
+
+The app carries signed `.mnpkg` releases (the MagNET OTA package format)
+under `assets/releases/`, listed in `releases.txt`. Install serves the
+chosen package from a small HTTP server on the phone's WiFi address (port
+8777), sends `ota!` to the goggle, follows the goggle's progress lines in
+the console, and stops serving when the goggle reboots. The goggle verifies
+the signature, hash and target itself; the app only reads the header to
+show what a release is. The weather HUD bundle ships the same way, pushed
+over the console. To ship a new release: build it in the firmware project
+(`tools/mnpkg/mnpkg.py build …`), copy it into `assets/releases/`, add a
+line to `releases.txt`.
+
+![Update](docs/screens/update.png)
 
 ## Run it
 
@@ -78,5 +94,6 @@ tool/gen_icon.py          the switchback mark → launcher icon and splash
 ## Phases
 
 A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
-C setup cards (WiFi, location, units) · D on-phone OTA server and bundle push ·
-E session. See the design doc for what each delivers.
+C setup cards (WiFi, location, units) ✓ · D on-phone `.mnpkg` server, OTA, bundle push ✓ ·
+E session. Verified 2026-10-01: a 1.1 MB release served from the phone
+installed on the goggle and came back as 0.5.3 with the bundle intact.

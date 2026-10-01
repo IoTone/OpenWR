@@ -25,6 +25,7 @@
 #include "ble_console.h"
 #include "bundle.h"
 #include "ota_words.h"
+#include "ota_mnpkg.h"
 
 static const char *TAG = "ota";
 
@@ -35,6 +36,14 @@ static const char *TAG = "ota";
 static void ota_task(void *arg)
 {
     char *url = (char *)arg;
+    size_t ul = strlen(url);
+    if (ul > 6 && strcmp(url + ul - 6, ".mnpkg") == 0) {
+        mnpkg_apply_url(url, true);      /* prints its own verdict; reboots on success */
+        free(url);
+        vTaskDelete(NULL);
+        return;
+    }
+    con_printf("ota: raw image (no package header); prefer a .mnpkg\n");
     esp_http_client_config_t http = {
         .url               = url,
         .timeout_ms        = 15000,
@@ -111,6 +120,8 @@ void ota_mark_boot_ok(void)
 /* version, status                                                     */
 /* ------------------------------------------------------------------ */
 
+static void w_ota_keys(void) { mnpkg_print_keys(); }
+
 static void w_version(void)
 {
     const esp_partition_t *run = esp_ota_get_running_partition();
@@ -133,6 +144,7 @@ static void w_status(void)
 void ota_register_words(void)
 {
     forth_register_word("ota!",    w_ota);
+    forth_register_word("ota-keys", w_ota_keys);
     forth_register_word("version", w_version);
     forth_register_word("status",  w_status);
 }

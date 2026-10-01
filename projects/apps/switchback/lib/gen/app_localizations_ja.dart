@@ -484,4 +484,167 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get updatePhaseNote => '予定: Switchback 自身がイメージを配信し、ユースケースのバンドルを送ります。';
+
+  @override
+  String get setupTitle => 'ゴーグルの設定';
+
+  @override
+  String get setupSettingsSub => 'WiFi、位置、単位';
+
+  @override
+  String get setupNotConnected => '先にゴーグルをペアリングしてください。カードは順に送信されます。';
+
+  @override
+  String get setupWifiTitle => 'WiFi';
+
+  @override
+  String get setupWifiBody => 'ゴーグルは自分で予報を取得するのでネットワークが必要です。2.4 GHz のみ。';
+
+  @override
+  String get setupWifiPick => 'ネットワークを選ぶ';
+
+  @override
+  String get setupWifiSsid => 'ネットワーク名';
+
+  @override
+  String get setupWifiPassword => 'パスワード';
+
+  @override
+  String get setupWifiSend => 'ゴーグルへ送信';
+
+  @override
+  String get setupWifiSending => '送信中、アドレスを待っています…';
+
+  @override
+  String setupWifiUp(String ip) {
+    return '接続しました。$ip';
+  }
+
+  @override
+  String get setupWifiNotYet => '30秒待ってもアドレスがありません。パスワードを確認するか、まだ接続中かもしれません。';
+
+  @override
+  String setupWifiState(String ip) {
+    return '$ip';
+  }
+
+  @override
+  String get setupWifiOff => 'ネットワークなし';
+
+  @override
+  String get setupLocationTitle => '位置';
+
+  @override
+  String get setupLocationBody =>
+      'そのままだとゴーグルは IP アドレスから都市単位で位置を決めます。手動またはこのスマホから正確な地点を設定でき、IP 検索は止まります。';
+
+  @override
+  String get setupLocationUsePhone => 'スマホの位置を使う';
+
+  @override
+  String get setupLocationSetManual => '設定';
+
+  @override
+  String get setupLocationBackToAuto => '自動に戻す';
+
+  @override
+  String get setupLocationReading => 'スマホの位置を取得中…';
+
+  @override
+  String get setupLocationDenied => '位置情報の権限が拒否されました。';
+
+  @override
+  String get setupLocationInvalid => '緯度と経度を度で入力してください。';
+
+  @override
+  String get setupLocationSending => '送信して予報を取得中…';
+
+  @override
+  String setupLocationSet(String city) {
+    return '設定しました。$city の予報。';
+  }
+
+  @override
+  String get setupLocationLookingUp => 'IP を検索中…';
+
+  @override
+  String get setupLocationLookupFailed => '検索に失敗。以前の位置のままです。';
+
+  @override
+  String setupLocationManual(String city) {
+    return '$city、手動';
+  }
+
+  @override
+  String setupLocationAuto(String city) {
+    return '$city、IP から';
+  }
+
+  @override
+  String get setupUnitsTitle => '単位';
+
+  @override
+  String get setupUnitsBody => '既定は国から選ばれます。ガラスとこのアプリが従います。';
+
+  @override
+  String get setupUnitsMetric => '°C · km/h';
+
+  @override
+  String get setupUnitsImperial => '°F · mph';
+
+  @override
+  String get updateNotConnected => 'ゴーグルをペアリングすると実行中のものが見えます。';
+
+  @override
+  String get updateEmbeddedTitle => 'このアプリ内のリリース';
+
+  @override
+  String get updateEmbeddedBody =>
+      'Switchback に組み込まれた署名付き .mnpkg パッケージ。スマホが WiFi 経由で配信し、ゴーグルは署名・ハッシュ・対象を確認してから書き込みます。';
+
+  @override
+  String get updateNoReleases => 'このビルドにはリリースがありません。';
+
+  @override
+  String get updateInstall => 'インストール';
+
+  @override
+  String get updateInstalled => '実行中';
+
+  @override
+  String get updateServing => '配信中…';
+
+  @override
+  String updateServingAt(String ip, int port, int n) {
+    return '$ip:$port で配信中、$n 回取得';
+  }
+
+  @override
+  String updateInstallBody(String fw, String version, String variant) {
+    return 'goggl1 $fw（$version、$variant）をインストールしますか？ゴーグルはこのスマホから取得・検証し、再起動します。';
+  }
+
+  @override
+  String updateProgress(int pct) {
+    return '書き込み中… $pct%';
+  }
+
+  @override
+  String get updateRebooting => '検証・準備完了。ゴーグルは再起動中です。数秒後にもう一度ペアリングしてください。';
+
+  @override
+  String get updateNoVerdict => '150秒以内に結果がありません。コンソールを確認してください。';
+
+  @override
+  String get updateBundleTitle => 'このアプリ内のユースケース';
+
+  @override
+  String get updateBundleBody =>
+      'このビルドに同梱の天気 HUD バンドル。送るとゴーグルのものを置き換え、再起動後も保持されます。';
+
+  @override
+  String get updateBundlePush => '天気 HUD を送る';
+
+  @override
+  String get updateBundleSending => 'バンドル送信中…';
 }

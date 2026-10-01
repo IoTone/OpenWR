@@ -11,6 +11,7 @@ import 'package:switchback/app_state_model.dart';
 import 'package:switchback/gen/app_localizations.dart';
 import 'package:switchback/goggle/console.dart';
 import 'package:switchback/goggle/nus_transport.dart';
+import 'package:switchback/goggle/release_server.dart';
 import 'package:switchback/l10n/locale_controller.dart';
 import 'package:switchback/perms/first_run_controller.dart';
 import 'package:switchback/perms/permissions_service.dart';
@@ -45,6 +46,7 @@ void main() {
           ChangeNotifierProvider<GoggleConsole>(
             create: (_) => GoggleConsole(transport: NusTransport()),
           ),
+          ChangeNotifierProvider<ReleaseServer>(create: (_) => ReleaseServer()),
         ],
         child: const SwitchbackApp(),
       ),

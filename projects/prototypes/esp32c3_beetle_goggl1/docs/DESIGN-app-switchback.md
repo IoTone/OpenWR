@@ -76,8 +76,8 @@ phase A.
 
 ## Phasing
 
-A rebrand and themes · B console, pairing, status, experience auto-select ·
-C setup and looks · D update · E session.
+A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
+C setup and looks ✓ · D update (phone-hosted `.mnpkg`, see DESIGN-provisioning-ota.md §4) ✓ · E session.
 
 ## Open questions
 

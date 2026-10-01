@@ -295,5 +295,121 @@
         "type": "int"
       }
     }
-  }
+  },
+  "setupTitle": "ゴーグルの設定",
+  "setupSettingsSub": "WiFi、位置、単位",
+  "setupNotConnected": "先にゴーグルをペアリングしてください。カードは順に送信されます。",
+  "setupWifiTitle": "WiFi",
+  "setupWifiBody": "ゴーグルは自分で予報を取得するのでネットワークが必要です。2.4 GHz のみ。",
+  "setupWifiPick": "ネットワークを選ぶ",
+  "setupWifiSsid": "ネットワーク名",
+  "setupWifiPassword": "パスワード",
+  "setupWifiSend": "ゴーグルへ送信",
+  "setupWifiSending": "送信中、アドレスを待っています…",
+  "setupWifiUp": "接続しました。{ip}",
+  "@setupWifiUp": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      }
+    }
+  },
+  "setupWifiNotYet": "30秒待ってもアドレスがありません。パスワードを確認するか、まだ接続中かもしれません。",
+  "setupWifiState": "{ip}",
+  "@setupWifiState": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      }
+    }
+  },
+  "setupWifiOff": "ネットワークなし",
+  "setupLocationTitle": "位置",
+  "setupLocationBody": "そのままだとゴーグルは IP アドレスから都市単位で位置を決めます。手動またはこのスマホから正確な地点を設定でき、IP 検索は止まります。",
+  "setupLocationUsePhone": "スマホの位置を使う",
+  "setupLocationSetManual": "設定",
+  "setupLocationBackToAuto": "自動に戻す",
+  "setupLocationReading": "スマホの位置を取得中…",
+  "setupLocationDenied": "位置情報の権限が拒否されました。",
+  "setupLocationInvalid": "緯度と経度を度で入力してください。",
+  "setupLocationSending": "送信して予報を取得中…",
+  "setupLocationSet": "設定しました。{city} の予報。",
+  "@setupLocationSet": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLocationLookingUp": "IP を検索中…",
+  "setupLocationLookupFailed": "検索に失敗。以前の位置のままです。",
+  "setupLocationManual": "{city}、手動",
+  "@setupLocationManual": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupLocationAuto": "{city}、IP から",
+  "@setupLocationAuto": {
+    "placeholders": {
+      "city": {
+        "type": "String"
+      }
+    }
+  },
+  "setupUnitsTitle": "単位",
+  "setupUnitsBody": "既定は国から選ばれます。ガラスとこのアプリが従います。",
+  "setupUnitsMetric": "°C · km/h",
+  "setupUnitsImperial": "°F · mph",
+  "updateNotConnected": "ゴーグルをペアリングすると実行中のものが見えます。",
+  "updateEmbeddedTitle": "このアプリ内のリリース",
+  "updateEmbeddedBody": "Switchback に組み込まれた署名付き .mnpkg パッケージ。スマホが WiFi 経由で配信し、ゴーグルは署名・ハッシュ・対象を確認してから書き込みます。",
+  "updateNoReleases": "このビルドにはリリースがありません。",
+  "updateInstall": "インストール",
+  "updateInstalled": "実行中",
+  "updateServing": "配信中…",
+  "updateServingAt": "{ip}:{port} で配信中、{n} 回取得",
+  "@updateServingAt": {
+    "placeholders": {
+      "ip": {
+        "type": "String"
+      },
+      "port": {
+        "type": "int"
+      },
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "updateInstallBody": "goggl1 {fw}（{version}、{variant}）をインストールしますか？ゴーグルはこのスマホから取得・検証し、再起動します。",
+  "@updateInstallBody": {
+    "placeholders": {
+      "fw": {
+        "type": "String"
+      },
+      "version": {
+        "type": "String"
+      },
+      "variant": {
+        "type": "String"
+      }
+    }
+  },
+  "updateProgress": "書き込み中… {pct}%",
+  "@updateProgress": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "updateRebooting": "検証・準備完了。ゴーグルは再起動中です。数秒後にもう一度ペアリングしてください。",
+  "updateNoVerdict": "150秒以内に結果がありません。コンソールを確認してください。",
+  "updateBundleTitle": "このアプリ内のユースケース",
+  "updateBundleBody": "このビルドに同梱の天気 HUD バンドル。送るとゴーグルのものを置き換え、再起動後も保持されます。",
+  "updateBundlePush": "天気 HUD を送る",
+  "updateBundleSending": "バンドル送信中…"
 }

@@ -51,7 +51,7 @@ class TrailheadScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        if (ex == Experience.squall && f.isNotEmpty) ...<Widget>[
+        if (ex == Experience.squall && f.isNotEmpty && _threat(f)) ...<Widget>[
           _WarningBar(forecast: f, speed: speed),
           const SizedBox(height: 14),
         ],
@@ -129,6 +129,10 @@ class TrailheadScreen extends StatelessWidget {
       ],
     );
   }
+
+  /// Something worth a warning bar: likely rain, strong gusts, or a storm.
+  static bool _threat(List<ForecastHour> f) =>
+      f.any((ForecastHour h) => h.pop >= 50 || h.gust >= 40 || h.stormy);
 
   static int _max(List<ForecastHour> f) =>
       f.map((ForecastHour h) => h.temp).reduce((double a, double b) => a > b ? a : b).round();

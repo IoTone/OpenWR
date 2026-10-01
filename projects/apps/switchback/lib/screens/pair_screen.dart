@@ -45,10 +45,20 @@ class _PairScreenState extends State<PairScreen> {
     final GoggleConsole g = context.read<GoggleConsole>();
     final ScannerController sc = context.read<ScannerController>();
     await sc.stop();
+    // The first link after the goggle starts advertising tends to drop in
+    // the first second; the second holds. One quiet retry.
     await g.connect(d.id, name: d.displayName);
+    if (!g.isConnected && mounted) {
+      await Future<void>.delayed(const Duration(milliseconds: 800));
+      await g.connect(d.id, name: d.displayName);
+    }
     if (!mounted) return;
     if (g.isConnected) {
-      context.pop();
+      if (g.status != null && !g.status!.netOk) {
+        context.pushReplacement('/setup');
+      } else {
+        context.pop();
+      }
     } else {
       setState(() => _autoTried = true);
       unawaited(sc.start());
