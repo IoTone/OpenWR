@@ -33,7 +33,7 @@
   else s" --:--" 98 57 oled-str then ;
 
 : hud-fresh  ( -- )
-  net-ok? 0= if 120 57 oled-glyph else
+  net-ok? 0= if 120 120 57 oled-glyph else
   wx-age dup 0< swap 1800 < or if 90 60 2 oled-disc else 90 60 2 oled-circle then then ;
 
 : hud-status  ( -- )

@@ -17,7 +17,7 @@
 
 : glance-wind  ( -- )
   s" wind" 62 19 oled-str windmax 92 19 oled-num
-  103 19 oled-glyph gustmax 110 19 oled-num ;
+  47 104 19 oled-glyph gustmax 110 19 oled-num ;   \ "wind 7/11" = speed/gust
 
 : glance-range  ( -- )
   s" lo" 62 28 oled-str tmin r10 80 28 oled-num

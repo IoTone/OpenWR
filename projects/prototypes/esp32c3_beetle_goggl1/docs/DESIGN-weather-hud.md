@@ -315,7 +315,20 @@ direction tick. The current hour's label is underlined.
 - Lit: **17 %** (1 155 px). Densest in information per pixel.
 - Weakness: busiest. Icons at 8 px are suggestive, not literal.
 
-### 7.4 Why three, and why these three
+### 7.4 On the glass
+
+Photographed 2026-10-01 with live data (Portland, imperial units chosen
+automatically from the country code, SNTP clock, filled freshness dot):
+
+![strip on hardware](images/hw-strip.jpg)
+![glance on hardware](images/hw-glance.jpg)
+![ribbon on hardware](images/hw-ribbon.jpg)
+
+Two layout corrections came out of these: Glance now writes wind as
+`7/11` (speed/gust) because the `g` glyph read as a zero, and Strip's wind
+and hour rows were separated by one pixel.
+
+### 7.5 Why three, and why these three
 
 They answer three different questions with the same data: *what is the
 shape of the next eight hours* (Strip), *what do I need to know right now*
