@@ -1,8 +1,11 @@
 # maplet — session maps on e-paper (design)
 
-**Status:** design and first build, 2026-10-02. Firmware runs on the XIAO
-ESP32S3 Sense: boots, console over USB and BLE, Postcard mockup pushed to
-the panel with `tools/push_map.py` and kept in slot 1. Phone side in Switchback.
+**Status:** Postcard works end to end, 2026-10-02: Switchback pairs the
+maplet as a second device, reads its safe area, renders the session's map
+from AWS Terrain Tiles on the phone, and pushes it over BLE (36 lines, about
+17 s); the maplet shows it and keeps it in slot 0. The bench panel has dead
+gate zones at both ends, so `epd-safe!` limits drawing to the 156 columns
+that render; a fresh panel gets `0 212 epd-safe!`.
 **Hardware (primary):** Seeed XIAO ESP32S3 Sense (OV2640 camera, microSD,
 8 MB PSRAM, 8 MB flash) + XIAO ePaper Breakout Board (SKU 105990172) + 2.13"
 flexible monochrome e-paper, 212×104 (SKU 104990847, UC8151-class controller,
@@ -156,6 +159,14 @@ BLE in 80-byte lines that is 36 lines and about three seconds. At boot the
 device shows the last saved map, or its splash if there is none.
 
 ## 7. Phone side
+
+Done in Switchback (`lib/map/`, `lib/goggle/maplet.dart`,
+`lib/screens/session_detail_screen.dart`): sessions keep the GPS track
+(one point per 10 m) and climb; a session's detail screen shows the real
+1-bit render and **Send to maplet**; Stop sends the Postcard by itself when a
+maplet is connected; Trailhead has a maplet card; `/pair-maplet` pairs it;
+**Add a demo session** (Forest Park loop) on the Session tab exercises the
+chain without a run.
 
 - Sessions record the GPS track (they already compute distance from it).
 - A session's detail screen renders the map and offers **Send to maplet**.

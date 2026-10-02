@@ -1,11 +1,18 @@
 // Copyright (c) 2026 IoTone, Inc.
 // SPDX-License-Identifier: MIT
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../gen/app_localizations.dart';
 import '../goggle/console.dart';
+import '../goggle/maplet.dart';
 import '../goggle/session.dart';
+import '../map/eink_canvas.dart';
+import '../map/map_render.dart';
+import 'session_detail_screen.dart';
 import '../theme/tokens.dart';
 
 /// Session: pick a sport, start, and the phone streams time, pace, distance
@@ -55,6 +62,11 @@ class SessionScreen extends StatelessWidget {
           FilledButton(onPressed: ss.start, child: Text(l.startSession)),
           const SizedBox(height: 8),
           Text(g.isConnected ? l.sessionGlassReady : l.sessionNoGlass, style: t.textTheme.bodySmall),
+          if (ss.log.every((SessionSummary s) => s.track.isEmpty))
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(onPressed: ss.addDemo, child: Text(l.sessionAddDemo)),
+            ),
         ] else ...<Widget>[
           Row(
             children: <Widget>[
@@ -83,11 +95,14 @@ class SessionScreen extends StatelessWidget {
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: cs.error, foregroundColor: cs.onError, minimumSize: const Size(64, 64)),
             onPressed: () async {
+              final MapletConsole m = context.read<MapletConsole>();
               final SessionSummary? s = await ss.stop();
               if (s != null && context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text(l.sessionDone(fmtClock(s.seconds), s.distanceUnits.toStringAsFixed(2), unit)),
                 ));
+                // Postcard: the loop you just did, on the patch, without asking.
+                if (m.isConnected && s.track.length >= 2) unawaited(sendPostcard(context, m, s));
               }
             },
             child: Text(l.sessionStop),
@@ -97,9 +112,11 @@ class SessionScreen extends StatelessWidget {
           const Divider(height: 32),
           Text(l.sessionLogTitle, style: t.textTheme.titleMedium?.copyWith(fontFamily: kFontDisplay, fontSize: 18)),
           const SizedBox(height: 6),
-          for (final SessionSummary s in ss.log.take(10))
+          for (final (int i, SessionSummary s) in ss.log.take(10).indexed)
             ListTile(
               contentPadding: EdgeInsets.zero,
+              onTap: () => context.push('/session/$i'),
+              trailing: s.track.isNotEmpty ? Icon(Icons.map_outlined, color: cs.onSurfaceVariant) : null,
               leading: Icon(icons[s.sport], color: cs.onSurfaceVariant),
               title: Text('${fmtClock(s.seconds)} · ${s.distanceUnits.toStringAsFixed(2)} ${s.imperial ? 'mi' : 'km'} · ${fmtPace(s.avgPaceMinPerUnit)} ${l.sessionPace(s.imperial ? 'mi' : 'km')}'),
               subtitle: Text('${_label(l, s.sport)} · ${s.startedAt.toLocal().toString().substring(0, 16)}'),
@@ -132,5 +149,21 @@ class _Cell extends StatelessWidget {
         Text(label, style: t.textTheme.labelMedium),
       ],
     );
+  }
+}
+
+/// Render the Postcard for the connected glass and push it. Errors go to
+/// the snackbar; the session is already saved either way.
+Future<void> sendPostcard(BuildContext context, MapletConsole m, SessionSummary s) async {
+  final AppLocalizations l = AppLocalizations.of(context);
+  final ScaffoldMessengerState sm = ScaffoldMessenger.of(context);
+  try {
+    final EinkCanvas c = await MapRenderer().postcard(postcardFor(s, l), m.safeW, MapletConsole.height);
+    final EinkCanvas full = EinkCanvas(width: MapletConsole.width, height: MapletConsole.height);
+    full.blit(c, m.safeX, 0);
+    await m.pushFrame(full.pack(), slot: 0);
+    sm.showSnackBar(SnackBar(content: Text(l.sessionSentToMaplet)));
+  } catch (e) {
+    sm.showSnackBar(SnackBar(content: Text('maplet: $e')));
   }
 }

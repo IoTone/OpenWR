@@ -709,4 +709,64 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sessionLogTitle => '最近のセッション';
+
+  @override
+  String get pairMaplet => 'maplet をペアリング';
+
+  @override
+  String get pairMapletTitle => 'maplet をペアリング';
+
+  @override
+  String get pairMapletHeadline => 'maplet の電源を入れてください。';
+
+  @override
+  String get pairMapletBody => '電源投入後3分間待ち受けます。Switchback が見つけて接続します。';
+
+  @override
+  String get mapletPostcard => 'ポストカード';
+
+  @override
+  String get mapletSend => 'maplet に送る';
+
+  @override
+  String mapletSending(int pct) {
+    return '送信中 $pct%';
+  }
+
+  @override
+  String get mapletSent => '表示しました。次のセッションまで残ります。';
+
+  @override
+  String get mapletNotConnected => 'maplet 未接続。プレビューは 212 × 104 の全面です。';
+
+  @override
+  String mapletGlassArea(int w, int h) {
+    return '接続中のパネル向けに描画: $w × $h。';
+  }
+
+  @override
+  String get mapletNoTrack => 'このセッションには GPS 軌跡がないため、バナーのみの地図です。';
+
+  @override
+  String get mapletTrackPoints => '点';
+
+  @override
+  String get mapletAttribution => '標高: AWS Terrain Tiles (USGS 3DEP / Mapzen)。';
+
+  @override
+  String get mapletCardTitle => 'maplet';
+
+  @override
+  String get mapletCardSub => '電子ペーパーのセッション地図';
+
+  @override
+  String mapletConnected(int w) {
+    return '接続中 · 幅 $w px';
+  }
+
+  @override
+  String get sessionSentToMaplet => 'maplet に送りました。';
+
+  @override
+  String get sessionAddDemo => 'デモセッションを追加（Forest Park ループ）';
 }

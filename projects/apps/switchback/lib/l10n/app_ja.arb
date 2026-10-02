@@ -475,5 +475,47 @@
       }
     }
   },
-  "sessionLogTitle": "最近のセッション"
+  "sessionLogTitle": "最近のセッション",
+  "pairMaplet": "maplet をペアリング",
+  "pairMapletTitle": "maplet をペアリング",
+  "pairMapletHeadline": "maplet の電源を入れてください。",
+  "pairMapletBody": "電源投入後3分間待ち受けます。Switchback が見つけて接続します。",
+  "mapletPostcard": "ポストカード",
+  "mapletSend": "maplet に送る",
+  "mapletSending": "送信中 {pct}%",
+  "@mapletSending": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletSent": "表示しました。次のセッションまで残ります。",
+  "mapletNotConnected": "maplet 未接続。プレビューは 212 × 104 の全面です。",
+  "mapletGlassArea": "接続中のパネル向けに描画: {w} × {h}。",
+  "@mapletGlassArea": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      },
+      "h": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletNoTrack": "このセッションには GPS 軌跡がないため、バナーのみの地図です。",
+  "mapletTrackPoints": "点",
+  "mapletAttribution": "標高: AWS Terrain Tiles (USGS 3DEP / Mapzen)。",
+  "mapletCardTitle": "maplet",
+  "mapletCardSub": "電子ペーパーのセッション地図",
+  "mapletConnected": "接続中 · 幅 {w} px",
+  "@mapletConnected": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionSentToMaplet": "maplet に送りました。",
+  "sessionAddDemo": "デモセッションを追加（Forest Park ループ）"
 }

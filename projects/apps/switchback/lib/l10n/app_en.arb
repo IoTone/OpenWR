@@ -475,5 +475,47 @@
       }
     }
   },
-  "sessionLogTitle": "Recent sessions"
+  "sessionLogTitle": "Recent sessions",
+  "pairMaplet": "Pair maplet",
+  "pairMapletTitle": "Pair maplet",
+  "pairMapletHeadline": "Power the maplet up.",
+  "pairMapletBody": "The patch listens for three minutes after power-up. Switchback finds it and connects.",
+  "mapletPostcard": "Postcard",
+  "mapletSend": "Send to maplet",
+  "mapletSending": "Sending {pct}%",
+  "@mapletSending": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletSent": "On the glass. It stays until the next session.",
+  "mapletNotConnected": "No maplet connected. The preview shows the full 212 × 104 panel.",
+  "mapletGlassArea": "Rendered for the connected glass: {w} × {h}.",
+  "@mapletGlassArea": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      },
+      "h": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletNoTrack": "This session has no GPS track, so the map is the banner only.",
+  "mapletTrackPoints": "track points",
+  "mapletAttribution": "Elevation: AWS Terrain Tiles (USGS 3DEP / Mapzen).",
+  "mapletCardTitle": "maplet",
+  "mapletCardSub": "e-paper session map",
+  "mapletConnected": "Connected · glass {w} px wide",
+  "@mapletConnected": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionSentToMaplet": "Sent to the maplet.",
+  "sessionAddDemo": "Add a demo session (Forest Park loop)"
 }

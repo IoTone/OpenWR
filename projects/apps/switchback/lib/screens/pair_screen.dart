@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../gen/app_localizations.dart';
 import '../goggle/console.dart';
+import '../goggle/maplet.dart';
 import '../scanner/scanned_device.dart';
 import '../scanner/scanner_controller.dart';
 import 'scan_controls.dart';
@@ -16,7 +17,8 @@ import 'scan_controls.dart';
 /// connects to the first one it sees; a list appears only if there are
 /// several. Pairing on this device is the button, so nothing else to do.
 class PairScreen extends StatefulWidget {
-  const PairScreen({super.key});
+  const PairScreen({super.key, this.kind = DeviceKind.goggle});
+  final DeviceKind kind;
 
   @override
   State<PairScreen> createState() => _PairScreenState();
@@ -103,14 +105,17 @@ class _PairScreenState extends State<PairScreen> {
     super.dispose();
   }
 
+  GoggleConsole _console(BuildContext c) =>
+      widget.kind == DeviceKind.maplet ? c.read<MapletConsole>() : c.read<GoggleConsole>();
+
   Future<void> _connect(ScannedDevice d) async {
-    final GoggleConsole g = context.read<GoggleConsole>();
+    final GoggleConsole g = _console(context);
     final ScannerController sc = context.read<ScannerController>();
     await sc.stop();
     await g.connect(d.id, name: d.displayName);
     if (!mounted) return;
     if (g.isConnected) {
-      if (g.status != null && !g.status!.netOk) {
+      if (widget.kind == DeviceKind.goggle && g.status != null && !g.status!.netOk) {
         context.pushReplacement('/setup');
       } else {
         context.pop();
@@ -124,13 +129,15 @@ class _PairScreenState extends State<PairScreen> {
   @override
   Widget build(BuildContext context) {
     final ScannerController sc = context.watch<ScannerController>();
-    final GoggleConsole g = context.watch<GoggleConsole>();
+    final bool maplet = widget.kind == DeviceKind.maplet;
+    final GoggleConsole g = maplet ? context.watch<MapletConsole>() : context.watch<GoggleConsole>();
     final AppLocalizations l = AppLocalizations.of(context);
     final ThemeData t = Theme.of(context);
     final ColorScheme cs = t.colorScheme;
 
+    final String prefix = maplet ? 'maplet' : 'goggl';
     final List<ScannedDevice> goggles =
-        sc.devices.where((ScannedDevice d) => d.name.toLowerCase().startsWith('goggl')).toList();
+        sc.devices.where((ScannedDevice d) => d.name.toLowerCase().startsWith(prefix)).toList();
 
     // One goggle in range and nobody connecting: that is the one.
     if (goggles.length == 1 && !_autoTried && g.link == GoggleLink.disconnected) {
@@ -139,20 +146,20 @@ class _PairScreenState extends State<PairScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(l.pairTitle)),
+      appBar: AppBar(title: Text(maplet ? l.pairMapletTitle : l.pairTitle)),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
         children: <Widget>[
-          Text(l.pairHeadline, style: t.textTheme.headlineMedium),
+          Text(maplet ? l.pairMapletHeadline : l.pairHeadline, style: t.textTheme.headlineMedium),
           const SizedBox(height: 10),
-          Text(l.pairBody, style: t.textTheme.bodyLarge),
+          Text(maplet ? l.pairMapletBody : l.pairBody, style: t.textTheme.bodyLarge),
           const SizedBox(height: 20),
           _StatusCard(goggle: g, scanning: sc.isScanning, found: goggles.length),
           const SizedBox(height: 16),
           for (final ScannedDevice d in goggles)
             Card(
               child: ListTile(
-                leading: Icon(Icons.visibility_outlined, color: cs.primary),
+                leading: Icon(maplet ? Icons.map_outlined : Icons.visibility_outlined, color: cs.primary),
                 title: Text(d.displayName),
                 subtitle: Text(l.rssiDbm(d.rssi)),
                 trailing: FilledButton(

@@ -10,6 +10,8 @@ import 'screens/diagnostics_screen.dart';
 import 'screens/looks_screen.dart';
 import 'screens/pair_screen.dart';
 import 'screens/radar_screen.dart';
+import 'goggle/console.dart';
+import 'screens/session_detail_screen.dart';
 import 'screens/session_screen.dart';
 import 'screens/setup_screen.dart';
 import 'screens/settings_screen.dart';
@@ -22,6 +24,8 @@ final GoRouter appRouter = GoRouter(
   routes: <RouteBase>[
     GoRoute(path: '/', builder: (_, __) => const HomeShell()),
     GoRoute(path: '/pair', builder: (_, __) => const PairScreen()),
+    GoRoute(path: '/pair-maplet', builder: (_, __) => const PairScreen(kind: DeviceKind.maplet)),
+    GoRoute(path: '/session/:i', builder: (_, GoRouterState st) => SessionDetailScreen(index: int.tryParse(st.pathParameters['i'] ?? '') ?? 0)),
     GoRoute(path: '/radar', builder: (_, __) => const RadarScreen()),
     GoRoute(path: '/setup', builder: (_, __) => const SetupScreen()),
     GoRoute(path: '/looks', builder: (BuildContext c, __) => _Page(title: AppLocalizations.of(c).tabLooks, child: const LooksScreen())),

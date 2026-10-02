@@ -727,4 +727,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionLogTitle => 'Recent sessions';
+
+  @override
+  String get pairMaplet => 'Pair maplet';
+
+  @override
+  String get pairMapletTitle => 'Pair maplet';
+
+  @override
+  String get pairMapletHeadline => 'Power the maplet up.';
+
+  @override
+  String get pairMapletBody =>
+      'The patch listens for three minutes after power-up. Switchback finds it and connects.';
+
+  @override
+  String get mapletPostcard => 'Postcard';
+
+  @override
+  String get mapletSend => 'Send to maplet';
+
+  @override
+  String mapletSending(int pct) {
+    return 'Sending $pct%';
+  }
+
+  @override
+  String get mapletSent => 'On the glass. It stays until the next session.';
+
+  @override
+  String get mapletNotConnected =>
+      'No maplet connected. The preview shows the full 212 × 104 panel.';
+
+  @override
+  String mapletGlassArea(int w, int h) {
+    return 'Rendered for the connected glass: $w × $h.';
+  }
+
+  @override
+  String get mapletNoTrack =>
+      'This session has no GPS track, so the map is the banner only.';
+
+  @override
+  String get mapletTrackPoints => 'track points';
+
+  @override
+  String get mapletAttribution =>
+      'Elevation: AWS Terrain Tiles (USGS 3DEP / Mapzen).';
+
+  @override
+  String get mapletCardTitle => 'maplet';
+
+  @override
+  String get mapletCardSub => 'e-paper session map';
+
+  @override
+  String mapletConnected(int w) {
+    return 'Connected · glass $w px wide';
+  }
+
+  @override
+  String get sessionSentToMaplet => 'Sent to the maplet.';
+
+  @override
+  String get sessionAddDemo => 'Add a demo session (Forest Park loop)';
 }

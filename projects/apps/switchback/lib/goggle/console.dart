@@ -14,6 +14,10 @@ import 'status.dart';
 
 enum GoggleLink { disconnected, connecting, connected }
 
+/// Which OpenWR device a console talks to. The maplet has the same Forth
+/// console as the goggle but no weather, and an e-paper safe area instead.
+enum DeviceKind { goggle, maplet }
+
 class GoggleLocation {
   const GoggleLocation({required this.lat, required this.lon, required this.manual});
   final double lat;
@@ -30,17 +34,19 @@ class ConsoleEntry {
 }
 
 class GoggleConsole extends ChangeNotifier {
-  GoggleConsole({required ConsoleTransport transport}) : _t = transport {
+  GoggleConsole({required ConsoleTransport transport, this.kind = DeviceKind.goggle}) : _t = transport {
     _inSub = _t.incoming.listen(_onIncoming);
     _connSub = _t.connected.listen(_onConnected);
   }
 
   final ConsoleTransport _t;
+  final DeviceKind kind;
+  String get _prefix => kind == DeviceKind.goggle ? 'goggle' : 'maplet';
   StreamSubscription<String>? _inSub;
   StreamSubscription<bool>? _connSub;
 
-  static const String _kLastId = 'goggle.lastId';
-  static const String _kLastName = 'goggle.lastName';
+  String get _kLastId => '$_prefix.lastId';
+  String get _kLastName => '$_prefix.lastName';
 
   GoggleLink _link = GoggleLink.disconnected;
   String _phase = '';
@@ -50,6 +56,12 @@ class GoggleConsole extends ChangeNotifier {
   String? _lastError;
   GoggleStatus? _status;
   List<ForecastHour> _forecast = const <ForecastHour>[];
+
+  /// maplet: its version line and the columns of the glass that render.
+  String mapletVersion = '';
+  int mapletSlot = -1;
+  int safeX = 0;
+  int safeW = 212;
   final List<ConsoleEntry> _transcript = <ConsoleEntry>[];
   static const int _transcriptCap = 150;
 
@@ -135,7 +147,7 @@ class GoggleConsole extends ChangeNotifier {
     final String s = e.toString();
     if (s.contains('133')) return 'Android GATT error 133 (first-connect glitch)';
     if (s.contains('TimeoutException') || s.contains('timeout')) return 'timed out: is the goggle advertising? (B on the glass)';
-    if (s.contains('No Nordic UART')) return 'that device is not a goggle';
+    if (s.contains('No Nordic UART')) return 'that device has no console';
     return s.replaceFirst('StateError: ', '').replaceFirst('Exception: ', '');
   }
 
@@ -224,6 +236,7 @@ class GoggleConsole extends ChangeNotifier {
   /// `status` and the forecast, which Trailhead and the experience need.
   Future<void> refresh() async {
     if (!isConnected) return;
+    if (kind == DeviceKind.maplet) return _refreshMaplet();
     try {
       final String s = await send('status', background: true, timeout: const Duration(seconds: 4));
       for (final String l in s.split('\n')) {
@@ -234,6 +247,31 @@ class GoggleConsole extends ChangeNotifier {
         final String d = await send('wx-dump', background: true, timeout: const Duration(seconds: 6));
         final List<ForecastHour> f = parseForecastDump(d);
         if (f.isNotEmpty) _forecast = f;
+      }
+      notifyListeners();
+    } catch (e) {
+      _lastError = e.toString();
+      notifyListeners();
+    }
+  }
+
+  /// `maplet v0.1.0 net=0 ... map=1 ...` and the safe area.
+  Future<void> _refreshMaplet() async {
+    try {
+      final String s = await send('status', background: true, timeout: const Duration(seconds: 4));
+      for (final String l in s.split('\n')) {
+        final List<String> parts = l.trim().split(RegExp(r'\s+'));
+        if (parts.length < 2 || parts[0] != 'maplet') continue;
+        mapletVersion = parts[1].startsWith('v') ? parts[1].substring(1) : parts[1];
+        for (final String p in parts) {
+          if (p.startsWith('map=')) mapletSlot = int.tryParse(p.substring(4)) ?? -1;
+        }
+      }
+      final String r = await send('epd-safe@ . .', background: true, timeout: const Duration(seconds: 4));
+      final List<int> n = r.trim().split(RegExp(r'\s+')).map((String x) => int.tryParse(x)).whereType<int>().toList();
+      if (n.length >= 2 && n[1] >= 0 && n[0] > 8 && n[1] + n[0] <= 212) {
+        safeW = n[0];
+        safeX = n[1];
       }
       notifyListeners();
     } catch (e) {

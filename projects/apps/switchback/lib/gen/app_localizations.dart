@@ -1357,6 +1357,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recent sessions'**
   String get sessionLogTitle;
+
+  /// No description provided for @pairMaplet.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair maplet'**
+  String get pairMaplet;
+
+  /// No description provided for @pairMapletTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair maplet'**
+  String get pairMapletTitle;
+
+  /// No description provided for @pairMapletHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Power the maplet up.'**
+  String get pairMapletHeadline;
+
+  /// No description provided for @pairMapletBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The patch listens for three minutes after power-up. Switchback finds it and connects.'**
+  String get pairMapletBody;
+
+  /// No description provided for @mapletPostcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Postcard'**
+  String get mapletPostcard;
+
+  /// No description provided for @mapletSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Send to maplet'**
+  String get mapletSend;
+
+  /// No description provided for @mapletSending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sending {pct}%'**
+  String mapletSending(int pct);
+
+  /// No description provided for @mapletSent.
+  ///
+  /// In en, this message translates to:
+  /// **'On the glass. It stays until the next session.'**
+  String get mapletSent;
+
+  /// No description provided for @mapletNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'No maplet connected. The preview shows the full 212 × 104 panel.'**
+  String get mapletNotConnected;
+
+  /// No description provided for @mapletGlassArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Rendered for the connected glass: {w} × {h}.'**
+  String mapletGlassArea(int w, int h);
+
+  /// No description provided for @mapletNoTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'This session has no GPS track, so the map is the banner only.'**
+  String get mapletNoTrack;
+
+  /// No description provided for @mapletTrackPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'track points'**
+  String get mapletTrackPoints;
+
+  /// No description provided for @mapletAttribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Elevation: AWS Terrain Tiles (USGS 3DEP / Mapzen).'**
+  String get mapletAttribution;
+
+  /// No description provided for @mapletCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'maplet'**
+  String get mapletCardTitle;
+
+  /// No description provided for @mapletCardSub.
+  ///
+  /// In en, this message translates to:
+  /// **'e-paper session map'**
+  String get mapletCardSub;
+
+  /// No description provided for @mapletConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected · glass {w} px wide'**
+  String mapletConnected(int w);
+
+  /// No description provided for @sessionSentToMaplet.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent to the maplet.'**
+  String get sessionSentToMaplet;
+
+  /// No description provided for @sessionAddDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a demo session (Forest Park loop)'**
+  String get sessionAddDemo;
 }
 
 class _AppLocalizationsDelegate

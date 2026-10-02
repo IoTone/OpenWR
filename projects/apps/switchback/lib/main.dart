@@ -10,6 +10,7 @@ import 'package:switchback/app_router.dart';
 import 'package:switchback/app_state_model.dart';
 import 'package:switchback/gen/app_localizations.dart';
 import 'package:switchback/goggle/console.dart';
+import 'package:switchback/goggle/maplet.dart';
 import 'package:switchback/goggle/nus_transport.dart';
 import 'package:switchback/goggle/release_server.dart';
 import 'package:switchback/goggle/session.dart';
@@ -47,6 +48,10 @@ void main() {
           ChangeNotifierProvider<GoggleConsole>(
             create: (_) => GoggleConsole(transport: NusTransport()),
           ),
+          // The maplet is a second console of the same shape, remembered on its own.
+          ChangeNotifierProvider<MapletConsole>(
+            create: (_) => MapletConsole(transport: NusTransport()),
+          ),
           ChangeNotifierProvider<ReleaseServer>(create: (_) => ReleaseServer()),
           ChangeNotifierProxyProvider<GoggleConsole, SessionController>(
             create: (BuildContext c) => SessionController(goggle: c.read<GoggleConsole>())..load(),
@@ -82,6 +87,7 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
       // The one place the goggle's weather reaches the app's look.
       g.addListener(() => tc.setFromGoggle(status: g.status, forecast: g.forecast));
       g.reconnectIfNeeded();
+      context.read<MapletConsole>().reconnectIfNeeded();
     });
     Future<void>.delayed(const Duration(milliseconds: 1600), () {
       if (mounted) setState(() => _minSplashElapsed = true);
@@ -98,6 +104,7 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       context.read<GoggleConsole>().reconnectIfNeeded();
+      context.read<MapletConsole>().reconnectIfNeeded();
     }
   }
 

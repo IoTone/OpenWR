@@ -42,6 +42,7 @@ dependencies:
 
   # --- Settings persistence ---
   shared_preferences: ^2.3.3
+  path_provider: ^2.1.5   # terrain tile cache for maplet maps
   wakelock_plus: ^1.3.3
 
 dev_dependencies:
