@@ -1465,6 +1465,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a demo session (Forest Park loop)'**
   String get sessionAddDemo;
+
+  /// No description provided for @planTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get planTitle;
+
+  /// No description provided for @planBody.
+  ///
+  /// In en, this message translates to:
+  /// **'A page for the trailhead: the route, the numbers, and when the light goes. It stays on the patch until you send the Postcard at the end.'**
+  String get planBody;
+
+  /// No description provided for @planHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Where I am'**
+  String get planHere;
+
+  /// No description provided for @planHereTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Here'**
+  String get planHereTitle;
+
+  /// No description provided for @planLoop.
+  ///
+  /// In en, this message translates to:
+  /// **'Loop'**
+  String get planLoop;
+
+  /// No description provided for @mapletFieldNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Field Notes'**
+  String get mapletFieldNotes;
+
+  /// No description provided for @sessionPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan a session'**
+  String get sessionPlan;
 }
 
 class _AppLocalizationsDelegate

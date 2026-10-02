@@ -517,5 +517,12 @@
     }
   },
   "sessionSentToMaplet": "maplet に送りました。",
-  "sessionAddDemo": "デモセッションを追加（Forest Park ループ）"
+  "sessionAddDemo": "デモセッションを追加（Forest Park ループ）",
+  "planTitle": "プラン",
+  "planBody": "登山口で見る1ページ: ルート、数字、日没時刻。終了時にポストカードを送るまでパッチに残ります。",
+  "planHere": "現在地",
+  "planHereTitle": "Here",
+  "planLoop": "周回",
+  "mapletFieldNotes": "フィールドノート",
+  "sessionPlan": "セッションを計画"
 }

@@ -769,4 +769,25 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sessionAddDemo => 'デモセッションを追加（Forest Park ループ）';
+
+  @override
+  String get planTitle => 'プラン';
+
+  @override
+  String get planBody => '登山口で見る1ページ: ルート、数字、日没時刻。終了時にポストカードを送るまでパッチに残ります。';
+
+  @override
+  String get planHere => '現在地';
+
+  @override
+  String get planHereTitle => 'Here';
+
+  @override
+  String get planLoop => '周回';
+
+  @override
+  String get mapletFieldNotes => 'フィールドノート';
+
+  @override
+  String get sessionPlan => 'セッションを計画';
 }

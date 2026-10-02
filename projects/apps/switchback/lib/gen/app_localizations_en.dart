@@ -791,4 +791,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionAddDemo => 'Add a demo session (Forest Park loop)';
+
+  @override
+  String get planTitle => 'Plan';
+
+  @override
+  String get planBody =>
+      'A page for the trailhead: the route, the numbers, and when the light goes. It stays on the patch until you send the Postcard at the end.';
+
+  @override
+  String get planHere => 'Where I am';
+
+  @override
+  String get planHereTitle => 'Here';
+
+  @override
+  String get planLoop => 'Loop';
+
+  @override
+  String get mapletFieldNotes => 'Field Notes';
+
+  @override
+  String get sessionPlan => 'Plan a session';
 }

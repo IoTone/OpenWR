@@ -61,6 +61,12 @@ class SessionScreen extends StatelessWidget {
           const SizedBox(height: 24),
           FilledButton(onPressed: ss.start, child: Text(l.startSession)),
           const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: () => context.push('/plan'),
+            icon: const Icon(Icons.edit_note),
+            label: Text(l.sessionPlan),
+          ),
+          const SizedBox(height: 8),
           Text(g.isConnected ? l.sessionGlassReady : l.sessionNoGlass, style: t.textTheme.bodySmall),
           if (ss.log.every((SessionSummary s) => s.track.isEmpty))
             Align(

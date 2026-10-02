@@ -19,6 +19,27 @@ class PostcardSpec {
   final bool planned; // dashed route instead of a walked track
 }
 
+/// Field Notes: a notebook page before the session. Left, the notes;
+/// right, the route as a dashed line with numbered waypoints.
+class FieldNotesSpec {
+  const FieldNotesSpec({
+    required this.title, required this.subtitle, required this.rows, required this.track, this.waypoints = 5,
+  });
+  final String title; // 2x, short ("PLAN")
+  final String subtitle; // two lines max, 1x ("WILDWOOD" / "> PITTOCK")
+  final List<(String, String)> rows; // label, value: DIST 8.9km ...
+  final List<(double, double)> track;
+  final int waypoints;
+}
+
+/// Map where I am: contours around a point, a ring at a planned radius.
+class HereSpec {
+  const HereSpec({required this.lat, required this.lon, required this.radiusM, required this.title, required this.rows});
+  final double lat, lon, radiusM;
+  final String title;
+  final List<(String, String)> rows;
+}
+
 class MapRenderer {
   MapRenderer({TerrainTiles? tiles}) : _tiles = tiles ?? TerrainTiles();
   final TerrainTiles _tiles;
@@ -64,6 +85,148 @@ class MapRenderer {
     c.text(6, 5, spec.title, scale: 2, inverted: true, pad: 3);
     c.text(6, 26, spec.stats, pad: 2);
     return c;
+  }
+
+  Future<EinkCanvas> fieldNotes(FieldNotesSpec spec, int w, int h) async {
+    final EinkCanvas c = EinkCanvas(width: w, height: h);
+    final int col = (w * 0.34).round().clamp(56, 80); // notes column
+    final int mx = col + 2, mw = w - mx;
+    // notes
+    c.text(4, 4, spec.title, scale: 2, pad: 0);
+    final List<String> sub = spec.subtitle.split('\n');
+    for (int i = 0; i < sub.length && i < 2; i++) {
+      c.text(4, 22 + i * 9, _fit(sub[i], col - 8), pad: 0);
+    }
+    c.line(4, 42, col - 6, 42);
+    _rows(c, spec.rows, col);
+    c.line(col, 0, col, h);
+    if (spec.track.length < 2) {
+      c.text(mx + 6, h ~/ 2 - 3, 'NO ROUTE', pad: 0);
+      return c;
+    }
+    // map
+    final EinkCanvas m = EinkCanvas(width: mw, height: h);
+    final GeoBox box = TerrainTiles.boxFor(spec.track, mw, h, pad: 0.12);
+    final ElevationGrid g = await _tiles.grid(box, mw, h);
+    final double relief = g.max - g.min;
+    final double interval = relief < 100 ? 10 : relief < 300 ? 25 : relief < 600 ? 50 : 100;
+    _contours(m, g, interval, 4);
+    _gridDots(m, (1000 / g.metersPerPixel).round().clamp(20, 200));
+    final List<(int, int)> pts = spec.track.map(((double, double) p) {
+      final (double x, double y) = g.project(p.$1, p.$2);
+      return (x.round(), y.round());
+    }).toList();
+    _route(m, pts);
+    // waypoints: every 1/n of the route by distance, numbered
+    final List<double> cum = <double>[0];
+    for (int i = 1; i < spec.track.length; i++) {
+      cum.add(cum.last + _haversine(spec.track[i - 1], spec.track[i]));
+    }
+    final double total = cum.last;
+    for (int k = 0; k < spec.waypoints; k++) {
+      final double target = total * k / spec.waypoints;
+      int idx = 0;
+      while (idx + 1 < cum.length && cum[idx + 1] <= target) {
+        idx++;
+      }
+      final (int x, int y) = pts[idx];
+      m.box(x - 5, y - 5, 11, 11, v: 0);
+      m.frame(x - 5, y - 5, 11, 11);
+      m.text(x - 2, y - 3, '${k + 1}', pad: 0);
+    }
+    final int bar = (500 / g.metersPerPixel).round().clamp(10, mw ~/ 2);
+    _scalebar(m, 6, h - 8, bar);
+    m.text(6 + bar + 4, h - 13, '${(bar * g.metersPerPixel).round()}m', pad: 1);
+    _north(m, mw - 10, 12);
+    c.blit(m, mx, 0);
+    return c;
+  }
+
+  Future<EinkCanvas> here(HereSpec spec, int w, int h) async {
+    final EinkCanvas c = EinkCanvas(width: w, height: h);
+    final int col = (w * 0.34).round().clamp(56, 80);
+    final int mx = col + 2, mw = w - mx;
+    c.text(4, 4, spec.title, scale: 2, pad: 0);
+    c.line(4, 42, col - 6, 42);
+    _rows(c, spec.rows, col);
+    c.line(col, 0, col, h);
+    final EinkCanvas m = EinkCanvas(width: mw, height: h);
+    // a box that holds the ring with a little room
+    final double dLat = spec.radiusM / 111320 * 1.25;
+    final double dLon = spec.radiusM / (111320 * math.cos(spec.lat * math.pi / 180)) * 1.25;
+    final GeoBox box = TerrainTiles.boxFor(<(double, double)>[
+      (spec.lat - dLat, spec.lon - dLon), (spec.lat + dLat, spec.lon + dLon),
+    ], mw, h, pad: 0);
+    final ElevationGrid g = await _tiles.grid(box, mw, h);
+    final Float32List shade = _hillshade(g, 2.0 / g.metersPerPixel);
+    _ditherShade(m, shade, 1.2);
+    final double relief = g.max - g.min;
+    final double interval = relief < 100 ? 10 : relief < 300 ? 25 : relief < 600 ? 50 : 100;
+    _contours(m, g, interval, 4);
+    final (double px, double py) = g.project(spec.lat, spec.lon);
+    final int r = (spec.radiusM / g.metersPerPixel).round();
+    _dashedRing(m, px.round(), py.round(), r);
+    m.disc(px.round(), py.round(), 4, v: 0);
+    m.disc(px.round(), py.round(), 2);
+    final int bar = (1000 / g.metersPerPixel).round().clamp(10, mw ~/ 2);
+    _scalebar(m, 6, h - 8, bar);
+    m.text(6 + bar + 4, h - 13, '${(bar * g.metersPerPixel / 1000).toStringAsFixed(bar * g.metersPerPixel >= 950 ? 0 : 1)}km', pad: 1);
+    _north(m, mw - 10, 12);
+    c.blit(m, mx, 0);
+    return c;
+  }
+
+  /// Label and value on one line, the label shortened to two letters when
+  /// the column is narrow (a 156-column glass gives 8 characters).
+  static void _rows(EinkCanvas c, List<(String, String)> rows, int col) {
+    final int chars = (col - 6) ~/ 6;
+    for (int i = 0; i < rows.length && i < 4; i++) {
+      final String label = rows[i].$1, value = rows[i].$2;
+      String line;
+      if (label.length + 1 + value.length <= chars) {
+        line = label.padRight(chars - value.length) + value;
+      } else {
+        final String l2 = label.length > 2 ? label.substring(0, 2) : label;
+        line = l2.padRight(chars - value.length > l2.length ? chars - value.length : l2.length + 1) + value;
+      }
+      c.text(4, 47 + i * 12, _fit(line, col - 6), pad: 0);
+    }
+  }
+
+  static String _fit(String s, int widthPx) {
+    final int n = (widthPx + 1) ~/ 6;
+    return s.length <= n ? s : s.substring(0, n);
+  }
+
+  static double _haversine((double, double) a, (double, double) b) {
+    const double R = 6371000;
+    final double p1 = a.$1 * math.pi / 180, p2 = b.$1 * math.pi / 180;
+    final double dp = p2 - p1, dl = (b.$2 - a.$2) * math.pi / 180;
+    final double x = math.sin(dp / 2) * math.sin(dp / 2) + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) * math.sin(dl / 2);
+    return 2 * R * math.atan2(math.sqrt(x), math.sqrt(1 - x));
+  }
+
+  static void _gridDots(EinkCanvas c, int step) {
+    for (int x = step; x < c.width; x += step) {
+      for (int y = 0; y < c.height; y += 3) {
+        c.set(x, y, 1);
+      }
+    }
+    for (int y = step; y < c.height; y += step) {
+      for (int x = 0; x < c.width; x += 3) {
+        c.set(x, y, 1);
+      }
+    }
+  }
+
+  static void _dashedRing(EinkCanvas c, int cx, int cy, int r) {
+    final int n = (2 * math.pi * r).round().clamp(24, 2000);
+    for (int i = 0; i < n; i++) {
+      if (i % 6 >= 3) continue;
+      final double a = 2 * math.pi * i / n;
+      c.set(cx + (r * math.cos(a)).round(), cy + (r * math.sin(a)).round(), 1);
+      c.set(cx + ((r + 1) * math.cos(a)).round(), cy + ((r + 1) * math.sin(a)).round(), 1);
+    }
   }
 
   static Float32List _hillshade(ElevationGrid g, double zscale) {

@@ -517,5 +517,12 @@
     }
   },
   "sessionSentToMaplet": "Sent to the maplet.",
-  "sessionAddDemo": "Add a demo session (Forest Park loop)"
+  "sessionAddDemo": "Add a demo session (Forest Park loop)",
+  "planTitle": "Plan",
+  "planBody": "A page for the trailhead: the route, the numbers, and when the light goes. It stays on the patch until you send the Postcard at the end.",
+  "planHere": "Where I am",
+  "planHereTitle": "Here",
+  "planLoop": "Loop",
+  "mapletFieldNotes": "Field Notes",
+  "sessionPlan": "Plan a session"
 }
