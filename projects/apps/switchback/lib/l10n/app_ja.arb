@@ -555,5 +555,21 @@
     }
   },
   "sessionSnap": "スナップ",
-  "sessionSnapping": "撮影中…"
+  "sessionSnapping": "撮影中…",
+  "rollTitle": "ロール",
+  "rollBody": "maplet のカードにあるスナップショット。Bluetooth で取得します（1 枚約 10 秒）。",
+  "rollEmpty": "まだスナップショットがありません。セッション中にスナップを押してください。",
+  "rollNoCard": "maplet にカードがないか、ロールを読めません。",
+  "rollFrame": "フレーム {n}",
+  "@rollFrame": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rollPull": "取得",
+  "rollPulling": "取得中…",
+  "rollShow": "パネルに表示",
+  "mapletRoll": "ロール"
 }

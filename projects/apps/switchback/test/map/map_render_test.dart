@@ -40,4 +40,16 @@ void main() {
     expect(full.get(16, 0), 1);
     expect(full.get(15, 0), 0);
   });
+
+  test('unpack is the inverse of pack', () {
+    final EinkCanvas c = EinkCanvas();
+    c.text(10, 10, 'ROLL', scale: 2);
+    c.disc(100, 50, 7);
+    final EinkCanvas back = EinkCanvas.unpack(c.pack());
+    for (int y = 0; y < 104; y += 3) {
+      for (int x = 0; x < 212; x += 3) {
+        expect(back.get(x, y), c.get(x, y));
+      }
+    }
+  });
 }

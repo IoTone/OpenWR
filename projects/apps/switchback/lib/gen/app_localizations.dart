@@ -1591,6 +1591,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Taking the picture…'**
   String get sessionSnapping;
+
+  /// No description provided for @rollTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Roll'**
+  String get rollTitle;
+
+  /// No description provided for @rollBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The snapshots on the maplet\'s card, pulled over Bluetooth. Each takes about ten seconds.'**
+  String get rollBody;
+
+  /// No description provided for @rollEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No snapshots on the card yet. Press Snap during a session.'**
+  String get rollEmpty;
+
+  /// No description provided for @rollNoCard.
+  ///
+  /// In en, this message translates to:
+  /// **'No card in the maplet, or the roll could not be read.'**
+  String get rollNoCard;
+
+  /// No description provided for @rollFrame.
+  ///
+  /// In en, this message translates to:
+  /// **'Frame {n}'**
+  String rollFrame(int n);
+
+  /// No description provided for @rollPull.
+  ///
+  /// In en, this message translates to:
+  /// **'Pull'**
+  String get rollPull;
+
+  /// No description provided for @rollPulling.
+  ///
+  /// In en, this message translates to:
+  /// **'Pulling…'**
+  String get rollPulling;
+
+  /// No description provided for @rollShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show on glass'**
+  String get rollShow;
+
+  /// No description provided for @mapletRoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Roll'**
+  String get mapletRoll;
 }
 
 class _AppLocalizationsDelegate

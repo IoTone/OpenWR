@@ -14,7 +14,10 @@ def dump():
         if m.group(1): out.append((m.group(1).replace('&#10;',' / '),tuple(map(int,m.groups()[1:]))))
     return out
 def find(sub):
-    for t,b in dump():
+    items=dump()
+    for t,b in items:
+        if t.lower()==sub.lower(): return t,b
+    for t,b in items:
         if sub.lower() in t.lower(): return t,b
     return None
 def tap(sub, wait=2):

@@ -836,4 +836,33 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sessionSnapping => '撮影中…';
+
+  @override
+  String get rollTitle => 'ロール';
+
+  @override
+  String get rollBody => 'maplet のカードにあるスナップショット。Bluetooth で取得します（1 枚約 10 秒）。';
+
+  @override
+  String get rollEmpty => 'まだスナップショットがありません。セッション中にスナップを押してください。';
+
+  @override
+  String get rollNoCard => 'maplet にカードがないか、ロールを読めません。';
+
+  @override
+  String rollFrame(int n) {
+    return 'フレーム $n';
+  }
+
+  @override
+  String get rollPull => '取得';
+
+  @override
+  String get rollPulling => '取得中…';
+
+  @override
+  String get rollShow => 'パネルに表示';
+
+  @override
+  String get mapletRoll => 'ロール';
 }

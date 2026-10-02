@@ -126,6 +126,18 @@ class EinkCanvas {
     return out;
   }
 
+  /// The inverse of [pack]: a device frame back into a canvas.
+  static EinkCanvas unpack(Uint8List frame, {int width = 212, int height = 104}) {
+    final EinkCanvas c = EinkCanvas(width: width, height: height);
+    final int stride = (width + 7) ~/ 8;
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        if (frame[y * stride + (x >> 3)] & (0x80 >> (x & 7)) != 0) c._px[y * width + x] = 1;
+      }
+    }
+    return c;
+  }
+
   /// Blit another canvas (a safe-area render) into this one at (x0, y0).
   void blit(EinkCanvas src, int x0, int y0) {
     for (int y = 0; y < src.height; y++) {

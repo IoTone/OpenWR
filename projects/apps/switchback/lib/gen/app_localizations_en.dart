@@ -860,4 +860,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionSnapping => 'Taking the picture…';
+
+  @override
+  String get rollTitle => 'Roll';
+
+  @override
+  String get rollBody =>
+      'The snapshots on the maplet\'s card, pulled over Bluetooth. Each takes about ten seconds.';
+
+  @override
+  String get rollEmpty =>
+      'No snapshots on the card yet. Press Snap during a session.';
+
+  @override
+  String get rollNoCard =>
+      'No card in the maplet, or the roll could not be read.';
+
+  @override
+  String rollFrame(int n) {
+    return 'Frame $n';
+  }
+
+  @override
+  String get rollPull => 'Pull';
+
+  @override
+  String get rollPulling => 'Pulling…';
+
+  @override
+  String get rollShow => 'Show on glass';
+
+  @override
+  String get mapletRoll => 'Roll';
 }

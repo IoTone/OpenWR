@@ -555,5 +555,21 @@
     }
   },
   "sessionSnap": "Snap",
-  "sessionSnapping": "Taking the picture…"
+  "sessionSnapping": "Taking the picture…",
+  "rollTitle": "Roll",
+  "rollBody": "The snapshots on the maplet's card, pulled over Bluetooth. Each takes about ten seconds.",
+  "rollEmpty": "No snapshots on the card yet. Press Snap during a session.",
+  "rollNoCard": "No card in the maplet, or the roll could not be read.",
+  "rollFrame": "Frame {n}",
+  "@rollFrame": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "rollPull": "Pull",
+  "rollPulling": "Pulling…",
+  "rollShow": "Show on glass",
+  "mapletRoll": "Roll"
 }

@@ -13,6 +13,7 @@ import 'screens/radar_screen.dart';
 import 'goggle/console.dart';
 import 'screens/maplet_screen.dart';
 import 'screens/plan_screen.dart';
+import 'screens/roll_screen.dart';
 import 'screens/update_screen.dart';
 import 'screens/session_detail_screen.dart';
 import 'screens/session_screen.dart';
@@ -29,6 +30,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: '/pair', builder: (_, __) => const PairScreen()),
     GoRoute(path: '/pair-maplet', builder: (_, __) => const PairScreen(kind: DeviceKind.maplet)),
     GoRoute(path: '/maplet', builder: (_, __) => const MapletScreen()),
+    GoRoute(path: '/maplet/roll', builder: (_, __) => const RollScreen()),
     GoRoute(path: '/maplet/setup', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).setupTitle, child: const SetupScreen()))),
     GoRoute(path: '/maplet/update', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).tabUpdate, child: const UpdateScreen()))),
     GoRoute(path: '/maplet/console', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).tabConsole, child: const ConsoleScreen()))),

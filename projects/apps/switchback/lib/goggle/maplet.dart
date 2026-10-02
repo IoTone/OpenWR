@@ -54,6 +54,35 @@ class MapletConsole extends GoggleConsole {
     return r.split('\n').firstWhere((String l) => l.startsWith('snap:'), orElse: () => r.trim());
   }
 
+  /// The roll on the card: frame numbers, newest last.
+  Future<List<int>> rollList() async {
+    final String r = await send('roll-ls', timeout: const Duration(seconds: 8));
+    final List<int> out = <int>[];
+    for (final String l in r.split('\n')) {
+      final RegExpMatch? m = RegExp(r'^(\d{4})\.bin', caseSensitive: false).firstMatch(l.trim());
+      if (m != null) out.add(int.parse(m.group(1)!));
+    }
+    out.sort();
+    return out;
+  }
+
+  /// One frame back from the card: 2 808 bytes as 26 hex lines, about 12 s over BLE.
+  Future<Uint8List> rollGet(int n) async {
+    final String r = await send('$n roll-get', timeout: const Duration(seconds: 40));
+    final StringBuffer hex = StringBuffer();
+    for (final String l in r.split('\n')) {
+      final String t = l.trim();
+      if (RegExp(r'^[0-9a-fA-F]+$').hasMatch(t) && t.length.isEven) hex.write(t);
+    }
+    final String h = hex.toString();
+    if (h.length != frameBytes * 2) throw StateError('frame $n: got ${h.length ~/ 2} of $frameBytes bytes');
+    final Uint8List out = Uint8List(frameBytes);
+    for (int i = 0; i < frameBytes; i++) {
+      out[i] = int.parse(h.substring(i * 2, i * 2 + 2), radix: 16);
+    }
+    return out;
+  }
+
   Future<void> showTestPattern() => send('epd-test epd-show', timeout: const Duration(seconds: 15));
   Future<void> showSplash() => send('epd-splash epd-show', timeout: const Duration(seconds: 15));
 }

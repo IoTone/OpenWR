@@ -61,6 +61,7 @@ class MapletScreen extends StatelessWidget {
               FilledButton.tonalIcon(onPressed: m.isConnected && !m.busy ? m.showSplash : null, icon: const Icon(Icons.auto_awesome), label: Text(l.mapletShowSplash)),
               FilledButton.tonalIcon(onPressed: () => context.push('/session/0'), icon: const Icon(Icons.map_outlined), label: Text(l.mapletLastPostcard)),
               FilledButton.tonalIcon(onPressed: () => context.push('/plan'), icon: const Icon(Icons.edit_note), label: Text(l.planTitle)),
+              FilledButton.tonalIcon(onPressed: m.isConnected ? () => context.push('/maplet/roll') : null, icon: const Icon(Icons.photo_library_outlined), label: Text(l.mapletRoll)),
             ],
           ),
           const Divider(height: 36),
