@@ -10,15 +10,14 @@
 
 #ifdef __cplusplus
 extern "C" {
-int skin_safe_x(void);
-int skin_safe_w(void);
-
 #endif
 
 void skin_init(void);
 void skin_register_words(void);
 void skin_splash(void);           /* draw the splash onto the canvas */
 bool skin_show_boot(void);        /* show last saved map or the splash; true if a map */
+int  skin_safe_x(void);           /* columns of the glass that render (epd-safe!) */
+int  skin_safe_w(void);
 
 #ifdef __cplusplus
 }

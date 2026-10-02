@@ -138,7 +138,7 @@ esp_err_t epd_init(void)
     gpio_config(&in);
     gpio_set_level(SKIN_PIN_RST, 1);
 
-    spi_bus_config_t bus = { .mosi_io_num = SKIN_PIN_MOSI, .miso_io_num = -1, .sclk_io_num = SKIN_PIN_SCK,
+    spi_bus_config_t bus = { .mosi_io_num = SKIN_PIN_MOSI, .miso_io_num = SKIN_PIN_MISO, .sclk_io_num = SKIN_PIN_SCK,
                              .quadwp_io_num = -1, .quadhd_io_num = -1, .max_transfer_sz = 4096 };
     esp_err_t err = spi_bus_initialize(SKIN_SPI_HOST, &bus, SPI_DMA_CH_AUTO);
     if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) return err;

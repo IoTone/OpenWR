@@ -27,6 +27,7 @@
 #include "pins.h"
 #include "epd.h"
 #include "skin_words.h"
+#include "cam_words.h"
 
 #define CONSOLE_RX_BUF 256
 #define CONSOLE_TX_BUF 256
@@ -135,6 +136,8 @@ void app_main(void)
     esp_err_t derr = epd_init();
     skin_init();
     skin_register_words();
+    cam_init_all();
+    cam_register_words();
     if (derr == ESP_OK) {
         bool map = skin_show_boot();
         console_printf("e-paper up, showing %s.\r\n", map ? "the last saved map" : "the splash");

@@ -21,6 +21,7 @@
 #define SKIN_PIN_BUSY   7
 #define SKIN_PIN_SCK    8
 #define SKIN_PIN_MOSI   10
+#define SKIN_PIN_MISO   -1
 #define SKIN_PIN_BOOT   9
 #define SKIN_USB_PIN_A  18
 #define SKIN_USB_PIN_B  19

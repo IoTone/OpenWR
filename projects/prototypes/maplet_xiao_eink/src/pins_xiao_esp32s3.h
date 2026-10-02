@@ -23,6 +23,7 @@
 #define SKIN_PIN_BUSY   6
 #define SKIN_PIN_SCK    7
 #define SKIN_PIN_MOSI   9
+#define SKIN_PIN_MISO   8     /* D9: the SD card reads back on it */
 #define SKIN_PIN_BOOT   0
 #define SKIN_PIN_SD_CS  21
 #define SKIN_USB_PIN_A  19
