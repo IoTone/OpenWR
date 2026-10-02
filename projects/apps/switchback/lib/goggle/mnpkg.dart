@@ -51,6 +51,12 @@ class MnpkgHeader {
   bool get clearsBundles => flags & flagClearsBundles != 0;
   bool get requiresRepartition => flags & flagRequiresRepartition != 0;
   bool get isDevSigned => keyId == 'f0846c794440d0ea';
+  /// The OpenWR release keys: ota_release signs, ota_release_next is the rotation key.
+  static const Map<String, String> releaseKeys = <String, String>{
+    '1500c14420e0910a': 'release',
+    'bd0d667bf74d1d52': 'release, next',
+  };
+  String get keyLabel => releaseKeys[keyId] ?? (isDevSigned ? 'dev' : 'unknown key');
 
   /// True when a goggl1 would accept the target fields (spec check 4).
   bool get targetsGoggle => chip == chipEsp32c3 && (board == 0 || board == boardBeetleEsp32c3) && imageFormat == 1;

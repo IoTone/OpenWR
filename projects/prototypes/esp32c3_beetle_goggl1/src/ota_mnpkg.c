@@ -55,6 +55,9 @@ static const struct {
 #ifdef MN_PKG_KEY1_ALG
     { MN_PKG_KEY1_ALG, MN_PKG_KEY1_LEN, MN_PKG_KEY1_ID, MN_PKG_KEY1_PUB },
 #endif
+#ifdef MN_PKG_KEY2_ALG
+    { MN_PKG_KEY2_ALG, MN_PKG_KEY2_LEN, MN_PKG_KEY2_ID, MN_PKG_KEY2_PUB },
+#endif
 };
 
 const char *mnpkg_err_name(int code)
@@ -277,6 +280,9 @@ void mnpkg_print_keys(void)
     for (size_t i = 0; i < sizeof s_keys / sizeof s_keys[0]; i++) {
         con_printf("key%u %s id=", (unsigned)i, s_keys[i].alg == SIG_ED25519 ? "ed25519" : "p256");
         for (int j = 0; j < 8; j++) con_printf("%02x", s_keys[i].id[j]);
-        con_printf("%s\n", (s_keys[i].id[0] == 0xf0 && s_keys[i].id[1] == 0x84) ? " (DEV, bench only)" : "");
+        const char *tag = (s_keys[i].id[0] == 0xf0 && s_keys[i].id[1] == 0x84) ? " (DEV, bench only)"
+                        : (s_keys[i].id[0] == 0x15 && s_keys[i].id[1] == 0x00) ? " (release)"
+                        : (s_keys[i].id[0] == 0xbd && s_keys[i].id[1] == 0x0d) ? " (release, next)" : "";
+        con_printf("%s\n", tag);
     }
 }

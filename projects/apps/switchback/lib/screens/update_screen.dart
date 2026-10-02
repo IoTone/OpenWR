@@ -252,7 +252,7 @@ class _ReleaseCard extends StatelessWidget {
             const SizedBox(height: 4),
             Text('${h.version} · ${h.variant} · ${(release.sizeBytes / 1024).round()} KB · ${h.buildTime.toLocal().toString().substring(0, 16)}', style: mono),
             Text(
-              '${h.targetDesc} · ${h.sigAlg == 2 ? 'ed25519' : 'p256'} ${h.keyId.substring(0, 8)}${h.isDevSigned ? ' (dev)' : ''}${h.clearsBundles ? ' · clears bundles' : ''}',
+              '${h.targetDesc} · ${h.sigAlg == 2 ? 'ed25519' : 'p256'} ${h.keyId.substring(0, 8)} (${h.keyLabel})${h.clearsBundles ? ' · clears bundles' : ''}',
               style: mono,
             ),
             const SizedBox(height: 10),
