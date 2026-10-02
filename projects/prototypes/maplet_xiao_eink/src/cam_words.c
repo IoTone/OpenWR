@@ -35,6 +35,8 @@
 #include "driver/i2c.h"
 #include "driver/ledc.h"
 #include "driver/gpio.h"
+#include "esp_rom_sys.h"
+#include "hal/gpio_ll.h"
 
 #include "forth_core.h"
 #include "console.h"
@@ -103,6 +105,12 @@ static void w_cam_scan(void)
     ledc_channel_config_t cc = { .gpio_num = 10, .speed_mode = LEDC_LOW_SPEED_MODE, .channel = LEDC_CHANNEL_1, .timer_sel = LEDC_TIMER_1, .duty = 1, .hpoint = 0 };
     ledc_channel_config(&cc);
     vTaskDelay(pdMS_TO_TICKS(20));
+    {   /* read the clock pin back while it runs: a toggling XCLK samples as a mix of 0s and 1s */
+        gpio_ll_input_enable(&GPIO, 10);   /* read back without re-routing the LEDC signal */
+        int ones = 0;
+        for (int i = 0; i < 200; i++) { ones += gpio_get_level(10); esp_rom_delay_us(7); }
+        con_printf("cam-scan: XCLK10 samples high %d/200 (%s)\n", ones, (ones > 20 && ones < 180) ? "toggling" : "STUCK");
+    }
     /* the camera library links the legacy I2C driver; use the same one */
     i2c_config_t ic = { .mode = I2C_MODE_MASTER, .sda_io_num = 40, .scl_io_num = 39,
                         .sda_pullup_en = GPIO_PULLUP_ENABLE, .scl_pullup_en = GPIO_PULLUP_ENABLE, .master.clk_speed = 100000 };
