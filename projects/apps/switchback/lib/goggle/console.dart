@@ -107,6 +107,7 @@ class GoggleConsole extends ChangeNotifier {
   /// to drop within a second on Android, the second holds.
   Future<void> connect(String deviceId, {String? name, int attempts = 2}) async {
     if (_link == GoggleLink.connecting) return;
+    _userDisconnect = false;
     _deviceId = deviceId;
     _deviceName = name;
     _lastError = null;
@@ -175,6 +176,9 @@ class GoggleConsole extends ChangeNotifier {
   }
 
   Future<void> disconnect() async {
+    _userDisconnect = true;
+    _retryTimer?.cancel();
+    _retryTimer = null;
     _statusTimer?.cancel();
     _statusTimer = null;
     await _t.disconnect();
@@ -400,10 +404,36 @@ class GoggleConsole extends ChangeNotifier {
     }
   }
 
+  // After an unexpected drop the device re-advertises for three minutes;
+  // keep knocking through that window so nobody has to tap anything.
+  bool _userDisconnect = false;
+  Timer? _retryTimer;
+  void _retryAfterDrop() {
+    _retryTimer?.cancel();
+    int tries = 0;
+    _retryTimer = Timer.periodic(const Duration(seconds: 12), (Timer t) async {
+      tries++;
+      if (_link == GoggleLink.connected || _userDisconnect || tries > 14) {
+        t.cancel();
+        if (_retryTimer == t) _retryTimer = null;
+        return;
+      }
+      if (_link == GoggleLink.disconnected && _deviceId != null) {
+        await connect(_deviceId!, name: _deviceName, attempts: 1);
+      }
+    });
+  }
+
   void _onConnected(bool up) {
-    if (up) return;
+    if (up) {
+      _userDisconnect = false;
+      return;
+    }
     final bool was = _link != GoggleLink.disconnected;
-    if (was && _phase == 'connected') _phase = 'dropped';
+    if (was && _phase == 'connected') {
+      _phase = 'dropped';
+      if (!_userDisconnect) _retryAfterDrop();
+    }
     _link = GoggleLink.disconnected;
     _statusTimer?.cancel();
     _statusTimer = null;
@@ -427,6 +457,7 @@ class GoggleConsole extends ChangeNotifier {
 
   @override
   void dispose() {
+    _retryTimer?.cancel();
     _notifyTimer?.cancel();
     _statusTimer?.cancel();
     _replyTimeout?.cancel();

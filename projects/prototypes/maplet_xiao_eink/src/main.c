@@ -26,6 +26,7 @@
 #include "console.h"
 #include "pins.h"
 #include "epd.h"
+#include "driver/gpio.h"
 #include "skin_words.h"
 #include "cam_words.h"
 
@@ -96,16 +97,52 @@ void con_printf(const char *fmt, ...)
 
 /* ----- housekeeping: BLE flush/poll, hook for the bundle ----- */
 
+/* Hold BOOT for a second to open the pairing window. The glass shows a
+ * PAIR badge over the current picture while the window is open, and goes
+ * back to the picture when a phone connects or the window closes. */
+static uint8_t s_before_badge[EPD_CANVAS];
+static bool s_badge;
+
+static void pair_badge_show(void)
+{
+    memcpy(s_before_badge, epd_canvas(), EPD_CANVAS);
+    int x = skin_safe_x() + skin_safe_w() - 40, y = 3;
+    epd_box(x, y, 36, 15, 0);
+    epd_frame(x, y, 36, 15);
+    epd_frame(x + 1, y + 1, 34, 13);
+    epd_str(x + 6, y + 4, "PAIR", 4, 1);
+    epd_show();
+    s_badge = true;
+}
+
+static void pair_badge_clear(void)
+{
+    memcpy(epd_canvas(), s_before_badge, EPD_CANVAS);
+    epd_show();
+    s_badge = false;
+}
+
 static void skin_task(void *arg)
 {
     uint32_t t = 0;
+    int held = 0;
     for (;;) {
         for (int i = 0; i < 20; i++) {
             vTaskDelay(pdMS_TO_TICKS(50));
             ble_console_flush();
+            if (gpio_get_level(SKIN_PIN_BOOT) == 0) {
+                if (++held == 20) {                               /* 1 s */
+                    ble_pair_window(180);
+                    console_print("ble: pairing window opened from BOOT\r\n");
+                    if (ble_console_state() != 2) pair_badge_show();
+                }
+            } else {
+                held = 0;
+            }
         }
         t++;
         ble_console_poll();
+        if (s_badge && ble_console_state() != 1) pair_badge_clear();   /* connected, or the window closed */
         if (net_just_connected()) clock_start_sntp();
         /* a bundle may define skin-tick for a once-a-minute job */
         if ((t % 60) == 0 && forth_word_exists("skin-tick")) forth_eval("skin-tick");
