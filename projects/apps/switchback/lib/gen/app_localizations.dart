@@ -1579,6 +1579,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Glass: {w} of 212 columns render, from column {x}'**
   String mapletSafeArea(int w, int x);
+
+  /// No description provided for @sessionSnap.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap'**
+  String get sessionSnap;
+
+  /// No description provided for @sessionSnapping.
+  ///
+  /// In en, this message translates to:
+  /// **'Taking the picture…'**
+  String get sessionSnapping;
 }
 
 class _AppLocalizationsDelegate

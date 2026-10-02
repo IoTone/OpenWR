@@ -553,5 +553,7 @@
         "type": "int"
       }
     }
-  }
+  },
+  "sessionSnap": "スナップ",
+  "sessionSnapping": "撮影中…"
 }

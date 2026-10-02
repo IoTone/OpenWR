@@ -98,6 +98,20 @@ class SessionScreen extends StatelessWidget {
             Text(ss.gpsNote!, style: t.textTheme.bodySmall),
           ],
           const SizedBox(height: 24),
+          if (context.watch<MapletConsole>().isConnected) ...<Widget>[
+            OutlinedButton.icon(
+              onPressed: () async {
+                final ScaffoldMessengerState sm = ScaffoldMessenger.of(context);
+                sm.showSnackBar(SnackBar(content: Text(l.sessionSnapping)));
+                final String r = await ss.snap();
+                sm.hideCurrentSnackBar();
+                sm.showSnackBar(SnackBar(content: Text(r)));
+              },
+              icon: const Icon(Icons.photo_camera_outlined),
+              label: Text(l.sessionSnap),
+            ),
+            const SizedBox(height: 12),
+          ],
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: cs.error, foregroundColor: cs.onError, minimumSize: const Size(64, 64)),
             onPressed: () async {

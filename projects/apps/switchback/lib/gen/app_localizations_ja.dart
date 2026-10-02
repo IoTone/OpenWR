@@ -830,4 +830,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String mapletSafeArea(int w, int x) {
     return 'パネル: 212 列中 $w 列が描画可能（$x 列目から）';
   }
+
+  @override
+  String get sessionSnap => 'スナップ';
+
+  @override
+  String get sessionSnapping => '撮影中…';
 }

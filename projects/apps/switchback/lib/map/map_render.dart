@@ -193,6 +193,22 @@ class MapRenderer {
     }
   }
 
+  /// A 76x64 (or so) inset for the Snapshot: contours around a point and
+  /// a dot where you are. Radius about 800 m.
+  Future<EinkCanvas> inset(double lat, double lon, int w, int h, {double radiusM = 800}) async {
+    final EinkCanvas m = EinkCanvas(width: w, height: h);
+    final double dLat = radiusM / 111320, dLon = radiusM / (111320 * math.cos(lat * math.pi / 180));
+    final GeoBox box = TerrainTiles.boxFor(<(double, double)>[(lat - dLat, lon - dLon), (lat + dLat, lon + dLon)], w, h, pad: 0);
+    final ElevationGrid g = await _tiles.grid(box, w, h);
+    final double relief = g.max - g.min;
+    final double interval = relief < 100 ? 20 : relief < 300 ? 50 : 100;
+    _contours(m, g, interval, 0);
+    final (double px, double py) = g.project(lat, lon);
+    m.disc(px.round(), py.round(), 4, v: 0);
+    m.disc(px.round(), py.round(), 2);
+    return m;
+  }
+
   static String _fit(String s, int widthPx) {
     final int n = (widthPx + 1) ~/ 6;
     return s.length <= n ? s : s.substring(0, n);

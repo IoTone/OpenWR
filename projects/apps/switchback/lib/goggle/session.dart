@@ -14,6 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'console.dart';
+import 'maplet.dart';
+import '../map/eink_canvas.dart';
+import '../map/map_render.dart';
 
 enum Sport { run, ride, ski, paddle, climb }
 
@@ -54,9 +57,11 @@ class SessionSummary {
 }
 
 class SessionController extends ChangeNotifier {
-  SessionController({required GoggleConsole goggle}) : _g = goggle;
+  SessionController({required GoggleConsole goggle, MapletConsole? maplet}) : _g = goggle, _m = maplet;
 
   final GoggleConsole _g;
+  final MapletConsole? _m;
+  bool _insetSent = false;
   static const String _kLog = 'session.log';
 
   Sport sport = Sport.run;
@@ -111,6 +116,7 @@ class SessionController extends ChangeNotifier {
     _lastAlt = null;
     _recent.clear();
     _gpsNote = null;
+    _insetSent = false;
     notifyListeners();
     unawaited(WakelockPlus.enable());
     unawaited(_startGps());
@@ -167,6 +173,10 @@ class SessionController extends ChangeNotifier {
     }
     _last = p;
     _gpsNote = null;
+    if (!_insetSent && (_m?.isConnected ?? false)) {
+      _insetSent = true;
+      unawaited(_sendInset(p.latitude, p.longitude));
+    }
     final DateTime now = DateTime.now();
     _recent.add((now, _meters));
     _recent.removeWhere(((DateTime, double) r) => now.difference(r.$1).inSeconds > 30);
@@ -177,6 +187,30 @@ class SessionController extends ChangeNotifier {
       _paceMinPerUnit = unitsPerSec < 1e-4 ? 0 : (1 / unitsPerSec) / 60;
     }
     notifyListeners();
+  }
+
+  /// Snapshot's minimap: where the session started, once, at the first fix.
+  Future<void> _sendInset(double lat, double lon) async {
+    final MapletConsole? m = _m;
+    if (m == null) return;
+    try {
+      final EinkCanvas c = await MapRenderer().inset(lat, lon, 76, 64);
+      await m.sendInset(76, 64, c.pack());
+    } catch (e) {
+      debugPrint('[maplet] inset: $e');
+    }
+  }
+
+  /// A Snapshot now: the device takes the picture; the phone adds the time
+  /// and distance. Returns the device's one-line verdict.
+  Future<String> snap() async {
+    final MapletConsole? m = _m;
+    if (m == null || !m.isConnected) return 'no maplet';
+    final DateTime t = DateTime.now();
+    const List<String> months = <String>['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    final String hhmm = '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+    final String dist = '${distanceUnits.toStringAsFixed(1)}${imperial ? 'mi' : 'km'}';
+    return m.snap('${months[t.month - 1]} ${t.day} $hhmm  $dist');
   }
 
   void _onTick() {

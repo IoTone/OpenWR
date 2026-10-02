@@ -53,9 +53,9 @@ void main() {
             create: (_) => MapletConsole(transport: NusTransport()),
           ),
           ChangeNotifierProvider<ReleaseServer>(create: (_) => ReleaseServer()),
-          ChangeNotifierProxyProvider<GoggleConsole, SessionController>(
-            create: (BuildContext c) => SessionController(goggle: c.read<GoggleConsole>())..load(),
-            update: (_, __, SessionController? s) => s!,
+          ChangeNotifierProxyProvider2<GoggleConsole, MapletConsole, SessionController>(
+            create: (BuildContext c) => SessionController(goggle: c.read<GoggleConsole>(), maplet: c.read<MapletConsole>())..load(),
+            update: (_, __, ___, SessionController? s) => s!,
           ),
         ],
         child: const SwitchbackApp(),

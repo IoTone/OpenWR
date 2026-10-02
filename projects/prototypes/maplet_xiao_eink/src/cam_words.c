@@ -310,7 +310,7 @@ static void w_roll_ls(void)
     if (!d) { con_printf("roll: no card\n"); return; }
     struct dirent *e; int n = 0;
     while ((e = readdir(d)) != NULL) {
-        if (strstr(e->d_name, ".bin")) { con_printf("%s\n", e->d_name); n++; }
+        if (strcasestr(e->d_name, ".bin")) { con_printf("%s\n", e->d_name); n++; }
     }
     closedir(d);
     con_printf("roll: %d frames\n", n);
@@ -351,11 +351,10 @@ static void w_snap(void)
     if (cap && n > 0) {
         char t[40]; int m = n < 39 ? n : 39;
         memcpy(t, cap, m); t[m] = 0;
-        epd_box(x0, EPD_H - 11, w, 11, 1);
-        epd_str(x0 + 3, EPD_H - 9, t, m, 1);     /* epd_str draws ink; invert the band below */
+        epd_box(x0, EPD_H - 11, w, 11, 0);          /* white band, black text, then invert the band */
+        epd_str(x0 + 3, EPD_H - 9, t, m, 1);
         for (int y = EPD_H - 11; y < EPD_H; y++)
             for (int x = x0; x < x0 + w; x++) epd_pixel(x, y, !epd_get(x, y));
-        /* the band was set black, text drew black on black, inverting gives white text on black */
     }
     epd_show();
     int r = roll_save();

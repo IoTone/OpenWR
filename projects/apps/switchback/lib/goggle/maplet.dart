@@ -35,6 +35,25 @@ class MapletConsole extends GoggleConsole {
     notifyListeners();
   }
 
+  /// The minimap inset for Snapshot: a packed 1-bit bitmap up to 128x64.
+  Future<void> sendInset(int w, int h, Uint8List packed) async {
+    await send('$w $h inset!', timeout: const Duration(seconds: 4));
+    const int chunk = 110;
+    for (int i = 0; i < packed.length; i += chunk) {
+      final int end = (i + chunk < packed.length) ? i + chunk : packed.length;
+      final String hex = packed.sublist(i, end).map((int b) => b.toRadixString(16).padLeft(2, '0')).join();
+      await send('s" $hex" inset-hex!', timeout: const Duration(seconds: 6));
+    }
+  }
+
+  /// Take a photo and show it with the inset and [caption]; the device
+  /// answers "snap: roll N", "snap: shown (no card)" or "snap: no camera frame".
+  Future<String> snap(String caption) async {
+    final String c = caption.replaceAll('"', '').replaceAll(RegExp(r'[^\x20-\x7e]'), '?');
+    final String r = await send('s" ${c.length > 38 ? c.substring(0, 38) : c}" snap', timeout: const Duration(seconds: 25));
+    return r.split('\n').firstWhere((String l) => l.startsWith('snap:'), orElse: () => r.trim());
+  }
+
   Future<void> showTestPattern() => send('epd-test epd-show', timeout: const Duration(seconds: 15));
   Future<void> showSplash() => send('epd-splash epd-show', timeout: const Duration(seconds: 15));
 }

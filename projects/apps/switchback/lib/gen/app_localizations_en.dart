@@ -854,4 +854,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapletSafeArea(int w, int x) {
     return 'Glass: $w of 212 columns render, from column $x';
   }
+
+  @override
+  String get sessionSnap => 'Snap';
+
+  @override
+  String get sessionSnapping => 'Taking the picture…';
 }
