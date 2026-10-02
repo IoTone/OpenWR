@@ -34,6 +34,7 @@
 #include "driver/sdspi_host.h"
 #include "driver/i2c.h"
 #include "driver/ledc.h"
+#include "driver/gpio.h"
 
 #include "forth_core.h"
 #include "console.h"
@@ -82,6 +83,20 @@ static void w_cam_q(void) { forth_push(s_cam_up ? -1 : 0); }
 static void w_cam_scan(void)
 {
     if (s_cam_up) { con_printf("cam-scan: camera already up\n"); return; }
+    /* Presence check: the Sense board pulls SIOD/SIOC and SD CS up; with the
+     * chip's own pull-downs on, a 1 means something external is there. */
+    {
+        const int pins[3] = { 40, 39, 21 };
+        const char *names[3] = { "SIOD40", "SIOC39", "SDCS21" };
+        for (int i = 0; i < 3; i++) {
+            gpio_config_t io = { .pin_bit_mask = 1ULL << pins[i], .mode = GPIO_MODE_INPUT, .pull_down_en = GPIO_PULLDOWN_ENABLE };
+            gpio_config(&io);
+            vTaskDelay(pdMS_TO_TICKS(2));
+            con_printf("cam-scan: %s reads %d with pull-down (1 = board present)\n", names[i], gpio_get_level(pins[i]));
+            gpio_config_t off = { .pin_bit_mask = 1ULL << pins[i], .mode = GPIO_MODE_INPUT };
+            gpio_config(&off);
+        }
+    }
     ledc_timer_config_t tc = { .speed_mode = LEDC_LOW_SPEED_MODE, .duty_resolution = LEDC_TIMER_1_BIT, .timer_num = LEDC_TIMER_1,
                                .freq_hz = 20000000, .clk_cfg = LEDC_AUTO_CLK };
     ledc_timer_config(&tc);
