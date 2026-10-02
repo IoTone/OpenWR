@@ -22,7 +22,17 @@ extern "C" {
 #endif
 
 #define MNPKG_CHIP_ESP32C3        0x0005
-#define MNPKG_BOARD_XIAO_ESP32C3 0x0502     /* in the spec registry */
+#define MNPKG_BOARD_XIAO_ESP32C3  0x0502     /* in the spec registry */
+#define MNPKG_CHIP_ESP32S3        0x0004
+#define MNPKG_BOARD_XIAO_ESP32S3  0x0408     /* xiao-esp32s3 (Sense) — proposed, append-only */
+#include "sdkconfig.h"
+#if CONFIG_IDF_TARGET_ESP32S3
+#define MNPKG_CHIP_THIS   MNPKG_CHIP_ESP32S3
+#define MNPKG_BOARD_THIS  MNPKG_BOARD_XIAO_ESP32S3
+#else
+#define MNPKG_CHIP_THIS   MNPKG_CHIP_ESP32C3
+#define MNPKG_BOARD_THIS  MNPKG_BOARD_XIAO_ESP32C3
+#endif
 
 /* Spec §4 outcomes, 0 = all checks passed and the image is staged + bootable */
 enum {

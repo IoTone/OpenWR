@@ -1,11 +1,13 @@
 # maplet — session maps on e-paper (design)
 
-**Status:** design and first build, 2026-10-02. Firmware builds; flash test
-waits for a XIAO on USB. Phone side in Switchback.
-**Hardware:** Seeed XIAO ESP32C3 + XIAO ePaper Breakout Board (SKU 105990172)
-+ 2.13" flexible monochrome e-paper, 212×104 (SKU 104990847, UC8151-class
-controller, the panel GxEPD2 calls `213_flex`). Build B: XIAO ESP32S3 Sense
-(camera, microSD, 8 MB PSRAM) on the same breakout.
+**Status:** design and first build, 2026-10-02. Firmware runs on the XIAO
+ESP32S3 Sense: boots, console over USB and BLE, Postcard mockup pushed to
+the panel with `tools/push_map.py` and kept in slot 1. Phone side in Switchback.
+**Hardware (primary):** Seeed XIAO ESP32S3 Sense (OV2640 camera, microSD,
+8 MB PSRAM, 8 MB flash) + XIAO ePaper Breakout Board (SKU 105990172) + 2.13"
+flexible monochrome e-paper, 212×104 (SKU 104990847, UC8151-class controller,
+the panel GxEPD2 calls `213_flex`). The XIAO ESP32C3 is kept as a second
+PlatformIO env (`xiao_c3`) for the camera-less builds.
 **Lineage:** the ESP_Skin prototypes in this repo (raw driver, GxEPD2
 driver); the goggl1 firmware for everything that is not the display.
 
@@ -114,15 +116,17 @@ Parameters that read well at one bit on this panel, from the mockups:
    80 bytes via `epd-hex!`; the driver rotates to native 104×212 on
    `epd-show`.
 
-## 5. Hardware, build B
+## 5. Hardware: XIAO ESP32S3 Sense
 
-XIAO ESP32S3 Sense on the same breakout: the breakout pins land on S3
-GPIOs 1, 2, 4, 6, 7, 9; the Sense's microSD shares that SPI bus with CS on
-GPIO21; the OV2640 has its own pins. Second PlatformIO env `xiao_s3_sense`
-with `pins_xiao_esp32s3.h`, esp32-camera and SD components, and the
-Snapshot words. New .mnpkg board id. To verify on the bench: shared-bus
-timing against the panel's BUSY line, and the breakout battery pin against
-the Sense's SD power.
+Env `xiao_s3_sense` (default). Breakout → S3 GPIO: RST 1, CS 2, DC 4,
+BUSY 6, SCK 7, MOSI 9; BOOT button GPIO0; USB on 19/20 (never touched).
+The Sense's microSD shares the SPI bus with CS on GPIO21 (also the user
+LED, so no LED); the OV2640 has its own pins. 8 MB flash: two 3 MB OTA
+slots plus a 1.9 MB `maps` partition (`partitions_s3.csv`); octal PSRAM on.
+.mnpkg chip 0x0004, board 0x0408 `xiao-esp32s3` (proposed). Flashing on
+macOS needs 115200 baud (`upload_speed` in platformio.ini); at 460800 the
+USB-serial-JTAG drops the data phase with "No serial data received".
+Still to add: esp32-camera and SD components and the Snapshot words.
 
 ## 6. The device contract
 

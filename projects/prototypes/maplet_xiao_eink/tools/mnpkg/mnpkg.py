@@ -58,6 +58,7 @@ BOARDS = {
     "stamps3": 0x0405, "unit-cams3": 0x0406, "respeaker-lite": 0x0407,
     "m5stamp-c3u": 0x0501, "xiao-esp32c3": 0x0502,
     "beetle-esp32c3": 0x0503,   # OpenWR goggl1 — proposed for the spec registry (append-only)
+    "xiao-esp32s3": 0x0408,     # OpenWR maplet (Sense) — proposed for the spec registry (append-only)
     "xiao-nrf52840": 0x0601,
 }
 CHIP_NAME = {v[0]: k for k, v in CHIPS.items()}

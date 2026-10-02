@@ -14,7 +14,7 @@
 #include "driver/gpio.h"
 #include "esp_log.h"
 
-#include "pins_xiao_esp32c3.h"
+#include "pins.h"
 #include "epd.h"
 
 static const char *TAG = "epd";

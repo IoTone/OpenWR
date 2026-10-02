@@ -40,7 +40,7 @@
 #include "forth_core.h"
 #include "console.h"
 #include "net_words.h"
-#include "pins_xiao_esp32c3.h"
+#include "pins.h"
 #include "epd.h"
 #include "skin_words.h"
 
@@ -157,7 +157,7 @@ static void w_button(void) { forth_push(gpio_get_level(SKIN_PIN_BOOT) == 0 ? -1 
 static void w_gpio_fetch(void)
 {
     int n = POP();
-    if (n < 0 || n > 21 || n == 18 || n == 19 || n == SKIN_PIN_SCK || n == SKIN_PIN_MOSI
+    if (n < 0 || n > SKIN_GPIO_MAX || n == SKIN_USB_PIN_A || n == SKIN_USB_PIN_B || n == SKIN_PIN_SCK || n == SKIN_PIN_MOSI
         || n == SKIN_PIN_CS || n == SKIN_PIN_DC || n == SKIN_PIN_RST) { forth_push(-1); return; }
     gpio_config_t io = { .pin_bit_mask = 1ULL << n, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE };
     gpio_config(&io);

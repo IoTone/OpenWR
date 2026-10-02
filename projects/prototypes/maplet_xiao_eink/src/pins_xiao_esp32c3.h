@@ -22,5 +22,9 @@
 #define SKIN_PIN_SCK    8
 #define SKIN_PIN_MOSI   10
 #define SKIN_PIN_BOOT   9
+#define SKIN_USB_PIN_A  18
+#define SKIN_USB_PIN_B  19
+#define SKIN_GPIO_MAX   21
+#define SKIN_BOARD_NAME "XIAO ESP32C3"
 
 #endif /* PINS_XIAO_ESP32C3_H */

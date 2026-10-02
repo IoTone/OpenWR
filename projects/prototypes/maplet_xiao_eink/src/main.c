@@ -24,6 +24,7 @@
 #include "ota_words.h"
 #include "ota_mnpkg.h"
 #include "console.h"
+#include "pins.h"
 #include "epd.h"
 #include "skin_words.h"
 
@@ -118,7 +119,7 @@ void app_main(void)
     console_print("\r\n\r\n============================================\r\n");
     console_printf("  maplet_xiao_eink (OpenWR) v%s\r\n", GOGGL1_VERSION);
     console_printf("  ESPIDFORTH v%s  build %s %s\r\n", ESPIDFORTH_VERSION_STRING, ESPIDFORTH_BUILD_DATE, ESPIDFORTH_BUILD_TIME);
-    console_print("  XIAO ESP32C3 + 2.13\" e-paper 212x104\r\n");
+    console_print("  " SKIN_BOARD_NAME " + 2.13\" e-paper 212x104\r\n");
     console_print("============================================\r\n");
 
     int rc = forth_init(FORTH_HEAP_SIZE);

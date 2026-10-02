@@ -135,8 +135,8 @@ static int check_header(const uint8_t *h, mnpkg_hdr_t *d)
     }
 
     /* 4: target */
-    if (d->chip != MNPKG_CHIP_ESP32C3) return MNPKG_E_TARGET;
-    if (d->board != 0 && d->board != MNPKG_BOARD_XIAO_ESP32C3) return MNPKG_E_TARGET;
+    if (d->chip != MNPKG_CHIP_THIS) return MNPKG_E_TARGET;
+    if (d->board != 0 && d->board != MNPKG_BOARD_THIS) return MNPKG_E_TARGET;
     if (d->image_format != FMT_ESP_IDF) return MNPKG_E_TARGET;
 
     /* 5: repartition */
