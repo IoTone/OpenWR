@@ -129,7 +129,11 @@ slots plus a 1.9 MB `maps` partition (`partitions_s3.csv`); octal PSRAM on.
 .mnpkg chip 0x0004, board 0x0408 `xiao-esp32s3` (proposed). Flashing on
 macOS needs 115200 baud (`upload_speed` in platformio.ini); at 460800 the
 USB-serial-JTAG drops the data phase with "No serial data received".
-Still to add: esp32-camera and SD components and the Snapshot words.
+Snapshot runs on the bench with an OV5640 module and a 2 GB card: `snap`
+takes about 4 s from the phone's tap to the refresh, and the roll holds the
+2 808-byte frames plus 320x240 PGM originals. Sample frame:
+
+![Snapshot from the bench](images/snapshot_bench.png)
 
 ## 6. The device contract
 
