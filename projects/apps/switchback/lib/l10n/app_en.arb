@@ -524,5 +524,34 @@
   "planHereTitle": "Here",
   "planLoop": "Loop",
   "mapletFieldNotes": "Field Notes",
-  "sessionPlan": "Plan a session"
+  "sessionPlan": "Plan a session",
+  "mapletTitle": "maplet",
+  "mapletHubBody": "The patch: what it is running, what it shows, and the tools to set it up and update it.",
+  "mapletSlot": "Showing map slot {n}",
+  "@mapletSlot": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletNoMap": "Showing the splash",
+  "mapletShowTest": "Test pattern",
+  "mapletShowSplash": "Splash",
+  "mapletLastPostcard": "Last Postcard",
+  "mapletSetupWifi": "Set up WiFi",
+  "mapletUpdate": "Update firmware",
+  "mapletConsole": "Console",
+  "mapletDisconnect": "Disconnect",
+  "mapletSafeArea": "Glass: {w} of 212 columns render, from column {x}",
+  "@mapletSafeArea": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      },
+      "x": {
+        "type": "int"
+      }
+    }
+  }
 }

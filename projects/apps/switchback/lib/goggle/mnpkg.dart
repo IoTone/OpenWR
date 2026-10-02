@@ -7,6 +7,8 @@
 // signature and hash checks itself.
 import 'dart:typed_data';
 
+import 'console.dart' show DeviceKind;
+
 class MnpkgHeader {
   const MnpkgHeader({
     required this.sigAlg,
@@ -27,6 +29,8 @@ class MnpkgHeader {
   static const int headerLen = 256;
   static const int chipEsp32c3 = 0x0005;
   static const int boardBeetleEsp32c3 = 0x0503;
+  static const int chipEsp32s3 = 0x0004;
+  static const int boardXiaoEsp32s3 = 0x0408; // maplet on the XIAO ESP32S3 Sense (proposed id)
   static const int flagRequiresRepartition = 0x01;
   static const int flagClearsBundles = 0x02;
 
@@ -50,6 +54,10 @@ class MnpkgHeader {
 
   /// True when a goggl1 would accept the target fields (spec check 4).
   bool get targetsGoggle => chip == chipEsp32c3 && (board == 0 || board == boardBeetleEsp32c3) && imageFormat == 1;
+  bool get targetsMaplet => chip == chipEsp32s3 && (board == 0 || board == boardXiaoEsp32s3) && imageFormat == 1;
+  bool targets(DeviceKind k) => k == DeviceKind.maplet ? targetsMaplet : targetsGoggle;
+  String get targetName => targetsMaplet ? 'maplet' : targetsGoggle ? 'goggl1' : 'other';
+  String get targetDesc => targetsMaplet ? 'esp32s3 / xiao sense' : targetsGoggle ? 'esp32c3 / beetle' : 'other target';
 
   static MnpkgHeader? parse(Uint8List bytes) {
     if (bytes.length < headerLen) return null;

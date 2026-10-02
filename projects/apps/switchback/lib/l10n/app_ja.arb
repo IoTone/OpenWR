@@ -524,5 +524,34 @@
   "planHereTitle": "Here",
   "planLoop": "周回",
   "mapletFieldNotes": "フィールドノート",
-  "sessionPlan": "セッションを計画"
+  "sessionPlan": "セッションを計画",
+  "mapletTitle": "maplet",
+  "mapletHubBody": "パッチの状態、表示中の内容、設定と更新のツール。",
+  "mapletSlot": "地図スロット {n} を表示中",
+  "@mapletSlot": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "mapletNoMap": "スプラッシュを表示中",
+  "mapletShowTest": "テストパターン",
+  "mapletShowSplash": "スプラッシュ",
+  "mapletLastPostcard": "最新のポストカード",
+  "mapletSetupWifi": "WiFi を設定",
+  "mapletUpdate": "ファームウェア更新",
+  "mapletConsole": "コンソール",
+  "mapletDisconnect": "切断",
+  "mapletSafeArea": "パネル: 212 列中 {w} 列が描画可能（{x} 列目から）",
+  "@mapletSafeArea": {
+    "placeholders": {
+      "w": {
+        "type": "int"
+      },
+      "x": {
+        "type": "int"
+      }
+    }
+  }
 }

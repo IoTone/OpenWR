@@ -38,6 +38,7 @@ class GoggleStatus {
     required this.ble,
     required this.receivedAt,
     this.bleDropped = 0,
+    this.device = 'goggl1',
   });
 
   final String version;
@@ -55,6 +56,7 @@ class GoggleStatus {
   final int ble; // 0 off, 1 advertising, 2 connected
   final DateTime receivedAt;
   final int bleDropped;
+  final String device; // goggl1 or maplet
 
   bool get forecastFresh =>
       forecastOk && forecastAgeS >= 0 && forecastAgeS < 30 * 60;
@@ -62,7 +64,7 @@ class GoggleStatus {
   /// Parse a status line. Returns null if it is not one.
   static GoggleStatus? parse(String line, {DateTime? now}) {
     final List<String> parts = line.trim().split(RegExp(r'\s+'));
-    if (parts.length < 3 || parts[0] != 'goggl1') return null;
+    if (parts.length < 3 || (parts[0] != 'goggl1' && parts[0] != 'maplet')) return null;
     final Map<String, String> kv = <String, String>{};
     String localTime = '--:--';
     for (int i = 1; i < parts.length; i++) {
@@ -91,6 +93,7 @@ class GoggleStatus {
       freeHeap: intOf('heap'),
       ble: intOf('ble'),
       receivedAt: now ?? DateTime.now(),
+      device: parts[0],
       bleDropped: intOf('bledrop'),
     );
   }

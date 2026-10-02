@@ -262,6 +262,8 @@ class GoggleConsole extends ChangeNotifier {
       for (final String l in s.split('\n')) {
         final List<String> parts = l.trim().split(RegExp(r'\s+'));
         if (parts.length < 2 || parts[0] != 'maplet') continue;
+        final GoggleStatus? st = GoggleStatus.parse(l);
+        if (st != null) _status = st;
         mapletVersion = parts[1].startsWith('v') ? parts[1].substring(1) : parts[1];
         for (final String p in parts) {
           if (p.startsWith('map=')) mapletSlot = int.tryParse(p.substring(4)) ?? -1;

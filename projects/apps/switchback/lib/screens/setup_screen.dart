@@ -43,7 +43,7 @@ class _SetupScreenState extends State<SetupScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final ScannerController sc = context.read<ScannerController>();
       if (!sc.isScanning && sc.wifiCapability != WifiCapability.unavailable) unawaited(sc.start());
-      unawaited(_readLocation());
+      if (context.read<GoggleConsole>().kind == DeviceKind.goggle) unawaited(_readLocation());
     });
   }
 

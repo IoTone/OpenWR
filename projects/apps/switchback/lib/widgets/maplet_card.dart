@@ -34,7 +34,7 @@ class MapletCard extends StatelessWidget {
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => context.push(m.isConnected ? '/session/0' : '/pair-maplet'),
+        onTap: () => context.push(m.isConnected ? '/maplet' : '/pair-maplet'),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
           child: Row(

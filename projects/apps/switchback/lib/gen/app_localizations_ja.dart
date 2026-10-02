@@ -790,4 +790,44 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sessionPlan => 'セッションを計画';
+
+  @override
+  String get mapletTitle => 'maplet';
+
+  @override
+  String get mapletHubBody => 'パッチの状態、表示中の内容、設定と更新のツール。';
+
+  @override
+  String mapletSlot(int n) {
+    return '地図スロット $n を表示中';
+  }
+
+  @override
+  String get mapletNoMap => 'スプラッシュを表示中';
+
+  @override
+  String get mapletShowTest => 'テストパターン';
+
+  @override
+  String get mapletShowSplash => 'スプラッシュ';
+
+  @override
+  String get mapletLastPostcard => '最新のポストカード';
+
+  @override
+  String get mapletSetupWifi => 'WiFi を設定';
+
+  @override
+  String get mapletUpdate => 'ファームウェア更新';
+
+  @override
+  String get mapletConsole => 'コンソール';
+
+  @override
+  String get mapletDisconnect => '切断';
+
+  @override
+  String mapletSafeArea(int w, int x) {
+    return 'パネル: 212 列中 $w 列が描画可能（$x 列目から）';
+  }
 }

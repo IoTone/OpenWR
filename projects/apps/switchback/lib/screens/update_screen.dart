@@ -179,7 +179,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
         else if (_releases!.isEmpty)
           Text(l.updateNoReleases, style: t.textTheme.bodySmall)
         else
-          for (final EmbeddedRelease r in _releases!) ...<Widget>[
+          for (final EmbeddedRelease r in _releases!.where((EmbeddedRelease r) => r.header.targets(g.kind))) ...<Widget>[
             _ReleaseCard(
               release: r,
               running: st?.version,
@@ -191,6 +191,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
           ],
         if (srv.running)
           Text(l.updateServingAt(srv.ip ?? '?', ReleaseServer.port, srv.served), style: mono),
+        if (g.kind == DeviceKind.goggle) ...<Widget>[
         const Divider(height: 32),
         Text(l.updateBundleTitle, style: t.textTheme.titleMedium?.copyWith(fontFamily: kFontDisplay, fontSize: 18)),
         const SizedBox(height: 4),
@@ -200,6 +201,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
           onPressed: g.isConnected && !_bundleBusy ? _pushBundle : null,
           child: Text(_bundleBusy ? l.updateBundleSending : l.updateBundlePush),
         ),
+        ],
         const Divider(height: 32),
         Text(l.updateOtaTitle, style: t.textTheme.titleMedium?.copyWith(fontFamily: kFontDisplay, fontSize: 18)),
         const SizedBox(height: 6),
@@ -243,19 +245,19 @@ class _ReleaseCard extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Expanded(child: Text('goggl1 ${h.fwVersion}', style: t.textTheme.titleMedium?.copyWith(fontFamily: kFontDisplay, fontSize: 18))),
+                Expanded(child: Text('${h.targetName} ${h.fwVersion}', style: t.textTheme.titleMedium?.copyWith(fontFamily: kFontDisplay, fontSize: 18))),
                 if (same) Chip(label: Text(l.updateInstalled), visualDensity: VisualDensity.compact),
               ],
             ),
             const SizedBox(height: 4),
             Text('${h.version} · ${h.variant} · ${(release.sizeBytes / 1024).round()} KB · ${h.buildTime.toLocal().toString().substring(0, 16)}', style: mono),
             Text(
-              '${h.targetsGoggle ? 'esp32c3 / beetle' : 'other target'} · ${h.sigAlg == 2 ? 'ed25519' : 'p256'} ${h.keyId.substring(0, 8)}${h.isDevSigned ? ' (dev)' : ''}${h.clearsBundles ? ' · clears bundles' : ''}',
+              '${h.targetDesc} · ${h.sigAlg == 2 ? 'ed25519' : 'p256'} ${h.keyId.substring(0, 8)}${h.isDevSigned ? ' (dev)' : ''}${h.clearsBundles ? ' · clears bundles' : ''}',
               style: mono,
             ),
             const SizedBox(height: 10),
             FilledButton(
-              onPressed: enabled && h.targetsGoggle ? onInstall : null,
+              onPressed: enabled ? onInstall : null,
               child: Text(busy ? l.updateServing : l.updateInstall),
             ),
           ],

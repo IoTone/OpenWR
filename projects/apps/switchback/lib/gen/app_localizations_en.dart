@@ -813,4 +813,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionPlan => 'Plan a session';
+
+  @override
+  String get mapletTitle => 'maplet';
+
+  @override
+  String get mapletHubBody =>
+      'The patch: what it is running, what it shows, and the tools to set it up and update it.';
+
+  @override
+  String mapletSlot(int n) {
+    return 'Showing map slot $n';
+  }
+
+  @override
+  String get mapletNoMap => 'Showing the splash';
+
+  @override
+  String get mapletShowTest => 'Test pattern';
+
+  @override
+  String get mapletShowSplash => 'Splash';
+
+  @override
+  String get mapletLastPostcard => 'Last Postcard';
+
+  @override
+  String get mapletSetupWifi => 'Set up WiFi';
+
+  @override
+  String get mapletUpdate => 'Update firmware';
+
+  @override
+  String get mapletConsole => 'Console';
+
+  @override
+  String get mapletDisconnect => 'Disconnect';
+
+  @override
+  String mapletSafeArea(int w, int x) {
+    return 'Glass: $w of 212 columns render, from column $x';
+  }
 }

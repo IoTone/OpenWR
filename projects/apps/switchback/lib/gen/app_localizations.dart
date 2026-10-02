@@ -1507,6 +1507,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Plan a session'**
   String get sessionPlan;
+
+  /// No description provided for @mapletTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'maplet'**
+  String get mapletTitle;
+
+  /// No description provided for @mapletHubBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The patch: what it is running, what it shows, and the tools to set it up and update it.'**
+  String get mapletHubBody;
+
+  /// No description provided for @mapletSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing map slot {n}'**
+  String mapletSlot(int n);
+
+  /// No description provided for @mapletNoMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing the splash'**
+  String get mapletNoMap;
+
+  /// No description provided for @mapletShowTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test pattern'**
+  String get mapletShowTest;
+
+  /// No description provided for @mapletShowSplash.
+  ///
+  /// In en, this message translates to:
+  /// **'Splash'**
+  String get mapletShowSplash;
+
+  /// No description provided for @mapletLastPostcard.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Postcard'**
+  String get mapletLastPostcard;
+
+  /// No description provided for @mapletSetupWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up WiFi'**
+  String get mapletSetupWifi;
+
+  /// No description provided for @mapletUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update firmware'**
+  String get mapletUpdate;
+
+  /// No description provided for @mapletConsole.
+  ///
+  /// In en, this message translates to:
+  /// **'Console'**
+  String get mapletConsole;
+
+  /// No description provided for @mapletDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get mapletDisconnect;
+
+  /// No description provided for @mapletSafeArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Glass: {w} of 212 columns render, from column {x}'**
+  String mapletSafeArea(int w, int x);
 }
 
 class _AppLocalizationsDelegate
