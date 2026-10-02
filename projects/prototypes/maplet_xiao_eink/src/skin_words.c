@@ -18,6 +18,15 @@
  *   epd-load      ( n -- flag )       canvas from map n
  *   epd-slot@     ( -- n )            last slot saved, -1 if none
  *   epd-splash    ( -- )              the brand splash
+ *   epd-test      ( -- )              calibration pattern (then epd-show)
+ *   epd-geom!     ( n -- )            0: native 104x212 (default)  1: native 122x250
+ *   epd-cdi!      ( n -- )            VCOM/data interval byte (default 0x97 = 151)
+ *   epd-old!      ( n -- )            old frame: 0 white (default), 1 inverse of new, 2 skip
+ *   epd-lut!      ( n -- )            0: LUT from register (default)  1: LUT from OTP
+ *   epd-spi!      ( hz -- )           SPI clock (default 4000000)
+ *   epd-csb!      ( n -- )            1: chip select around every byte (vendor demo style)
+ *   epd-fill      ( n -- )            0 white 1 black 2 h-stripes 3 v-stripes 4 checker 5 half
+ *   epd-safe!     ( x w -- )          columns that render on this glass (NVS); epd-safe@ ( -- x w )
  *
  * Board: ms us random reboot gpio@ button?
  *
@@ -128,24 +137,56 @@ int skin_last_slot(void) { return s_last_slot; }
 
 /* ---- splash --------------------------------------------------------- */
 
+static int s_safe_x = 0, s_safe_w = EPD_W;   /* columns that render on this glass */
+
 void skin_splash(void)
 {
+    int x0 = s_safe_x, w = s_safe_w;
     epd_clear();
-    epd_frame(0, 0, EPD_W, EPD_H);
-    epd_frame(2, 2, EPD_W - 4, EPD_H - 4);
+    epd_frame(x0, 0, w, EPD_H);
+    epd_frame(x0 + 2, 2, w - 4, EPD_H - 4);
     /* the switchback mark: two strokes and a dot, top left */
     for (int t = 0; t < 4; t++) {
-        epd_line(14 + t, 70, 48 + t, 46);
-        epd_line(48 + t, 46, 20 + t, 32);
-        epd_line(20 + t, 32, 46 + t, 16);
+        epd_line(x0 + 12 + t, 70, x0 + 46 + t, 46);
+        epd_line(x0 + 46 + t, 46, x0 + 18 + t, 32);
+        epd_line(x0 + 18 + t, 32, x0 + 44 + t, 16);
     }
-    epd_box(44, 42, 8, 8, 1);
-    epd_str(66, 18, "maplet", 5, 3);
-    epd_str(66, 46, "OpenWR", 6, 2);
-    epd_str(66, 66, "Open. Weird. Wild. Strong.", 26, 1);
-    epd_str(14, 86, "pair from Switchback", 20, 1);
+    epd_box(x0 + 42, 42, 8, 8, 1);
+    int big = (w >= 200) ? 3 : 2;
+    epd_str(x0 + 60, 16, "maplet", 6, big);
+    epd_str(x0 + 60, 16 + 8 * big + 6, "OpenWR", 6, 1);
+    epd_str(x0 + 12, 86, "pair from Switchback", 20, 1);
 }
 static void w_splash(void) { skin_splash(); }
+int skin_safe_x(void); int skin_safe_w(void);
+static void w_test(void)   { epd_test_pattern_in(skin_safe_x(), skin_safe_w()); }
+static void w_geom(void)   { epd_knob(0, POP()); }
+static void w_cdi(void)    { epd_knob(1, POP()); }
+static void w_old(void)    { epd_knob(2, POP()); }
+static void w_lut(void)    { epd_knob(3, POP()); }
+static void w_spi(void)    { epd_knob(4, POP()); }
+static void w_csb(void)    { epd_knob(5, POP()); }
+static void w_fill(void)   { epd_fill(POP()); }
+
+/* Safe area: the columns of the glass that still render (this bench panel
+ * has dead gate zones at both ends). Stored in NVS; the splash, the test
+ * pattern and the phone's renderer keep inside it. */
+static void safe_load(void)
+{
+    int32_t x, w;
+    if (kv_get_i32("safex", &x) && kv_get_i32("safew", &w) && x >= 0 && w > 8 && x + w <= EPD_W) { s_safe_x = x; s_safe_w = w; }
+}
+static void w_safe_store(void)
+{
+    int w = POP(), x = POP();
+    if (x < 0 || w <= 8 || x + w > EPD_W) { con_printf("epd-safe!: need 0 <= x, x+w <= %d\n", EPD_W); return; }
+    s_safe_x = x; s_safe_w = w;
+    kv_set_i32("safex", x); kv_set_i32("safew", w);
+    con_printf("epd: safe area x=%d w=%d\n", x, w);
+}
+static void w_safe_fetch(void) { forth_push(s_safe_x); forth_push(s_safe_w); }
+int skin_safe_x(void) { return s_safe_x; }
+int skin_safe_w(void) { return s_safe_w; }
 
 /* ---- board ---------------------------------------------------------- */
 
@@ -170,6 +211,7 @@ void skin_init(void)
 {
     gpio_config_t btn = { .pin_bit_mask = 1ULL << SKIN_PIN_BOOT, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE };
     gpio_config(&btn);
+    safe_load();
     int32_t slot = -1;
     if (kv_get_i32("mapslot", &slot)) s_last_slot = (int)slot;
     ESP_LOGI(TAG, "last map slot %d", s_last_slot);
@@ -195,7 +237,8 @@ void skin_register_words(void)
         { "epd-hex!", w_hex_store }, { "epd-pixel", w_pixel }, { "epd-line", w_line },
         { "epd-box", w_box }, { "epd-frame", w_frame }, { "epd-str", w_str }, { "epd-scale", w_scale },
         { "epd-show", w_show }, { "epd-save", w_save }, { "epd-load", w_load }, { "epd-slot@", w_slot_fetch },
-        { "epd-splash", w_splash },
+        { "epd-splash", w_splash }, { "epd-test", w_test },
+        { "epd-geom!", w_geom }, { "epd-cdi!", w_cdi }, { "epd-old!", w_old }, { "epd-lut!", w_lut }, { "epd-spi!", w_spi }, { "epd-csb!", w_csb }, { "epd-fill", w_fill }, { "epd-safe!", w_safe_store }, { "epd-safe@", w_safe_fetch },
         { "ms", w_ms }, { "us", w_us }, { "random", w_random }, { "reboot", w_reboot },
         { "button?", w_button }, { "gpio@", w_gpio_fetch },
     };

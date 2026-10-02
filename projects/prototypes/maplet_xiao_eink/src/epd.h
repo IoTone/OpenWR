@@ -30,6 +30,10 @@ extern "C" {
 esp_err_t epd_init(void);
 void epd_show(void);                 /* push the canvas, refresh, sleep the panel */
 void epd_clear(void);                /* canvas to white */
+void epd_test_pattern(void);
+void epd_test_pattern_in(int x0, int w);
+void epd_fill(int mode);             /* 0 white 1 black 2 h-stripes 3 v-stripes 4 checker 5 half */
+void epd_knob(int which, int v);     /* bench knobs: 0 geom, 1 cdi, 2 old-frame mode, 3 lut source, 4 spi hz */         /* calibration pattern into the canvas */
 uint8_t *epd_canvas(void);           /* EPD_CANVAS bytes */
 
 void epd_pixel(int x, int y, int on);

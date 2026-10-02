@@ -10,6 +10,9 @@
 
 #ifdef __cplusplus
 extern "C" {
+int skin_safe_x(void);
+int skin_safe_w(void);
+
 #endif
 
 void skin_init(void);
