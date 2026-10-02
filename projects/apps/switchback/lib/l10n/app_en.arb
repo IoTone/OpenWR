@@ -571,5 +571,7 @@
   "rollPull": "Pull",
   "rollPulling": "Pulling…",
   "rollShow": "Show on glass",
-  "mapletRoll": "Roll"
+  "mapletRoll": "Roll",
+  "sportSnowboard": "Snowboard",
+  "sportHike": "Hike"
 }

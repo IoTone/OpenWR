@@ -1645,6 +1645,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Roll'**
   String get mapletRoll;
+
+  /// No description provided for @sportSnowboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Snowboard'**
+  String get sportSnowboard;
+
+  /// No description provided for @sportHike.
+  ///
+  /// In en, this message translates to:
+  /// **'Hike'**
+  String get sportHike;
 }
 
 class _AppLocalizationsDelegate

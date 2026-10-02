@@ -571,5 +571,7 @@
   "rollPull": "取得",
   "rollPulling": "取得中…",
   "rollShow": "パネルに表示",
-  "mapletRoll": "ロール"
+  "mapletRoll": "ロール",
+  "sportSnowboard": "スノーボード",
+  "sportHike": "ハイキング"
 }

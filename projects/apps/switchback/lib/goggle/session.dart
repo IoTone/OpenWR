@@ -18,7 +18,7 @@ import 'maplet.dart';
 import '../map/eink_canvas.dart';
 import '../map/map_render.dart';
 
-enum Sport { run, ride, ski, paddle, climb }
+enum Sport { run, ride, ski, snowboard, hike, paddle, climb }
 
 class SessionSummary {
   const SessionSummary({

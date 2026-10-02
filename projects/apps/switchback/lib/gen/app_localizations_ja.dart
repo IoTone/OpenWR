@@ -865,4 +865,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get mapletRoll => 'ロール';
+
+  @override
+  String get sportSnowboard => 'スノーボード';
+
+  @override
+  String get sportHike => 'ハイキング';
 }

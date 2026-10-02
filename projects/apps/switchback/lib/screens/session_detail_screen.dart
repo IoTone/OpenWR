@@ -175,6 +175,8 @@ String sessionTitle(SessionSummary s, AppLocalizations l) {
     Sport.run => l.sportRun,
     Sport.ride => l.sportRide,
     Sport.ski => l.sportSki,
+    Sport.snowboard => l.sportSnowboard,
+    Sport.hike => l.sportHike,
     Sport.paddle => l.sportPaddle,
     Sport.climb => l.sportClimb,
   };

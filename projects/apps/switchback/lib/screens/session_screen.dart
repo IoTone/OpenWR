@@ -33,6 +33,8 @@ class SessionScreen extends StatelessWidget {
       Sport.run: Icons.directions_run,
       Sport.ride: Icons.directions_bike,
       Sport.ski: Icons.downhill_skiing,
+      Sport.snowboard: Icons.snowboarding,
+      Sport.hike: Icons.hiking,
       Sport.paddle: Icons.kayaking,
       Sport.climb: Icons.terrain,
     };
@@ -150,6 +152,8 @@ class SessionScreen extends StatelessWidget {
         Sport.run => l.sportRun,
         Sport.ride => l.sportRide,
         Sport.ski => l.sportSki,
+        Sport.snowboard => l.sportSnowboard,
+        Sport.hike => l.sportHike,
         Sport.paddle => l.sportPaddle,
         Sport.climb => l.sportClimb,
       };

@@ -146,6 +146,8 @@ class _PlanScreenState extends State<PlanScreen> {
       Sport.run => 7.0,
       Sport.ride => 3.0,
       Sport.ski => 4.0,
+      Sport.snowboard => 4.0,
+      Sport.hike => 15.0,
       Sport.paddle => 10.0,
       Sport.climb => 20.0,
     };

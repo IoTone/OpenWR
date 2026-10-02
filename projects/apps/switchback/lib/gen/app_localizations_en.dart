@@ -892,4 +892,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapletRoll => 'Roll';
+
+  @override
+  String get sportSnowboard => 'Snowboard';
+
+  @override
+  String get sportHike => 'Hike';
 }
