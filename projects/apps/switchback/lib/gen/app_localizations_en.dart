@@ -903,4 +903,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String mapletPanel(String driver, int w, int h) {
     return 'Panel: $driver, $w × $h';
   }
+
+  @override
+  String updateDeviceNotConnected(String device) {
+    return 'Connect the $device to install this.';
+  }
+
+  @override
+  String updateDeviceNeedsWifi(String device) {
+    return 'The $device needs WiFi to fetch it: its page → Set up WiFi.';
+  }
 }

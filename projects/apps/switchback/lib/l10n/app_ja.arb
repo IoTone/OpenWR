@@ -590,5 +590,21 @@
         "type": "int"
       }
     }
+  },
+  "updateDeviceNotConnected": "{device} を接続するとインストールできます。",
+  "@updateDeviceNotConnected": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
+  },
+  "updateDeviceNeedsWifi": "{device} の取得には WiFi が必要です: デバイスのページ → WiFi を設定。",
+  "@updateDeviceNeedsWifi": {
+    "placeholders": {
+      "device": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -1663,6 +1663,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Panel: {driver}, {w} × {h}'**
   String mapletPanel(String driver, int w, int h);
+
+  /// No description provided for @updateDeviceNotConnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect the {device} to install this.'**
+  String updateDeviceNotConnected(String device);
+
+  /// No description provided for @updateDeviceNeedsWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'The {device} needs WiFi to fetch it: its page → Set up WiFi.'**
+  String updateDeviceNeedsWifi(String device);
 }
 
 class _AppLocalizationsDelegate

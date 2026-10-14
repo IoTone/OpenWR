@@ -877,4 +877,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String mapletPanel(String driver, int w, int h) {
     return 'パネル: $driver、$w × $h';
   }
+
+  @override
+  String updateDeviceNotConnected(String device) {
+    return '$device を接続するとインストールできます。';
+  }
+
+  @override
+  String updateDeviceNeedsWifi(String device) {
+    return '$device の取得には WiFi が必要です: デバイスのページ → WiFi を設定。';
+  }
 }

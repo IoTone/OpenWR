@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../gen/app_localizations.dart';
 import '../goggle/console.dart';
+import '../goggle/maplet.dart';
 import '../goggle/mnpkg.dart';
 import '../goggle/release_server.dart';
 import '../goggle/status.dart';
@@ -68,7 +69,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
     });
     try {
       final String url = await srv.serve(r);
-      await _sendOta(url);
+      await _sendOta(url, _consoleFor(r));
     } catch (e) {
       if (mounted) setState(() => _log = e.toString());
     } finally {
@@ -76,8 +77,13 @@ class _UpdateScreenState extends State<UpdateScreen> {
     }
   }
 
-  Future<void> _sendOta(String url) async {
-    final GoggleConsole g = context.read<GoggleConsole>();
+  /// The console a package installs to. On the Update tab that is the
+  /// goggle or the maplet by the package's target; on the maplet's own page
+  /// (MapletScope) the GoggleConsole above is already the maplet.
+  GoggleConsole _consoleFor(EmbeddedRelease r) =>
+      r.header.targetsMaplet ? context.read<MapletConsole>() : context.read<GoggleConsole>();
+
+  Future<void> _sendOta(String url, GoggleConsole g) async {
     final ReleaseServer srv = context.read<ReleaseServer>();
     final AppLocalizations l = AppLocalizations.of(context);
     // ota! returns at once; the task reports through the console. Watch the
@@ -110,7 +116,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
   Future<void> _otaFromUrl() async {
     final String url = _url.text.trim();
     if (!url.startsWith('http')) return;
-    await _sendOta(url);
+    await _sendOta(url, context.read<GoggleConsole>());
   }
 
   Future<void> _pushBundle() async {
@@ -148,6 +154,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
   @override
   Widget build(BuildContext context) {
     final GoggleConsole g = context.watch<GoggleConsole>();
+    final MapletConsole m = context.watch<MapletConsole>();
     final ReleaseServer srv = context.watch<ReleaseServer>();
     final AppLocalizations l = AppLocalizations.of(context);
     final ThemeData t = Theme.of(context);
@@ -179,14 +186,28 @@ class _UpdateScreenState extends State<UpdateScreen> {
         else if (_releases!.isEmpty)
           Text(l.updateNoReleases, style: t.textTheme.bodySmall)
         else
-          for (final EmbeddedRelease r in _releases!.where((EmbeddedRelease r) => r.header.targets(g.kind))) ...<Widget>[
-            _ReleaseCard(
-              release: r,
-              running: st?.version,
-              busy: _busyFile == r.fileName,
-              enabled: g.isConnected && _busyFile == null && (st?.netOk ?? false),
-              onInstall: () => _install(r),
-            ),
+          for (final EmbeddedRelease r in _releases!.where((EmbeddedRelease r) =>
+              g.kind == DeviceKind.maplet ? r.header.targetsMaplet : (r.header.targetsGoggle || r.header.targetsMaplet))) ...<Widget>[
+            Builder(builder: (BuildContext c) {
+              final GoggleConsole dev = r.header.targetsMaplet ? m : g;
+              final bool online = dev.status?.netOk ?? false;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _ReleaseCard(
+                    release: r,
+                    running: dev.status?.version,
+                    busy: _busyFile == r.fileName,
+                    enabled: dev.isConnected && _busyFile == null && online,
+                    onInstall: () => _install(r),
+                  ),
+                  if (!dev.isConnected)
+                    Padding(padding: const EdgeInsets.only(top: 4), child: Text(l.updateDeviceNotConnected(r.header.targetName), style: t.textTheme.bodySmall))
+                  else if (!online)
+                    Padding(padding: const EdgeInsets.only(top: 4), child: Text(l.updateDeviceNeedsWifi(r.header.targetName), style: t.textTheme.bodySmall)),
+                ],
+              );
+            }),
             const SizedBox(height: 10),
           ],
         if (srv.running)

@@ -256,3 +256,34 @@ landscape canvas. Proposed scheme, not built:
 
 Pins: the breakout board (105990172) puts BUSY on D5. Seeed's ePaper driver
 board puts it on D2, so a panel on that board needs its own pin header.
+
+## 10. Bookmarked: pick the map and the area for a session
+
+Asked for 2026-10-13, not built. Today Plan offers a past session's track
+or "where I am" with a loop ring. The ask is to choose the place and the
+line before going: a ski run to come down, a mountain bike loop, a camping
+spot, a forest road or 4x4 track to drive.
+
+Sketch, for when it is picked up:
+
+- **Pick on the phone.** A map screen in Switchback (the colour render the
+  engine already makes, or OSM tiles) where you search a name, tap a
+  point, or trace a line. The result is a saved Plan: a polyline or a
+  point, a title, a sport.
+- **Lines from open data**, so you rarely trace by hand. OpenStreetMap via
+  the Overpass API has what each case needs:
+  ski runs `piste:type=downhill` (with `piste:difficulty`),
+  MTB trails `mtb:scale` and `route=mtb` relations,
+  camp sites `tourism=camp_site`,
+  forest roads and tracks `highway=track` (with `tracktype`, `4wd_only`).
+  The terrain stays AWS Terrain Tiles; OSM adds the line and the name.
+- **Render as Field Notes**: the picked line dashed over contours, start
+  and end marks, numbered waypoints, and sport-aware notes (vertical drop
+  and run length for a ski run, distance and climb for a loop, elevation
+  and sunset for a camp spot, surface for a track).
+- **Offline**: cache the tiles and the OSM extract for the picked area so
+  the plan still renders at the trailhead without signal; on the S3 Sense
+  the SD card can hold the area too.
+- **Attribution**: OSM data is ODbL; the app shows "(c) OpenStreetMap
+  contributors" with any map that uses it.
+
