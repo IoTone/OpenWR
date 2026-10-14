@@ -606,5 +606,46 @@
         "type": "String"
       }
     }
-  }
+  },
+  "hrCardTitle": "Heart rate",
+  "hrCardSub": "Pair a strap: Scosche Rhythm, Polar, Garmin, Wahoo",
+  "hrCardLive": "{bpm} bpm",
+  "@hrCardLive": {
+    "placeholders": {
+      "bpm": {
+        "type": "int"
+      }
+    }
+  },
+  "hrCardNoReading": "Connected · no reading yet",
+  "hrTitle": "Heart-rate strap",
+  "hrBody": "Any strap that speaks the standard Bluetooth heart-rate service. Put it on against skin and press its button until the light blinks. Once paired, it reconnects by itself, and a session sends your heart rate to the glass.",
+  "hrScanning": "Looking for straps…",
+  "hrNoneYet": "Nothing yet. A strap connected to another phone or watch stays hidden; disconnect it there first.",
+  "hrNoContact": "No skin contact: snug the strap up.",
+  "hrWaiting": "Waiting for a reading…",
+  "hrBattery": "Battery {pct}%",
+  "@hrBattery": {
+    "placeholders": {
+      "pct": {
+        "type": "int"
+      }
+    }
+  },
+  "hrDisconnect": "Disconnect",
+  "hrForget": "Forget this strap",
+  "hrReconnect": "Reconnect",
+  "sessionHr": "{avg} avg · {max} max bpm",
+  "@sessionHr": {
+    "placeholders": {
+      "avg": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "sessionNoStrap": "No heart-rate strap: the glass shows -- bpm.",
+  "sessionStrapReady": "Heart-rate strap connected."
 }

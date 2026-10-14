@@ -10,6 +10,7 @@ import 'package:switchback/app_router.dart';
 import 'package:switchback/app_state_model.dart';
 import 'package:switchback/gen/app_localizations.dart';
 import 'package:switchback/goggle/console.dart';
+import 'package:switchback/goggle/hr_strap.dart';
 import 'package:switchback/goggle/maplet.dart';
 import 'package:switchback/goggle/nus_transport.dart';
 import 'package:switchback/goggle/release_server.dart';
@@ -52,10 +53,13 @@ void main() {
           ChangeNotifierProvider<MapletConsole>(
             create: (_) => MapletConsole(transport: NusTransport()),
           ),
+          // A heart-rate strap, standard Heart Rate service; the session reads it.
+          ChangeNotifierProvider<HrStrap>(create: (_) => HrStrap()),
           ChangeNotifierProvider<ReleaseServer>(create: (_) => ReleaseServer()),
-          ChangeNotifierProxyProvider2<GoggleConsole, MapletConsole, SessionController>(
-            create: (BuildContext c) => SessionController(goggle: c.read<GoggleConsole>(), maplet: c.read<MapletConsole>())..load(),
-            update: (_, __, ___, SessionController? s) => s!,
+          ChangeNotifierProxyProvider3<GoggleConsole, MapletConsole, HrStrap, SessionController>(
+            create: (BuildContext c) =>
+                SessionController(goggle: c.read<GoggleConsole>(), maplet: c.read<MapletConsole>(), strap: c.read<HrStrap>())..load(),
+            update: (_, __, ___, ____, SessionController? s) => s!,
           ),
         ],
         child: const SwitchbackApp(),
@@ -88,6 +92,7 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
       g.addListener(() => tc.setFromGoggle(status: g.status, forecast: g.forecast));
       g.reconnectIfNeeded();
       context.read<MapletConsole>().reconnectIfNeeded();
+      context.read<HrStrap>().reconnectIfNeeded();
     });
     Future<void>.delayed(const Duration(milliseconds: 1600), () {
       if (mounted) setState(() => _minSplashElapsed = true);
@@ -105,6 +110,7 @@ class _SwitchbackAppState extends State<SwitchbackApp> with WidgetsBindingObserv
     if (state == AppLifecycleState.resumed) {
       context.read<GoggleConsole>().reconnectIfNeeded();
       context.read<MapletConsole>().reconnectIfNeeded();
+      context.read<HrStrap>().reconnectIfNeeded();
     }
   }
 

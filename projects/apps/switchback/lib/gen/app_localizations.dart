@@ -1675,6 +1675,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The {device} needs WiFi to fetch it: its page → Set up WiFi.'**
   String updateDeviceNeedsWifi(String device);
+
+  /// No description provided for @hrCardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart rate'**
+  String get hrCardTitle;
+
+  /// No description provided for @hrCardSub.
+  ///
+  /// In en, this message translates to:
+  /// **'Pair a strap: Scosche Rhythm, Polar, Garmin, Wahoo'**
+  String get hrCardSub;
+
+  /// No description provided for @hrCardLive.
+  ///
+  /// In en, this message translates to:
+  /// **'{bpm} bpm'**
+  String hrCardLive(int bpm);
+
+  /// No description provided for @hrCardNoReading.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected · no reading yet'**
+  String get hrCardNoReading;
+
+  /// No description provided for @hrTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart-rate strap'**
+  String get hrTitle;
+
+  /// No description provided for @hrBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Any strap that speaks the standard Bluetooth heart-rate service. Put it on against skin and press its button until the light blinks. Once paired, it reconnects by itself, and a session sends your heart rate to the glass.'**
+  String get hrBody;
+
+  /// No description provided for @hrScanning.
+  ///
+  /// In en, this message translates to:
+  /// **'Looking for straps…'**
+  String get hrScanning;
+
+  /// No description provided for @hrNoneYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing yet. A strap connected to another phone or watch stays hidden; disconnect it there first.'**
+  String get hrNoneYet;
+
+  /// No description provided for @hrNoContact.
+  ///
+  /// In en, this message translates to:
+  /// **'No skin contact: snug the strap up.'**
+  String get hrNoContact;
+
+  /// No description provided for @hrWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for a reading…'**
+  String get hrWaiting;
+
+  /// No description provided for @hrBattery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery {pct}%'**
+  String hrBattery(int pct);
+
+  /// No description provided for @hrDisconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnect'**
+  String get hrDisconnect;
+
+  /// No description provided for @hrForget.
+  ///
+  /// In en, this message translates to:
+  /// **'Forget this strap'**
+  String get hrForget;
+
+  /// No description provided for @hrReconnect.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnect'**
+  String get hrReconnect;
+
+  /// No description provided for @sessionHr.
+  ///
+  /// In en, this message translates to:
+  /// **'{avg} avg · {max} max bpm'**
+  String sessionHr(int avg, int max);
+
+  /// No description provided for @sessionNoStrap.
+  ///
+  /// In en, this message translates to:
+  /// **'No heart-rate strap: the glass shows -- bpm.'**
+  String get sessionNoStrap;
+
+  /// No description provided for @sessionStrapReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart-rate strap connected.'**
+  String get sessionStrapReady;
 }
 
 class _AppLocalizationsDelegate

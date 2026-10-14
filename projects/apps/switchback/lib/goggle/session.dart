@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import 'console.dart';
+import 'hr_strap.dart';
 import 'maplet.dart';
 import '../map/eink_canvas.dart';
 import '../map/map_render.dart';
@@ -23,7 +24,7 @@ enum Sport { run, ride, ski, snowboard, hike, paddle, climb }
 class SessionSummary {
   const SessionSummary({
     required this.sport, required this.startedAt, required this.seconds, required this.meters, required this.imperial,
-    this.track = const <(double, double)>[], this.climbMeters = 0,
+    this.track = const <(double, double)>[], this.climbMeters = 0, this.hrAvg = 0, this.hrMax = 0,
   });
   final Sport sport;
   final DateTime startedAt;
@@ -34,12 +35,18 @@ class SessionSummary {
   final List<(double, double)> track;
   final double climbMeters;
 
+  /// From a heart-rate strap; 0 when none was worn.
+  final int hrAvg;
+  final int hrMax;
+
   double get distanceUnits => imperial ? meters / 1609.344 : meters / 1000;
   double get avgPaceMinPerUnit => distanceUnits < 0.01 ? 0 : (seconds / 60) / distanceUnits;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'sport': sport.name, 'startedAt': startedAt.toIso8601String(), 'seconds': seconds, 'meters': meters, 'imperial': imperial,
         'climb': climbMeters,
+        if (hrMax > 0) 'hrAvg': hrAvg,
+        if (hrMax > 0) 'hrMax': hrMax,
         // 1e-5 degrees is about a metre; plenty for a 13 m/px map
         'track': track.map(((double, double) p) => <int>[(p.$1 * 1e5).round(), (p.$2 * 1e5).round()]).toList(),
       };
@@ -50,6 +57,8 @@ class SessionSummary {
         meters: (j['meters'] as num).toDouble(),
         imperial: j['imperial'] as bool,
         climbMeters: ((j['climb'] ?? 0) as num).toDouble(),
+        hrAvg: ((j['hrAvg'] ?? 0) as num).toInt(),
+        hrMax: ((j['hrMax'] ?? 0) as num).toInt(),
         track: ((j['track'] ?? const <dynamic>[]) as List<dynamic>)
             .map((dynamic e) => ((e[0] as num) / 1e5, (e[1] as num) / 1e5))
             .toList(),
@@ -57,10 +66,11 @@ class SessionSummary {
 }
 
 class SessionController extends ChangeNotifier {
-  SessionController({required GoggleConsole goggle, MapletConsole? maplet}) : _g = goggle, _m = maplet;
+  SessionController({required GoggleConsole goggle, MapletConsole? maplet, HrStrap? strap}) : _g = goggle, _m = maplet, _strap = strap;
 
   final GoggleConsole _g;
   final MapletConsole? _m;
+  final HrStrap? _strap;
   bool _insetSent = false;
   static const String _kLog = 'session.log';
 
@@ -75,6 +85,7 @@ class SessionController extends ChangeNotifier {
   double _meters = 0;
   double _paceMinPerUnit = 0; // rolling, over the last ~30 s
   int _hr = 0;
+  int _hrSum = 0, _hrN = 0, _hrMax = 0;
   Position? _last;
   final List<(double, double)> _track = <(double, double)>[];
   double _climb = 0;
@@ -117,6 +128,10 @@ class SessionController extends ChangeNotifier {
     _recent.clear();
     _gpsNote = null;
     _insetSent = false;
+    _hr = 0;
+    _hrSum = 0;
+    _hrN = 0;
+    _hrMax = 0;
     notifyListeners();
     unawaited(WakelockPlus.enable());
     unawaited(_startGps());
@@ -216,6 +231,12 @@ class SessionController extends ChangeNotifier {
   void _onTick() {
     if (!_running) return;
     _seconds = DateTime.now().difference(_startedAt!).inSeconds;
+    _hr = _strap?.bpm ?? 0;
+    if (_hr > 0) {
+      _hrSum += _hr;
+      _hrN++;
+      if (_hr > _hrMax) _hrMax = _hr;
+    }
     notifyListeners();
     if (_g.isConnected && !_g.busy) {
       final int pace10 = (_paceMinPerUnit * 10).round().clamp(0, 999);
@@ -238,6 +259,7 @@ class SessionController extends ChangeNotifier {
     final SessionSummary s = SessionSummary(
       sport: sport, startedAt: _startedAt!, seconds: _seconds, meters: _meters, imperial: imperial,
       track: List<(double, double)>.unmodifiable(_track), climbMeters: _climb,
+      hrAvg: _hrN == 0 ? 0 : (_hrSum / _hrN).round(), hrMax: _hrMax,
     );
     _log.insert(0, s);
     if (_log.length > 50) _log.removeLast();

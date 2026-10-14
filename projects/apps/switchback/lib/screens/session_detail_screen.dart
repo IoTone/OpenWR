@@ -118,6 +118,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
           const SizedBox(height: 8),
           Text('${s.distanceUnits.toStringAsFixed(2)} $unit · ${fmtPace(s.avgPaceMinPerUnit)} ${l.sessionPace(unit)} · +${s.climbMeters.round()} m',
               style: t.textTheme.bodyLarge),
+          if (s.hrMax > 0) Text(l.sessionHr(s.hrAvg, s.hrMax), style: t.textTheme.bodyLarge),
           Text('${s.startedAt.toLocal().toString().substring(0, 16)} · ${s.track.length} ${l.mapletTrackPoints}', style: t.textTheme.bodySmall),
           const SizedBox(height: 20),
           Text(l.mapletPostcard.toUpperCase(), style: t.textTheme.labelMedium?.copyWith(color: cs.primary, letterSpacing: 1.2)),

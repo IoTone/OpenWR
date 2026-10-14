@@ -79,10 +79,16 @@ phase A.
 A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
 C setup and looks ✓ · D update (phone-hosted `.mnpkg`, see DESIGN-provisioning-ota.md §4) ✓ ·
 E session ✓ 2026-10-02 (as a mode in the weather bundle, `15-session.fs`, not a
-second bundle: one word to switch instead of an 8 KB push; heart-rate strap still open).
+second bundle: one word to switch instead of an 8 KB push). Heart-rate strap ✓ 2026-10-14:
+standard Heart Rate service 0x180D/0x2A37 in Dart (`lib/goggle/hr_strap.dart`), so any
+strap works. Verified with a Scosche Rhythm 24 (advertises as `Rhythm 24 NNNN`, fw 4.016,
+2 Hz notifications, contact bit, no RR in its default mode). Scosche's SDK24 (binary .aar /
+xcframework, MIT) is not needed for bpm; it adds sport mode, 5-zone settings and FIT-file
+download over its private `FCE61000`/`FCE62000` services, should we want those later.
+The glass already drew `NNN bpm` from `sess!`; no firmware change.
 
 ## Open questions
 
 Name; platform order (Android first for BLE and the on-phone HTTP server,
-iOS for the first users); heart-rate strap in phase E; keep Japanese
+iOS for the first users); keep Japanese
 (proposed yes); the glass cannot red-shift, only dim.

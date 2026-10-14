@@ -7,6 +7,7 @@ import 'gen/app_localizations.dart';
 import 'screens/about_screen.dart';
 import 'screens/console_screen.dart';
 import 'screens/diagnostics_screen.dart';
+import 'screens/hr_screen.dart';
 import 'screens/looks_screen.dart';
 import 'screens/pair_screen.dart';
 import 'screens/radar_screen.dart';
@@ -34,6 +35,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: '/maplet/setup', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).setupTitle, child: const SetupScreen()))),
     GoRoute(path: '/maplet/update', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).tabUpdate, child: const UpdateScreen()))),
     GoRoute(path: '/maplet/console', builder: (BuildContext c, __) => MapletScope(child: _Page(title: AppLocalizations.of(c).tabConsole, child: const ConsoleScreen()))),
+    GoRoute(path: '/hr', builder: (_, __) => const HrScreen()),
     GoRoute(path: '/plan', builder: (_, __) => const PlanScreen()),
     GoRoute(path: '/session/:i', builder: (_, GoRouterState st) => SessionDetailScreen(index: int.tryParse(st.pathParameters['i'] ?? '') ?? 0)),
     GoRoute(path: '/radar', builder: (_, __) => const RadarScreen()),

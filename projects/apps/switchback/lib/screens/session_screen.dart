@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../gen/app_localizations.dart';
 import '../goggle/console.dart';
+import '../goggle/hr_strap.dart';
 import '../goggle/maplet.dart';
 import '../goggle/session.dart';
 import '../map/eink_canvas.dart';
@@ -70,6 +71,7 @@ class SessionScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(g.isConnected ? l.sessionGlassReady : l.sessionNoGlass, style: t.textTheme.bodySmall),
+          Text(context.watch<HrStrap>().isConnected ? l.sessionStrapReady : l.sessionNoStrap, style: t.textTheme.bodySmall),
           if (ss.log.every((SessionSummary s) => s.track.isEmpty))
             Align(
               alignment: Alignment.centerLeft,
@@ -141,7 +143,8 @@ class SessionScreen extends StatelessWidget {
               trailing: s.track.isNotEmpty ? Icon(Icons.map_outlined, color: cs.onSurfaceVariant) : null,
               leading: Icon(icons[s.sport], color: cs.onSurfaceVariant),
               title: Text('${fmtClock(s.seconds)} · ${s.distanceUnits.toStringAsFixed(2)} ${s.imperial ? 'mi' : 'km'} · ${fmtPace(s.avgPaceMinPerUnit)} ${l.sessionPace(s.imperial ? 'mi' : 'km')}'),
-              subtitle: Text('${_label(l, s.sport)} · ${s.startedAt.toLocal().toString().substring(0, 16)}'),
+              subtitle: Text('${_label(l, s.sport)} · ${s.startedAt.toLocal().toString().substring(0, 16)}'
+                  '${s.hrMax > 0 ? ' · ${l.sessionHr(s.hrAvg, s.hrMax)}' : ''}'),
             ),
         ],
       ],

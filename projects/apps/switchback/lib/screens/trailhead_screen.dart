@@ -11,6 +11,7 @@ import '../theme/theme_controller.dart';
 import '../theme/tokens.dart';
 import '../widgets/forecast_graph.dart';
 import '../widgets/goggle_card.dart';
+import '../widgets/hr_card.dart';
 import '../widgets/maplet_card.dart';
 
 /// Home. The experience, the headline, the device card, the one big button.
@@ -106,6 +107,8 @@ class TrailheadScreen extends StatelessWidget {
         const GoggleCard(),
         const SizedBox(height: 8),
         const MapletCard(),
+        const SizedBox(height: 8),
+        const HrCard(),
         const SizedBox(height: 16),
         FilledButton(
           onPressed: () => context.push(g.isConnected ? '/session' : '/pair'),

@@ -913,4 +913,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String updateDeviceNeedsWifi(String device) {
     return 'The $device needs WiFi to fetch it: its page → Set up WiFi.';
   }
+
+  @override
+  String get hrCardTitle => 'Heart rate';
+
+  @override
+  String get hrCardSub => 'Pair a strap: Scosche Rhythm, Polar, Garmin, Wahoo';
+
+  @override
+  String hrCardLive(int bpm) {
+    return '$bpm bpm';
+  }
+
+  @override
+  String get hrCardNoReading => 'Connected · no reading yet';
+
+  @override
+  String get hrTitle => 'Heart-rate strap';
+
+  @override
+  String get hrBody =>
+      'Any strap that speaks the standard Bluetooth heart-rate service. Put it on against skin and press its button until the light blinks. Once paired, it reconnects by itself, and a session sends your heart rate to the glass.';
+
+  @override
+  String get hrScanning => 'Looking for straps…';
+
+  @override
+  String get hrNoneYet =>
+      'Nothing yet. A strap connected to another phone or watch stays hidden; disconnect it there first.';
+
+  @override
+  String get hrNoContact => 'No skin contact: snug the strap up.';
+
+  @override
+  String get hrWaiting => 'Waiting for a reading…';
+
+  @override
+  String hrBattery(int pct) {
+    return 'Battery $pct%';
+  }
+
+  @override
+  String get hrDisconnect => 'Disconnect';
+
+  @override
+  String get hrForget => 'Forget this strap';
+
+  @override
+  String get hrReconnect => 'Reconnect';
+
+  @override
+  String sessionHr(int avg, int max) {
+    return '$avg avg · $max max bpm';
+  }
+
+  @override
+  String get sessionNoStrap => 'No heart-rate strap: the glass shows -- bpm.';
+
+  @override
+  String get sessionStrapReady => 'Heart-rate strap connected.';
 }

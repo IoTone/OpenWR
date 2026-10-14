@@ -887,4 +887,63 @@ class AppLocalizationsJa extends AppLocalizations {
   String updateDeviceNeedsWifi(String device) {
     return '$device の取得には WiFi が必要です: デバイスのページ → WiFi を設定。';
   }
+
+  @override
+  String get hrCardTitle => '心拍数';
+
+  @override
+  String get hrCardSub => 'ストラップをペアリング：Scosche Rhythm、Polar、Garmin、Wahoo';
+
+  @override
+  String hrCardLive(int bpm) {
+    return '$bpm bpm';
+  }
+
+  @override
+  String get hrCardNoReading => '接続済み・まだ計測なし';
+
+  @override
+  String get hrTitle => '心拍ストラップ';
+
+  @override
+  String get hrBody =>
+      '標準の Bluetooth 心拍サービスに対応したストラップなら使えます。肌に密着させて装着し、ライトが点滅するまでボタンを押してください。一度ペアリングすれば自動で再接続し、セッション中は心拍数がグラスに表示されます。';
+
+  @override
+  String get hrScanning => 'ストラップを探しています…';
+
+  @override
+  String get hrNoneYet =>
+      'まだ見つかりません。他のスマホや時計に接続中のストラップは表示されません。先にそちらで切断してください。';
+
+  @override
+  String get hrNoContact => '肌に触れていません。ストラップを締めてください。';
+
+  @override
+  String get hrWaiting => '計測を待っています…';
+
+  @override
+  String hrBattery(int pct) {
+    return 'バッテリー $pct%';
+  }
+
+  @override
+  String get hrDisconnect => '切断';
+
+  @override
+  String get hrForget => 'このストラップを削除';
+
+  @override
+  String get hrReconnect => '再接続';
+
+  @override
+  String sessionHr(int avg, int max) {
+    return '平均 $avg・最大 $max bpm';
+  }
+
+  @override
+  String get sessionNoStrap => '心拍ストラップなし：グラスには -- bpm と表示されます。';
+
+  @override
+  String get sessionStrapReady => '心拍ストラップ接続済み。';
 }

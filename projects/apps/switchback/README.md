@@ -96,6 +96,7 @@ tool/gen_icon.py          the switchback mark → launcher icon and splash
 A rebrand and themes ✓ · B console, pairing, status, experience auto-select ✓ ·
 C setup cards (WiFi, location, units) ✓ · D on-phone `.mnpkg` server, OTA, bundle push ✓ ·
 E session ✓ (phone GPS for distance and pace, elapsed time, a session log;
-heart rate shows `--` until a strap is wired in). The session HUD is a mode
+heart rate from a strap over the standard Bluetooth Heart Rate service:
+Trailhead → Heart rate, verified with a Scosche Rhythm 24; no vendor SDK). The session HUD is a mode
 inside the weather bundle (`15-session.fs`) rather than a second bundle:
 switching costs one word instead of an 8 KB push.

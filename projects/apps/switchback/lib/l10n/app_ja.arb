@@ -606,5 +606,22 @@
         "type": "String"
       }
     }
-  }
+  },
+  "hrCardTitle": "心拍数",
+  "hrCardSub": "ストラップをペアリング：Scosche Rhythm、Polar、Garmin、Wahoo",
+  "hrCardLive": "{bpm} bpm",
+  "hrCardNoReading": "接続済み・まだ計測なし",
+  "hrTitle": "心拍ストラップ",
+  "hrBody": "標準の Bluetooth 心拍サービスに対応したストラップなら使えます。肌に密着させて装着し、ライトが点滅するまでボタンを押してください。一度ペアリングすれば自動で再接続し、セッション中は心拍数がグラスに表示されます。",
+  "hrScanning": "ストラップを探しています…",
+  "hrNoneYet": "まだ見つかりません。他のスマホや時計に接続中のストラップは表示されません。先にそちらで切断してください。",
+  "hrNoContact": "肌に触れていません。ストラップを締めてください。",
+  "hrWaiting": "計測を待っています…",
+  "hrBattery": "バッテリー {pct}%",
+  "hrDisconnect": "切断",
+  "hrForget": "このストラップを削除",
+  "hrReconnect": "再接続",
+  "sessionHr": "平均 {avg}・最大 {max} bpm",
+  "sessionNoStrap": "心拍ストラップなし：グラスには -- bpm と表示されます。",
+  "sessionStrapReady": "心拍ストラップ接続済み。"
 }
