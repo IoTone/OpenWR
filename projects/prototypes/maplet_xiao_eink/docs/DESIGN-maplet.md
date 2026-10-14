@@ -233,10 +233,11 @@ pattern edge to edge (no RAM offset, all 296 x 128 live), 1 px checker
 clean, refresh 2.1 s, text upright with the flex cable to the right
 (rotation 0). The choice persists across reboot.
 
-**Bookmarked: portrait and landscape (needed for the 2.9in unit).**
-Today `epd-rot!` only turns or mirrors a landscape canvas. The 2.9in unit
-will be worn portrait, so the canvas itself must be able to stand up.
-Proposed scheme, not built yet:
+**Bookmarked, low priority: portrait orientation.** The 2.9in unit will
+be used landscape (decided 2026-10-13), which is what the firmware and
+Switchback do today; switching to portrait is unlikely. Kept here in case
+a later panel or mount needs it. `epd-rot!` already turns or mirrors the
+landscape canvas. Proposed scheme, not built:
 
 - `epd-orient!` ( n -- ): 0 landscape, 1 portrait, 2 landscape turned 180,
   3 portrait turned 180. Portrait swaps the canvas to 128 x 296; the
