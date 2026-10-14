@@ -1,0 +1,8 @@
+Quantity,Manufacturer Part Number,Manufacturer,Digikey Part Number,Customer Reference
+1,SC1112,Raspberry Pi,,SBC
+1,SC1157,Raspberry Pi,,PSU
+1,SC1148,Raspberry Pi,,FAN
+1,4900,Adafruit,,IMUB
+1,4754,Adafruit,1528-4754-ND,IMU
+1,4399,Adafruit,1528-4399-ND,QT
+2,SC0872,Raspberry Pi,,CAM

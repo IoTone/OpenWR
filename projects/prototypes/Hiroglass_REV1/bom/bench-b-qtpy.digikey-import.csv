@@ -1,0 +1,14 @@
+Quantity,Manufacturer Part Number,Manufacturer,Digikey Part Number,Customer Reference
+3,5405,Adafruit,1528-5405-ND,MCU
+3,938,Adafruit,1528-1512-ND,OLED
+3,SEN-22397,SparkFun,1568-22397-ND,IMU
+3,4162,Adafruit,1528-2891-ND,ALS
+9,4210,Adafruit,,QT
+3,4755,Adafruit,1528-4755-ND,PUCK
+3,1578,Adafruit,,BAT
+3,1131,Adafruit,,SW
+3,3814,Adafruit,,LEAD
+6,4474,Adafruit,,USB
+3,64,Adafruit,,BB
+3,758,Adafruit,,JMP
+1,392,Adafruit,,HDR

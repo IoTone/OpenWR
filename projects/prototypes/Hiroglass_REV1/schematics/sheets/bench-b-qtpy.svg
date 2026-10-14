@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Bench kit B · QT Py ESP32-C3">
+<rect width="1600" height="1000" fill="#f7f9fb"/>
+<rect x="16" y="16" width="1568" height="968" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<rect x="1064" y="892" width="520" height="92" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<line x1="1064" y1="942" x2="1584" y2="942" stroke="#1b232c"/>
+<line x1="1364" y1="942" x2="1364" y2="984" stroke="#1b232c"/>
+<line x1="1464" y1="942" x2="1464" y2="984" stroke="#1b232c"/>
+<text x="1076.0" y="914.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1b232c" text-anchor="start">Bench kit B · QT Py ESP32-C3</text>
+<text x="1076.0" y="933.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">Everything on STEMMA QT, no soldering on the bench</text>
+<text x="1076.0" y="958.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · Hiroglass REV1</text>
+<text x="1076.0" y="974.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">CERN-OHL-P-2.0</text>
+<text x="1376.0" y="958.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">SHEET</text>
+<text x="1376.0" y="976.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">B-B</text>
+<text x="1476.0" y="958.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">REV A</text>
+<text x="1476.0" y="976.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">2026-10-14</text>
+<rect x="120" y="150" width="200" height="136" rx="8" fill="#253041"/>
+<text x="220.0" y="170.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">QT Py ESP32-C3</text>
+<text x="220.0" y="302.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 5405 · SDA=GPIO5 SCL=GPIO6</text>
+<rect x="115" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="132.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">5V</text>
+<rect x="115" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="132.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="315" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="308.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT 3V3</text>
+<rect x="315" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="308.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT GND</text>
+<rect x="315" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="308.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT SDA</text>
+<rect x="315" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="308.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT SCL</text>
+<rect x="520" y="150" width="200" height="136" rx="8" fill="#253041"/>
+<text x="620.0" y="170.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">OLED 1.3″ SSD1306</text>
+<text x="620.0" y="302.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 938 · I2C default · 0x3D</text>
+<rect x="515" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="532.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 3V3</text>
+<rect x="515" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="532.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 GND</text>
+<rect x="515" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="532.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 SDA</text>
+<rect x="515" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="532.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 SCL</text>
+<rect x="715" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="708.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 3V3</text>
+<rect x="715" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="708.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 GND</text>
+<rect x="715" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="708.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 SDA</text>
+<rect x="715" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="708.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 SCL</text>
+<rect x="920" y="150" width="200" height="136" rx="8" fill="#253041"/>
+<text x="1020.0" y="170.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">BMI270 IMU</text>
+<text x="1020.0" y="302.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">SparkFun SEN-22397 · 0x68</text>
+<rect x="915" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="932.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 3V3</text>
+<rect x="915" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="932.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 GND</text>
+<rect x="915" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="932.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 SDA</text>
+<rect x="915" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="932.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT1 SCL</text>
+<rect x="1115" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1108.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 3V3</text>
+<rect x="1115" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1108.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 GND</text>
+<rect x="1115" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1108.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 SDA</text>
+<rect x="1115" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1108.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">QT2 SCL</text>
+<rect x="1320" y="150" width="170" height="136" rx="8" fill="#253041"/>
+<text x="1405.0" y="170.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">VEML7700</text>
+<text x="1405.0" y="302.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 4162 · 0x10</text>
+<rect x="1315" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1332.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT 3V3</text>
+<rect x="1315" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1332.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT GND</text>
+<rect x="1315" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1332.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT SDA</text>
+<rect x="1315" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1332.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">QT SCL</text>
+<polyline points="320,198 400,198 400,198 520,198" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="320" cy="198" r="3.2" fill="#d62828"/>
+<circle cx="520" cy="198" r="3.2" fill="#d62828"/>
+<text x="405.0" y="191.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#d62828" text-anchor="start">QT 4210</text>
+<polyline points="320,220 412,220 412,220 520,220" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="320" cy="220" r="3.2" fill="#1b232c"/>
+<circle cx="520" cy="220" r="3.2" fill="#1b232c"/>
+<polyline points="320,242 424,242 424,242 520,242" fill="none" stroke="#1f6fd1" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="320" cy="242" r="3.2" fill="#1f6fd1"/>
+<circle cx="520" cy="242" r="3.2" fill="#1f6fd1"/>
+<polyline points="320,264 436,264 436,264 520,264" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="320" cy="264" r="3.2" fill="#d9a400"/>
+<circle cx="520" cy="264" r="3.2" fill="#d9a400"/>
+<polyline points="720,198 800,198 800,198 920,198" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="720" cy="198" r="3.2" fill="#d62828"/>
+<circle cx="920" cy="198" r="3.2" fill="#d62828"/>
+<text x="805.0" y="191.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#d62828" text-anchor="start">QT 4210</text>
+<polyline points="720,220 812,220 812,220 920,220" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="720" cy="220" r="3.2" fill="#1b232c"/>
+<circle cx="920" cy="220" r="3.2" fill="#1b232c"/>
+<polyline points="720,242 824,242 824,242 920,242" fill="none" stroke="#1f6fd1" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="720" cy="242" r="3.2" fill="#1f6fd1"/>
+<circle cx="920" cy="242" r="3.2" fill="#1f6fd1"/>
+<polyline points="720,264 836,264 836,264 920,264" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="720" cy="264" r="3.2" fill="#d9a400"/>
+<circle cx="920" cy="264" r="3.2" fill="#d9a400"/>
+<polyline points="1120,198 1200,198 1200,198 1320,198" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1120" cy="198" r="3.2" fill="#d62828"/>
+<circle cx="1320" cy="198" r="3.2" fill="#d62828"/>
+<text x="1205.0" y="191.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#d62828" text-anchor="start">QT 4210</text>
+<polyline points="1120,220 1212,220 1212,220 1320,220" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1120" cy="220" r="3.2" fill="#1b232c"/>
+<circle cx="1320" cy="220" r="3.2" fill="#1b232c"/>
+<polyline points="1120,242 1224,242 1224,242 1320,242" fill="none" stroke="#1f6fd1" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1120" cy="242" r="3.2" fill="#1f6fd1"/>
+<circle cx="1320" cy="242" r="3.2" fill="#1f6fd1"/>
+<polyline points="1120,264 1236,264 1236,264 1320,264" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1120" cy="264" r="3.2" fill="#d9a400"/>
+<circle cx="1320" cy="264" r="3.2" fill="#d9a400"/>
+<rect x="60" y="520" width="150" height="92" rx="8" fill="#5b4a2e"/>
+<text x="135.0" y="540.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">LiPo 500 mAh</text>
+<text x="135.0" y="628.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 1578 · JST-PH</text>
+<rect x="205" y="563" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="198.0" y="572.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">BATT +</text>
+<rect x="205" y="585" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="198.0" y="594.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">BATT −</text>
+<rect x="310" y="480" width="190" height="136" rx="8" fill="#253041"/>
+<text x="405.0" y="500.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">bq24074 charger</text>
+<text x="405.0" y="632.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 4755</text>
+<rect x="305" y="523" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="322.0" y="532.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">BATT +</text>
+<rect x="305" y="545" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="322.0" y="554.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">BATT −</text>
+<rect x="305" y="589" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="322.0" y="598.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">USB-C in</text>
+<rect x="495" y="523" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="488.0" y="532.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">LOAD +</text>
+<rect x="495" y="545" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="488.0" y="554.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">LOAD −</text>
+<rect x="600" y="510" width="140" height="92" rx="8" fill="#3b4656"/>
+<text x="670.0" y="530.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">switch ext.</text>
+<text x="670.0" y="618.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Adafruit 1131 → 3814 lead</text>
+<rect x="595" y="553" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="612.0" y="562.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">IN +</text>
+<rect x="595" y="575" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="612.0" y="584.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">IN −</text>
+<rect x="735" y="553" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="728.0" y="562.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">OUT +</text>
+<rect x="735" y="575" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="728.0" y="584.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">OUT −</text>
+<polyline points="210,568 260,568 260,528 310,528" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="210" cy="568" r="3.2" fill="#d62828"/>
+<circle cx="310" cy="528" r="3.2" fill="#d62828"/>
+<polyline points="210,590 275,590 275,550 310,550" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="210" cy="590" r="3.2" fill="#1b232c"/>
+<circle cx="310" cy="550" r="3.2" fill="#1b232c"/>
+<polyline points="500,528 560,528 560,558 600,558" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="500" cy="528" r="3.2" fill="#d62828"/>
+<circle cx="600" cy="558" r="3.2" fill="#d62828"/>
+<polyline points="500,550 575,550 575,580 600,580" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="500" cy="550" r="3.2" fill="#1b232c"/>
+<circle cx="600" cy="580" r="3.2" fill="#1b232c"/>
+<polyline points="740,558 755,558 755,450 90,450 90,198 120,198" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="740" cy="558" r="3.2" fill="#d62828"/>
+<circle cx="120" cy="198" r="3.2" fill="#d62828"/>
+<polyline points="740,580 770,580 770,440 100,440 100,220 120,220" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="740" cy="580" r="3.2" fill="#1b232c"/>
+<circle cx="120" cy="220" r="3.2" fill="#1b232c"/>
+<rect x="980.0" y="470.0" width="520.0" height="134.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="992.0" y="490.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">Bench B in one look</text>
+<text x="992.0" y="510.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">One I2C bus daisy-chained over STEMMA QT: QT Py → OLED → IMU → light.</text>
+<text x="992.0" y="526.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Addresses: OLED 0x3D (0x3C with jumper), BMI270 0x68, VEML7700 0x10.</text>
+<text x="992.0" y="542.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">The display moves to I2C, so goggl1's SPI driver needs an I2C path;</text>
+<text x="992.0" y="558.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">at 400 kHz a full 1 KB frame takes about 25 ms.</text>
+<text x="992.0" y="574.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">QT Py ESP32-C3 is often out of stock. The Seeed XIAO ESP32C3</text>
+<text x="992.0" y="590.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">works too but needs headers soldered and a QT→header cable.</text>
+<rect x="980.0" y="640.0" width="520.0" height="86.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="992.0" y="660.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">Optional: SPI display on the QT Py</text>
+<text x="992.0" y="680.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Cut the 938's two jumpers and solder its header, then:</text>
+<text x="992.0" y="696.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">SCK GPIO10 → Clk · MO GPIO7 → Data · A0 GPIO4 → CS</text>
+<text x="992.0" y="712.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">A1 GPIO3 → DC · A2 GPIO1 → Rst · 3V → Vin</text>
+<rect x="60.0" y="820.0" width="700.0" height="86.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="72.0" y="840.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">Power and safety</text>
+<text x="72.0" y="860.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">On the bench the QT Py's own USB-C powers everything; the puck is optional.</text>
+<text x="72.0" y="876.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Puck mode needs one soldered header on the QT Py's 5V / GND.</text>
+<text x="72.0" y="892.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Set the 4755 charge jumper to 500 mA. Keep LOAD off the 3V pin.</text>
+</svg>

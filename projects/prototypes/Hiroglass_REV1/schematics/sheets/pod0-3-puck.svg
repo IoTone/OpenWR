@@ -1,0 +1,430 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" role="img" aria-label="Pod-0 puck · charger and battery">
+<rect width="1600" height="1100" fill="#f7f9fb"/>
+<rect x="16" y="16" width="1568" height="1068" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<rect x="1064" y="992" width="520" height="92" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<line x1="1064" y1="1042" x2="1584" y2="1042" stroke="#1b232c"/>
+<line x1="1364" y1="1042" x2="1364" y2="1084" stroke="#1b232c"/>
+<line x1="1464" y1="1042" x2="1464" y2="1084" stroke="#1b232c"/>
+<text x="1076.0" y="1014.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1b232c" text-anchor="start">Pod-0 puck · charger and battery</text>
+<text x="1076.0" y="1033.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">BQ24074, 500 mAh LiPo with NTC, power switch, fuel gauge</text>
+<text x="1076.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · Hiroglass REV1</text>
+<text x="1076.0" y="1074.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">CERN-OHL-P-2.0</text>
+<text x="1376.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">SHEET</text>
+<text x="1376.0" y="1076.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">P-3</text>
+<text x="1476.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">REV A</text>
+<text x="1476.0" y="1076.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">2026-10-14</text>
+<rect x="70.0" y="110.0" width="150.0" height="242.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="70.0" y="86.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">J10</text>
+<text x="70.0" y="101.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">USB-C receptacle, 16 pin</text>
+<text x="145.0" y="370.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">charge only, no data</text>
+<line x1="220.0" y1="132.0" x2="269.8" y2="132.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VBUS</text>
+<text x="224.0" y="128.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A4 B9</text>
+<polygon points="269.8,132 276.8,124.0 353.6,124.0 353.6,140.0 276.8,140.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="281.8" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VBUS_PUCK</text>
+<line x1="220.0" y1="154.0" x2="269.8" y2="154.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VBUS</text>
+<text x="224.0" y="150.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">B4 A9</text>
+<polygon points="269.8,154 276.8,146.0 353.6,146.0 353.6,162.0 276.8,162.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="281.8" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VBUS_PUCK</text>
+<line x1="220.0" y1="176.0" x2="269.8" y2="176.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">GND</text>
+<text x="224.0" y="172.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A1 B12</text>
+<polygon points="269.8,176 276.8,168.0 310.40000000000003,168.0 310.40000000000003,184.0 276.8,184.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="281.8" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="start">GND</text>
+<line x1="220.0" y1="198.0" x2="269.8" y2="198.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">GND</text>
+<text x="224.0" y="194.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">B1 A12</text>
+<polygon points="269.8,198 276.8,190.0 310.40000000000003,190.0 310.40000000000003,206.0 276.8,206.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="281.8" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="start">GND</text>
+<line x1="220.0" y1="220.0" x2="269.8" y2="220.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">CC1</text>
+<text x="224.0" y="216.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A5</text>
+<polygon points="269.8,220 276.8,212.0 317.6,212.0 317.6,228.0 276.8,228.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="281.8" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">PCC1</text>
+<line x1="220.0" y1="242.0" x2="269.8" y2="242.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">CC2</text>
+<text x="224.0" y="238.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">B5</text>
+<polygon points="269.8,242 276.8,234.0 317.6,234.0 317.6,250.0 276.8,250.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="281.8" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">PCC2</text>
+<line x1="220.0" y1="264.0" x2="269.8" y2="264.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">D+</text>
+<text x="224.0" y="260.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A6 B6</text>
+<line x1="264.8" y1="259.0" x2="274.8" y2="269.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="264.8" y1="269.0" x2="274.8" y2="259.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="220.0" y1="286.0" x2="269.8" y2="286.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="290.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">D−</text>
+<text x="224.0" y="282.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A7 B7</text>
+<line x1="264.8" y1="281.0" x2="274.8" y2="291.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="264.8" y1="291.0" x2="274.8" y2="281.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="220.0" y1="308.0" x2="269.8" y2="308.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="312.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SBU</text>
+<text x="224.0" y="304.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">A8 B8</text>
+<line x1="264.8" y1="303.0" x2="274.8" y2="313.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="264.8" y1="313.0" x2="274.8" y2="303.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="220.0" y1="330.0" x2="269.8" y2="330.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="214.0" y="334.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SHIELD</text>
+<text x="224.0" y="326.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">S</text>
+<polygon points="269.8,330 276.8,322.0 310.40000000000003,322.0 310.40000000000003,338.0 276.8,338.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="281.8" y="334.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="start">GND</text>
+<g><rect x="83" y="438.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="90" y1="420.0" x2="90" y2="438.0" stroke="#1b232c" stroke-width="1.4"/><line x1="90" y1="472.0" x2="90" y2="490.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="108.0" y="453.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R20</text>
+<text x="108.0" y="468.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">5.1k</text>
+<line x1="90.0" y1="420.0" x2="90.0" y2="410.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="69.6,410 110.4,410 110.4,394 69.6,394" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="90.0" y="406.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">PCC1</text>
+<line x1="90.0" y1="490.0" x2="90.0" y2="498.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="80.0" y1="498.0" x2="100.0" y2="498.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="83.5" y1="502.0" x2="96.5" y2="502.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="87.0" y1="506.0" x2="93.0" y2="506.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><rect x="163" y="438.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="170" y1="420.0" x2="170" y2="438.0" stroke="#1b232c" stroke-width="1.4"/><line x1="170" y1="472.0" x2="170" y2="490.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="188.0" y="453.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R21</text>
+<text x="188.0" y="468.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">5.1k</text>
+<line x1="170.0" y1="420.0" x2="170.0" y2="410.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="149.6,410 190.4,410 190.4,394 149.6,394" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="170.0" y="406.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">PCC2</text>
+<line x1="170.0" y1="490.0" x2="170.0" y2="498.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="160.0" y1="498.0" x2="180.0" y2="498.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="163.5" y1="502.0" x2="176.5" y2="502.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="167.0" y1="506.0" x2="173.0" y2="506.0" stroke="#1b232c" stroke-width="1.6"/>
+<g transform="rotate(-90 535.0 150)"><line x1="535.0" y1="115" x2="535.0" y2="141" stroke="#1b232c" stroke-width="1.4"/><line x1="535.0" y1="159" x2="535.0" y2="185" stroke="#1b232c" stroke-width="1.4"/><polygon points="525.0,141 545.0,141 535.0,159" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="525.0" y1="159" x2="545.0" y2="159" stroke="#1b232c" stroke-width="1.8"/></g>
+<text x="535.0" y="136.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D10  PMEG2010AEH</text>
+<polygon points="500,150 493,142.0 416.2,142.0 416.2,158.0 493,158.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="488.0" y="154.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VBUS_PUCK</text>
+<polygon points="570,150 577,142.0 632.2,142.0 632.2,158.0 577,158.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="582.0" y="154.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">CHG_IN</text>
+<g transform="rotate(-90 535.0 240)"><line x1="535.0" y1="205" x2="535.0" y2="231" stroke="#1b232c" stroke-width="1.4"/><line x1="535.0" y1="249" x2="535.0" y2="275" stroke="#1b232c" stroke-width="1.4"/><polygon points="525.0,231 545.0,231 535.0,249" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="525.0" y1="249" x2="545.0" y2="249" stroke="#1b232c" stroke-width="1.8"/></g>
+<text x="535.0" y="226.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D11  PMEG2010AEH</text>
+<polygon points="500,240 493,232.0 423.4,232.0 423.4,248.0 493,248.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="488.0" y="244.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VBUS_POD</text>
+<polygon points="570,240 577,232.0 632.2,232.0 632.2,248.0 577,248.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="582.0" y="244.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">CHG_IN</text>
+<g><line x1="540" y1="320.0" x2="540" y2="351.0" stroke="#1b232c" stroke-width="1.4"/><line x1="540" y1="359.0" x2="540" y2="390.0" stroke="#1b232c" stroke-width="1.4"/><line x1="527" y1="351.0" x2="553" y2="351.0" stroke="#1b232c" stroke-width="2.4"/><line x1="527" y1="359.0" x2="553" y2="359.0" stroke="#1b232c" stroke-width="2.4"/></g>
+<text x="558.0" y="353.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">C20</text>
+<text x="558.0" y="368.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">1µF 25V</text>
+<line x1="540.0" y1="320.0" x2="540.0" y2="310.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="512.4,310 567.6,310 567.6,294 512.4,294" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="540.0" y="306.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">CHG_IN</text>
+<line x1="540.0" y1="390.0" x2="540.0" y2="398.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="530.0" y1="398.0" x2="550.0" y2="398.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="533.5" y1="402.0" x2="546.5" y2="402.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="537.0" y1="406.0" x2="543.0" y2="406.0" stroke="#1b232c" stroke-width="1.6"/>
+<rect x="820.0" y="110.0" width="150.0" height="220.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="820.0" y="86.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">U10</text>
+<text x="820.0" y="101.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">BQ24074RGT</text>
+<text x="895.0" y="348.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">EN2=0 EN1=1 → 500 mA USB · ISET 500 mA</text>
+<line x1="782.8" y1="132.0" x2="820.0" y2="132.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">IN</text>
+<text x="816.0" y="128.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">13</text>
+<polygon points="782.8,132 775.8,124.0 720.5999999999999,124.0 720.5999999999999,140.0 775.8,140.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="770.8" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="end">CHG_IN</text>
+<line x1="782.8" y1="154.0" x2="820.0" y2="154.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">CE#</text>
+<text x="816.0" y="150.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">4</text>
+<polygon points="782.8,154 775.8,146.0 742.1999999999999,146.0 742.1999999999999,162.0 775.8,162.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="770.8" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="782.8" y1="176.0" x2="820.0" y2="176.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">EN2</text>
+<text x="816.0" y="172.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">5</text>
+<polygon points="782.8,176 775.8,168.0 742.1999999999999,168.0 742.1999999999999,184.0 775.8,184.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="770.8" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="782.8" y1="198.0" x2="820.0" y2="198.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">EN1</text>
+<text x="816.0" y="194.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">6</text>
+<polygon points="782.8,198 775.8,190.0 742.1999999999999,190.0 742.1999999999999,206.0 775.8,206.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="770.8" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="end">EN1</text>
+<line x1="782.8" y1="220.0" x2="820.0" y2="220.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">ISET</text>
+<text x="816.0" y="216.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">16</text>
+<polygon points="782.8,220 775.8,212.0 735.0,212.0 735.0,228.0 775.8,228.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="770.8" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="end">ISET</text>
+<line x1="782.8" y1="242.0" x2="820.0" y2="242.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">ILIM</text>
+<text x="816.0" y="238.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">12</text>
+<polygon points="782.8,242 775.8,234.0 735.0,234.0 735.0,250.0 775.8,250.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="770.8" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="end">ILIM</text>
+<line x1="782.8" y1="264.0" x2="820.0" y2="264.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">TMR</text>
+<text x="816.0" y="260.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">14</text>
+<line x1="777.8" y1="259.0" x2="787.8" y2="269.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="777.8" y1="269.0" x2="787.8" y2="259.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="782.8" y1="286.0" x2="820.0" y2="286.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="290.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">ITERM</text>
+<text x="816.0" y="282.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">15</text>
+<line x1="777.8" y1="281.0" x2="787.8" y2="291.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="777.8" y1="291.0" x2="787.8" y2="281.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="782.8" y1="308.0" x2="820.0" y2="308.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="826.0" y="312.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">VSS</text>
+<text x="816.0" y="304.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">8 EP</text>
+<polygon points="782.8,308 775.8,300.0 742.1999999999999,300.0 742.1999999999999,316.0 775.8,316.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="770.8" y="312.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="970.0" y1="132.0" x2="1013.5" y2="132.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="964.0" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">OUT</text>
+<text x="974.0" y="128.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">10 11</text>
+<polygon points="1013.5,132 1020.5,124.0 1061.3,124.0 1061.3,140.0 1020.5,140.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1025.5" y="136.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VSYS</text>
+<line x1="970.0" y1="154.0" x2="1013.5" y2="154.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="964.0" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">BAT</text>
+<text x="974.0" y="150.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">2 3</text>
+<polygon points="1013.5,154 1020.5,146.0 1068.5,146.0 1068.5,162.0 1020.5,162.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1025.5" y="158.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VCELL</text>
+<line x1="970.0" y1="176.0" x2="1013.5" y2="176.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="964.0" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">TS</text>
+<text x="974.0" y="172.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">1</text>
+<polygon points="1013.5,176 1020.5,168.0 1075.7,168.0 1075.7,184.0 1020.5,184.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1025.5" y="180.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">NTC_TS</text>
+<line x1="970.0" y1="198.0" x2="1013.5" y2="198.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="964.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">PGOOD#</text>
+<text x="974.0" y="194.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">7</text>
+<polygon points="1013.5,198 1020.5,190.0 1082.9,190.0 1082.9,206.0 1020.5,206.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1025.5" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">PGOOD_N</text>
+<line x1="970.0" y1="220.0" x2="1013.5" y2="220.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="964.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">CHG#</text>
+<text x="974.0" y="216.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">9</text>
+<polygon points="1013.5,220 1020.5,212.0 1068.5,212.0 1068.5,228.0 1020.5,228.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1025.5" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">CHG_N</text>
+<g><rect x="613" y="488.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="620" y1="470.0" x2="620" y2="488.0" stroke="#1b232c" stroke-width="1.4"/><line x1="620" y1="522.0" x2="620" y2="540.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="638.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R22</text>
+<text x="638.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">10k</text>
+<line x1="620.0" y1="470.0" x2="620.0" y2="460.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="599.6,460 640.4,460 640.4,444 599.6,444" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="620.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VSYS</text>
+<line x1="620.0" y1="540.0" x2="620.0" y2="550.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="603.2,550 636.8,550 636.8,566 603.2,566" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="620.0" y="562.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">EN1</text>
+<g><rect x="713" y="488.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="720" y1="470.0" x2="720" y2="488.0" stroke="#1b232c" stroke-width="1.4"/><line x1="720" y1="522.0" x2="720" y2="540.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="738.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R23</text>
+<text x="738.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">1.78k 1%</text>
+<line x1="720.0" y1="470.0" x2="720.0" y2="460.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="699.6,460 740.4,460 740.4,444 699.6,444" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="720.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">ISET</text>
+<line x1="720.0" y1="540.0" x2="720.0" y2="548.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="710.0" y1="548.0" x2="730.0" y2="548.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="713.5" y1="552.0" x2="726.5" y2="552.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="717.0" y1="556.0" x2="723.0" y2="556.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><rect x="813" y="488.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="820" y1="470.0" x2="820" y2="488.0" stroke="#1b232c" stroke-width="1.4"/><line x1="820" y1="522.0" x2="820" y2="540.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="838.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R24</text>
+<text x="838.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">3.09k 1%</text>
+<line x1="820.0" y1="470.0" x2="820.0" y2="460.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="799.6,460 840.4,460 840.4,444 799.6,444" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="820.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">ILIM</text>
+<line x1="820.0" y1="540.0" x2="820.0" y2="548.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="810.0" y1="548.0" x2="830.0" y2="548.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="813.5" y1="552.0" x2="826.5" y2="552.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="817.0" y1="556.0" x2="823.0" y2="556.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><line x1="920" y1="470.0" x2="920" y2="501.0" stroke="#1b232c" stroke-width="1.4"/><line x1="920" y1="509.0" x2="920" y2="540.0" stroke="#1b232c" stroke-width="1.4"/><line x1="907" y1="501.0" x2="933" y2="501.0" stroke="#1b232c" stroke-width="2.4"/><line x1="907" y1="509.0" x2="933" y2="509.0" stroke="#1b232c" stroke-width="2.4"/></g>
+<text x="938.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">C21</text>
+<text x="938.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">4.7µF</text>
+<line x1="920.0" y1="470.0" x2="920.0" y2="460.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="899.6,460 940.4,460 940.4,444 899.6,444" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="920.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VSYS</text>
+<line x1="920.0" y1="540.0" x2="920.0" y2="548.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="910.0" y1="548.0" x2="930.0" y2="548.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="913.5" y1="552.0" x2="926.5" y2="552.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="917.0" y1="556.0" x2="923.0" y2="556.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><line x1="1020" y1="470.0" x2="1020" y2="501.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1020" y1="509.0" x2="1020" y2="540.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1007" y1="501.0" x2="1033" y2="501.0" stroke="#1b232c" stroke-width="2.4"/><line x1="1007" y1="509.0" x2="1033" y2="509.0" stroke="#1b232c" stroke-width="2.4"/></g>
+<text x="1038.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">C22</text>
+<text x="1038.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">4.7µF</text>
+<line x1="1020.0" y1="470.0" x2="1020.0" y2="460.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="996.0,460 1044.0,460 1044.0,444 996.0,444" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1020.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VCELL</text>
+<line x1="1020.0" y1="540.0" x2="1020.0" y2="548.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="1010.0" y1="548.0" x2="1030.0" y2="548.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="1013.5" y1="552.0" x2="1026.5" y2="552.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="1017.0" y1="556.0" x2="1023.0" y2="556.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><rect x="1113" y="488.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="1120" y1="470.0" x2="1120" y2="488.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1120" y1="522.0" x2="1120" y2="540.0" stroke="#1b232c" stroke-width="1.4"/><polyline points="1106,521.0 1114,521.0 1132,489.0" fill="none" stroke="#1b232c" stroke-width="1.3"/></g>
+<text x="1138.0" y="503.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">RT1</text>
+<text x="1138.0" y="518.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">10k NTC</text>
+<line x1="1120.0" y1="470.0" x2="1120.0" y2="460.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1092.4,460 1147.6,460 1147.6,444 1092.4,444" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1120.0" y="456.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">NTC_TS</text>
+<line x1="1120.0" y1="540.0" x2="1120.0" y2="548.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="1110.0" y1="548.0" x2="1130.0" y2="548.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="1113.5" y1="552.0" x2="1126.5" y2="552.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="1117.0" y1="556.0" x2="1123.0" y2="556.0" stroke="#1b232c" stroke-width="1.6"/>
+<g><rect x="1193" y="148.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="1200" y1="130.0" x2="1200" y2="148.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1200" y1="182.0" x2="1200" y2="200.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="1218.0" y="163.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R25</text>
+<text x="1218.0" y="178.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">1.5k</text>
+<line x1="1200.0" y1="130.0" x2="1200.0" y2="120.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="1179.6,120 1220.4,120 1220.4,104 1179.6,104" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1200.0" y="116.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VSYS</text>
+<line x1="1200.0" y1="200.0" x2="1200.0" y2="210.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1179.6,210 1220.4,210 1220.4,226 1179.6,226" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1200.0" y="222.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">PG_A</text>
+<g><line x1="1200" y1="230.0" x2="1200" y2="256.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1200" y1="274.0" x2="1200" y2="300.0" stroke="#1b232c" stroke-width="1.4"/><polygon points="1190,256.0 1210,256.0 1200,274.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="1190" y1="274.0" x2="1210" y2="274.0" stroke="#1b232c" stroke-width="1.8"/><line x1="1212" y1="261.0" x2="1220" y2="255.0" stroke="#1b232c" stroke-width="1.1"/><line x1="1212" y1="268.0" x2="1220" y2="262.0" stroke="#1b232c" stroke-width="1.1"/></g>
+<text x="1218.0" y="263.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">D12</text>
+<text x="1218.0" y="278.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">green</text>
+<line x1="1200.0" y1="230.0" x2="1200.0" y2="220.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1179.6,220 1220.4,220 1220.4,204 1179.6,204" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1200.0" y="216.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">PG_A</text>
+<line x1="1200.0" y1="300.0" x2="1200.0" y2="310.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1168.8,310 1231.2,310 1231.2,326 1168.8,326" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1200.0" y="322.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">PGOOD_N</text>
+<g><rect x="1283" y="148.0" width="14" height="34" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/><line x1="1290" y1="130.0" x2="1290" y2="148.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1290" y1="182.0" x2="1290" y2="200.0" stroke="#1b232c" stroke-width="1.4"/></g>
+<text x="1308.0" y="163.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">R26</text>
+<text x="1308.0" y="178.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">1.5k</text>
+<line x1="1290.0" y1="130.0" x2="1290.0" y2="120.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="1269.6,120 1310.4,120 1310.4,104 1269.6,104" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1290.0" y="116.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VSYS</text>
+<line x1="1290.0" y1="200.0" x2="1290.0" y2="210.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1266.0,210 1314.0,210 1314.0,226 1266.0,226" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1290.0" y="222.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">CHG_A</text>
+<g><line x1="1290" y1="230.0" x2="1290" y2="256.0" stroke="#1b232c" stroke-width="1.4"/><line x1="1290" y1="274.0" x2="1290" y2="300.0" stroke="#1b232c" stroke-width="1.4"/><polygon points="1280,256.0 1300,256.0 1290,274.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="1280" y1="274.0" x2="1300" y2="274.0" stroke="#1b232c" stroke-width="1.8"/><line x1="1302" y1="261.0" x2="1310" y2="255.0" stroke="#1b232c" stroke-width="1.1"/><line x1="1302" y1="268.0" x2="1310" y2="262.0" stroke="#1b232c" stroke-width="1.1"/></g>
+<text x="1308.0" y="263.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">D13</text>
+<text x="1308.0" y="278.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">red</text>
+<line x1="1290.0" y1="230.0" x2="1290.0" y2="220.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1266.0,220 1314.0,220 1314.0,204 1266.0,204" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1290.0" y="216.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">CHG_A</text>
+<line x1="1290.0" y1="300.0" x2="1290.0" y2="310.0" stroke="#1f6f8b" stroke-width="1.4"/>
+<polygon points="1266.0,310 1314.0,310 1314.0,326 1266.0,326" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1290.0" y="322.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="middle">CHG_N</text>
+<rect x="1400.0" y="420.0" width="120.0" height="66.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="1400.0" y="396.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">J11</text>
+<text x="1400.0" y="411.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Battery, JST PH 2</text>
+<text x="1460.0" y="504.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">verify cell polarity</text>
+<line x1="1366.0" y1="442.0" x2="1400.0" y2="442.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="1406.0" y="446.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">+</text>
+<text x="1396.0" y="438.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">1</text>
+<polygon points="1366,442 1359,434.0 1311.0,434.0 1311.0,450.0 1359,450.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1354.0" y="446.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VCELL</text>
+<line x1="1366.0" y1="464.0" x2="1400.0" y2="464.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="1406.0" y="468.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">−</text>
+<text x="1396.0" y="460.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">2</text>
+<polygon points="1366,464 1359,456.0 1325.4,456.0 1325.4,472.0 1359,472.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="1354.0" y="468.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<rect x="1180.0" y="640.0" width="120.0" height="66.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="1180.0" y="616.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">SW10</text>
+<text x="1180.0" y="631.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Slide switch</text>
+<text x="1240.0" y="724.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">pod LDO enable, µA only</text>
+<line x1="1146.0" y1="662.0" x2="1180.0" y2="662.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="1186.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">A</text>
+<text x="1176.0" y="658.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">1</text>
+<polygon points="1146,662 1139,654.0 1098.2,654.0 1098.2,670.0 1139,670.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="1134.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VSYS</text>
+<line x1="1146.0" y1="684.0" x2="1180.0" y2="684.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="1186.0" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">B</text>
+<text x="1176.0" y="680.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">3</text>
+<line x1="1141.0" y1="679.0" x2="1151.0" y2="689.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="1141.0" y1="689.0" x2="1151.0" y2="679.0" stroke="#5a6672" stroke-width="1.4"/>
+<line x1="1300.0" y1="662.0" x2="1334.0" y2="662.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="1294.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">COM</text>
+<text x="1304.0" y="658.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">2</text>
+<polygon points="1334,662 1341,654.0 1396.2,654.0 1396.2,670.0 1341,670.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="1346.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">PWR_EN</text>
+<rect x="160.0" y="640.0" width="150.0" height="132.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="160.0" y="616.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">U11</text>
+<text x="160.0" y="631.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">MAX17048 (optional)</text>
+<text x="235.0" y="790.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">0x36 · pins: verify vs. ADI datasheet</text>
+<line x1="122.8" y1="662.0" x2="160.0" y2="662.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="166.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">CELL</text>
+<text x="156.0" y="658.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">2</text>
+<polygon points="122.8,662 115.8,654.0 67.8,654.0 67.8,670.0 115.8,670.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="110.8" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VCELL</text>
+<line x1="122.8" y1="684.0" x2="160.0" y2="684.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="166.0" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">VDD</text>
+<text x="156.0" y="680.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">3</text>
+<polygon points="122.8,684 115.8,676.0 67.8,676.0 67.8,692.0 115.8,692.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="110.8" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VCELL</text>
+<line x1="122.8" y1="706.0" x2="160.0" y2="706.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="166.0" y="710.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">CTG</text>
+<text x="156.0" y="702.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">1</text>
+<polygon points="122.8,706 115.8,698.0 82.19999999999999,698.0 82.19999999999999,714.0 115.8,714.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="110.8" y="710.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="122.8" y1="728.0" x2="160.0" y2="728.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="166.0" y="732.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">QSTRT</text>
+<text x="156.0" y="724.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">6</text>
+<polygon points="122.8,728 115.8,720.0 82.19999999999999,720.0 82.19999999999999,736.0 115.8,736.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="110.8" y="732.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="122.8" y1="750.0" x2="160.0" y2="750.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="166.0" y="754.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">GND</text>
+<text x="156.0" y="746.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">4 EP</text>
+<polygon points="122.8,750 115.8,742.0 82.19999999999999,742.0 82.19999999999999,758.0 115.8,758.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="110.8" y="754.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="end">GND</text>
+<line x1="310.0" y1="662.0" x2="344.0" y2="662.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="304.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SDA</text>
+<text x="314.0" y="658.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">8</text>
+<polygon points="344,662 351,654.0 413.4,654.0 413.4,670.0 351,670.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="356.0" y="666.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">I2C_SDA</text>
+<line x1="310.0" y1="684.0" x2="344.0" y2="684.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="304.0" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SCL</text>
+<text x="314.0" y="680.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">7</text>
+<polygon points="344,684 351,676.0 413.4,676.0 413.4,692.0 351,692.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="356.0" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">I2C_SCL</text>
+<line x1="310.0" y1="706.0" x2="344.0" y2="706.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="304.0" y="710.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">ALRT</text>
+<text x="314.0" y="702.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">5</text>
+<polygon points="344,706 351,698.0 435.0,698.0 435.0,714.0 351,714.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="356.0" y="710.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">GAUGE_ALRT</text>
+<g><line x1="470" y1="640.0" x2="470" y2="671.0" stroke="#1b232c" stroke-width="1.4"/><line x1="470" y1="679.0" x2="470" y2="710.0" stroke="#1b232c" stroke-width="1.4"/><line x1="457" y1="671.0" x2="483" y2="671.0" stroke="#1b232c" stroke-width="2.4"/><line x1="457" y1="679.0" x2="483" y2="679.0" stroke="#1b232c" stroke-width="2.4"/></g>
+<text x="488.0" y="673.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="600" fill="#1b232c" text-anchor="start">C23</text>
+<text x="488.0" y="688.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">1µF</text>
+<line x1="470.0" y1="640.0" x2="470.0" y2="630.0" stroke="#b5371f" stroke-width="1.4"/>
+<polygon points="446.0,630 494.0,630 494.0,614 446.0,614" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="470.0" y="626.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="middle">VCELL</text>
+<line x1="470.0" y1="710.0" x2="470.0" y2="718.0" stroke="#1b232c" stroke-width="1.4"/>
+<line x1="460.0" y1="718.0" x2="480.0" y2="718.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="463.5" y1="722.0" x2="476.5" y2="722.0" stroke="#1b232c" stroke-width="1.6"/>
+<line x1="467.0" y1="726.0" x2="473.0" y2="726.0" stroke="#1b232c" stroke-width="1.6"/>
+<rect x="600.0" y="680.0" width="140.0" height="242.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
+<text x="600.0" y="656.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">J12</text>
+<text x="600.0" y="671.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Tether, JST SH 10</text>
+<text x="670.0" y="940.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">same pin order as J3 on the pod</text>
+<line x1="740.0" y1="702.0" x2="774.0" y2="702.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="706.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VBUS_POD</text>
+<text x="744.0" y="698.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">1</text>
+<polygon points="774,702 781,694.0 850.6,694.0 850.6,710.0 781,710.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="786.0" y="706.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VBUS_POD</text>
+<line x1="740.0" y1="724.0" x2="774.0" y2="724.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="728.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VSYS</text>
+<text x="744.0" y="720.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">2</text>
+<polygon points="774,724 781,716.0 821.8,716.0 821.8,732.0 781,732.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="786.0" y="728.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VSYS</text>
+<line x1="740.0" y1="746.0" x2="774.0" y2="746.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="750.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VSYS</text>
+<text x="744.0" y="742.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">3</text>
+<polygon points="774,746 781,738.0 821.8,738.0 821.8,754.0 781,754.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="786.0" y="750.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VSYS</text>
+<line x1="740.0" y1="768.0" x2="774.0" y2="768.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="772.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">GND</text>
+<text x="744.0" y="764.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">4</text>
+<polygon points="774,768 781,760.0 814.6,760.0 814.6,776.0 781,776.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="786.0" y="772.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="start">GND</text>
+<line x1="740.0" y1="790.0" x2="774.0" y2="790.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="794.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">GND</text>
+<text x="744.0" y="786.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">5</text>
+<polygon points="774,790 781,782.0 814.6,782.0 814.6,798.0 781,798.0" fill="#ffffff" stroke="#1b232c" stroke-width="1.2"/>
+<text x="786.0" y="794.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1b232c" text-anchor="start">GND</text>
+<line x1="740.0" y1="812.0" x2="774.0" y2="812.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="816.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">VCELL</text>
+<text x="744.0" y="808.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">6</text>
+<polygon points="774,812 781,804.0 829.0,804.0 829.0,820.0 781,820.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
+<text x="786.0" y="816.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="start">VCELL</text>
+<line x1="740.0" y1="834.0" x2="774.0" y2="834.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="838.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">PWR_EN</text>
+<text x="744.0" y="830.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">7</text>
+<polygon points="774,834 781,826.0 836.2,826.0 836.2,842.0 781,842.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="786.0" y="838.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">PWR_EN</text>
+<line x1="740.0" y1="856.0" x2="774.0" y2="856.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="860.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SDA</text>
+<text x="744.0" y="852.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">8</text>
+<polygon points="774,856 781,848.0 843.4,848.0 843.4,864.0 781,864.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="786.0" y="860.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">I2C_SDA</text>
+<line x1="740.0" y1="878.0" x2="774.0" y2="878.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="882.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">SCL</text>
+<text x="744.0" y="874.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">9</text>
+<polygon points="774,878 781,870.0 843.4,870.0 843.4,886.0 781,886.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="786.0" y="882.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">I2C_SCL</text>
+<line x1="740.0" y1="900.0" x2="774.0" y2="900.0" stroke="#1b232c" stroke-width="1.4"/>
+<text x="734.0" y="904.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="end">ALRT</text>
+<text x="744.0" y="896.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">10</text>
+<polygon points="774,900 781,892.0 865.0,892.0 865.0,908.0 781,908.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
+<text x="786.0" y="904.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">GAUGE_ALRT</text>
+<rect x="960.0" y="790.0" width="600.0" height="134.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="972.0" y="810.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">Charger settings (TI SLUS810N)</text>
+<text x="972.0" y="830.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">ISET 1.78k → 890/R = 500 mA fast charge (±10 %), 1C for a 500 mAh cell.</text>
+<text x="972.0" y="846.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">ILIM 3.09k → 1550/R = 502 mA input limit; must be fitted.</text>
+<text x="972.0" y="862.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">TS + 10k NTC on the cell: charging only between 0 and 50 °C.</text>
+<text x="972.0" y="878.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">TMR and ITERM open: default timers and 10 % termination.</text>
+<text x="972.0" y="894.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">OUT (VSYS) is 4.4 V on USB and follows the cell on battery.</text>
+<text x="972.0" y="910.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Charge from either USB-C: D10/D11 diode-OR the two VBUS lines.</text>
+</svg>

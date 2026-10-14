@@ -1,0 +1,8 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_per_kit,order_qty,ext_usd,status,note
+MCU2,Raspberry Pi Pico 2 (RP2350),Raspberry Pi,SC1631,2648-SC1631CT-ND,358-SC1631,,5.00,3,3,15.00,snapshot,PIO bus driver
+LVL,"8-bit dual-supply translator, TSSOP-24",TI,SN74AXC8T245PWR,,,,1.20,2,2,2.40,estimate,needs a TSSOP-24 breakout
+BRK,TSSOP-24 to DIP breakout,,(pick at order),,,,3.00,2,2,6.00,estimate,
+LDO18,"1.8 V LDO, SOT-23-5",TI,TLV75718PDBVR,,,,0.40,1,1,0.40,estimate,
+PANEL,Sony ECX336-class micro-OLED + HDMI driver board,Display Components (HK),,,,Tindie,99.50,1,1,99.50,vendor,"HDMI viewer board, for seeing the panel"
+REF,"Hicenda 0.23"" 640x400 module, 4,000 nit (reference)",Hicenda,,,,hicendadisplay.com,389.00,1,1,389.00,vendor,$184 for the standard version
+FPGA,iCEBreaker FPGA board (optional),1BitSquared,iCEBreaker,,,Mouser storefront,80.00,1,1,80.00,estimate,Yosys/nextpnr route

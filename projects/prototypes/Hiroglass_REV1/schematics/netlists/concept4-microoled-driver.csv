@@ -1,0 +1,27 @@
+net,connections
+3V3(OUT)-VCCA 3V3,Level shift ×2.VCCA 3V3 Pico 2 · RP2350.3V3(OUT)
+B  CS-CS,Level shift ×2.B  CS Micro-OLED panel.CS
+B  DE-DE,Level shift ×2.B  DE Micro-OLED panel.DE
+B  HSYNC-HSYNC,Level shift ×2.B  HSYNC Micro-OLED panel.HSYNC
+B  PCLK-PCLK,Level shift ×2.B  PCLK Micro-OLED panel.PCLK
+B  SCK-SCK,Level shift ×2.B  SCK Micro-OLED panel.SCK
+B  SDI-SDI,Level shift ×2.B  SDI Micro-OLED panel.SDI
+B  VSYNC-VSYNC,Level shift ×2.B  VSYNC Micro-OLED panel.VSYNC
+B  XCLR-XCLR,Level shift ×2.B  XCLR Micro-OLED panel.XCLR
+GND -GND,Level shift ×2.GND Pico 2 · RP2350.GND 
+GND-GND,Pico 2 · RP2350.GND Pod MCU · ESP32-C3.GND
+GP10  PCLK-A  PCLK,Level shift ×2.A  PCLK Pico 2 · RP2350.GP10  PCLK
+GP11  HSYNC-A  HSYNC,Level shift ×2.A  HSYNC Pico 2 · RP2350.GP11  HSYNC
+GP12  VSYNC-A  VSYNC,Level shift ×2.A  VSYNC Pico 2 · RP2350.GP12  VSYNC
+GP13  DE-A  DE,Level shift ×2.A  DE Pico 2 · RP2350.GP13  DE
+GP17  SPI0 CS-A  CS,Level shift ×2.A  CS Pico 2 · RP2350.GP17  SPI0 CS
+GP18  SPI0 SCK-A  SCK,Level shift ×2.A  SCK Pico 2 · RP2350.GP18  SPI0 SCK
+GP19  SPI0 TX-A  SDI,Level shift ×2.A  SDI Pico 2 · RP2350.GP19  SPI0 TX
+GP20  XCLR-A  XCLR,Level shift ×2.A  XCLR Pico 2 · RP2350.GP20  XCLR
+GPIO20 RX-GP0 UART0 TX,Pico 2 · RP2350.GP0 UART0 TX Pod MCU · ESP32-C3.GPIO20 RX
+UART cmds,Pico 2 · RP2350.GP1 UART0 RX Pod MCU · ESP32-C3.GPIO21 TX
+VOUT 1V8-VCCB 1V8,1.8 V LDO.VOUT 1V8 Level shift ×2.VCCB 1V8
+VOUT 1V8-VDD 1V8,1.8 V LDO.VOUT 1V8 Micro-OLED panel.VDD 1V8
+VPANEL-VPANEL (?),Micro-OLED panel.VPANEL (?) Panel rail.VPANEL
+VSYS-VSYS,Pico 2 · RP2350.VSYS Pod MCU · ESP32-C3.VSYS
+×8,Level shift ×2.A  D0–D7 Level shift ×2.B  D0–D7 Micro-OLED panel.D0–D7  (YCbCr 8-bit) Pico 2 · RP2350.GP2–GP9  D0–D7

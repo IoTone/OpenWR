@@ -1,0 +1,15 @@
+net,connections
+5 V,HDMI → USB-C adapter.USB-C 5 V in Puck · Raspberry Pi 5.USB 2.0 port
+5 V 5 A,27 W USB-C PSU.USB-C PD out Puck · Raspberry Pi 5.USB-C power in
+A0  INT-INT,BNO085 IMU.INT IMU bridge · QT Py RP2040.A0  INT
+A1  RST-RST,BNO085 IMU.RST IMU bridge · QT Py RP2040.A1  RST
+BLE sideband,Phone · Switchback.BLE Puck · Raspberry Pi 5.BLE (onboard)
+CSI,Camera Module 3 ×2.cam L  22-pin Puck · Raspberry Pi 5.CSI/DSI 0
+DP alt,Birdbath glasses.USB-C  DP alt + 5 V HDMI → USB-C adapter.USB-C DP alt out
+HDMI,HDMI → USB-C adapter.HDMI in Puck · Raspberry Pi 5.micro-HDMI 0
+QT 3V3-QT 3V3,BNO085 IMU.QT 3V3 IMU bridge · QT Py RP2040.QT 3V3
+QT GND-QT GND,BNO085 IMU.QT GND IMU bridge · QT Py RP2040.QT GND
+QT SCL-QT SCL,BNO085 IMU.QT SCL IMU bridge · QT Py RP2040.QT SCL
+QT SDA-QT SDA,BNO085 IMU.QT SDA IMU bridge · QT Py RP2040.QT SDA
+USB,IMU bridge · QT Py RP2040.USB-C Puck · Raspberry Pi 5.USB 3.0 port
+cam R  22-pin-CSI/DSI 1,Camera Module 3 ×2.cam R  22-pin Puck · Raspberry Pi 5.CSI/DSI 1

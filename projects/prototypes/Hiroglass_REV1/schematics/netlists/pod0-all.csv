@@ -1,0 +1,61 @@
+net,connections
++3V3,pod0-1-mcu-usb-power:C1.1 pod0-1-mcu-usb-power:C2.1 pod0-1-mcu-usb-power:C8.1 pod0-1-mcu-usb-power:R1.1 pod0-1-mcu-usb-power:R17.1 pod0-1-mcu-usb-power:R2.1 pod0-1-mcu-usb-power:R3.1 pod0-1-mcu-usb-power:R4.1 pod0-1-mcu-usb-power:U1.3:3V3 pod0-1-mcu-usb-power:U4.5:VOUT pod0-2-display-sensors:C13.1 pod0-2-display-sensors:C4.1 pod0-2-display-sensors:C5.1 pod0-2-display-sensors:C6.1 pod0-2-display-sensors:J1.9:VDD pod0-2-display-sensors:R5.1 pod0-2-display-sensors:R6.1 pod0-2-display-sensors:U2.12:CSB pod0-2-display-sensors:U2.5:VDDIO pod0-2-display-sensors:U2.8:VDD pod0-2-display-sensors:U3.2:VDD
+BOOT,pod0-1-mcu-usb-power:R2.2 pod0-1-mcu-usb-power:SW2.1 pod0-1-mcu-usb-power:U1.23:IO9
+CC1,pod0-1-mcu-usb-power:J2.A5:CC1 pod0-1-mcu-usb-power:R8.1
+CC2,pod0-1-mcu-usb-power:J2.B5:CC2 pod0-1-mcu-usb-power:R9.1
+CHG_A,pod0-3-puck:D13.1 pod0-3-puck:R26.2
+CHG_IN,pod0-3-puck:C20.1 pod0-3-puck:D10.2 pod0-3-puck:D11.2 pod0-3-puck:U10.13:IN
+CHG_N,pod0-3-puck:D13.2 pod0-3-puck:U10.9:CHG#
+EN,pod0-1-mcu-usb-power:C3.1 pod0-1-mcu-usb-power:R1.2 pod0-1-mcu-usb-power:SW1.1 pod0-1-mcu-usb-power:U1.8:EN
+EN1,pod0-3-puck:R22.2 pod0-3-puck:U10.6:EN1
+GAUGE_ALRT,pod0-1-mcu-usb-power:J3.10:ALRT pod0-1-mcu-usb-power:R17.2 pod0-1-mcu-usb-power:U1.30:IO20 RXD0 pod0-3-puck:J12.10:ALRT pod0-3-puck:U11.5:ALRT
+GND,pod0-1-mcu-usb-power:C1.2 pod0-1-mcu-usb-power:C2.2 pod0-1-mcu-usb-power:C3.2 pod0-1-mcu-usb-power:C7.2 pod0-1-mcu-usb-power:C8.2 pod0-1-mcu-usb-power:C9.2 pod0-1-mcu-usb-power:J2.A1 A12 B1 B12:GND pod0-1-mcu-usb-power:J2.S:SHIELD pod0-1-mcu-usb-power:J3.4:GND pod0-1-mcu-usb-power:J3.5:GND pod0-1-mcu-usb-power:R7.2 pod0-1-mcu-usb-power:R8.2 pod0-1-mcu-usb-power:R9.2 pod0-1-mcu-usb-power:SW1.2 pod0-1-mcu-usb-power:SW2.2 pod0-1-mcu-usb-power:U1.1 2 11 14 36–53:GND pod0-1-mcu-usb-power:U4.2:GND pod0-1-mcu-usb-power:U5.2:GND pod0-2-display-sensors:C12.2 pod0-2-display-sensors:C13.2 pod0-2-display-sensors:C14.2 pod0-2-display-sensors:C15.2 pod0-2-display-sensors:C4.2 pod0-2-display-sensors:C5.2 pod0-2-display-sensors:C6.2 pod0-2-display-sensors:J1.10:BS0 pod0-2-display-sensors:J1.11:BS1 pod0-2-display-sensors:J1.12:BS2 pod0-2-display-sensors:J1.1:NC/GND pod0-2-display-sensors:J1.21:D3 pod0-2-display-sensors:J1.22:D4 pod0-2-display-sensors:J1.23:D5 pod0-2-display-sensors:J1.24:D6 pod0-2-display-sensors:J1.25:D7 pod0-2-display-sensors:J1.29:VLSS pod0-2-display-sensors:J1.30:NC/GND pod0-2-display-sensors:J1.8:VSS pod0-2-display-sensors:Q2.2:S pod0-2-display-sensors:R12.2 pod0-2-display-sensors:R13.2 pod0-2-display-sensors:R14.2 pod0-2-display-sensors:R16.2 pod0-2-display-sensors:U2.1:SDO pod0-2-display-sensors:U2.6:GNDIO pod0-2-display-sensors:U2.7:GND pod0-2-display-sensors:U3.3:GND pod0-3-puck:C20.2 pod0-3-puck:C21.2 pod0-3-puck:C22.2 pod0-3-puck:C23.2 pod0-3-puck:J10.A1 B12:GND pod0-3-puck:J10.B1 A12:GND pod0-3-puck:J10.S:SHIELD pod0-3-puck:J11.2:− pod0-3-puck:J12.4:GND pod0-3-puck:J12.5:GND pod0-3-puck:R20.2 pod0-3-puck:R21.2 pod0-3-puck:R23.2 pod0-3-puck:R24.2 pod0-3-puck:RT1.2 pod0-3-puck:U10.4:CE# pod0-3-puck:U10.5:EN2 pod0-3-puck:U10.8 EP:VSS pod0-3-puck:U11.1:CTG pod0-3-puck:U11.4 EP:GND pod0-3-puck:U11.6:QSTRT
+I2C_SCL,pod0-1-mcu-usb-power:J3.9:SCL pod0-1-mcu-usb-power:U1.5:IO2 pod0-2-display-sensors:R6.2 pod0-2-display-sensors:U2.13:SCx pod0-2-display-sensors:U3.1:SCL pod0-3-puck:J12.9:SCL pod0-3-puck:U11.7:SCL
+I2C_SDA,pod0-1-mcu-usb-power:J3.8:SDA pod0-1-mcu-usb-power:U1.19:IO5 pod0-2-display-sensors:R5.2 pod0-2-display-sensors:U2.14:SDx pod0-2-display-sensors:U3.4:SDA pod0-3-puck:J12.8:SDA pod0-3-puck:U11.8:SDA
+ILIM,pod0-3-puck:R24.1 pod0-3-puck:U10.12:ILIM
+IMU_INT1,pod0-1-mcu-usb-power:U1.12:IO0 pod0-2-display-sensors:U2.4:INT1
+ISET,pod0-3-puck:R23.1 pod0-3-puck:U10.16:ISET
+LED_A,pod0-1-mcu-usb-power:D1.1 pod0-1-mcu-usb-power:R4.2
+LED_N,pod0-1-mcu-usb-power:D1.2 pod0-1-mcu-usb-power:R3.2 pod0-1-mcu-usb-power:U1.22:IO8
+NTC_TS,pod0-3-puck:RT1.1 pod0-3-puck:U10.1:TS
+OLED_C1N,pod0-2-display-sensors:C11.2 pod0-2-display-sensors:J1.5:C1N
+OLED_C1P,pod0-2-display-sensors:C11.1 pod0-2-display-sensors:J1.4:C1P
+OLED_C2N,pod0-2-display-sensors:C10.2 pod0-2-display-sensors:J1.3:C2N
+OLED_C2P,pod0-2-display-sensors:C10.1 pod0-2-display-sensors:J1.2:C2P
+OLED_CS_N,pod0-1-mcu-usb-power:U1.21:IO7 pod0-2-display-sensors:J1.13:CS#
+OLED_DC,pod0-1-mcu-usb-power:U1.13:IO1 pod0-2-display-sensors:J1.15:D/C#
+OLED_ERD,pod0-2-display-sensors:J1.17:E/RD# pod0-2-display-sensors:R14.1
+OLED_IREF,pod0-2-display-sensors:J1.26:IREF pod0-2-display-sensors:R12.1
+OLED_RES_N,pod0-1-mcu-usb-power:U1.6:IO3 pod0-2-display-sensors:J1.14:RES#
+OLED_RW,pod0-2-display-sensors:J1.16:R/W# pod0-2-display-sensors:R13.1
+OLED_SCLK,pod0-1-mcu-usb-power:U1.18:IO4 pod0-2-display-sensors:J1.18:D0 SCLK
+OLED_SDIN,pod0-1-mcu-usb-power:U1.20:IO6 pod0-2-display-sensors:J1.19:D1 SDIN
+OLED_VBAT,pod0-2-display-sensors:C12.1 pod0-2-display-sensors:J1.6:VBAT pod0-2-display-sensors:Q1.3:D
+OLED_VBAT_EN,pod0-1-mcu-usb-power:U1.16:IO10 pod0-2-display-sensors:Q2.1:G pod0-2-display-sensors:R16.1
+OLED_VCC,pod0-2-display-sensors:C15.1 pod0-2-display-sensors:J1.28:VCC
+OLED_VCOMH,pod0-2-display-sensors:C14.1 pod0-2-display-sensors:J1.27:VCOMH
+PCC1,pod0-3-puck:J10.A5:CC1 pod0-3-puck:R20.1
+PCC2,pod0-3-puck:J10.B5:CC2 pod0-3-puck:R21.1
+PGOOD_N,pod0-3-puck:D12.2 pod0-3-puck:U10.7:PGOOD#
+PG_A,pod0-3-puck:D12.1 pod0-3-puck:R25.2
+PWR_EN,pod0-1-mcu-usb-power:J3.7:PWR_EN pod0-1-mcu-usb-power:R7.1 pod0-1-mcu-usb-power:U4.3:EN pod0-3-puck:J12.7:PWR_EN pod0-3-puck:SW10.2:COM
+Q1_G,pod0-2-display-sensors:Q1.1:G pod0-2-display-sensors:Q2.3:D pod0-2-display-sensors:R15.2
+TP_RX1N,pod0-1-mcu-usb-power:J2.B10:RX1−
+TP_RX1P,pod0-1-mcu-usb-power:J2.B11:RX1+
+TP_RX2N,pod0-1-mcu-usb-power:J2.A10:RX2−
+TP_RX2P,pod0-1-mcu-usb-power:J2.A11:RX2+
+TP_SBU1,pod0-1-mcu-usb-power:J2.A8:SBU1
+TP_SBU2,pod0-1-mcu-usb-power:J2.B8:SBU2
+TP_TX1N,pod0-1-mcu-usb-power:J2.A3:TX1−
+TP_TX1P,pod0-1-mcu-usb-power:J2.A2:TX1+
+TP_TX2N,pod0-1-mcu-usb-power:J2.B3:TX2−
+TP_TX2P,pod0-1-mcu-usb-power:J2.B2:TX2+
+TP_TXD0,pod0-1-mcu-usb-power:U1.31:IO21 TXD0
+USB_C_DN,pod0-1-mcu-usb-power:J2.A7 B7:D− pod0-1-mcu-usb-power:R11.1 pod0-1-mcu-usb-power:U5.1:I/O1 pod0-1-mcu-usb-power:U5.6:I/O1
+USB_C_DP,pod0-1-mcu-usb-power:J2.A6 B6:D+ pod0-1-mcu-usb-power:R10.1 pod0-1-mcu-usb-power:U5.3:I/O2 pod0-1-mcu-usb-power:U5.4:I/O2
+USB_DN,pod0-1-mcu-usb-power:R11.2 pod0-1-mcu-usb-power:U1.26:IO18 D−
+USB_DP,pod0-1-mcu-usb-power:R10.2 pod0-1-mcu-usb-power:U1.27:IO19 D+
+VBUS_POD,pod0-1-mcu-usb-power:C9.1 pod0-1-mcu-usb-power:J2.A4 A9 B4 B9:VBUS pod0-1-mcu-usb-power:J3.1:VBUS_POD pod0-1-mcu-usb-power:U5.5:VBUS pod0-3-puck:D11.1 pod0-3-puck:J12.1:VBUS_POD
+VBUS_PUCK,pod0-3-puck:D10.1 pod0-3-puck:J10.A4 B9:VBUS pod0-3-puck:J10.B4 A9:VBUS
+VCELL,pod0-1-mcu-usb-power:J3.6:VCELL pod0-2-display-sensors:Q1.2:S pod0-2-display-sensors:R15.1 pod0-3-puck:C22.1 pod0-3-puck:C23.1 pod0-3-puck:J11.1:+ pod0-3-puck:J12.6:VCELL pod0-3-puck:U10.2 3:BAT pod0-3-puck:U11.2:CELL pod0-3-puck:U11.3:VDD
+VSYS,pod0-1-mcu-usb-power:C7.1 pod0-1-mcu-usb-power:J3.2:VSYS pod0-1-mcu-usb-power:J3.3:VSYS pod0-1-mcu-usb-power:U4.1:VIN pod0-3-puck:C21.1 pod0-3-puck:J12.2:VSYS pod0-3-puck:J12.3:VSYS pod0-3-puck:R22.1 pod0-3-puck:R25.1 pod0-3-puck:R26.1 pod0-3-puck:SW10.1:A pod0-3-puck:U10.10 11:OUT

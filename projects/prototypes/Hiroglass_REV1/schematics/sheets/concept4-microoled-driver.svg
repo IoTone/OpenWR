@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" role="img" aria-label="Concept 4 · micro-OLED on an open driver">
+<rect width="1600" height="1100" fill="#f7f9fb"/>
+<rect x="16" y="16" width="1568" height="1068" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<rect x="1064" y="992" width="520" height="92" fill="#ffffff" stroke="#1b232c" stroke-width="1.5"/>
+<line x1="1064" y1="1042" x2="1584" y2="1042" stroke="#1b232c"/>
+<line x1="1364" y1="1042" x2="1364" y2="1084" stroke="#1b232c"/>
+<line x1="1464" y1="1042" x2="1464" y2="1084" stroke="#1b232c"/>
+<text x="1076.0" y="1014.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" fill="#1b232c" text-anchor="start">Concept 4 · micro-OLED on an open driver</text>
+<text x="1076.0" y="1033.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">Pico 2 PIO (or iCEBreaker PMOD) → 1.8 V parallel bus</text>
+<text x="1076.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · Hiroglass REV1</text>
+<text x="1076.0" y="1074.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">CERN-OHL-P-2.0</text>
+<text x="1376.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">SHEET</text>
+<text x="1376.0" y="1076.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">X-4</text>
+<text x="1476.0" y="1058.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="start">REV A</text>
+<text x="1476.0" y="1076.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">2026-10-14</text>
+<rect x="60" y="150" width="190" height="136" rx="8" fill="#253041"/>
+<text x="155.0" y="170.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Pod MCU · ESP32-C3</text>
+<text x="155.0" y="302.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Pod-0 board, sheet P-1</text>
+<rect x="245" y="193" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="238.0" y="202.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GPIO21 TX</text>
+<rect x="245" y="215" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="238.0" y="224.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GPIO20 RX</text>
+<rect x="245" y="237" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="238.0" y="246.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GND</text>
+<rect x="245" y="259" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="238.0" y="268.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">VSYS</text>
+<rect x="420" y="110" width="230" height="290" rx="8" fill="#253041"/>
+<text x="535.0" y="130.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Pico 2 · RP2350</text>
+<text x="535.0" y="416.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Raspberry Pi SC1631 · PIO drives the bus</text>
+<rect x="415" y="153" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="432.0" y="162.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GP1 UART0 RX</text>
+<rect x="415" y="175" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="432.0" y="184.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GP0 UART0 TX</text>
+<rect x="415" y="197" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="432.0" y="206.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="415" y="219" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="432.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VSYS</text>
+<rect x="645" y="153" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="162.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP2–GP9  D0–D7</text>
+<rect x="645" y="175" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="184.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP10  PCLK</text>
+<rect x="645" y="197" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="206.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP11  HSYNC</text>
+<rect x="645" y="219" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP12  VSYNC</text>
+<rect x="645" y="241" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="250.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP13  DE</text>
+<rect x="645" y="263" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="272.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP18  SPI0 SCK</text>
+<rect x="645" y="285" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="294.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP19  SPI0 TX</text>
+<rect x="645" y="307" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="316.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP17  SPI0 CS</text>
+<rect x="645" y="329" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="338.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GP20  XCLR</text>
+<rect x="645" y="351" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="360.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">3V3(OUT)</text>
+<rect x="645" y="373" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="638.0" y="382.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GND </text>
+<rect x="840" y="110" width="200" height="290" rx="8" fill="#253041"/>
+<text x="940.0" y="130.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Level shift ×2</text>
+<text x="940.0" y="416.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">TI SN74AXC8T245 ×2 · DIR = A→B</text>
+<rect x="835" y="153" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="162.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  D0–D7</text>
+<rect x="835" y="175" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="184.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  PCLK</text>
+<rect x="835" y="197" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="206.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  HSYNC</text>
+<rect x="835" y="219" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  VSYNC</text>
+<rect x="835" y="241" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="250.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  DE</text>
+<rect x="835" y="263" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="272.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  SCK</text>
+<rect x="835" y="285" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="294.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  SDI</text>
+<rect x="835" y="307" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="316.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  CS</text>
+<rect x="835" y="329" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="338.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">A  XCLR</text>
+<rect x="835" y="351" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="360.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VCCA 3V3</text>
+<rect x="835" y="373" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="382.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="1035" y="153" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="162.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  D0–D7</text>
+<rect x="1035" y="175" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="184.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  PCLK</text>
+<rect x="1035" y="197" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="206.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  HSYNC</text>
+<rect x="1035" y="219" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  VSYNC</text>
+<rect x="1035" y="241" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="250.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  DE</text>
+<rect x="1035" y="263" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="272.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  SCK</text>
+<rect x="1035" y="285" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="294.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  SDI</text>
+<rect x="1035" y="307" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="316.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  CS</text>
+<rect x="1035" y="329" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="338.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">B  XCLR</text>
+<rect x="1035" y="351" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="360.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">VCCB 1V8</text>
+<rect x="1035" y="373" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1028.0" y="382.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">GND </text>
+<rect x="1240" y="110" width="230" height="312" rx="8" fill="#5b2b22"/>
+<text x="1355.0" y="130.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Micro-OLED panel</text>
+<text x="1355.0" y="438.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">Sony ECX336-class 0.23″ 640×400</text>
+<rect x="1235" y="153" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="162.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">D0–D7  (YCbCr 8-bit)</text>
+<rect x="1235" y="175" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="184.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">PCLK</text>
+<rect x="1235" y="197" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="206.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">HSYNC</text>
+<rect x="1235" y="219" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VSYNC</text>
+<rect x="1235" y="241" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="250.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">DE</text>
+<rect x="1235" y="263" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="272.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">SCK</text>
+<rect x="1235" y="285" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="294.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">SDI</text>
+<rect x="1235" y="307" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="316.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">CS</text>
+<rect x="1235" y="329" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="338.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">XCLR</text>
+<rect x="1235" y="351" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="360.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VDD 1V8</text>
+<rect x="1235" y="373" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="382.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="1235" y="395" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="404.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VPANEL (?)</text>
+<rect x="840" y="560" width="170" height="92" rx="8" fill="#253041"/>
+<text x="925.0" y="580.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">1.8 V LDO</text>
+<text x="925.0" y="668.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">TI TLV75718PDBVR</text>
+<rect x="835" y="603" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="612.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VIN</text>
+<rect x="835" y="625" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="852.0" y="634.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="1005" y="603" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="998.0" y="612.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">VOUT 1V8</text>
+<rect x="1240" y="560" width="170" height="92" rx="8" fill="#5b2b22"/>
+<text x="1325.0" y="580.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#ffffff" text-anchor="middle">Panel rail</text>
+<text x="1325.0" y="668.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="middle">per panel datasheet: unknown</text>
+<rect x="1235" y="603" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="612.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">VIN</text>
+<rect x="1235" y="625" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1252.0" y="634.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="start">GND</text>
+<rect x="1405" y="603" width="10" height="10" fill="#d4a017" stroke="#7a5c00"/>
+<text x="1398.0" y="612.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#ffffff" text-anchor="end">VPANEL</text>
+<polyline points="250,198 330,198 330,158 420,158" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="250" cy="198" r="3.2" fill="#2a9d4b"/>
+<circle cx="420" cy="158" r="3.2" fill="#2a9d4b"/>
+<text x="335.0" y="175.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#2a9d4b" text-anchor="start">UART cmds</text>
+<polyline points="250,220 345,220 345,180 420,180" fill="none" stroke="#7b3fbf" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="250" cy="220" r="3.2" fill="#7b3fbf"/>
+<circle cx="420" cy="180" r="3.2" fill="#7b3fbf"/>
+<polyline points="250,242 360,242 360,202 420,202" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="250" cy="242" r="3.2" fill="#1b232c"/>
+<circle cx="420" cy="202" r="3.2" fill="#1b232c"/>
+<polyline points="250,264 375,264 375,224 420,224" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="250" cy="264" r="3.2" fill="#d62828"/>
+<circle cx="420" cy="224" r="3.2" fill="#d62828"/>
+<polyline points="650,158 700,158 700,158 840,158" fill="none" stroke="#1f6fd1" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="158" r="3.2" fill="#1f6fd1"/>
+<circle cx="840" cy="158" r="3.2" fill="#1f6fd1"/>
+<text x="705.0" y="151.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#1f6fd1" text-anchor="start">×8</text>
+<polyline points="1040,158 1100,158 1100,158 1240,158" fill="none" stroke="#1f6fd1" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="158" r="3.2" fill="#1f6fd1"/>
+<circle cx="1240" cy="158" r="3.2" fill="#1f6fd1"/>
+<text x="1105.0" y="151.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="400" fill="#1f6fd1" text-anchor="start">×8</text>
+<polyline points="650,180 712,180 712,180 840,180" fill="none" stroke="#e76f1c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="180" r="3.2" fill="#e76f1c"/>
+<circle cx="840" cy="180" r="3.2" fill="#e76f1c"/>
+<polyline points="1040,180 1112,180 1112,180 1240,180" fill="none" stroke="#e76f1c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="180" r="3.2" fill="#e76f1c"/>
+<circle cx="1240" cy="180" r="3.2" fill="#e76f1c"/>
+<polyline points="650,202 724,202 724,202 840,202" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="202" r="3.2" fill="#d9a400"/>
+<circle cx="840" cy="202" r="3.2" fill="#d9a400"/>
+<polyline points="1040,202 1124,202 1124,202 1240,202" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="202" r="3.2" fill="#d9a400"/>
+<circle cx="1240" cy="202" r="3.2" fill="#d9a400"/>
+<polyline points="650,224 736,224 736,224 840,224" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="224" r="3.2" fill="#d9a400"/>
+<circle cx="840" cy="224" r="3.2" fill="#d9a400"/>
+<polyline points="1040,224 1136,224 1136,224 1240,224" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="224" r="3.2" fill="#d9a400"/>
+<circle cx="1240" cy="224" r="3.2" fill="#d9a400"/>
+<polyline points="650,246 748,246 748,246 840,246" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="246" r="3.2" fill="#d9a400"/>
+<circle cx="840" cy="246" r="3.2" fill="#d9a400"/>
+<polyline points="1040,246 1148,246 1148,246 1240,246" fill="none" stroke="#d9a400" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="246" r="3.2" fill="#d9a400"/>
+<circle cx="1240" cy="246" r="3.2" fill="#d9a400"/>
+<polyline points="650,268 760,268 760,268 840,268" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="268" r="3.2" fill="#2a9d4b"/>
+<circle cx="840" cy="268" r="3.2" fill="#2a9d4b"/>
+<polyline points="1040,268 1160,268 1160,268 1240,268" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="268" r="3.2" fill="#2a9d4b"/>
+<circle cx="1240" cy="268" r="3.2" fill="#2a9d4b"/>
+<polyline points="650,290 772,290 772,290 840,290" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="290" r="3.2" fill="#2a9d4b"/>
+<circle cx="840" cy="290" r="3.2" fill="#2a9d4b"/>
+<polyline points="1040,290 1172,290 1172,290 1240,290" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="290" r="3.2" fill="#2a9d4b"/>
+<circle cx="1240" cy="290" r="3.2" fill="#2a9d4b"/>
+<polyline points="650,312 784,312 784,312 840,312" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="312" r="3.2" fill="#2a9d4b"/>
+<circle cx="840" cy="312" r="3.2" fill="#2a9d4b"/>
+<polyline points="1040,312 1184,312 1184,312 1240,312" fill="none" stroke="#2a9d4b" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="312" r="3.2" fill="#2a9d4b"/>
+<circle cx="1240" cy="312" r="3.2" fill="#2a9d4b"/>
+<polyline points="650,334 796,334 796,334 840,334" fill="none" stroke="#7b3fbf" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="334" r="3.2" fill="#7b3fbf"/>
+<circle cx="840" cy="334" r="3.2" fill="#7b3fbf"/>
+<polyline points="1040,334 1196,334 1196,334 1240,334" fill="none" stroke="#7b3fbf" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1040" cy="334" r="3.2" fill="#7b3fbf"/>
+<circle cx="1240" cy="334" r="3.2" fill="#7b3fbf"/>
+<polyline points="650,356 812,356 812,356 840,356" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="356" r="3.2" fill="#d62828"/>
+<circle cx="840" cy="356" r="3.2" fill="#d62828"/>
+<polyline points="650,378 826,378 826,378 840,378" fill="none" stroke="#1b232c" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="650" cy="378" r="3.2" fill="#1b232c"/>
+<circle cx="840" cy="378" r="3.2" fill="#1b232c"/>
+<polyline points="1010,608 1060,608 1060,440 1080,440 1080,356 1040,356" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1010" cy="608" r="3.2" fill="#d62828"/>
+<circle cx="1040" cy="356" r="3.2" fill="#d62828"/>
+<polyline points="1010,608 1060,608 1060,470 1215,470 1215,356 1240,356" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1010" cy="608" r="3.2" fill="#d62828"/>
+<circle cx="1240" cy="356" r="3.2" fill="#d62828"/>
+<polyline points="1410,608 1500,608 1500,520 1225,520 1225,400 1240,400" fill="none" stroke="#d62828" stroke-width="2.6" stroke-linejoin="round" opacity="0.92"/>
+<circle cx="1410" cy="608" r="3.2" fill="#d62828"/>
+<circle cx="1240" cy="400" r="3.2" fill="#d62828"/>
+<rect x="60.0" y="560.0" width="700.0" height="150.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="72.0" y="580.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">What is and isn't known</text>
+<text x="72.0" y="600.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Known: Brilliant Labs Frame drives this panel class with an 8-bit YCbCr</text>
+<text x="72.0" y="616.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">parallel bus plus SPI configuration (Frame hardware docs).</text>
+<text x="72.0" y="632.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Not known: Sony publishes no datasheet, so connector pinout, the panel</text>
+<text x="72.0" y="648.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">rail voltages and the init sequence are unverified. Treat the panel side</text>
+<text x="72.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">of this sheet as a signal list, not a pinout.</text>
+<text x="72.0" y="680.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Bus budget: ~17 signals; Pico 2 has 26 GPIO, so the IMU fits on I2C too.</text>
+<text x="72.0" y="696.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Level shifting assumes 1.8 V panel logic; drop the shifters if it is 3.3 V.</text>
+<rect x="60.0" y="790.0" width="700.0" height="86.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="72.0" y="810.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">iCEBreaker instead of Pico 2</text>
+<text x="72.0" y="830.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">PMOD 1A + 1B as a double PMOD: 16 I/O for D0–D7 and the four timing lines;</text>
+<text x="72.0" y="846.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">PMOD 2 for SPI config + XCLR. Same level shifters. Toolchain: Yosys + nextpnr.</text>
+<text x="72.0" y="862.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">Reference: Frame's RTL (check its license before reuse).</text>
+<rect x="800.0" y="790.0" width="420.0" height="86.0" rx="4" fill="#eef5f8" stroke="#1f6f8b" stroke-width="1.1"/>
+<text x="812.0" y="810.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="600" fill="#1f6f8b" text-anchor="start">Pod-0 pins on this branch</text>
+<text x="812.0" y="830.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">VSYS comes from the Pod-0 puck tether (sheet P-3).</text>
+<text x="812.0" y="846.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">GPIO20 is the fuel-gauge alert on Pod-0: leave</text>
+<text x="812.0" y="862.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">the optional gauge off, or move the UART pins.</text>
+</svg>

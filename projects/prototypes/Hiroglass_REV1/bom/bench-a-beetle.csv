@@ -1,0 +1,15 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_per_kit,order_qty,ext_usd,status,note
+MCU,Beetle ESP32-C3,DFRobot,DFR0868,1738-DFR0868-ND,,,6.90,1,3,20.70,snapshot,skip if reusing goggl1 boards
+OLED,"1.3"" 128x64 SSD1306 OLED, SPI/I2C (cut 2 jumpers for SPI)",Adafruit,938,1528-1512-ND,,,19.95,1,3,59.85,snapshot,"0.96"" alternate: Adafruit 326"
+IMU,"BMI270 IMU breakout, Qwiic",SparkFun,SEN-22397,1568-22397-ND,474-SEN-22397,,18.50,1,3,55.50,snapshot,"DigiKey 33, Mouser 113 (+208 due 10/16)"
+ALS,"VEML7700 light sensor, STEMMA QT",Adafruit,4162,1528-2891-ND,,,4.95,1,3,14.85,snapshot,DigiKey 125
+QTH,STEMMA QT to male header cable,Adafruit,4209,,,,0.95,1,3,2.85,estimate,Beetle to IMU
+QT,STEMMA QT cable 50 mm,Adafruit,4399,1528-4399-ND,,,0.95,1,3,2.85,snapshot,IMU to light sensor
+PUCK,"bq24074 LiPo charger, USB-C (set jumper to 500 mA)",Adafruit,4755,1528-4755-ND,485-4755,,14.95,1,3,44.85,snapshot,Mouser lists it without a price
+BAT,"LiPo 500 mAh, JST-PH",Adafruit,1578,,485-1578,,7.95,1,3,23.85,snapshot,no thermistor
+SW,JST-PH extension with on/off switch,Adafruit,1131,,,,2.95,1,3,8.85,estimate,
+LEAD,"JST-PH 2-pin to male header, 200 mm",Adafruit,3814,,,,0.75,1,3,2.25,estimate,
+USB,USB-A to USB-C cable,Adafruit,4474,,,,2.95,2,6,17.70,estimate,
+BB,Half-size breadboard,Adafruit,64,,,,5.00,1,3,15.00,estimate,
+JMP,"Jumper wires, male/male",Adafruit,758,,,,3.95,1,3,11.85,estimate,
+HDR,Header strip pack (one per team),Adafruit,392,,,,4.95,0.333,1,4.95,estimate,
