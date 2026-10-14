@@ -1,6 +1,6 @@
 /*
- * epd.c — UC8151-class e-paper driver (the raw sequence from the ESP_Skin
- * prototype, ported to ESP-IDF spi_master) plus a landscape canvas.
+ * epd.c — e-paper panel drivers (a table: UC8151 2.13in flex, SSD1680 2.9in)
+ * on ESP-IDF spi_master, plus a landscape 1-bit canvas sized by the driver.
  *
  * Licensed under the Apache License, Version 2.0
  */
@@ -20,19 +20,13 @@
 
 static const char *TAG = "epd";
 
-/* Bench knobs (epd-geom! epd-cdi! epd-spi! epd-old! epd-lut!) so a panel
- * can be characterised from the console without reflashing. */
-static int s_geom = 0;        /* 0: native 104x212 (13 B/row); 1: native 122x250 (16 B/row) */
-static int s_cdi  = 0x97;     /* VCOM and data interval byte */
-static int s_old  = 0;        /* 0x10 "old" frame: 0 all white, 1 inverse of new, 2 not written */
-static int s_lutm = 0;        /* 0 LUT from register (GxEPD2), 1 LUT from OTP (vendor, PSR 0x1f) */
+/* ==== bus ============================================================= */
+
 static int s_hz   = 4000000;
 static int s_csb  = 0;        /* 1: assert CS around every byte, as the vendor demo does */
 static spi_device_handle_t s_spi;
-static uint8_t s_canvas[EPD_CANVAS];
+static uint8_t s_canvas[EPD_CANVAS_MAX];
 static bool s_up;
-
-/* ---- bus ---------------------------------------------------------- */
 
 static void xfer(bool data, const uint8_t *buf, size_t n)
 {
@@ -50,29 +44,47 @@ static void xfer(bool data, const uint8_t *buf, size_t n)
 static void cmd(uint8_t c)            { xfer(false, &c, 1); }
 static void dat(uint8_t d)            { xfer(true, &d, 1); }
 
-/* BUSY is low while the controller works; wait for idle, bounded. */
-static void wait_idle(int max_ms)
+/* Send len bytes after a command: from buf, or 0xFF (white) when buf is NULL,
+ * inverted when asked. Chunked so a 4.7 KB frame never needs a DMA buffer. */
+static void send_frame(uint8_t c, const uint8_t *buf, int len, int invert)
 {
+    cmd(c);
+    uint8_t tmp[256];
+    for (int i = 0; i < len; i += 256) {
+        int n = (len - i) < 256 ? (len - i) : 256;
+        if (buf) { for (int k = 0; k < n; k++) tmp[k] = invert ? (uint8_t)~buf[i + k] : buf[i + k]; }
+        else memset(tmp, 0xFF, n);
+        xfer(true, tmp, n);
+    }
+}
+
+/* Wait while the controller is busy. UC8151 pulls BUSY low while it
+ * works; SSD1680 drives it high. Bounded either way. */
+static void wait_busy(bool busy_level_high, int max_ms)
+{
+    int busy = busy_level_high ? 1 : 0;
     for (int i = 0; i < max_ms / 10; i++) {
-        if (gpio_get_level(SKIN_PIN_BUSY) == 1) return;
+        if (gpio_get_level(SKIN_PIN_BUSY) != busy) return;
         vTaskDelay(pdMS_TO_TICKS(10));
     }
     ESP_LOGW(TAG, "busy timeout after %d ms", max_ms);
 }
 
-static void panel_reset(void)
+static void reset_pulse(int times, int low_ms, int after_ms)
 {
-    for (int i = 0; i < 3; i++) {          /* three pulses, as the vendor code does */
-        gpio_set_level(SKIN_PIN_RST, 0); vTaskDelay(pdMS_TO_TICKS(10));
-        gpio_set_level(SKIN_PIN_RST, 1); vTaskDelay(pdMS_TO_TICKS(10));
+    for (int i = 0; i < times; i++) {
+        gpio_set_level(SKIN_PIN_RST, 0); vTaskDelay(pdMS_TO_TICKS(low_ms));
+        gpio_set_level(SKIN_PIN_RST, 1); vTaskDelay(pdMS_TO_TICKS(after_ms));
     }
 }
 
-/* Init as GxEPD2_213_flex does it (the combination the ESP_Skin prototype
- * proved on this glass): power setting, boost, panel setting 0xbf 0x0d
- * (LUT from register), PLL, 104x212, VCOM DC, CDI 0x97, then the five
- * full-refresh LUTs and power on. The vendor's short sequence (PSR 0x1f,
- * LUT from OTP) left the picture short of the glass with comb artifacts. */
+/* ==== driver: UC8151 2.13" flexible, 212x104 (GxEPD2_213_flex) ======== */
+/* Bench knobs (epd-geom! epd-cdi! epd-old! epd-lut!) apply to this driver. */
+static int s_geom = 0;        /* 0: native 104x212; 1: native 122x250 */
+static int s_cdi  = 0x97;     /* VCOM and data interval byte */
+static int s_old  = 0;        /* 0x10 "old" frame: 0 all white, 1 inverse of new, 2 not written */
+static int s_lutm = 0;        /* 0 LUT from register (GxEPD2), 1 LUT from OTP (vendor, PSR 0x1f) */
+
 static const uint8_t lut_20_vcomDC[] = {
     0x00, 0x08, 0x00, 0x00, 0x00, 0x02, 0x60, 0x28, 0x28, 0x00, 0x00, 0x01,
     0x00, 0x14, 0x00, 0x00, 0x00, 0x01, 0x00, 0x12, 0x12, 0x00, 0x00, 0x01,
@@ -101,12 +113,12 @@ static const uint8_t lut_24_bb[] = {
 
 static void lut(uint8_t c, const uint8_t *t, size_t n) { cmd(c); xfer(true, t, n); }
 
-static void panel_init(void)
+static void uc8151_init(void)
 {
-    panel_reset();
+    reset_pulse(3, 10, 10);
     cmd(0x01); dat(0x03); dat(0x00); dat(0x2b); dat(0x2b); dat(0x03);   /* power setting */
     cmd(0x06); dat(0x17); dat(0x17); dat(0x17);                         /* boost soft start */
-    int nw = s_geom ? 122 : EPD_H, nh = s_geom ? 250 : EPD_W;           /* native width (sources) x height (gates) */
+    int nw = s_geom ? 122 : 104, nh = s_geom ? 250 : 212;
     if (s_lutm == 0) { cmd(0x00); dat(0xbf); dat(0x0d); }               /* panel setting: LUT from register */
     else             { cmd(0x00); dat(0x1f); }                          /* vendor: LUT from OTP */
     cmd(0x30); dat(0x3a);                                               /* PLL 100 Hz */
@@ -120,15 +132,124 @@ static void panel_init(void)
         lut(0x23, lut_23_wb, sizeof lut_23_wb);
         lut(0x24, lut_24_bb, sizeof lut_24_bb);
     }
-    cmd(0x04); wait_idle(3000);                                         /* power on */
+    cmd(0x04); wait_busy(false, 3000);                                  /* power on */
 }
 
-static void panel_sleep(void)
+static void uc8151_write(const uint8_t *native, int len)
 {
-    cmd(0x02); wait_idle(3000);           /* power off */
+    if (s_old == 0)      send_frame(0x10, NULL, len, 0);       /* old frame: all white */
+    else if (s_old == 1) send_frame(0x10, native, len, 1);     /* old frame: inverse */
+    send_frame(0x13, native, len, 0);                          /* new frame */
+}
+
+static void uc8151_refresh(void)
+{
+    cmd(0x12); vTaskDelay(pdMS_TO_TICKS(10));
+    wait_busy(false, 6000);
+}
+
+static void uc8151_sleep(void)
+{
+    cmd(0x02); wait_busy(false, 3000);    /* power off */
     vTaskDelay(pdMS_TO_TICKS(1000));      /* the vendor code insists */
     cmd(0x07); dat(0xA5);                 /* deep sleep */
 }
+
+/* ==== driver: SSD1680 2.9" mono, 296x128 (Seeed Setup504, GxEPD2_290_T94) */
+
+static void ssd1680_init(void)
+{
+    reset_pulse(1, 10, 120);
+    wait_busy(true, 2000);
+    cmd(0x12);                                            /* software reset */
+    wait_busy(true, 2000);
+    cmd(0x3C); dat(0x05);                                 /* border waveform */
+    cmd(0x01); dat((296 - 1) & 0xff); dat((296 - 1) >> 8); dat(0x00);   /* driver output: 296 gates */
+    cmd(0x11); dat(0x03);                                 /* data entry: x+, y+ */
+    cmd(0x44); dat(0x00); dat(128 / 8 - 1);               /* RAM x: bytes 0..15 */
+    cmd(0x45); dat(0x00); dat(0x00); dat((296 - 1) & 0xff); dat((296 - 1) >> 8);
+    cmd(0x18); dat(0x80);                                 /* built-in temperature sensor */
+    cmd(0x4E); dat(0x00);
+    cmd(0x4F); dat(0x00); dat(0x00);
+    wait_busy(true, 2000);
+}
+
+static void ssd1680_write(const uint8_t *native, int len)
+{
+    send_frame(0x24, native, len, 0);                     /* black/white RAM, 1 = white */
+    cmd(0x4E); dat(0x00);
+    cmd(0x4F); dat(0x00); dat(0x00);
+    send_frame(0x26, native, len, 0);                     /* previous-image RAM, same picture */
+}
+
+static void ssd1680_refresh(void)
+{
+    cmd(0x22); dat(0xF7);                                 /* full update, waveform from OTP */
+    cmd(0x20);
+    vTaskDelay(pdMS_TO_TICKS(10));
+    wait_busy(true, 8000);
+}
+
+static void ssd1680_sleep(void)
+{
+    cmd(0x10); dat(0x01);                                 /* deep sleep; the next init resets it awake */
+    vTaskDelay(pdMS_TO_TICKS(100));
+}
+
+/* ==== the driver table ================================================ */
+/* To add a panel: write init/write/refresh/sleep for its controller and
+ * add a row. w x h is the landscape canvas; src is the controller's source
+ * count across the short side (native row width in pixels), gates the long
+ * side. Native frames are 1 = white, MSB first, src/8 bytes a row. */
+
+typedef struct {
+    const char *name, *desc;
+    int w, h;                 /* landscape canvas */
+    int src, gates;           /* native: bytes a row = src/8, rows = gates */
+    void (*init)(void);
+    void (*write)(const uint8_t *native, int len);
+    void (*refresh)(void);
+    void (*sleep)(void);
+} epd_driver_t;
+
+static const epd_driver_t s_drivers[] = {
+    { "uc8151-213flex", "2.13in flexible mono 212x104 (UC8151, GxEPD2_213_flex)",
+      212, 104, 104, 212, uc8151_init, uc8151_write, uc8151_refresh, uc8151_sleep },
+    { "ssd1680-290", "2.9in mono 296x128 (SSD1680, Seeed 104990853)",
+      296, 128, 128, 296, ssd1680_init, ssd1680_write, ssd1680_refresh, ssd1680_sleep },
+};
+#define N_DRIVERS ((int)(sizeof s_drivers / sizeof s_drivers[0]))
+
+static int s_drv = 0;
+static int s_rot = 0;         /* 0..3: how the canvas lands on the native frame (epd-rot!) */
+
+int epd_w(void)          { return s_drivers[s_drv].w; }
+int epd_h(void)          { return s_drivers[s_drv].h; }
+int epd_stride(void)     { return (s_drivers[s_drv].w + 7) / 8; }
+int epd_canvas_len(void) { return epd_stride() * s_drivers[s_drv].h; }
+
+int epd_driver_count(void)          { return N_DRIVERS; }
+int epd_driver_current(void)        { return s_drv; }
+const char *epd_driver_name(int i)  { return (i >= 0 && i < N_DRIVERS) ? s_drivers[i].name : "?"; }
+const char *epd_driver_desc(int i)  { return (i >= 0 && i < N_DRIVERS) ? s_drivers[i].desc : "?"; }
+
+int epd_driver_find(const char *name, int len)
+{
+    for (int i = 0; i < N_DRIVERS; i++)
+        if ((int)strlen(s_drivers[i].name) == len && strncmp(s_drivers[i].name, name, len) == 0) return i;
+    return -1;
+}
+
+void epd_driver_set(int i)
+{
+    if (i < 0 || i >= N_DRIVERS) return;
+    s_drv = i;
+    memset(s_canvas, 0, sizeof s_canvas);
+    ESP_LOGI(TAG, "driver %s: %dx%d", s_drivers[i].name, s_drivers[i].w, s_drivers[i].h);
+}
+
+void epd_set_rot(int r) { s_rot = r & 3; }
+int  epd_rot(void)      { return s_rot; }
 
 esp_err_t epd_init(void)
 {
@@ -147,59 +268,51 @@ esp_err_t epd_init(void)
     if (err != ESP_OK) return err;
     s_up = true;
     epd_clear();
-    ESP_LOGI(TAG, "up: 212x104, rst=%d cs=%d dc=%d busy=%d", SKIN_PIN_RST, SKIN_PIN_CS, SKIN_PIN_DC, SKIN_PIN_BUSY);
+    ESP_LOGI(TAG, "up: rst=%d cs=%d dc=%d busy=%d", SKIN_PIN_RST, SKIN_PIN_CS, SKIN_PIN_DC, SKIN_PIN_BUSY);
     return ESP_OK;
 }
 
-/* Rotate the landscape canvas (212x104, 1 = black) into the panel's native
- * frame (sources across, gates down, 1 = white). Canvas (x, y) lands at
- * native column (103 - y), native row x. In geometry 1 the native frame is
- * 122 x 250 (16 bytes per row) and the canvas sits at its origin. */
-static int native_stride(void) { return s_geom ? 16 : 13; }
-static int native_rows(void)   { return s_geom ? 250 : EPD_W; }
-static int native_len(void)    { return native_stride() * native_rows(); }
+/* Rotate the landscape canvas (1 = black) into the native frame (1 = white).
+ * The UC8151 bench geometry 1 (122x250) keeps its own native size. */
+static int native_src(void)   { return (s_drv == 0 && s_geom) ? 122 : s_drivers[s_drv].src; }
+static int native_rows(void)  { return (s_drv == 0 && s_geom) ? 250 : s_drivers[s_drv].gates; }
+static int native_stride(void){ return (native_src() + 7) / 8; }
+static int native_len(void)   { return native_stride() * native_rows(); }
 
 static void to_native(uint8_t *out)
 {
-    int st = native_stride();
+    int st = native_stride(), W = epd_w(), H = epd_h(), cs = epd_stride();
+    int S = s_drivers[s_drv].src, G = s_drivers[s_drv].gates;
     memset(out, 0xFF, native_len());
-    for (int y = 0; y < EPD_H; y++) {
-        for (int x = 0; x < EPD_W; x++) {
-            if (!(s_canvas[y * EPD_STRIDE + (x >> 3)] & (0x80 >> (x & 7)))) continue;
-            int nc = 103 - y, nr = x;
+    for (int y = 0; y < H; y++) {
+        for (int x = 0; x < W; x++) {
+            if (!(s_canvas[y * cs + (x >> 3)] & (0x80 >> (x & 7)))) continue;
+            int nc, nr;
+            switch (s_rot) {
+            default:
+            case 0: nc = S - 1 - y; nr = x;         break;   /* as the 2.13in flex came up */
+            case 1: nc = y;         nr = G - 1 - x; break;   /* 180 degrees */
+            case 2: nc = y;         nr = x;         break;   /* mirrored across the long axis */
+            case 3: nc = S - 1 - y; nr = G - 1 - x; break;   /* mirrored across the short axis */
+            }
             out[nr * st + (nc >> 3)] &= (uint8_t)~(0x80 >> (nc & 7));
         }
-    }
-}
-
-static void send_frame(uint8_t c, const uint8_t *buf, int len, int invert)
-{
-    cmd(c);
-    uint8_t tmp[256];
-    for (int i = 0; i < len; i += 256) {
-        int n = (len - i) < 256 ? (len - i) : 256;
-        if (buf) { for (int k = 0; k < n; k++) tmp[k] = invert ? (uint8_t)~buf[i + k] : buf[i + k]; }
-        else memset(tmp, 0xFF, n);
-        xfer(true, tmp, n);
     }
 }
 
 void epd_show(void)
 {
     if (!s_up) return;
+    const epd_driver_t *d = &s_drivers[s_drv];
     int len = native_len();
     uint8_t *native = malloc(len);
     if (!native) return;
     to_native(native);
-    ESP_LOGI(TAG, "show: geom=%d (%dx%d) cdi=0x%02x old=%d lut=%s spi=%d csb=%d", s_geom, s_geom ? 122 : 104,
-             native_rows(), s_cdi, s_old, s_lutm ? "otp" : "reg", s_hz, s_csb);
-    panel_init();
-    if (s_old == 0)      send_frame(0x10, NULL, len, 0);       /* old frame: all white */
-    else if (s_old == 1) send_frame(0x10, native, len, 1);     /* old frame: inverse, every pixel transitions */
-    send_frame(0x13, native, len, 0);                          /* new frame */
-    cmd(0x12); vTaskDelay(pdMS_TO_TICKS(10));                  /* refresh */
-    wait_idle(6000);
-    panel_sleep();
+    ESP_LOGI(TAG, "show: %s %dx%d rot=%d spi=%d", d->name, native_src(), native_rows(), s_rot, s_hz);
+    d->init();
+    d->write(native, len);
+    d->refresh();
+    d->sleep();
     free(native);
 }
 
@@ -282,7 +395,8 @@ void epd_test_pattern_in(int X0, int W0)
     epd_box(X0 + 14, by, W0 / 2 - 20, 10, 1);
     for (int y = by; y < by + 10; y++) for (int x = X0 + W0 / 2 + 2; x < X1 - 12; x++) if (((x + y) & 1) == 0) epd_pixel(x, y, 1);
     int mx = X0 + W0 / 2;
-    epd_line(mx - 10, 52, mx + 10, 52); epd_line(mx, 42, mx, 62);
+    int my = EPD_H / 2;
+    epd_line(mx - 10, my, mx + 10, my); epd_line(mx, my - 10, mx, my + 10);
     char lbl[32]; int n = snprintf(lbl, sizeof lbl, "TEST %dX%d @%d", W0, EPD_H, X0);
     epd_str(X0 + 12, EPD_H - 20, lbl, n, 1);
     epd_str(X0 + 12, EPD_H - 11, "X", 1, 1); epd_str(X1 - 16, EPD_H - 11, "X", 1, 1);

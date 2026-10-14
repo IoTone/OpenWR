@@ -62,6 +62,12 @@ class GoggleConsole extends ChangeNotifier {
   int mapletSlot = -1;
   int safeX = 0;
   int safeW = 212;
+
+  /// The maplet's panel, from `epd=driver:WxH` in its status line (firmware
+  /// 0.3.0+); older firmware means the original 212x104 glass.
+  String panelDriver = 'uc8151-213flex';
+  int panelW = 212;
+  int panelH = 104;
   final List<ConsoleEntry> _transcript = <ConsoleEntry>[];
   static const int _transcriptCap = 150;
 
@@ -259,6 +265,13 @@ class GoggleConsole extends ChangeNotifier {
     }
   }
 
+  /// `epd=ssd1680-290:296x128` from a maplet status line: driver, width, height.
+  static (String, int, int)? parseEpdField(String token) {
+    final RegExpMatch? e = RegExp(r'^epd=([\w.-]+):(\d+)x(\d+)$').firstMatch(token.trim());
+    if (e == null) return null;
+    return (e.group(1)!, int.parse(e.group(2)!), int.parse(e.group(3)!));
+  }
+
   /// `maplet v0.1.0 net=0 ... map=1 ...` and the safe area.
   Future<void> _refreshMaplet() async {
     try {
@@ -271,11 +284,17 @@ class GoggleConsole extends ChangeNotifier {
         mapletVersion = parts[1].startsWith('v') ? parts[1].substring(1) : parts[1];
         for (final String p in parts) {
           if (p.startsWith('map=')) mapletSlot = int.tryParse(p.substring(4)) ?? -1;
+          final (String, int, int)? e = parseEpdField(p);
+          if (e != null) {
+            panelDriver = e.$1;
+            panelW = e.$2;
+            panelH = e.$3;
+          }
         }
       }
       final String r = await send('epd-safe@ . .', background: true, timeout: const Duration(seconds: 4));
       final List<int> n = r.trim().split(RegExp(r'\s+')).map((String x) => int.tryParse(x)).whereType<int>().toList();
-      if (n.length >= 2 && n[1] >= 0 && n[0] > 8 && n[1] + n[0] <= 212) {
+      if (n.length >= 2 && n[1] >= 0 && n[0] > 8 && n[1] + n[0] <= panelW) {
         safeW = n[0];
         safeX = n[1];
       }

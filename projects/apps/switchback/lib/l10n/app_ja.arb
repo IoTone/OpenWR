@@ -491,7 +491,7 @@
     }
   },
   "mapletSent": "表示しました。次のセッションまで残ります。",
-  "mapletNotConnected": "maplet 未接続。プレビューは 212 × 104 の全面です。",
+  "mapletNotConnected": "maplet 未接続。プレビューは 2.13 インチ 212 × 104 パネルです。",
   "mapletGlassArea": "接続中のパネル向けに描画: {w} × {h}。",
   "@mapletGlassArea": {
     "placeholders": {
@@ -543,10 +543,13 @@
   "mapletUpdate": "ファームウェア更新",
   "mapletConsole": "コンソール",
   "mapletDisconnect": "切断",
-  "mapletSafeArea": "パネル: 212 列中 {w} 列が描画可能（{x} 列目から）",
+  "mapletSafeArea": "パネル: {total} 列中 {w} 列が描画可能（{x} 列目から）",
   "@mapletSafeArea": {
     "placeholders": {
       "w": {
+        "type": "int"
+      },
+      "total": {
         "type": "int"
       },
       "x": {
@@ -573,5 +576,19 @@
   "rollShow": "パネルに表示",
   "mapletRoll": "ロール",
   "sportSnowboard": "スノーボード",
-  "sportHike": "ハイキング"
+  "sportHike": "ハイキング",
+  "mapletPanel": "パネル: {driver}、{w} × {h}",
+  "@mapletPanel": {
+    "placeholders": {
+      "driver": {
+        "type": "String"
+      },
+      "w": {
+        "type": "int"
+      },
+      "h": {
+        "type": "int"
+      }
+    }
+  }
 }

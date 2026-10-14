@@ -41,7 +41,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
     super.didChangeDependencies();
     final MapletConsole m = context.watch<MapletConsole>();
     // Render for the glass that is connected, or the full panel if none.
-    final int w = m.isConnected ? m.safeW : MapletConsole.width;
+    final int w = m.isConnected ? m.safeW : m.width;
     if (w != _renderedForW && !_rendering) {
       _renderedForW = w;
       unawaited(_render(w));
@@ -61,7 +61,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
       _renderError = null;
     });
     try {
-      final EinkCanvas c = await MapRenderer().postcard(postcardFor(s, AppLocalizations.of(context)), w, MapletConsole.height);
+      final EinkCanvas c = await MapRenderer().postcard(postcardFor(s, AppLocalizations.of(context)), w, context.read<MapletConsole>().height);
       final ui.Image img = await c.toImage();
       if (!mounted) return;
       setState(() {
@@ -85,7 +85,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
       _sendNote = null;
     });
     try {
-      final EinkCanvas full = EinkCanvas(width: MapletConsole.width, height: MapletConsole.height);
+      final EinkCanvas full = EinkCanvas(width: m.width, height: m.height);
       full.blit(c, m.safeX, 0);
       await m.pushFrame(full.pack(), slot: 0, onProgress: (double p) {
         if (mounted) setState(() => _progress = p);
@@ -125,7 +125,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> {
           _Glass(preview: _preview, rendering: _rendering, error: _renderError),
           const SizedBox(height: 6),
           Text(
-            m.isConnected ? l.mapletGlassArea(m.safeW, MapletConsole.height) : l.mapletNotConnected,
+            m.isConnected ? l.mapletGlassArea(m.safeW, m.height) : l.mapletNotConnected,
             style: t.textTheme.bodySmall,
           ),
           const SizedBox(height: 20),
@@ -194,7 +194,7 @@ class _Glass extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData t = Theme.of(context);
     return AspectRatio(
-      aspectRatio: 212 / 104,
+      aspectRatio: preview != null ? preview!.width / preview!.height : 212 / 104,
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xFFECEBE4),

@@ -50,7 +50,7 @@ class _RollScreenState extends State<RollScreen> {
     setState(() => _pulling = n);
     try {
       final Uint8List f = await m.rollGet(n);
-      final ui.Image img = await EinkCanvas.unpack(f).toImage();
+      final ui.Image img = await EinkCanvas.unpack(f, width: m.width, height: m.height).toImage();
       if (!mounted) return;
       setState(() {
         _raw[n] = f;
@@ -93,7 +93,7 @@ class _RollScreenState extends State<RollScreen> {
               Text(l.rollFrame(n), style: t.textTheme.titleMedium),
               const SizedBox(height: 6),
               AspectRatio(
-                aspectRatio: 212 / 104,
+                aspectRatio: _images[n] != null ? _images[n]!.width / _images[n]!.height : m.width / m.height,
                 child: Container(
                   decoration: BoxDecoration(color: const Color(0xFFECEBE4), borderRadius: BorderRadius.circular(4), border: Border.all(color: Colors.black26)),
                   clipBehavior: Clip.antiAlias,

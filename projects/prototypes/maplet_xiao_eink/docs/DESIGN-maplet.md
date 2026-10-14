@@ -184,3 +184,49 @@ chain without a run.
 Live updates (the goggle's job), partial refresh (this panel's LUT does a
 full flash; fine for a patch), a user button (the XIAO has none; the app
 flips maps), and trails from OSM.
+
+## 9. Panels: one driver table, chosen from the console
+
+The firmware drives more than one e-paper panel. `src/epd.c` holds a table
+of drivers; each row names a panel and carries its canvas size, its native
+frame (sources x gates) and four steps: init, write, refresh, sleep. The
+active row is chosen at run time and remembered in NVS, so the same image
+runs on every panel and a swap is a console line, not a reflash.
+
+| Driver | Panel | Canvas | Controller notes |
+|---|---|---|---|
+| `uc8151-213flex` | 2.13in flexible mono, Seeed 104990847 | 212 x 104 | BUSY low = busy; LUTs from register (GxEPD2_213_flex); bench knobs epd-geom!, epd-cdi!, epd-old!, epd-lut! |
+| `ssd1680-290` | 2.9in mono, Seeed 104990853 | 296 x 128 | BUSY high = busy; OTP waveform, update 0xF7; RAM 0x24/0x26, 1 = white (Seeed_GFX Setup504, GxEPD2_290_T94) |
+
+Words:
+
+```
+epd-drivers                       list them, * on the active one
+s" ssd1680-290" epd-driver!       switch, remember, reset the safe area
+epd-driver                        print the active one
+epd-size@      ( -- w h )         canvas size
+epd-rot!       ( n -- )           0..3 if the picture lands mirrored or upside down
+epd-test epd-show                 the calibration pattern, always the first look
+```
+
+The canvas, the drawing words, Snapshot, the PAIR badge and the phone all
+follow the active size. The status line carries `epd=driver:WxH`, and
+Switchback renders for it. Saved maps record the size they were drawn for;
+a map from another panel is not shown, the splash is. On the S3 the four
+slots live in the `maps` partition (8 KB each) because a 296 x 128 frame
+(4 736 bytes) times four does not fit the 24 KB NVS.
+
+Bringing up a new panel:
+
+1. Find the controller (Seeed_GFX `User_Setups/Setup5xx_*.h` names it) and
+   its init, refresh and sleep (`TFT_Drivers/<IC>_Defines.h`, or GxEPD2).
+2. Check which BUSY level means busy and whether RAM data is 1 = white.
+3. Add the four functions and a row; raise `EPD_W_MAX` / `EPD_H_MAX` if it
+   is the biggest panel yet.
+4. Flash, `s" name" epd-driver!`, `epd-test epd-show`: border on the glass
+   edge, 1 px checker clean, "0,0 TOP-L" top left. Fix orientation with
+   `epd-rot!`.
+5. Send a Postcard from Switchback.
+
+Pins: the breakout board (105990172) puts BUSY on D5. Seeed's ePaper driver
+board puts it on D2, so a panel on that board needs its own pin header.

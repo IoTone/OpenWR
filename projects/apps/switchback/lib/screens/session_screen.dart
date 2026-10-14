@@ -182,8 +182,8 @@ Future<void> sendPostcard(BuildContext context, MapletConsole m, SessionSummary 
   final AppLocalizations l = AppLocalizations.of(context);
   final ScaffoldMessengerState sm = ScaffoldMessenger.of(context);
   try {
-    final EinkCanvas c = await MapRenderer().postcard(postcardFor(s, l), m.safeW, MapletConsole.height);
-    final EinkCanvas full = EinkCanvas(width: MapletConsole.width, height: MapletConsole.height);
+    final EinkCanvas c = await MapRenderer().postcard(postcardFor(s, l), m.safeW, m.height);
+    final EinkCanvas full = EinkCanvas(width: m.width, height: m.height);
     full.blit(c, m.safeX, 0);
     await m.pushFrame(full.pack(), slot: 0);
     sm.showSnackBar(SnackBar(content: Text(l.sessionSentToMaplet)));

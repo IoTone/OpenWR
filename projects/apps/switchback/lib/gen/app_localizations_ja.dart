@@ -737,7 +737,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mapletSent => '表示しました。次のセッションまで残ります。';
 
   @override
-  String get mapletNotConnected => 'maplet 未接続。プレビューは 212 × 104 の全面です。';
+  String get mapletNotConnected =>
+      'maplet 未接続。プレビューは 2.13 インチ 212 × 104 パネルです。';
 
   @override
   String mapletGlassArea(int w, int h) {
@@ -827,8 +828,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mapletDisconnect => '切断';
 
   @override
-  String mapletSafeArea(int w, int x) {
-    return 'パネル: 212 列中 $w 列が描画可能（$x 列目から）';
+  String mapletSafeArea(int w, int total, int x) {
+    return 'パネル: $total 列中 $w 列が描画可能（$x 列目から）';
   }
 
   @override
@@ -871,4 +872,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sportHike => 'ハイキング';
+
+  @override
+  String mapletPanel(String driver, int w, int h) {
+    return 'パネル: $driver、$w × $h';
+  }
 }

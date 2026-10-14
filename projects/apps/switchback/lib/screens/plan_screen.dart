@@ -50,7 +50,7 @@ class _PlanScreenState extends State<PlanScreen> {
 
   void _maybeRender() {
     final MapletConsole m = context.read<MapletConsole>();
-    final int w = m.isConnected ? m.safeW : MapletConsole.width;
+    final int w = m.isConnected ? m.safeW : m.width;
     final String key = '$_routeIndex/$_radiusKm/$w';
     if (key == _key || _busy) return;
     _key = key;
@@ -64,6 +64,7 @@ class _PlanScreenState extends State<PlanScreen> {
     });
     final AppLocalizations l = AppLocalizations.of(context);
     final SessionController sc = context.read<SessionController>();
+    final int h = context.read<MapletConsole>().height;
     try {
       EinkCanvas c;
       if (_routeIndex != null && _routeIndex! < sc.log.length) {
@@ -88,7 +89,7 @@ class _PlanScreenState extends State<PlanScreen> {
             track: s.track,
           ),
           w,
-          MapletConsole.height,
+          h,
         );
       } else {
         final Position p = await _position();
@@ -109,7 +110,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ],
           ),
           w,
-          MapletConsole.height,
+          h,
         );
       }
       final ui.Image img = await c.toImage();
@@ -165,7 +166,7 @@ class _PlanScreenState extends State<PlanScreen> {
       _note = null;
     });
     try {
-      final EinkCanvas full = EinkCanvas(width: MapletConsole.width, height: MapletConsole.height);
+      final EinkCanvas full = EinkCanvas(width: m.width, height: m.height);
       full.blit(c, m.safeX, 0);
       await m.pushFrame(full.pack(), slot: 1, onProgress: (double p) {
         if (mounted) setState(() => _progress = p);
@@ -239,7 +240,7 @@ class _PlanScreenState extends State<PlanScreen> {
           Text(l.mapletFieldNotes.toUpperCase(), style: t.textTheme.labelMedium?.copyWith(color: cs.primary, letterSpacing: 1.2)),
           const SizedBox(height: 8),
           AspectRatio(
-            aspectRatio: 212 / 104,
+            aspectRatio: _preview != null ? _preview!.width / _preview!.height : 212 / 104,
             child: Container(
               decoration: BoxDecoration(color: const Color(0xFFECEBE4), borderRadius: BorderRadius.circular(4), border: Border.all(color: Colors.black26)),
               clipBehavior: Clip.antiAlias,
@@ -249,7 +250,7 @@ class _PlanScreenState extends State<PlanScreen> {
             ),
           ),
           const SizedBox(height: 6),
-          Text(m.isConnected ? l.mapletGlassArea(m.safeW, MapletConsole.height) : l.mapletNotConnected, style: t.textTheme.bodySmall),
+          Text(m.isConnected ? l.mapletGlassArea(m.safeW, m.height) : l.mapletNotConnected, style: t.textTheme.bodySmall),
           const SizedBox(height: 20),
           if (m.isConnected)
             FilledButton.icon(

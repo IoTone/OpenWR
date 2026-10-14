@@ -1409,7 +1409,7 @@ abstract class AppLocalizations {
   /// No description provided for @mapletNotConnected.
   ///
   /// In en, this message translates to:
-  /// **'No maplet connected. The preview shows the full 212 × 104 panel.'**
+  /// **'No maplet connected. The preview shows the 2.13in 212 × 104 panel.'**
   String get mapletNotConnected;
 
   /// No description provided for @mapletGlassArea.
@@ -1577,8 +1577,8 @@ abstract class AppLocalizations {
   /// No description provided for @mapletSafeArea.
   ///
   /// In en, this message translates to:
-  /// **'Glass: {w} of 212 columns render, from column {x}'**
-  String mapletSafeArea(int w, int x);
+  /// **'Glass: {w} of {total} columns render, from column {x}'**
+  String mapletSafeArea(int w, int total, int x);
 
   /// No description provided for @sessionSnap.
   ///
@@ -1657,6 +1657,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hike'**
   String get sportHike;
+
+  /// No description provided for @mapletPanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Panel: {driver}, {w} × {h}'**
+  String mapletPanel(String driver, int w, int h);
 }
 
 class _AppLocalizationsDelegate

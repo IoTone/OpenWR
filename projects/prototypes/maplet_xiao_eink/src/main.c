@@ -100,7 +100,7 @@ void con_printf(const char *fmt, ...)
 /* Hold BOOT for a second to open the pairing window. The glass shows a
  * PAIR badge over the current picture while the window is open, and goes
  * back to the picture when a phone connects or the window closes. */
-static uint8_t s_before_badge[EPD_CANVAS];
+static uint8_t s_before_badge[EPD_CANVAS_MAX];
 static bool s_badge;
 
 static void pair_badge_show(void)

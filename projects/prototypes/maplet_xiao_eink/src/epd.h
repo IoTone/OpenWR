@@ -1,10 +1,11 @@
 /*
- * epd.h — 2.13" flexible monochrome e-paper (212x104, UC8151-class) on
- * ESP-IDF, with a landscape 1-bit canvas and a 5x7 font.
+ * epd.h — e-paper panels behind one canvas. A driver table (epd.c) holds
+ * each panel's size and its init / write / refresh / sleep; the active
+ * driver is chosen at run time (epd-driver!) and remembered in NVS.
  *
- * Canvas: 212 wide x 104 tall, 27 bytes per row, MSB first, 1 = black.
- * The panel is natively 104 x 212 (13 bytes per row, 1 = white); epd_show()
- * rotates and inverts on the way out. Full refresh only, about 2 s.
+ * Canvas: landscape, epd_w() x epd_h(), epd_stride() bytes a row, MSB
+ * first, 1 = black. epd_show() rotates and inverts into the panel's native
+ * frame. Full refresh only.
  *
  * Licensed under the Apache License, Version 2.0
  */
@@ -21,11 +22,30 @@
 extern "C" {
 #endif
 
-#define EPD_W        212
-#define EPD_H        104
-#define EPD_STRIDE   27                      /* bytes per canvas row */
-#define EPD_CANVAS   (EPD_STRIDE * EPD_H)    /* 2808 */
-#define EPD_NATIVE   (13 * 212)              /* 2756, what the panel takes */
+/* The biggest panel in the table sizes the static buffers. */
+#define EPD_W_MAX      296
+#define EPD_H_MAX      128
+#define EPD_CANVAS_MAX (((EPD_W_MAX + 7) / 8) * EPD_H_MAX)   /* 4736 */
+
+/* The active panel; these read like the old constants but follow the driver. */
+int epd_w(void);
+int epd_h(void);
+int epd_stride(void);
+int epd_canvas_len(void);
+#define EPD_W        epd_w()
+#define EPD_H        epd_h()
+#define EPD_STRIDE   epd_stride()
+#define EPD_CANVAS   epd_canvas_len()
+
+/* Driver table */
+int  epd_driver_count(void);
+int  epd_driver_current(void);
+const char *epd_driver_name(int i);
+const char *epd_driver_desc(int i);
+int  epd_driver_find(const char *name, int len);   /* index or -1 */
+void epd_driver_set(int i);                        /* switch now; clears the canvas */
+void epd_set_rot(int r);                           /* 0..3, see to_native() */
+int  epd_rot(void);
 
 esp_err_t epd_init(void);
 void epd_show(void);                 /* push the canvas, refresh, sleep the panel */
@@ -33,8 +53,8 @@ void epd_clear(void);                /* canvas to white */
 void epd_test_pattern(void);
 void epd_test_pattern_in(int x0, int w);
 void epd_fill(int mode);             /* 0 white 1 black 2 h-stripes 3 v-stripes 4 checker 5 half */
-void epd_knob(int which, int v);     /* bench knobs: 0 geom, 1 cdi, 2 old-frame mode, 3 lut source, 4 spi hz */         /* calibration pattern into the canvas */
-uint8_t *epd_canvas(void);           /* EPD_CANVAS bytes */
+void epd_knob(int which, int v);     /* bench knobs: 0 geom, 1 cdi, 2 old-frame mode, 3 lut source (UC8151); 4 spi hz, 5 cs per byte */
+uint8_t *epd_canvas(void);           /* EPD_CANVAS bytes (EPD_CANVAS_MAX allocated) */
 
 void epd_pixel(int x, int y, int on);
 int  epd_get(int x, int y);

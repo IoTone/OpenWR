@@ -2,19 +2,20 @@
 // SPDX-License-Identifier: MIT
 //
 // The maplet: an e-paper patch with the same Forth console as the goggle.
-// It receives a finished 212x104 picture as hex lines and shows it.
+// It receives a finished picture as hex lines and shows it. The picture is
+// the size of whatever panel the maplet drives (epd-driver!), read from its
+// status line: 212x104 on the 2.13in flex, 296x128 on the 2.9in.
 import 'dart:typed_data';
 
 import 'console.dart';
-import 'nus_transport.dart';
 
 class MapletConsole extends GoggleConsole {
   MapletConsole({required super.transport}) : super(kind: DeviceKind.maplet);
 
-  static const int width = 212;
-  static const int height = 104;
-  static const int stride = 27;
-  static const int frameBytes = stride * height; // 2808
+  int get width => panelW;
+  int get height => panelH;
+  int get stride => (width + 7) ~/ 8;
+  int get frameBytes => stride * height; // 2808 on 212x104, 4736 on 296x128
 
   /// Push a packed frame (27 bytes a row, MSB first, 1 = black), show it,
   /// and keep it in [slot] (0..3) so it comes back at power-up.
@@ -66,7 +67,7 @@ class MapletConsole extends GoggleConsole {
     return out;
   }
 
-  /// One frame back from the card: 2 808 bytes as 26 hex lines, about 12 s over BLE.
+  /// One frame back from the card, at the active panel's size (about 12 s over BLE for 212x104).
   Future<Uint8List> rollGet(int n) async {
     final String r = await send('$n roll-get', timeout: const Duration(seconds: 40));
     final StringBuffer hex = StringBuffer();

@@ -133,10 +133,10 @@ static void w_status(void)
     int h = 0, m = 0; clock_local_hm(&h, &m);
     char bname[48]; bundle_name(bname, sizeof bname);
     extern int skin_last_slot(void);
-    con_printf("maplet v%s net=%d ip=%u.%u.%u.%u clock=%d %02d:%02d map=%d bundle=%s heap=%u ble=%d bledrop=%lu\n",
+    con_printf("maplet v%s net=%d ip=%u.%u.%u.%u clock=%d %02d:%02d map=%d epd=%s:%dx%d bundle=%s heap=%u ble=%d bledrop=%lu\n",
            GOGGL1_VERSION, net_ok() ? 1 : 0,
            (unsigned)(a & 0xFF), (unsigned)((a >> 8) & 0xFF), (unsigned)((a >> 16) & 0xFF), (unsigned)(a >> 24),
-           clock_ok() ? 1 : 0, h, m, skin_last_slot(), bname,
+           clock_ok() ? 1 : 0, h, m, skin_last_slot(), epd_driver_name(epd_driver_current()), epd_w(), epd_h(), bname,
            (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL), ble_console_state(), (unsigned long)ble_console_dropped());
 }
 

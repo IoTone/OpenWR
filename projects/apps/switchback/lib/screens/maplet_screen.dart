@@ -49,7 +49,8 @@ class MapletScreen extends StatelessWidget {
           if (m.isConnected) ...<Widget>[
             Text('v${m.mapletVersion}${st != null ? ' · ${st.netOk ? 'net ${st.ip}' : 'no net'} · heap ${(st.freeHeap / 1024).round()} KB' : ''}', style: mono),
             Text(m.mapletSlot >= 0 ? l.mapletSlot(m.mapletSlot) : l.mapletNoMap, style: mono),
-            Text(l.mapletSafeArea(m.safeW, m.safeX), style: mono),
+            Text(l.mapletPanel(m.panelDriver, m.panelW, m.panelH), style: mono),
+            Text(l.mapletSafeArea(m.safeW, m.panelW, m.safeX), style: mono),
           ] else
             Text(l.mapletNotConnected, style: t.textTheme.bodyMedium),
           const SizedBox(height: 20),

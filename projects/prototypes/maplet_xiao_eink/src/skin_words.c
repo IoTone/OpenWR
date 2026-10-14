@@ -27,6 +27,11 @@
  *   epd-csb!      ( n -- )            1: chip select around every byte (vendor demo style)
  *   epd-fill      ( n -- )            0 white 1 black 2 h-stripes 3 v-stripes 4 checker 5 half
  *   epd-safe!     ( x w -- )          columns that render on this glass (NVS); epd-safe@ ( -- x w )
+ *   epd-drivers   ( -- )              list the panel drivers, * on the active one
+ *   epd-driver!   ( c-addr u -- )     choose a panel by name (NVS); s" ssd1680-290" epd-driver!
+ *   epd-driver    ( -- )              print the active panel
+ *   epd-size@     ( -- w h )          canvas size of the active panel
+ *   epd-rot!      ( n -- )            0..3 orientation of the canvas on the glass (NVS)
  *
  * Board: ms us random reboot gpio@ button?
  *
@@ -45,6 +50,7 @@
 #include "esp_random.h"
 #include "esp_timer.h"
 #include "nvs.h"
+#include "esp_partition.h"
 
 #include "forth_core.h"
 #include "console.h"
@@ -110,34 +116,72 @@ static void w_show(void)
 }
 
 /* ---- saved maps ---------------------------------------------------- */
+/* Four slots. On the S3 they live in the 'maps' data partition (8 KB a
+ * slot, a small header then the canvas), so a 296x128 frame fits; on the
+ * C3 they stay NVS blobs. Each slot records the canvas size it was drawn
+ * for, and a slot from a different panel is refused rather than shown. */
+
+typedef struct { uint32_t magic; uint16_t w, h; uint32_t len; } slot_hdr_t;
+#define SLOT_MAGIC 0x4D504C54u   /* "MPLT" */
+#define SLOT_SPAN  8192
+
+static const esp_partition_t *maps_part(void)
+{
+    static const esp_partition_t *p; static bool looked;
+    if (!looked) { p = esp_partition_find_first(ESP_PARTITION_TYPE_DATA, ESP_PARTITION_SUBTYPE_ANY, "maps"); looked = true; }
+    return p;
+}
 
 static void slot_key(int n, char *k) { snprintf(k, 16, "map%d", n); }
+
+static bool slot_write(int n)
+{
+    const esp_partition_t *p = maps_part();
+    if (p) {
+        slot_hdr_t h = { SLOT_MAGIC, (uint16_t)EPD_W, (uint16_t)EPD_H, (uint32_t)EPD_CANVAS };
+        size_t off = (size_t)n * SLOT_SPAN;
+        if (esp_partition_erase_range(p, off, SLOT_SPAN) != ESP_OK) return false;
+        if (esp_partition_write(p, off, &h, sizeof h) != ESP_OK) return false;
+        return esp_partition_write(p, off + sizeof h, epd_canvas(), EPD_CANVAS) == ESP_OK;
+    }
+    char k[16]; slot_key(n, k);
+    kv_set_blob(k, epd_canvas(), EPD_CANVAS);
+    return true;
+}
+
+static bool slot_read(int n)
+{
+    if (n < 0 || n >= SLOTS) return false;
+    const esp_partition_t *p = maps_part();
+    if (p) {
+        slot_hdr_t h;
+        size_t off = (size_t)n * SLOT_SPAN;
+        if (esp_partition_read(p, off, &h, sizeof h) != ESP_OK) return false;
+        if (h.magic != SLOT_MAGIC || h.w != EPD_W || h.h != EPD_H || h.len != (uint32_t)EPD_CANVAS) return false;
+        return esp_partition_read(p, off + sizeof h, epd_canvas(), EPD_CANVAS) == ESP_OK;
+    }
+    char k[16]; slot_key(n, k);
+    return kv_get_blob(k, epd_canvas(), EPD_CANVAS);    /* fails on a size mismatch */
+}
 
 static void w_save(void)
 {
     int n = POP();
     if (n < 0 || n >= SLOTS) { con_printf("? slot 0..%d\n", SLOTS - 1); return; }
-    char k[16]; slot_key(n, k);
-    kv_set_blob(k, epd_canvas(), EPD_CANVAS);
+    if (!slot_write(n)) { con_printf("epd: could not save map %d\n", n); return; }
     kv_set_i32("mapslot", n);
     s_last_slot = n;
     con_printf("epd: saved map %d\n", n);
 }
 
-static void w_load(void)
-{
-    int n = POP();
-    char k[16]; slot_key(n < 0 ? 0 : n, k);
-    bool ok = n >= 0 && n < SLOTS && kv_get_blob(k, epd_canvas(), EPD_CANVAS);
-    forth_push(ok ? -1 : 0);
-}
+static void w_load(void) { int n = POP(); forth_push(slot_read(n) ? -1 : 0); }
 
 static void w_slot_fetch(void) { forth_push(s_last_slot); }
 int skin_last_slot(void) { return s_last_slot; }
 
 /* ---- splash --------------------------------------------------------- */
 
-static int s_safe_x = 0, s_safe_w = EPD_W;   /* columns that render on this glass */
+static int s_safe_x = 0, s_safe_w = 0;   /* columns that render on this glass; w 0 = whole panel */
 
 void skin_splash(void)
 {
@@ -174,7 +218,7 @@ static void w_fill(void)   { epd_fill(POP()); }
 static void safe_load(void)
 {
     int32_t x, w;
-    if (kv_get_i32("safex", &x) && kv_get_i32("safew", &w) && x >= 0 && w > 8 && x + w <= EPD_W) { s_safe_x = x; s_safe_w = w; }
+    if (kv_get_i32("safex", &x) && kv_get_i32("safew", &w) && x >= 0 && w >= 0) { s_safe_x = x; s_safe_w = w; }
 }
 static void w_safe_store(void)
 {
@@ -184,9 +228,54 @@ static void w_safe_store(void)
     kv_set_i32("safex", x); kv_set_i32("safew", w);
     con_printf("epd: safe area x=%d w=%d\n", x, w);
 }
-static void w_safe_fetch(void) { forth_push(s_safe_x); forth_push(s_safe_w); }
-int skin_safe_x(void) { return s_safe_x; }
-int skin_safe_w(void) { return s_safe_w; }
+int skin_safe_x(void) { return (s_safe_w > 0 && s_safe_x + s_safe_w <= EPD_W) ? s_safe_x : 0; }
+int skin_safe_w(void) { return (s_safe_w > 0 && s_safe_x + s_safe_w <= EPD_W) ? s_safe_w : EPD_W; }
+static void w_safe_fetch(void) { forth_push(skin_safe_x()); forth_push(skin_safe_w()); }
+
+/* ---- panel drivers ---------------------------------------------------- */
+/* epd-driver! picks the panel by name, remembers it, resets the safe area
+ * to the whole new panel, and leaves a blank canvas: follow it with
+ * epd-test epd-show. Saved maps drawn for another size are not shown. */
+
+static void w_drivers(void)
+{
+    for (int i = 0; i < epd_driver_count(); i++)
+        con_printf("%c %-16s %s\n", i == epd_driver_current() ? '*' : ' ', epd_driver_name(i), epd_driver_desc(i));
+}
+
+static void w_driver_store(void)
+{
+    int n = POP(); const char *name = (const char *)forth_pop();
+    int i = name ? epd_driver_find(name, n) : -1;
+    if (i < 0) { con_printf("epd-driver!: unknown; epd-drivers lists them\n"); return; }
+    epd_driver_set(i);
+    kv_set_str("epddrv", epd_driver_name(i));
+    s_safe_x = 0; s_safe_w = 0;
+    kv_set_i32("safex", 0); kv_set_i32("safew", 0);
+    con_printf("epd: driver %s, %dx%d; safe area reset to the whole panel\n", epd_driver_name(i), EPD_W, EPD_H);
+}
+
+static void w_driver_print(void) { con_printf("%s\n", epd_driver_name(epd_driver_current())); }
+static void w_size_fetch(void)   { forth_push(EPD_W); forth_push(EPD_H); }
+static void w_rot_store(void)
+{
+    int r = POP() & 3;
+    epd_set_rot(r);
+    kv_set_i32("epdrot", r);
+    con_printf("epd: rotation %d\n", r);
+}
+
+static void driver_load(void)
+{
+    char name[24] = "";
+    if (kv_get_str("epddrv", name, sizeof name) && name[0]) {
+        int i = epd_driver_find(name, (int)strlen(name));
+        if (i >= 0) epd_driver_set(i);
+    }
+    int32_t r = 0;
+    if (kv_get_i32("epdrot", &r)) epd_set_rot((int)r);
+    ESP_LOGI(TAG, "panel %s %dx%d rot %d", epd_driver_name(epd_driver_current()), EPD_W, EPD_H, epd_rot());
+}
 
 /* ---- board ---------------------------------------------------------- */
 
@@ -211,6 +300,7 @@ void skin_init(void)
 {
     gpio_config_t btn = { .pin_bit_mask = 1ULL << SKIN_PIN_BOOT, .mode = GPIO_MODE_INPUT, .pull_up_en = GPIO_PULLUP_ENABLE };
     gpio_config(&btn);
+    driver_load();
     safe_load();
     int32_t slot = -1;
     if (kv_get_i32("mapslot", &slot)) s_last_slot = (int)slot;
@@ -220,11 +310,7 @@ void skin_init(void)
 /* The boot picture: the last saved map, else the splash. */
 bool skin_show_boot(void)
 {
-    char k[16];
-    if (s_last_slot >= 0) {
-        slot_key(s_last_slot, k);
-        if (kv_get_blob(k, epd_canvas(), EPD_CANVAS)) { epd_show(); return true; }
-    }
+    if (s_last_slot >= 0 && slot_read(s_last_slot)) { epd_show(); return true; }
     skin_splash();
     epd_show();
     return false;
@@ -239,6 +325,7 @@ void skin_register_words(void)
         { "epd-show", w_show }, { "epd-save", w_save }, { "epd-load", w_load }, { "epd-slot@", w_slot_fetch },
         { "epd-splash", w_splash }, { "epd-test", w_test },
         { "epd-geom!", w_geom }, { "epd-cdi!", w_cdi }, { "epd-old!", w_old }, { "epd-lut!", w_lut }, { "epd-spi!", w_spi }, { "epd-csb!", w_csb }, { "epd-fill", w_fill }, { "epd-safe!", w_safe_store }, { "epd-safe@", w_safe_fetch },
+        { "epd-drivers", w_drivers }, { "epd-driver!", w_driver_store }, { "epd-driver", w_driver_print }, { "epd-size@", w_size_fetch }, { "epd-rot!", w_rot_store },
         { "ms", w_ms }, { "us", w_us }, { "random", w_random }, { "reboot", w_reboot },
         { "button?", w_button }, { "gpio@", w_gpio_fetch },
     };

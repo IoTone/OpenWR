@@ -757,7 +757,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapletNotConnected =>
-      'No maplet connected. The preview shows the full 212 × 104 panel.';
+      'No maplet connected. The preview shows the 2.13in 212 × 104 panel.';
 
   @override
   String mapletGlassArea(int w, int h) {
@@ -851,8 +851,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapletDisconnect => 'Disconnect';
 
   @override
-  String mapletSafeArea(int w, int x) {
-    return 'Glass: $w of 212 columns render, from column $x';
+  String mapletSafeArea(int w, int total, int x) {
+    return 'Glass: $w of $total columns render, from column $x';
   }
 
   @override
@@ -898,4 +898,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sportHike => 'Hike';
+
+  @override
+  String mapletPanel(String driver, int w, int h) {
+    return 'Panel: $driver, $w × $h';
+  }
 }

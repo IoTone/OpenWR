@@ -491,7 +491,7 @@
     }
   },
   "mapletSent": "On the glass. It stays until the next session.",
-  "mapletNotConnected": "No maplet connected. The preview shows the full 212 × 104 panel.",
+  "mapletNotConnected": "No maplet connected. The preview shows the 2.13in 212 × 104 panel.",
   "mapletGlassArea": "Rendered for the connected glass: {w} × {h}.",
   "@mapletGlassArea": {
     "placeholders": {
@@ -543,10 +543,13 @@
   "mapletUpdate": "Update firmware",
   "mapletConsole": "Console",
   "mapletDisconnect": "Disconnect",
-  "mapletSafeArea": "Glass: {w} of 212 columns render, from column {x}",
+  "mapletSafeArea": "Glass: {w} of {total} columns render, from column {x}",
   "@mapletSafeArea": {
     "placeholders": {
       "w": {
+        "type": "int"
+      },
+      "total": {
         "type": "int"
       },
       "x": {
@@ -573,5 +576,19 @@
   "rollShow": "Show on glass",
   "mapletRoll": "Roll",
   "sportSnowboard": "Snowboard",
-  "sportHike": "Hike"
+  "sportHike": "Hike",
+  "mapletPanel": "Panel: {driver}, {w} × {h}",
+  "@mapletPanel": {
+    "placeholders": {
+      "driver": {
+        "type": "String"
+      },
+      "w": {
+        "type": "int"
+      },
+      "h": {
+        "type": "int"
+      }
+    }
+  }
 }
