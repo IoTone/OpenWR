@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Hiroglass REV1 concept 4: Micro-OLED pod on an open FPGA">
+<defs>
+<marker id="arrow-light" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8572a"/></marker>
+<marker id="arrow-world" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f7fa8"/></marker>
+<marker id="arrow-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1b232c"/></marker>
+<marker id="arrow-ink-rev" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#1b232c"/></marker>
+<marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M5,0 L5,10" stroke="#5a6672" stroke-width="1.5"/></marker>
+<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#5a6672" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="760" fill="#f7f9fb"/>
+<text x="30.0" y="38.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="500" fill="#1f6f8b" text-anchor="start">HIROGLASS REV1 · CONCEPT 4</text>
+<text x="30.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#1b232c" text-anchor="start">Micro-OLED pod on an open FPGA</text>
+<text x="1170.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5a6672" text-anchor="end">Brilliant Labs Frame-class optics · experimental branch</text>
+<text x="30.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · concept sketch, not to scale · see reports/Open hardware XR wearable approaches.md</text>
+<text x="1170.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">display light</text>
+<line x1="1038" y1="734" x2="1068" y2="734" stroke="#e8572a" stroke-width="2"/>
+<text x="1025.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">world light</text>
+<line x1="902" y1="734" x2="932" y2="734" stroke="#4f7fa8" stroke-width="2" stroke-dasharray="6 5"/>
+<rect x="30" y="90" width="580" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="46.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">SIDE SECTION · BIRDBATH</text>
+<g transform="rotate(0 150 360)"><circle cx="150" cy="360" r="66" fill="#fbfcfd" stroke="#1b232c" stroke-width="1.6"/><path d="M202.0,319.4 Q243.7,360 202.0,400.6" fill="#eef6f9" stroke="#1b232c" stroke-width="1.4"/><ellipse cx="197.5" cy="360" rx="6.6" ry="21.1" fill="#9fd3e6" stroke="#1b232c" stroke-width="1.2"/><line x1="205.4" y1="332.3" x2="205.4" y2="349.4" stroke="#1b232c" stroke-width="3"/><line x1="205.4" y1="370.6" x2="205.4" y2="387.7" stroke="#1b232c" stroke-width="3"/><circle cx="93.2" cy="367.9" r="5.9" fill="#c9d1d8"/></g>
+<polyline points="590.0,345.0 480.0,345.0" fill="none" stroke="#4f7fa8" stroke-width="1.6" stroke-linejoin="round" opacity="1" stroke-dasharray="6 5"/>
+<polyline points="452.0,345.0 226.0,345.0" fill="none" stroke="#4f7fa8" stroke-width="1.2" stroke-linejoin="round" opacity="0.55" stroke-dasharray="6 5" marker-end="url(#arrow-world)"/>
+<polyline points="590.0,375.0 480.0,375.0" fill="none" stroke="#4f7fa8" stroke-width="1.6" stroke-linejoin="round" opacity="1" stroke-dasharray="6 5"/>
+<polyline points="452.0,375.0 226.0,375.0" fill="none" stroke="#4f7fa8" stroke-width="1.2" stroke-linejoin="round" opacity="0.55" stroke-dasharray="6 5" marker-end="url(#arrow-world)"/>
+<path d="M318,186 h92 v40 h-92 Z" fill="#2b333b"/>
+<rect x="338" y="226" width="52" height="7" fill="#11161b"/>
+<rect x="306" y="300" width="160" height="124" rx="10" fill="none" stroke="#2b333b" stroke-width="3"/>
+<line x1="326" y1="326" x2="396" y2="396" stroke="#9fd3e6" stroke-width="6" stroke-linecap="round"/>
+<line x1="326" y1="326" x2="396" y2="396" stroke="#1b232c" stroke-width="1"/>
+<path d="M446,302 Q480,360 446,420" fill="none" stroke="#1b232c" stroke-width="4"/>
+<polyline points="350.0,233.0 350.0,350.0 445.3,350.0" fill="none" stroke="#e8572a" stroke-width="2" stroke-linejoin="round" opacity="1"/>
+<polyline points="456.0,350.0 226.0,350.0" fill="none" stroke="#e8572a" stroke-width="2.2" stroke-linejoin="round" opacity="1" marker-end="url(#arrow-light)"/>
+<polyline points="364.0,233.0 364.0,364.0 446.0,364.0" fill="none" stroke="#e8572a" stroke-width="2" stroke-linejoin="round" opacity="1"/>
+<polyline points="456.0,364.0 226.0,364.0" fill="none" stroke="#e8572a" stroke-width="2.2" stroke-linejoin="round" opacity="1" marker-end="url(#arrow-light)"/>
+<polyline points="378.0,233.0 378.0,378.0 446.7,378.0" fill="none" stroke="#e8572a" stroke-width="2" stroke-linejoin="round" opacity="1"/>
+<polyline points="456.0,378.0 226.0,378.0" fill="none" stroke="#e8572a" stroke-width="2.2" stroke-linejoin="round" opacity="1" marker-end="url(#arrow-light)"/>
+<circle cx="330" cy="212" r="2.6" fill="#1b232c"/>
+<polyline points="330,212 300,160" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="294.0" y="164.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="end">Sony 0.23″ 640×400 micro-OLED</text>
+<text x="294.0" y="179.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="end">or SeeYA 0.49″ 1080p</text>
+<circle cx="330" cy="330" r="2.6" fill="#1b232c"/>
+<polyline points="330,330 260,262" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="254.0" y="266.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="end">50/50 splitter</text>
+<circle cx="468" cy="330" r="2.6" fill="#1b232c"/>
+<polyline points="468,330 500,300" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="506.0" y="304.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">curved mirror</text>
+<text x="330.0" y="470.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#e8572a" text-anchor="start">≈ 25% of panel light reaches the eye:</text>
+<text x="330.0" y="488.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="400" fill="#e8572a" text-anchor="start">3,000 nits in → ~700 nits out</text>
+<text x="50.0" y="528.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">Same panel in a look-around layout keeps its full 3,000–4,000</text>
+<text x="50.0" y="545.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">nits, which is the better outdoor use of this hardware.</text>
+<rect x="630" y="90" width="540" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="646.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">SIGNAL CHAIN</text>
+<rect x="660" y="130" width="210" height="66" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="672.0" y="151.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">Phone · Switchback</text>
+<text x="672.0" y="169.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">retained-mode primitives</text>
+<rect x="660" y="250" width="210" height="86" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="672.0" y="271.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">nRF52840 / ESP32-C3</text>
+<text x="672.0" y="289.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">protocol, Forth or Lua</text>
+<text x="672.0" y="305.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">panel config over SPI</text>
+<rect x="930" y="250" width="210" height="86" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="942.0" y="271.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">iCE40 / ECP5 FPGA</text>
+<text x="942.0" y="289.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Yosys + nextpnr, fully open</text>
+<text x="942.0" y="305.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">frame buffer + timing</text>
+<rect x="930" y="400" width="210" height="66" rx="6" fill="#fdf0eb" stroke="#e8572a" stroke-width="1.4"/>
+<text x="942.0" y="421.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">micro-OLED</text>
+<text x="942.0" y="439.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">single source, no datasheet</text>
+<rect x="660" y="400" width="210" height="66" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="672.0" y="421.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">RP2350 PIO</text>
+<text x="672.0" y="439.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">FPGA-free option, untested</text>
+<line x1="765" y1="198" x2="765" y2="248" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<text x="790.0" y="228.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">BLE</text>
+<line x1="872" y1="293" x2="928" y2="293" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<text x="900.0" y="286.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="middle">SPI</text>
+<line x1="1035" y1="338" x2="1035" y2="398" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<text x="1045.0" y="372.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">8-bit YCbCr</text>
+<line x1="872" y1="433" x2="928" y2="433" stroke="#5a6672" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrow-ink)"/>
+<text x="660.0" y="510.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">BLE moves ~46–63 KB/s; one 640×400 frame at 4 bpp is 128 KB.</text>
+<text x="660.0" y="527.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">So the glass renders primitives itself, as Frame and ActiveLook do.</text>
+<rect x="30" y="580" width="1140" height="120" rx="4" fill="#ffffff" stroke="#c9d1d8"/>
+<text x="48.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PROTOTYPE BOM</text>
+<text x="48.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">$200–450</text>
+<text x="48.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">panel kits $184–415</text>
+<line x1="258.0" y1="596" x2="258.0" y2="684" stroke="#c9d1d8"/>
+<text x="276.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">OUTDOORS</text>
+<text x="276.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Good look-around</text>
+<text x="276.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">marginal through a birdbath</text>
+<line x1="486.0" y1="596" x2="486.0" y2="684" stroke="#c9d1d8"/>
+<text x="504.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">SINGLE-SUPPLIER</text>
+<text x="504.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Panel</text>
+<text x="504.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">Sony / SeeYA</text>
+<line x1="714.0" y1="596" x2="714.0" y2="684" stroke="#c9d1d8"/>
+<text x="732.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PATH TO BINOCULAR</text>
+<text x="732.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Good</text>
+<text x="732.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">same panel class ×2</text>
+<line x1="942.0" y1="596" x2="942.0" y2="684" stroke="#c9d1d8"/>
+<text x="960.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">TEAM EFFORT</text>
+<text x="960.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">3–6 months</text>
+<text x="960.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">RTL + board work</text>
+</svg>

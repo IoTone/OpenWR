@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Hiroglass REV1 concept 3: Behind-the-visor reflector">
+<defs>
+<marker id="arrow-light" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8572a"/></marker>
+<marker id="arrow-world" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f7fa8"/></marker>
+<marker id="arrow-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1b232c"/></marker>
+<marker id="arrow-ink-rev" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#1b232c"/></marker>
+<marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M5,0 L5,10" stroke="#5a6672" stroke-width="1.5"/></marker>
+<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#5a6672" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="760" fill="#f7f9fb"/>
+<text x="30.0" y="38.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="500" fill="#1f6f8b" text-anchor="start">HIROGLASS REV1 · CONCEPT 3</text>
+<text x="30.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#1b232c" text-anchor="start">Behind-the-visor reflector</text>
+<text x="1170.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5a6672" text-anchor="end">helmets and goggles · combiner behind the tint</text>
+<text x="30.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · concept sketch, not to scale · see reports/Open hardware XR wearable approaches.md</text>
+<text x="1170.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">display light</text>
+<line x1="1038" y1="734" x2="1068" y2="734" stroke="#e8572a" stroke-width="2"/>
+<text x="1025.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">world light</text>
+<line x1="902" y1="734" x2="932" y2="734" stroke="#4f7fa8" stroke-width="2" stroke-dasharray="6 5"/>
+<rect x="30" y="90" width="580" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="46.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">SIDE SECTION · INSIDE A GOGGLE</text>
+<g transform="rotate(0 170 380)"><circle cx="170" cy="380" r="60" fill="#fbfcfd" stroke="#1b232c" stroke-width="1.6"/><path d="M217.3,343.1 Q255.2,380 217.3,416.9" fill="#eef6f9" stroke="#1b232c" stroke-width="1.4"/><ellipse cx="213.2" cy="380" rx="6.0" ry="19.2" fill="#9fd3e6" stroke="#1b232c" stroke-width="1.2"/><line x1="220.4" y1="354.8" x2="220.4" y2="370.4" stroke="#1b232c" stroke-width="3"/><line x1="220.4" y1="389.6" x2="220.4" y2="405.2" stroke="#1b232c" stroke-width="3"/><circle cx="118.4" cy="387.2" r="5.4" fill="#c9d1d8"/></g>
+<path d="M318,196 Q402,370 318,536 L334,536 Q418,370 334,196 Z" fill="#6b7177" fill-opacity="0.45" stroke="#1b232c" stroke-width="1.2"/>
+<path d="M200,184 L340,184 L340,204 L214,204 Z" fill="#2b333b"/>
+<path d="M200,526 L340,526 L340,546 L214,546 Z" fill="#2b333b"/>
+<rect x="190" y="176" width="22" height="36" rx="4" fill="url(#hatch)" stroke="#5a6672"/>
+<rect x="190" y="518" width="22" height="36" rx="4" fill="url(#hatch)" stroke="#5a6672"/>
+<path d="M357,338 Q364,372 360,410" fill="none" stroke="#e8572a" stroke-width="5" stroke-linecap="round" opacity="0.8"/>
+<polyline points="590.0,360.0 412.0,360.0" fill="none" stroke="#4f7fa8" stroke-width="2.4" stroke-linejoin="round" opacity="1" stroke-dasharray="6 5"/>
+<polyline points="400.0,360.0 236.0,360.0" fill="none" stroke="#4f7fa8" stroke-width="1.2" stroke-linejoin="round" opacity="0.55" stroke-dasharray="6 5" marker-end="url(#arrow-world)"/>
+<polyline points="590.0,384.0 412.0,384.0" fill="none" stroke="#4f7fa8" stroke-width="2.4" stroke-linejoin="round" opacity="1" stroke-dasharray="6 5"/>
+<polyline points="400.0,384.0 236.0,384.0" fill="none" stroke="#4f7fa8" stroke-width="1.2" stroke-linejoin="round" opacity="0.55" stroke-dasharray="6 5" marker-end="url(#arrow-world)"/>
+<rect x="232" y="206" width="70" height="34" rx="6" fill="#2b333b"/>
+<rect x="282" y="214" width="6" height="22" fill="#11161b"/>
+<polyline points="290.0,228.0 358.0,352.0 236.0,364.0" fill="none" stroke="#e8572a" stroke-width="2.2" stroke-linejoin="round" opacity="1" marker-end="url(#arrow-light)"/>
+<polyline points="290.0,234.0 361.0,392.0 236.0,384.0" fill="none" stroke="#e8572a" stroke-width="2.2" stroke-linejoin="round" opacity="1" marker-end="url(#arrow-light)"/>
+<circle cx="270" cy="206" r="2.6" fill="#1b232c"/>
+<polyline points="270,206 360,150" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="366.0" y="154.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">pod at the brow</text>
+<text x="366.0" y="169.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">display + projection lens</text>
+<circle cx="360" cy="372" r="2.6" fill="#1b232c"/>
+<polyline points="360,372 450,300" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="456.0" y="304.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">HUD film patch</text>
+<text x="456.0" y="319.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">on the inner surface</text>
+<circle cx="380" cy="450" r="2.6" fill="#1b232c"/>
+<polyline points="380,450 420,480" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="426.0" y="484.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">tint dims the world 5–10×,</text>
+<text x="426.0" y="499.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">not the display</text>
+<text x="500.0" y="352.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#4f7fa8" text-anchor="middle">bright</text>
+<rect x="630" y="90" width="540" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="646.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">ON A GOGGLE AND A HELMET</text>
+<g transform="translate(0,22)">
+<path d="M700,170 Q900,120 1100,170 Q1130,230 1100,290 Q1010,320 935,296 Q900,282 865,296 Q790,320 700,290 Q670,230 700,170 Z" fill="#6b7177" fill-opacity="0.35" stroke="#1b232c" stroke-width="5"/>
+<path d="M650,215 Q672,212 690,214 M1110,214 Q1128,212 1150,215" stroke="#1f6f8b" stroke-width="16" stroke-linecap="round" fill="none"/>
+<rect x="750" y="176" width="60" height="24" rx="5" fill="#2b333b"/>
+<rect x="756" y="210" width="50" height="34" rx="3" fill="#e8572a" fill-opacity="0.35" stroke="#e8572a"/>
+<circle cx="806" cy="250" r="2.6" fill="#1b232c"/>
+<polyline points="806,250 870,270" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="876.0" y="274.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">film patch, one per goggle family</text>
+</g>
+<circle cx="780" cy="204" r="2.6" fill="#1b232c"/>
+<polyline points="780,204 830,140" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="836.0" y="144.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">pod inside, under the frame</text>
+<path d="M700,500 Q700,370 840,360 Q960,356 990,470 L990,500 Z" fill="#e7ecf0" stroke="#1b232c" stroke-width="2"/>
+<path d="M980,440 Q1060,450 1080,520 L1060,526 Q1040,470 976,462 Z" fill="#6b7177" fill-opacity="0.4" stroke="#1b232c" stroke-width="1.4"/>
+<rect x="958" y="424" width="34" height="18" rx="4" fill="#2b333b"/>
+<circle cx="975" cy="424" r="2.6" fill="#1b232c"/>
+<polyline points="975,424 1020,384" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="1026.0" y="388.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">breakaway brow mount</text>
+<circle cx="1050" cy="490" r="2.6" fill="#1b232c"/>
+<polyline points="1050,490 1090,540" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="1084.0" y="544.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="end">visor or flip-down combiner</text>
+<rect x="30" y="580" width="1140" height="120" rx="4" fill="#ffffff" stroke="#c9d1d8"/>
+<text x="48.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PROTOTYPE BOM</text>
+<text x="48.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">$80–200</text>
+<text x="48.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">+ $10–40 optics + film</text>
+<line x1="258.0" y1="596" x2="258.0" y2="684" stroke="#c9d1d8"/>
+<text x="276.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">OUTDOORS</text>
+<text x="276.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Strong</text>
+<text x="276.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">combiner behind the tint</text>
+<line x1="486.0" y1="596" x2="486.0" y2="684" stroke="#c9d1d8"/>
+<text x="504.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">SINGLE-SUPPLIER</text>
+<text x="504.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">None</text>
+<text x="504.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">but every goggle curves differently</text>
+<line x1="714.0" y1="596" x2="714.0" y2="684" stroke="#c9d1d8"/>
+<text x="732.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PATH TO BINOCULAR</text>
+<text x="732.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Modest</text>
+<text x="732.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">wide visors host research combiners</text>
+<line x1="942.0" y1="596" x2="942.0" y2="684" stroke="#c9d1d8"/>
+<text x="960.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">TEAM EFFORT</text>
+<text x="960.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">2–3 months</text>
+<text x="960.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">+ per-goggle adapters</text>
+</svg>

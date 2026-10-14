@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Hiroglass REV1 concept 5: USB-C display on a Linux puck">
+<defs>
+<marker id="arrow-light" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e8572a"/></marker>
+<marker id="arrow-world" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f7fa8"/></marker>
+<marker id="arrow-ink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1b232c"/></marker>
+<marker id="arrow-ink-rev" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M10,0 L0,5 L10,10 z" fill="#1b232c"/></marker>
+<marker id="tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M5,0 L5,10" stroke="#5a6672" stroke-width="1.5"/></marker>
+<pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#5a6672" stroke-width="1"/></pattern>
+</defs>
+<rect width="1200" height="760" fill="#f7f9fb"/>
+<text x="30.0" y="38.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="12" font-weight="500" fill="#1f6f8b" text-anchor="start">HIROGLASS REV1 · CONCEPT 5</text>
+<text x="30.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#1b232c" text-anchor="start">USB-C display on a Linux puck</text>
+<text x="1170.0" y="70.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="400" fill="#5a6672" text-anchor="end">binocular through Monado / OpenXR</text>
+<text x="30.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">OpenWR · concept sketch, not to scale · see reports/Open hardware XR wearable approaches.md</text>
+<text x="1170.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">display light</text>
+<line x1="1038" y1="734" x2="1068" y2="734" stroke="#e8572a" stroke-width="2"/>
+<text x="1025.0" y="738.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="end">world light</text>
+<line x1="902" y1="734" x2="932" y2="734" stroke="#4f7fa8" stroke-width="2" stroke-dasharray="6 5"/>
+<rect x="30" y="90" width="580" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="46.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">TOP VIEW · BINOCULAR HEAD UNIT</text>
+<g transform="rotate(-90 220 470)"><circle cx="220" cy="470" r="40" fill="#fbfcfd" stroke="#1b232c" stroke-width="1.6"/><path d="M251.5,445.4 Q276.8,470 251.5,494.6" fill="#eef6f9" stroke="#1b232c" stroke-width="1.4"/><ellipse cx="248.8" cy="470" rx="4.0" ry="12.8" fill="#9fd3e6" stroke="#1b232c" stroke-width="1.2"/><line x1="253.6" y1="453.2" x2="253.6" y2="463.6" stroke="#1b232c" stroke-width="3"/><line x1="253.6" y1="476.4" x2="253.6" y2="486.8" stroke="#1b232c" stroke-width="3"/><circle cx="185.6" cy="474.8" r="3.6" fill="#c9d1d8"/></g>
+<g transform="rotate(-90 420 470)"><circle cx="420" cy="470" r="40" fill="#fbfcfd" stroke="#1b232c" stroke-width="1.6"/><path d="M451.5,445.4 Q476.8,470 451.5,494.6" fill="#eef6f9" stroke="#1b232c" stroke-width="1.4"/><ellipse cx="448.8" cy="470" rx="4.0" ry="12.8" fill="#9fd3e6" stroke="#1b232c" stroke-width="1.2"/><line x1="453.6" y1="453.2" x2="453.6" y2="463.6" stroke="#1b232c" stroke-width="3"/><line x1="453.6" y1="476.4" x2="453.6" y2="486.8" stroke="#1b232c" stroke-width="3"/><circle cx="385.6" cy="474.8" r="3.6" fill="#c9d1d8"/></g>
+<line x1="220" y1="538" x2="420" y2="538" stroke="#5a6672" stroke-width="1" marker-end="url(#tick)" marker-start="url(#tick)"/>
+<text x="320.0" y="534.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="middle">IPD 55–72 mm on the rail</text>
+<rect x="120" y="292" width="400" height="20" rx="3" fill="#2b333b"/>
+<path d="M120,292 l14,-10 h372 l14,10 Z" fill="#5a6672"/>
+<rect x="174" y="318" width="92" height="76" rx="8" fill="#ffffff" stroke="#2b333b" stroke-width="3"/>
+<line x1="190" y1="384" x2="250" y2="330" stroke="#9fd3e6" stroke-width="5"/>
+<path d="M186,322 Q220,310 254,322" fill="none" stroke="#1b232c" stroke-width="3"/>
+<line x1="162" y1="356" x2="170" y2="356" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<line x1="278" y1="356" x2="270" y2="356" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<rect x="374" y="318" width="92" height="76" rx="8" fill="#ffffff" stroke="#2b333b" stroke-width="3"/>
+<line x1="390" y1="384" x2="450" y2="330" stroke="#9fd3e6" stroke-width="5"/>
+<path d="M386,322 Q420,310 454,322" fill="none" stroke="#1b232c" stroke-width="3"/>
+<line x1="362" y1="356" x2="370" y2="356" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<line x1="478" y1="356" x2="470" y2="356" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<rect x="306" y="266" width="28" height="22" rx="3" fill="#3d7a52"/>
+<circle cx="320" cy="268" r="2.6" fill="#1b232c"/>
+<polyline points="320,268 360,200" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="366.0" y="204.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">IMU with FIFO + sync pin,</text>
+<text x="366.0" y="219.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">mounted on the optics</text>
+<rect x="200" y="226" width="240" height="22" rx="11" fill="none" stroke="#1b232c" stroke-width="1.6" stroke-dasharray="5 4"/>
+<circle cx="232" cy="237" r="7" fill="#1b232c"/>
+<circle cx="408" cy="237" r="7" fill="#1b232c"/>
+<circle cx="436" cy="237" r="2.6" fill="#1b232c"/>
+<polyline points="436,237 476,244" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="482.0" y="248.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">stereo camera bar</text>
+<text x="482.0" y="263.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">add-on, 6DoF</text>
+<circle cx="450" cy="336" r="2.6" fill="#1b232c"/>
+<polyline points="450,336 486,330" fill="none" stroke="#5a6672" stroke-width="1"/>
+<text x="492.0" y="334.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">birdbath per eye</text>
+<text x="492.0" y="349.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">(borrowed, or</text>
+<text x="492.0" y="364.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#1b232c" text-anchor="start">dual ECX335)</text>
+<text x="120.0" y="146.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="start">same dovetail rail as the REV1 pod</text>
+<rect x="630" y="90" width="540" height="470" rx="4" fill="#ffffff" stroke="#c9d1d8" stroke-width="1"/>
+<text x="646.0" y="114.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="500" fill="#5a6672" text-anchor="start">SYSTEM</text>
+<rect x="660" y="130" width="220" height="100" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="672.0" y="151.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">Head unit</text>
+<text x="672.0" y="169.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">two displays, IMU, calibration</text>
+<text x="672.0" y="185.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">USB-C tether, every pin routed</text>
+<rect x="930" y="130" width="220" height="120" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="942.0" y="151.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">Puck · RK3588 / Pi 5</text>
+<text x="942.0" y="169.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Monado (OpenXR runtime)</text>
+<text x="942.0" y="185.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Hiroglass driver</text>
+<text x="942.0" y="201.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">Basalt SLAM for 6DoF</text>
+<rect x="930" y="310" width="220" height="66" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="942.0" y="331.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">OpenXR apps</text>
+<text x="942.0" y="349.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">any engine, no vendor SDK</text>
+<rect x="660" y="310" width="220" height="86" rx="6" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/>
+<text x="672.0" y="331.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">Phone · Switchback</text>
+<text x="672.0" y="349.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">settings, HUD widgets</text>
+<text x="672.0" y="365.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">BLE sideband only</text>
+<line x1="882" y1="160" x2="928" y2="160" stroke="#e8572a" stroke-width="2" marker-start="url(#arrow-light)"/>
+<text x="905.0" y="152.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#e8572a" text-anchor="middle">DP alt</text>
+<line x1="882" y1="200" x2="928" y2="200" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<text x="905.0" y="218.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#5a6672" text-anchor="middle">USB</text>
+<line x1="1040" y1="252" x2="1040" y2="308" stroke="#1b232c" stroke-width="1.5" marker-end="url(#arrow-ink)"/>
+<line x1="770" y1="232" x2="770" y2="308" stroke="#5a6672" stroke-width="1.4" stroke-dasharray="5 4"/>
+<text x="780.0" y="276.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11" font-weight="400" fill="#5a6672" text-anchor="start">BLE</text>
+<rect x="660" y="430" width="490" height="100" rx="6" fill="#eaf3f6" stroke="#1f6f8b" stroke-width="1.4"/>
+<text x="672.0" y="451.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#1b232c" text-anchor="start">Fastest start: borrow the displays</text>
+<text x="672.0" y="469.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">Xreal, Viture, Rokid and RayNeo glasses already run on Linux through</text>
+<text x="672.0" y="485.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">wheaney's XRLinuxDriver (GPL-3.0); Monado 25.1 does 3DoF on Xreal.</text>
+<text x="672.0" y="501.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#1b232c" text-anchor="start">Write the 3DoF Monado driver for the monocular pod first.</text>
+<rect x="30" y="580" width="1140" height="120" rx="4" fill="#ffffff" stroke="#c9d1d8"/>
+<text x="48.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PROTOTYPE BOM</text>
+<text x="48.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">$150–450</text>
+<text x="48.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">+ puck SoC</text>
+<line x1="258.0" y1="596" x2="258.0" y2="684" stroke="#c9d1d8"/>
+<text x="276.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">OUTDOORS</text>
+<text x="276.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Marginal</text>
+<text x="276.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">birdbath class</text>
+<line x1="486.0" y1="596" x2="486.0" y2="684" stroke="#c9d1d8"/>
+<text x="504.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">SINGLE-SUPPLIER</text>
+<text x="504.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Panel or vendor</text>
+<text x="504.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">several glasses brands work</text>
+<line x1="714.0" y1="596" x2="714.0" y2="684" stroke="#c9d1d8"/>
+<text x="732.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">PATH TO BINOCULAR</text>
+<text x="732.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">Direct</text>
+<text x="732.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">this is the path</text>
+<line x1="942.0" y1="596" x2="942.0" y2="684" stroke="#c9d1d8"/>
+<text x="960.0" y="610.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10.5" font-weight="500" fill="#5a6672" text-anchor="start">TEAM EFFORT</text>
+<text x="960.0" y="640.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#1b232c" text-anchor="start">3–6 months</text>
+<text x="960.0" y="664.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#5a6672" text-anchor="start">mostly software</text>
+</svg>

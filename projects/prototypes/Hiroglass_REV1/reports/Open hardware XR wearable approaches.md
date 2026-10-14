@@ -14,9 +14,11 @@ Focus math is simple and favors cheap parts. With a single positive lens and the
 
 ## Five approaches a team of 2-3 can build
 
-The notes list six optical families. Waveguides drop out of the REV1 product path: a small team cannot fabricate them, and the bright projectors they need are quote-only from single suppliers ([LEDinside](https://ledinside.com/node/view/32728)). They still earn a parallel experiment, covered in the waveguide section below. The five approaches below remain, ordered from the cheapest and most open to the most ambitious.
+The notes list six optical families. Waveguides drop out of the REV1 product path: a small team cannot fabricate them, and the bright projectors they need are quote-only from single suppliers ([LEDinside](https://ledinside.com/node/view/32728)). They still earn a parallel experiment, covered in the waveguide section below. The five approaches below remain, ordered from the cheapest and most open to the most ambitious. Each has a concept sheet in [`concepts/`](../concepts/README.md).
 
 ### 1. Plate-combiner pod: goggl1 electronics, one lens, a tilted partial mirror
+
+![Concept sheet: concept-1-plate-combiner](../concepts/concept-1-plate-combiner.svg)
 
 **Architecture.** A 0.96" SSD1306/SSD1309-class OLED sits at the focal plane of a 15-20 mm PMMA aspheric lens. The image folds off a 45° plate beamsplitter, either wedged or AR-coated with about 30R/70T, inside a matte-black SLA housing. An ESP32-C3 sits in the pod with BLE to the phone and a cable to a battery puck. The pod mounts on the common magnet-plus-dovetail dock described below.
 
@@ -33,6 +35,8 @@ The notes list six optical families. Waveguides drop out of the REV1 product pat
 **Effort.** Bench optics in weeks, and a wearable in one or two months for one optomechanical person. This is where the documented DIY builds cluster (ESP32 or Arduino, a small OLED, a lens, acrylic or film), and their published lesson is that alignment and stray reflections are the hard part ([Arduino blog](https://blog.arduino.cc/2021/08/27/giving-google-glass-a-run-for-its-money/), [hackaday.io Smartglass](https://hackaday.io/project/92176-smartglass)).
 
 ### 2. Look-around eyepiece pod: the sunlight answer
+
+![Concept sheet: concept-2-look-around](../concepts/concept-2-look-around.svg)
 
 **Architecture.** The same pod and electronics, but the cartridge is an opaque eyepiece the user glances into, placed beside or below the line of sight, as on the Vuzix M400 ([Vuzix M400](https://vuzix.com/products/M400-Smart-Glasses)).
 
@@ -52,6 +56,8 @@ The ergonomics research supports glanceable placement. A 2025 study recommends k
 
 ### 3. Behind-the-visor reflector for helmets and goggles
 
+![Concept sheet: concept-3-visor-reflector](../concepts/concept-3-visor-reflector.svg)
+
 **Architecture.** A small display and projection lens sit at the side or brow and reflect off the goggle lens or helmet visor. A bare visor reflects about 4%. A strip of HUD film, or a small separate combiner, can sit behind the tint. This is the classic helmet-HUD design: the display at the lens focal plane puts the image at infinity ([US10884245](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/10884245)).
 
 **BOM.** The optics add an estimated $10-40 plus film on top of the pod electronics.
@@ -70,6 +76,8 @@ The ergonomics research supports glanceable placement. A 2025 study recommends k
 
 ### 4. Micro-OLED pod driven by an open FPGA
 
+![Concept sheet: concept-4-microoled-fpga](../concepts/concept-4-microoled-fpga.svg)
+
 **Architecture.** A Sony 0.23" 640x400 micro-OLED, or a SeeYA 0.49" 1080p, behind a prism or small birdbath. A small FPGA drives the display: Frame uses a Lattice CrossLink-NX feeding the panel an 8-bit YCbCr bus while an nRF52840 configures it over SPI ([Frame hardware manual](https://docs.brilliant.xyz/frame/hardware)). The MCU can stay an ESP32-C3, or move to an nRF52840/nRF54L15 module. Power and compute can move to the puck.
 
 **BOM.** Panel-plus-prism kits run **$184 for a 0.23" 640x400 helmet module, $389 for the 4,000-nit version**, and $286-415 for 0.39"/LCoS kits ([Hicenda](https://www.hicendadisplay.com/products/0-39-inch-oled-microdisplay-module-rgb-1024x768-integrated-kits-for-ar)). Tindie sells Sony HDMI driver boards and SeeYA boards at $149-579 ([Tindie Sony](https://tindie.com/products/oled-modules/hdmi-driver-board-for-the-sony-microdisplays), [Tindie SeeYA](https://www.tindie.com/products/oled-module/0491080p-micro-oled-display-1920x1080-1800nits/)). Prototypes cost an estimated $200-450, which is at or over the $300 retail ceiling.
@@ -85,6 +93,8 @@ The ergonomics research supports glanceable placement. A 2025 study recommends k
 **Effort.** Months of RTL and board work for the EE. Frame's RTL is the best reference, but its repo carries an "Other" license rather than a standard one, so check reuse terms first ([brilliantlabsAR](https://github.com/orgs/brilliantlabsAR/repositories)). Prefer iCE40 or ECP5 parts with the fully open Yosys/nextpnr toolchain, unless MIPI D-PHY forces CrossLink-NX. An untested alternative is to drive the parallel bus with RP2350 PIO and no FPGA at all.
 
 ### 5. USB-C display peripheral on a Linux puck, through OpenXR
+
+![Concept sheet: concept-5-usbc-monado](../concepts/concept-5-usbc-monado.svg)
 
 **Architecture.** The head unit becomes a "dumb display plus sensors" device. Video arrives over USB-C DisplayPort alt mode or HDMI, the IMU streams over USB, and a puck (RK3588, Pi 5/CM5, or a phone) renders through Monado, the open OpenXR runtime. The first stereo display can be borrowed: wheaney's GPL-3.0 XRLinuxDriver already supports Xreal, Viture, Rokid and RayNeo glasses, which gives several vendors and no lock-in to one ([XRLinuxDriver](https://github.com/wheaney/XRLinuxDriver)). Monado 25.1.0 added further drivers and Cardboard calibration on Android ([GamingOnLinux](https://www.gamingonlinux.com/2025/12/open-source-xr-runtime-monado-25-1-0-released-with-expanded-hardware-support/)). The DIY optics step is a dual Sony ECX335 birdbath module: Tindie lists one with a 50° FOV, at prices that range widely, from $75 to $569 ([Tindie](https://tindie.com/products/oled-modules/bird-bath-lenses-ar-glasses-optical-module-fov50)).
 
@@ -118,6 +128,8 @@ The table makes the sequencing plain. Approaches 1 and 2 differ only in the opti
 ## REV1 sequencing: Pod-0 first, binocular hooks from day one
 
 **The concrete first prototype is "Pod-0":**
+
+![Concept sheet: concept-0-pod0-system](../concepts/concept-0-pod0-system.svg)
 
 - **Pod electronics.** An ESP32-C3-MINI-1 (the Beetle board for the very first build), an opaque 0.96" SSD1306-class OLED, a BMI270 IMU and a VEML7700 light sensor.
 - **Cartridges.** Two snap-in optics cartridges. Cartridge A is a PMMA aspheric lens plus a wedged 30/70 plate. Cartridge B is a look-around eyepiece. Each has an M2-screw focus slide with about ±2 mm of travel.
