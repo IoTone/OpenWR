@@ -91,7 +91,19 @@ class _HrScreenState extends State<HrScreen> {
             ),
             const SizedBox(height: 8),
             if (h.bpm == 0) Text(h.contact == false ? l.hrNoContact : l.hrWaiting, style: t.textTheme.bodyMedium),
+            if (h.zone > 0) Text(l.hrZoneLine(h.zone, h.maxHr), style: t.textTheme.titleMedium),
+            if (h.hasRunCadence || h.hasRideCadence)
+              Text(l.hrCadenceLine(h.stepCadence, h.crankCadence), style: t.textTheme.bodyMedium),
             if (h.battery >= 0) Text(l.hrBattery(h.battery), style: t.textTheme.bodySmall),
+            const SizedBox(height: 16),
+            Row(
+              children: <Widget>[
+                Expanded(child: Text(l.hrMaxLabel(h.maxHr), style: t.textTheme.bodyMedium)),
+                IconButton(onPressed: () => h.setMaxHr(h.maxHr - 1), icon: const Icon(Icons.remove)),
+                IconButton(onPressed: () => h.setMaxHr(h.maxHr + 1), icon: const Icon(Icons.add)),
+              ],
+            ),
+            Text(l.hrMaxHint, style: t.textTheme.bodySmall),
             const SizedBox(height: 24),
             OutlinedButton(onPressed: h.disconnect, child: Text(l.hrDisconnect)),
             TextButton(onPressed: h.forget, child: Text(l.hrForget)),

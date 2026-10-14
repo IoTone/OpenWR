@@ -85,7 +85,12 @@ strap works. Verified with a Scosche Rhythm 24 (advertises as `Rhythm 24 NNNN`, 
 2 Hz notifications, contact bit, no RR in its default mode). Scosche's SDK24 (binary .aar /
 xcframework, MIT) is not needed for bpm; it adds sport mode, 5-zone settings and FIT-file
 download over its private `FCE61000`/`FCE62000` services, should we want those later.
-The glass already drew `NNN bpm` from `sess!`; no firmware change.
+The glass already drew `NNN bpm` from `sess!`; no firmware change. Weather-hud 0.7 adds `zone cad kind sess-x!`
+after `sess!` on the same line: the zone (1..5 by % of a max HR set on the strap page) as a
+large `Z4` top right, since the glass is one colour, and cadence beside bpm (steps/min from the
+strap's Running Speed and Cadence, crank rpm from Cycling Speed and Cadence on a ride). The app
+sends it only to a goggle reporting bundle 0.7 or later. ESPIDFORTH has no `[char]` or `exit`:
+write characters as numbers (90 for Z) and nest `if` instead.
 
 ## Open questions
 

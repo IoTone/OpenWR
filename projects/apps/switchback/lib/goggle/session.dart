@@ -241,8 +241,23 @@ class SessionController extends ChangeNotifier {
     if (_g.isConnected && !_g.busy) {
       final int pace10 = (_paceMinPerUnit * 10).round().clamp(0, 999);
       final int dist100 = (distanceUnits * 100).round();
-      unawaited(_g.send('$_seconds $pace10 $dist100 $_hr sess!', timeout: const Duration(seconds: 2), background: true).catchError((_) => ''));
+      String line = '$_seconds $pace10 $dist100 $_hr sess!';
+      if (bundleHasSessX(_g.status?.bundle)) line += ' ${_strapExtras()} sess-x!';
+      unawaited(_g.send(line, timeout: const Duration(seconds: 2), background: true).catchError((_) => ''));
     }
+  }
+
+  /// `zone cad kind` for sess-x!: steps a minute on foot, crank rpm on a
+  /// bike, nothing for sports where cadence means little.
+  String _strapExtras() {
+    final HrStrap? h = _strap;
+    if (h == null || !h.isConnected) return '0 0 0';
+    final int zone = h.zone;
+    return switch (sport) {
+      Sport.run || Sport.hike when h.hasRunCadence => '$zone ${h.stepCadence} 1',
+      Sport.ride when h.hasRideCadence => '$zone ${h.crankCadence} 2',
+      _ => '$zone 0 0',
+    };
   }
 
   Future<SessionSummary?> stop() async {
@@ -304,6 +319,14 @@ class SessionController extends ChangeNotifier {
     _pos?.cancel();
     super.dispose();
   }
+}
+
+/// The weather-hud bundle learned `sess-x!` (zone and cadence) in 0.7.
+bool bundleHasSessX(String? bundle) {
+  final RegExpMatch? m = RegExp(r'weather-hud[ _](\d+)\.(\d+)').firstMatch(bundle ?? '');
+  if (m == null) return false;
+  final int major = int.parse(m.group(1)!), minor = int.parse(m.group(2)!);
+  return major > 0 || minor >= 7;
 }
 
 String fmtClock(int secs) {

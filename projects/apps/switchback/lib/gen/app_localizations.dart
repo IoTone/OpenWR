@@ -1777,6 +1777,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Heart-rate strap connected.'**
   String get sessionStrapReady;
+
+  /// No description provided for @hrZoneLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Zone {zone} of 5 · max {max}'**
+  String hrZoneLine(int zone, int max);
+
+  /// No description provided for @hrCadenceLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Cadence: {spm} steps/min · {rpm} rpm'**
+  String hrCadenceLine(int spm, int rpm);
+
+  /// No description provided for @hrMaxLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Max heart rate: {max} bpm'**
+  String hrMaxLabel(int max);
+
+  /// No description provided for @hrMaxHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Zones are percent of max: 1 under 60%, 2 to 70%, 3 to 80%, 4 to 90%, 5 above. A rough max is 220 minus your age; a hard effort tells you better.'**
+  String get hrMaxHint;
+
+  /// No description provided for @sessionCadence.
+  ///
+  /// In en, this message translates to:
+  /// **'cadence'**
+  String get sessionCadence;
 }
 
 class _AppLocalizationsDelegate

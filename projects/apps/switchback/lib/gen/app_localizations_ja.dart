@@ -946,4 +946,26 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sessionStrapReady => '心拍ストラップ接続済み。';
+
+  @override
+  String hrZoneLine(int zone, int max) {
+    return 'ゾーン $zone/5・最大 $max';
+  }
+
+  @override
+  String hrCadenceLine(int spm, int rpm) {
+    return 'ケイデンス：$spm 歩/分・$rpm rpm';
+  }
+
+  @override
+  String hrMaxLabel(int max) {
+    return '最大心拍数：$max bpm';
+  }
+
+  @override
+  String get hrMaxHint =>
+      'ゾーンは最大心拍数に対する割合です：1 は 60% 未満、2 は 70% まで、3 は 80% まで、4 は 90% まで、5 はそれ以上。目安は 220 − 年齢ですが、全力の運動で測るほうが正確です。';
+
+  @override
+  String get sessionCadence => 'ケイデンス';
 }

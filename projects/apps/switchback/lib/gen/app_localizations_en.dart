@@ -972,4 +972,26 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sessionStrapReady => 'Heart-rate strap connected.';
+
+  @override
+  String hrZoneLine(int zone, int max) {
+    return 'Zone $zone of 5 · max $max';
+  }
+
+  @override
+  String hrCadenceLine(int spm, int rpm) {
+    return 'Cadence: $spm steps/min · $rpm rpm';
+  }
+
+  @override
+  String hrMaxLabel(int max) {
+    return 'Max heart rate: $max bpm';
+  }
+
+  @override
+  String get hrMaxHint =>
+      'Zones are percent of max: 1 under 60%, 2 to 70%, 3 to 80%, 4 to 90%, 5 above. A rough max is 220 minus your age; a hard effort tells you better.';
+
+  @override
+  String get sessionCadence => 'cadence';
 }

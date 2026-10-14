@@ -18,6 +18,9 @@ class HrUuids {
   static const String measurement = '00002a37-0000-1000-8000-00805f9b34fb';
   static const String battery = '0000180f-0000-1000-8000-00805f9b34fb';
   static const String batteryLevel = '00002a19-0000-1000-8000-00805f9b34fb';
+  // Running Speed and Cadence measurement, and Cycling Speed and Cadence.
+  static const String rsc = '00002a53-0000-1000-8000-00805f9b34fb';
+  static const String csc = '00002a5b-0000-1000-8000-00805f9b34fb';
 
   /// Matches the short (`180d`) and long forms a scan or discovery reports.
   static bool same(String a, String full) {
@@ -69,6 +72,48 @@ HrSample? parseHeartRate(List<int> b) {
   return HrSample(bpm: bpm, contact: contact, rrMs: rr, energyKj: energy);
 }
 
+/// One RSC measurement (0x2A53): speed in m/s and cadence per minute.
+class RscSample {
+  const RscSample({required this.speedMps, required this.cadence});
+  final double speedMps;
+  final int cadence;
+}
+
+RscSample? parseRsc(List<int> b) {
+  if (b.length < 4) return null;
+  return RscSample(speedMps: (b[1] | (b[2] << 8)) / 256, cadence: b[3]);
+}
+
+/// Crank revolutions and event time (1/1024 s) from a CSC measurement
+/// (0x2A5B), or null when it carries no crank data.
+(int, int)? parseCscCrank(List<int> b) {
+  if (b.isEmpty) return null;
+  final int f = b[0];
+  int i = 1;
+  if (f & 0x01 != 0) i += 6; // wheel revs u32 + event time u16
+  if (f & 0x02 == 0 || b.length < i + 4) return null;
+  return (b[i] | (b[i + 1] << 8), b[i + 2] | (b[i + 3] << 8));
+}
+
+/// Crank rpm between two CSC samples; both counters wrap at 16 bits.
+int crankRpm((int, int) prev, (int, int) now) {
+  final int revs = (now.$1 - prev.$1) & 0xFFFF;
+  final int ticks = (now.$2 - prev.$2) & 0xFFFF;
+  if (ticks == 0) return -1; // no new crank event: keep the last value
+  return (revs * 60 * 1024 / ticks).round();
+}
+
+/// Heart-rate zone 1..5 by percent of max (50-60-70-80-90), 0 for no reading.
+int hrZone(int bpm, int maxHr) {
+  if (bpm <= 0 || maxHr <= 0) return 0;
+  final double p = bpm / maxHr;
+  if (p >= .9) return 5;
+  if (p >= .8) return 4;
+  if (p >= .7) return 3;
+  if (p >= .6) return 2;
+  return 1;
+}
+
 /// Is this scan result worth offering as a strap? Advertises the Heart Rate
 /// service, or carries a name the common straps use (the Rhythm 24 puts
 /// its services only in the scan response, which not every phone merges).
@@ -82,9 +127,12 @@ bool looksLikeHrStrap(String name, List<String> serviceUuids) {
 class HrStrap extends ChangeNotifier {
   static const String _kLastId = 'hr.lastId';
   static const String _kLastName = 'hr.lastName';
+  static const String _kMaxHr = 'hr.max';
 
   BluetoothDevice? _device;
   StreamSubscription<List<int>>? _hrSub;
+  StreamSubscription<List<int>>? _rscSub;
+  StreamSubscription<List<int>>? _cscSub;
   StreamSubscription<BluetoothConnectionState>? _stateSub;
   GoggleLink _link = GoggleLink.disconnected;
   String? _deviceId;
@@ -98,6 +146,42 @@ class HrStrap extends ChangeNotifier {
   bool _userDisconnect = false;
   Timer? _retryTimer;
   int _retriesLeft = 0;
+  int _maxHr = 185;
+  int _stepCad = 0, _crankCad = 0;
+  DateTime? _stepAt, _crankAt;
+  (int, int)? _lastCrank;
+
+  HrStrap() {
+    unawaited(_loadMax());
+  }
+
+  Future<void> _loadMax() async {
+    final SharedPreferences p = await SharedPreferences.getInstance();
+    _maxHr = p.getInt(_kMaxHr) ?? 185;
+    notifyListeners();
+  }
+
+  /// Max heart rate for the zones; set on the strap page.
+  int get maxHr => _maxHr;
+  Future<void> setMaxHr(int v) async {
+    _maxHr = v.clamp(120, 230);
+    notifyListeners();
+    final SharedPreferences p = await SharedPreferences.getInstance();
+    await p.setInt(_kMaxHr, _maxHr);
+  }
+
+  int get zone => hrZone(bpm, _maxHr);
+
+  /// Steps per minute from the strap's running cadence, 0 when stale.
+  int get stepCadence => _fresh(_stepAt) ? _stepCad : 0;
+
+  /// Crank rpm from its cycling cadence, 0 when stale.
+  int get crankCadence => _fresh(_crankAt, secs: 6) ? _crankCad : 0;
+
+  bool get hasRunCadence => _rscSub != null;
+  bool get hasRideCadence => _cscSub != null;
+
+  bool _fresh(DateTime? t, {int secs = 5}) => isConnected && t != null && DateTime.now().difference(t).inSeconds <= secs;
 
   GoggleLink get link => _link;
   bool get isConnected => _link == GoggleLink.connected;
@@ -132,11 +216,13 @@ class HrStrap extends ChangeNotifier {
       _device = d;
       await d.connect(timeout: const Duration(seconds: 15), autoConnect: false);
       final List<BluetoothService> services = await d.discoverServices();
-      BluetoothCharacteristic? hrm, batt;
+      BluetoothCharacteristic? hrm, batt, rsc, csc;
       for (final BluetoothService s in services) {
         for (final BluetoothCharacteristic c in s.characteristics) {
           if (HrUuids.same(c.uuid.str, HrUuids.measurement)) hrm = c;
           if (HrUuids.same(c.uuid.str, HrUuids.batteryLevel)) batt = c;
+          if (HrUuids.same(c.uuid.str, HrUuids.rsc)) rsc = c;
+          if (HrUuids.same(c.uuid.str, HrUuids.csc)) csc = c;
         }
       }
       if (hrm == null) {
@@ -148,6 +234,23 @@ class HrStrap extends ChangeNotifier {
       });
       _hrSub = hrm.onValueReceived.listen(_onMeasurement);
       await hrm.setNotifyValue(true);
+      // Cadence is a bonus: a strap without it, or one that refuses, still counts.
+      if (rsc != null) {
+        try {
+          _rscSub = rsc.onValueReceived.listen(_onRsc);
+          await rsc.setNotifyValue(true);
+        } catch (e) {
+          debugPrint('[hr] rsc: $e');
+        }
+      }
+      if (csc != null) {
+        try {
+          _cscSub = csc.onValueReceived.listen(_onCsc);
+          await csc.setNotifyValue(true);
+        } catch (e) {
+          debugPrint('[hr] csc: $e');
+        }
+      }
       if (batt != null) {
         try {
           final List<int> v = await batt.read();
@@ -179,6 +282,36 @@ class HrStrap extends ChangeNotifier {
     _lastSample = DateTime.now();
     if (s.rrMs.isNotEmpty) _lastRr = s.rrMs;
     if (changed) notifyListeners();
+  }
+
+  void _onRsc(List<int> v) {
+    final RscSample? s = parseRsc(v);
+    if (s == null) return;
+    debugPrint('[hr] rsc ${v.map((int x) => x.toRadixString(16).padLeft(2, '0')).join()} cad=${s.cadence} v=${s.speedMps.toStringAsFixed(2)}');
+    _stepAt = DateTime.now();
+    if (s.cadence != _stepCad) {
+      _stepCad = s.cadence;
+      notifyListeners();
+    }
+  }
+
+  void _onCsc(List<int> v) {
+    final (int, int)? c = parseCscCrank(v);
+    debugPrint('[hr] csc ${v.map((int x) => x.toRadixString(16).padLeft(2, '0')).join()} crank=$c');
+    if (c == null) return;
+    final (int, int)? prev = _lastCrank;
+    _lastCrank = c;
+    if (prev == null) return;
+    final int rpm = crankRpm(prev, c);
+    if (rpm < 0) {
+      if (!_fresh(_crankAt, secs: 3)) _crankCad = 0; // stopped pedalling
+      return;
+    }
+    _crankAt = DateTime.now();
+    if (rpm != _crankCad && rpm < 250) {
+      _crankCad = rpm;
+      notifyListeners();
+    }
   }
 
   void _onDropped() {
@@ -237,7 +370,12 @@ class HrStrap extends ChangeNotifier {
 
   Future<void> _teardown() async {
     await _hrSub?.cancel();
+    await _rscSub?.cancel();
+    await _cscSub?.cancel();
     await _stateSub?.cancel();
+    _rscSub = null;
+    _cscSub = null;
+    _lastCrank = null;
     _hrSub = null;
     _stateSub = null;
     _lastSample = null;

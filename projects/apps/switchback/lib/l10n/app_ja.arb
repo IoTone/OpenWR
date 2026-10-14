@@ -623,5 +623,10 @@
   "hrReconnect": "再接続",
   "sessionHr": "平均 {avg}・最大 {max} bpm",
   "sessionNoStrap": "心拍ストラップなし：グラスには -- bpm と表示されます。",
-  "sessionStrapReady": "心拍ストラップ接続済み。"
+  "sessionStrapReady": "心拍ストラップ接続済み。",
+  "hrZoneLine": "ゾーン {zone}/5・最大 {max}",
+  "hrCadenceLine": "ケイデンス：{spm} 歩/分・{rpm} rpm",
+  "hrMaxLabel": "最大心拍数：{max} bpm",
+  "hrMaxHint": "ゾーンは最大心拍数に対する割合です：1 は 60% 未満、2 は 70% まで、3 は 80% まで、4 は 90% まで、5 はそれ以上。目安は 220 − 年齢ですが、全力の運動で測るほうが正確です。",
+  "sessionCadence": "ケイデンス"
 }

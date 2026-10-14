@@ -143,7 +143,13 @@ class _UpdateScreenState extends State<UpdateScreen> {
         }
       }
       final String verdict = await g.installBundle(lines);
-      if (mounted) setState(() => _log = verdict.split('\n').where((String s) => s.startsWith('bundle:')).join('\n'));
+      // The verdict lines, and the failing line the goggle prints under a rejection.
+      final List<String> vl = verdict.split('\n');
+      final List<String> keep = <String>[
+        for (int i = 0; i < vl.length; i++)
+          if (vl[i].startsWith('bundle:') || (i > 0 && vl[i - 1].contains('Failing line'))) vl[i].trim(),
+      ];
+      if (mounted) setState(() => _log = keep.join('\n'));
     } catch (e) {
       if (mounted) setState(() => _log = e.toString());
     } finally {
