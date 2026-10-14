@@ -228,5 +228,30 @@ Bringing up a new panel:
    `epd-rot!`.
 5. Send a Postcard from Switchback.
 
+First light, 2026-10-13: `ssd1680-290` on the 2.9in panel shows the test
+pattern edge to edge (no RAM offset, all 296 x 128 live), 1 px checker
+clean, refresh 2.1 s, text upright with the flex cable to the right
+(rotation 0). The choice persists across reboot.
+
+**Bookmarked: portrait and landscape (needed for the 2.9in unit).**
+Today `epd-rot!` only turns or mirrors a landscape canvas. The 2.9in unit
+will be worn portrait, so the canvas itself must be able to stand up.
+Proposed scheme, not built yet:
+
+- `epd-orient!` ( n -- ): 0 landscape, 1 portrait, 2 landscape turned 180,
+  3 portrait turned 180. Portrait swaps the canvas to 128 x 296; the
+  driver keeps its native frame and `to_native()` picks the mapping.
+  `epd-rot!` stays for mirror fixes on odd glass.
+- Stored per panel in NVS; the status line reports the canvas as it
+  stands (`epd=ssd1680-290:128x296`), so Switchback already gets the
+  right size.
+- Saved maps carry their size, so a landscape map is not shown in
+  portrait and vice versa (already true today).
+- Switchback needs portrait layouts: Postcard with the banner on top and a
+  tall map, Field Notes with the notes block under the map, Snapshot with
+  the inset at the bottom. The renderer takes w x h already; the layouts
+  are the work.
+- Optional later: an orientation toggle on the maplet page in the app.
+
 Pins: the breakout board (105990172) puts BUSY on D5. Seeed's ePaper driver
 board puts it on D2, so a panel on that board needs its own pin header.
