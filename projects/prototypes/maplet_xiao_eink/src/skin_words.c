@@ -110,6 +110,14 @@ static void w_str(void)
 
 static void w_show(void)
 {
+    /* A hex upload that stopped short is a frame for another panel size
+     * (an older phone app, say). Refuse it rather than show a scramble. */
+    if (s_cursor > 0 && s_cursor < EPD_CANVAS) {
+        con_printf("epd-show: refused, got %d of %d bytes for %dx%d (is the app current?)\n", s_cursor, EPD_CANVAS, EPD_W, EPD_H);
+        s_cursor = 0;
+        return;
+    }
+    s_cursor = 0;
     int64_t t0 = esp_timer_get_time();
     epd_show();
     con_printf("epd: shown in %lld ms\n", (long long)((esp_timer_get_time() - t0) / 1000));

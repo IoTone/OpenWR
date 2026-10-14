@@ -30,7 +30,8 @@ class MapletConsole extends GoggleConsole {
       await send('s" $hex" epd-hex!', timeout: const Duration(seconds: 6));
       onProgress?.call(end / frame.length);
     }
-    await send('epd-show', timeout: const Duration(seconds: 15));
+    final String shown = await send('epd-show', timeout: const Duration(seconds: 15));
+    if (shown.contains('refused')) throw StateError(shown.trim());
     if (slot >= 0 && slot <= 3) await send('$slot epd-save', timeout: const Duration(seconds: 4));
     mapletSlot = slot;
     notifyListeners();

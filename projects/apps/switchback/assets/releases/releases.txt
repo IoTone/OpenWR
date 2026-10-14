@@ -1,4 +1,4 @@
 # one embedded release per line, built with tools/mnpkg/mnpkg.py and signed
 # with the OpenWR release key (ota_release, id 1500c14420e0910a)
 assets/releases/goggl1-0.6.0-weather.mnpkg
-assets/releases/maplet-0.3.0-release.mnpkg
+assets/releases/maplet-0.3.1-release.mnpkg

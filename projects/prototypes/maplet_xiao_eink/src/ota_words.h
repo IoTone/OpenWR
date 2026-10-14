@@ -14,7 +14,7 @@
 #ifndef OTA_WORDS_H
 #define OTA_WORDS_H
 
-#define GOGGL1_VERSION "0.3.0"   /* skin1 firmware version (name kept for the shared OTA code) */
+#define GOGGL1_VERSION "0.3.1"   /* skin1 firmware version (name kept for the shared OTA code) */
 
 #ifdef __cplusplus
 extern "C" {
