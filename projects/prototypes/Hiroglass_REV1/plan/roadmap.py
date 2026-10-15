@@ -75,28 +75,28 @@ TASKS = [
      "AOM12864A0-0.96WW panel showed 0 stock with an 8-week lead. Neither can wait for layout.",
      ["Pod-0 uses the GCT USB4105-GF-A (no DisplayPort lanes) unless the Amphenol part is in stock this week; the choice is written in schematics/README.md",
       "OLED panels ordered: Winstar alternate (in stock) plus Orient if any arrive by Dec 1",
-      "Pod-0 PCB BOM ordered for 3 builds from the bom/pod0-pcb.digikey-import.csv or mouser-import cart",
+      "Pod-0 PCB BOM ordered for 3 builds (two dev, one demo) from the bom/pod0-pcb.digikey-import.csv or mouser-import cart",
       "Order numbers and ETAs posted as a comment here"]),
-    (2, "Order bench kits and the optics-mech set", "J", "ces", "M0",
-     "2026-10-16", "2026-10-20", "S", "expedite", [],
-     "Bench rigs are how both engineers see a HUD in week 2. Optics come from Edmund, which DigiKey and Mouser do not stock.",
-     ["Bench kit A (Beetle) for 2 builds and bench kit B (QT Py) for 1 build ordered from the import CSVs in bom/",
-      "Edmund #63-480 lenses, #43-736 50/50 and #34-412 30/70 plates ordered per bom/optics-mech.csv",
+    (2, "Order bench kits, optics and the concept 5 exploration set", "S", "ces", "M0",
+     "2026-10-16", "2026-10-21", "S", "fixed", [],
+     "Bench rigs are how both engineers see a HUD in week 2, at both sites. Optics come from Edmund, which "
+     "DigiKey and Mouser do not stock. Concept 5 starts as one exploration set; more only if it is picked at M3.",
+     ["Bench kit A (Beetle) for 3 builds (two dev, one demo) ordered from the import CSVs in bom/",
+      "optics-mech for 3 builds, with the lux meter and ND filter one per site (bom/optics-mech.csv)",
+      "One concept 5 set (bom/concept5-linux-puck.csv); the Pi 5's USB-C is power-only, so either the XREAL adapter or a ROCK 5B",
+      "Junior's dev kit ships straight to their site; the demo kit is labelled and kept apart",
       "Live cart prices recorded back into bom/make_bom.py and the CSVs regenerated",
       "ETAs posted as a comment here"]),
-    (3, "Order the concept 5 Linux puck set", "J", "c5", "M0",
-     "2026-10-16", "2026-10-21", "S", "standard", [],
-     "The Pi 5's USB-C port is power-only, so USB-C glasses need the ROCK 5B (DisplayPort alt mode) or an HDMI adapter.",
-     ["bom/concept5-linux-puck.csv set ordered, ROCK 5B path preferred",
-      "Senior signs off on the glasses choice before the order goes in"]),
-    (4, "Close the schematic verify list before KiCad capture", "S", "pod0", "M0",
+    (4, "Close the schematic verify list before KiCad capture", "J", "pod0", "M0",
      "2026-10-16", "2026-10-22", "S", "fixed", [],
-     "Some pin numbers in the SVG schematics came from secondary sources because datasheet downloads failed.",
+     "Some pin numbers in the SVG schematics came from secondary sources because datasheet downloads failed. "
+     "Datasheet work the junior can do from day one, at their own site; the senior reviews the fixes before capture.",
      ["USBLC6-2SC6 and MAX17048 pin numbers checked against the datasheets",
       "Winstar OLED pin map checked against the Orient panel and the FPC footprint",
       "Battery connector polarity checked against the cells we bought",
       "Bench-kit silkscreen labels checked against sheets B-A and B-B",
-      "schematics/README.md verify list updated; fixes regenerated with make_schematics.py"]),
+      "schematics/README.md verify list updated; fixes regenerated with make_schematics.py",
+      "Senior reviews the PR"]),
     (5, "Set up the shared toolchain and repo conventions", "J", "ces", "M0",
      "2026-10-16", "2026-10-21", "S", "standard", [],
      "Both engineers need the same tools so either one can pick up the other's card.",
@@ -123,18 +123,20 @@ TASKS = [
      "2026-11-12", "2026-11-13", "S", "fixed", [7],
      "One-hour review by both engineers, then order. Assembly is by hand, so order a stencil.",
      ["Review notes committed next to the KiCad project",
-      "Boards ordered (5 of each) with a stencil; ETA posted",
+      "Senior places the order: 5 of each board (3 builds plus 2 spare) with a stencil; ETA posted",
       "Any parts the layout changed are reordered"]),
     (9, "Print the Pod-0 enclosure, puck case and clip mounts", "J", "pod0", "M4",
      "2026-11-16", "2026-12-04", "M", "standard", [7],
      "Uses the board outlines from layout. Mounts reuse whatever clip works best in concepts 1-3.",
      ["Parametric source (FreeCAD or OpenSCAD) and STLs in the repo",
       "Pod fits a glasses arm, a goggle strap and a helmet edge",
+      "Three sets printed: one dev set at each site, one demo set",
       "Puck holds the cell, board and USB-C opening; tether strain relief"]),
     (10, "Assemble Pod-0 rev A and bring up power", "S", "pod0", "M4",
      "2026-11-30", "2026-12-04", "M", "fixed", [8],
      "Power first: BQ24074 charger, AP2112K LDO, the FDN338P/FDN335N OLED VBAT switch.",
-     ["Three pods and three pucks assembled",
+     ["Three pods and three pucks assembled: two dev, one demo",
+      "Junior's dev unit shipped to their site the same week",
       "Charger ISET (500 mA) and TS window (0-50 C) measured, not assumed",
       "3V3 rail holds under Wi-Fi/BLE transmit bursts",
       "OLED VBAT follows OLED_VBAT_EN (GPIO10)",
@@ -209,7 +211,7 @@ TASKS = [
      "The ECX336 pinout is not public. This card is emails and quotes, a few hours spread over three weeks.",
      ["Sony ECX336 or an alternate micro-OLED quoted with a datasheet we may publish",
       "If the datasheet is NDA-only, record that; it decides whether C4 can be open hardware",
-      "Order bom/concept4-microoled.csv only if the answer is yes"]),
+      "Senior orders one bom/concept4-microoled.csv exploration set only if the answer is yes"]),
     (21, "C4 spike: FPGA test pattern on the micro-OLED", "S", "c4", "M3",
      "2026-11-16", "2026-11-20", "M", "standard", [20],
      "Timebox: one week. Open toolchain (yosys/nextpnr) only. If C4 gate said no, skip this and show C4 as the board plus the concept rendering.",
@@ -218,7 +220,7 @@ TASKS = [
 
     # ---- concept 5: Linux puck + Monado -------------------------------------
     (22, "C5: Monado OpenXR scene on USB-C glasses", "S", "c5", "M3",
-     "2026-11-16", "2026-11-25", "M", "standard", [3],
+     "2026-11-16", "2026-11-25", "M", "standard", [2],
      "Proves the spatial-XR path on parts anyone can buy. Fab wait on Pod-0 makes room for this.",
      ["ROCK 5B boots a Linux image with Monado; build steps in the repo",
       "An OpenXR sample renders on the glasses at native refresh",
@@ -253,12 +255,21 @@ TASKS = [
      "Booth loop and social posts. Shot through the optic so people see what the wearer sees.",
      ["One 30-60 second clip per demo",
       "Stills for the README"]),
-    (28, "Demo freeze: build kits, spares and travel case", "P", "ces", "M5",
-     "2026-12-14", "2026-12-18", "M", "fixed", [11, 24],
-     "Two working units of each chosen demo plus spares, chargers and cables. After this only fixes.",
+    (28, "Demo freeze: three units of each demo, spares and travel case", "P", "ces", "M5",
+     "2026-12-14", "2026-12-18", "M", "fixed", [11, 24, 30],
+     "Three working units of each chosen demo: the demo unit plus both dev units, which travel as backups. "
+     "Chargers, cables and spares too. After this only fixes.",
      ["Kit checklist committed; every item ticked",
-      "Each unit runs a full charge cycle without a fault",
+      "All three units of each demo run a full charge cycle without a fault, at whichever site they live",
+      "Junior's units shipped or carried to CES; the plan for that is on this card",
       "Firmware and app builds tagged"]),
+    (30, "Order two more units of each demo chosen at M3", "S", "ces", "M4",
+     "2026-11-20", "2026-11-24", "S", "fixed", [24],
+     "Every demo that survives the go/no-go needs three units: two dev (one per site) and one demo. "
+     "Bench, optics and Pod-0 were bought for three; concepts 4 and 5 started as one set each.",
+     ["For each chosen demo, a list of what is still short of three units",
+      "Orders placed, with the junior's dev set shipping to their site",
+      "ETAs posted; anything landing after Dec 11 flagged on the M5 cards"]),
     (29, "CES dry run and pack", "P", "ces", "M6",
      "2027-01-04", "2027-01-05", "S", "fixed", [28],
      "Run the booth script end to end with someone who has not seen the demos, then pack.",
@@ -310,13 +321,15 @@ def write_plan(issue_numbers=None, project_url=None):
       "Demo freeze is **December 18**, so the holidays are buffer, not plan.\n")
     w("## Who starts on what\n")
     w("| | Senior (@truedat101) | Junior (@lk911) |\n|---|---|---|")
-    w("| Friday Oct 16 | Long-lead Pod-0 orders and the USB-C fallback; start the schematic verify list | Order bench kits, optics and the concept 5 set; set up the toolchain |")
+    w("| Friday Oct 16 | All purchasing: Pod-0 long-lead parts and the USB-C fallback, then bench kits, optics and the concept 5 set | Schematic verify list from the datasheets; set up the toolchain |")
     w("| Weeks 1-4 | Pod-0 KiCad capture and layout to fab (M2); concept 4 sourcing by email on the side | Bench HUD firmware, then concept 1 plate combiner to a wearable clip-on (M1) |")
-    w("| Weeks 5-6 | Concept 4 FPGA spike (1 week timebox), concept 5 Monado bring-up while boards are at fab | Concept 2 eyepiece and concept 3 visor reflector; auto brightness |")
+    w("| Weeks 5-6 | Concept 4 FPGA spike (1 week timebox), concept 5 Monado bring-up while boards are at fab; after M3, order two more units of each picked demo | Concept 2 eyepiece and concept 3 visor reflector; auto brightness |")
     w("| Weeks 7-8 | Pod-0 rev A power bring-up, then firmware bring-up paired with Junior | Enclosure and mounts, Switchback profile, battery tests, booth script |")
     w("| Week 9 | Concept 5 spatial panel, demo freeze | Release pack, videos, demo freeze |")
     w("")
-    w("Why this split: Pod-0 is the critical path and the riskiest electronics, so the senior owns it from day one. "
+    w("Why this split: Pod-0 is the critical path and the riskiest electronics, so the senior owns it from day one, "
+      "along with all purchasing. The junior starts on the schematic verify list, which is datasheet work that "
+      "needs no parts and gives them a review role on Pod-0 from the first day. "
       "The junior owns concepts 1-3 end to end, which are real deliverables that need judgment, not just assembly. "
       "The two meet on firmware bring-up and the C5 spatial panel, where pairing teaches the most. "
       "Concepts 4 and 5 run in the fab wait, timeboxed, so they cannot starve Pod-0.\n")
@@ -334,13 +347,18 @@ def write_plan(issue_numbers=None, project_url=None):
     for key, title, due, done in MILESTONES:
         w(f"| {title} | {fmt(due)} | {done} |")
     w("")
+    w("## Sites, copies and purchasing\n")
+    w("- **Two sites.** The senior and the junior work at different sites. Each has a dev unit of everything and its own bench tools (lux meter, ND filter, printer, hand tools).")
+    w("- **Three copies of whatever we end up with:** two dev units (one per site) and one demo unit. The demo unit is labelled, kept apart and only used for rehearsals.")
+    w("- **The senior places every order.** Need a part? Comment on the card with the part and quantity and move it to Blocked with \"needs order\". Orders for the junior ship straight to their site.")
+    w("- Bench, optics and Pod-0 are bought for three units now. Concepts 4 and 5 start with one exploration set; whatever M3 picks gets two more sets.\n")
     w("## Kanban policies\n")
     w("- **Flow, not sprints.** Cards move Backlog, Ready, In progress, Review, Done. Blocked is a flag, not a parking lot.")
     w("- **WIP limits:** 2 in progress per engineer, 3 in Review. Finish before starting: if you are at your limit, help clear Review.")
     w("- **Pull order:** Expedite, then Fixed date (earliest target first), then Standard (top of Ready first), then Intangible.")
     w("- **Expedite** is for long-lead orders and anything blocking the other engineer. At most one at a time.")
     w("- **Definition of done:** acceptance criteria ticked, files in the repo, the other engineer has seen it work.")
-    w("- **Cadence:** async standup daily (what moved, what is blocked). Friday: 30-minute demo of whatever moved to Done, then replenish Ready. Milestone dates are the review points.")
+    w("- **Cadence:** async standup daily (what moved, what is blocked). Friday: 30-minute video-call demo of whatever moved to Done, then replenish Ready. Milestone dates are the review points.")
     w("- **Metrics:** cycle time per card and throughput per week, read at the Friday replenishment. If cycle time grows, cut WIP before adding cards.")
     w("- **Fairness:** each engineer owns whole deliverables. Reviews go both ways: the junior reviews the senior's schematic and layout too.")
     w("- **Holidays:** Thanksgiving Nov 26-27 and Dec 21-Jan 1 are unplanned. Slips land there, not in nights and weekends.\n")
@@ -448,7 +466,11 @@ def sync_issues():
         labels = ["hiroglass", f"owner:{OWNERS[owner].lower()}", f"track:{track}", f"cos:{t[8]}"]
         gh("issue", "edit", str(numbers[tid]), "--repo", REPO, "--title", title,
            "--body", issue_body(t, numbers), "--milestone", MS[ms][1],
-           "--add-label", ",".join(labels), "--add-assignee", ",".join(PEOPLE[owner]))
+           "--add-label", ",".join(labels), "--add-assignee", ",".join(PEOPLE[owner]),
+           "--remove-label", ",".join(f"owner:{o.lower()}" for o in OWNERS.values()
+                                      if o != OWNERS[owner]),
+           *(["--remove-assignee", ",".join(gone)] if (gone := sorted(
+               set(PEOPLE["P"]) - set(PEOPLE[owner]))) else []))
     return numbers
 
 

@@ -10,13 +10,13 @@ Kickoff **Friday October 16, 2026**. CES runs **January 6-9, 2027** in Las Vegas
 
 | | Senior (@truedat101) | Junior (@lk911) |
 |---|---|---|
-| Friday Oct 16 | Long-lead Pod-0 orders and the USB-C fallback; start the schematic verify list | Order bench kits, optics and the concept 5 set; set up the toolchain |
+| Friday Oct 16 | All purchasing: Pod-0 long-lead parts and the USB-C fallback, then bench kits, optics and the concept 5 set | Schematic verify list from the datasheets; set up the toolchain |
 | Weeks 1-4 | Pod-0 KiCad capture and layout to fab (M2); concept 4 sourcing by email on the side | Bench HUD firmware, then concept 1 plate combiner to a wearable clip-on (M1) |
-| Weeks 5-6 | Concept 4 FPGA spike (1 week timebox), concept 5 Monado bring-up while boards are at fab | Concept 2 eyepiece and concept 3 visor reflector; auto brightness |
+| Weeks 5-6 | Concept 4 FPGA spike (1 week timebox), concept 5 Monado bring-up while boards are at fab; after M3, order two more units of each picked demo | Concept 2 eyepiece and concept 3 visor reflector; auto brightness |
 | Weeks 7-8 | Pod-0 rev A power bring-up, then firmware bring-up paired with Junior | Enclosure and mounts, Switchback profile, battery tests, booth script |
 | Week 9 | Concept 5 spatial panel, demo freeze | Release pack, videos, demo freeze |
 
-Why this split: Pod-0 is the critical path and the riskiest electronics, so the senior owns it from day one. The junior owns concepts 1-3 end to end, which are real deliverables that need judgment, not just assembly. The two meet on firmware bring-up and the C5 spatial panel, where pairing teaches the most. Concepts 4 and 5 run in the fab wait, timeboxed, so they cannot starve Pod-0.
+Why this split: Pod-0 is the critical path and the riskiest electronics, so the senior owns it from day one, along with all purchasing. The junior starts on the schematic verify list, which is datasheet work that needs no parts and gives them a review role on Pod-0 from the first day. The junior owns concepts 1-3 end to end, which are real deliverables that need judgment, not just assembly. The two meet on firmware bring-up and the C5 spatial panel, where pairing teaches the most. Concepts 4 and 5 run in the fab wait, timeboxed, so they cannot starve Pod-0.
 
 ## Parallel paths
 
@@ -41,6 +41,13 @@ Why this split: Pod-0 is the critical path and the riskiest electronics, so the 
 | M5 Demo freeze | Dec 18 | Demo kits, spares, videos and the open-hardware release are done. Only fixes after this. |
 | M6 CES 2027 | Jan 5 | Dry run, pack and travel. CES runs January 6-9, 2027. |
 
+## Sites, copies and purchasing
+
+- **Two sites.** The senior and the junior work at different sites. Each has a dev unit of everything and its own bench tools (lux meter, ND filter, printer, hand tools).
+- **Three copies of whatever we end up with:** two dev units (one per site) and one demo unit. The demo unit is labelled, kept apart and only used for rehearsals.
+- **The senior places every order.** Need a part? Comment on the card with the part and quantity and move it to Blocked with "needs order". Orders for the junior ship straight to their site.
+- Bench, optics and Pod-0 are bought for three units now. Concepts 4 and 5 start with one exploration set; whatever M3 picks gets two more sets.
+
 ## Kanban policies
 
 - **Flow, not sprints.** Cards move Backlog, Ready, In progress, Review, Done. Blocked is a flag, not a parking lot.
@@ -48,7 +55,7 @@ Why this split: Pod-0 is the critical path and the riskiest electronics, so the 
 - **Pull order:** Expedite, then Fixed date (earliest target first), then Standard (top of Ready first), then Intangible.
 - **Expedite** is for long-lead orders and anything blocking the other engineer. At most one at a time.
 - **Definition of done:** acceptance criteria ticked, files in the repo, the other engineer has seen it work.
-- **Cadence:** async standup daily (what moved, what is blocked). Friday: 30-minute demo of whatever moved to Done, then replenish Ready. Milestone dates are the review points.
+- **Cadence:** async standup daily (what moved, what is blocked). Friday: 30-minute video-call demo of whatever moved to Done, then replenish Ready. Milestone dates are the review points.
 - **Metrics:** cycle time per card and throughput per week, read at the Friday replenishment. If cycle time grows, cut WIP before adding cards.
 - **Fairness:** each engineer owns whole deliverables. Reviews go both ways: the junior reviews the senior's schematic and layout too.
 - **Holidays:** Thanksgiving Nov 26-27 and Dec 21-Jan 1 are unplanned. Slips land there, not in nights and weekends.
@@ -58,9 +65,8 @@ Why this split: Pod-0 is the critical path and the riskiest electronics, so the 
 | Card | Owner | Track | Start | Target | Size | Class | Needs |
 |---|---|---|---|---|---|---|---|
 | #20 Order Pod-0 long-lead parts and settle the USB-C fallback | Senior | Pod-0 electronics | Oct 16 | Oct 20 | S | Expedite | - |
-| #21 Order bench kits and the optics-mech set | Junior | Program and CES | Oct 16 | Oct 20 | S | Expedite | - |
-| #22 Order the concept 5 Linux puck set | Junior | C5 Linux puck + Monado | Oct 16 | Oct 21 | S | Standard | - |
-| #23 Close the schematic verify list before KiCad capture | Senior | Pod-0 electronics | Oct 16 | Oct 22 | S | Fixed date | - |
+| #21 Order bench kits, optics and the concept 5 exploration set | Senior | Program and CES | Oct 16 | Oct 21 | S | Fixed date | - |
+| #23 Close the schematic verify list before KiCad capture | Junior | Pod-0 electronics | Oct 16 | Oct 22 | S | Fixed date | - |
 | #24 Set up the shared toolchain and repo conventions | Junior | Program and CES | Oct 16 | Oct 21 | S | Standard | - |
 | #25 Capture Pod-0 schematics in KiCad | Senior | Pod-0 electronics | Oct 19 | Oct 30 | L | Fixed date | #23 |
 | #26 Lay out the Pod-0 pod and puck boards | Senior | Pod-0 electronics | Oct 29 | Nov 11 | L | Fixed date | #25 |
@@ -78,13 +84,14 @@ Why this split: Pod-0 is the critical path and the riskiest electronics, so the 
 | #38 C3: behind-the-visor reflector on a helmet | Junior | C3 behind-visor reflector | Nov 16 | Nov 20 | M | Standard | #35 |
 | #39 C4 gate: can we buy a micro-OLED and its datasheet? | Senior | C4 micro-OLED FPGA | Oct 19 | Nov 6 | S | Standard | - |
 | #40 C4 spike: FPGA test pattern on the micro-OLED | Senior | C4 micro-OLED FPGA | Nov 16 | Nov 20 | M | Standard | #39 |
-| #41 C5: Monado OpenXR scene on USB-C glasses | Senior | C5 Linux puck + Monado | Nov 16 | Nov 25 | M | Standard | #22 |
+| #41 C5: Monado OpenXR scene on USB-C glasses | Senior | C5 Linux puck + Monado | Nov 16 | Nov 25 | M | Standard | #21 |
 | #42 C5: Hiroglass HUD as a spatial panel | Pair | C5 Linux puck + Monado | Dec 7 | Dec 16 | M | Standard | #41, #34 |
 | #43 M3 go/no-go review: choose the CES demo set | Pair | Program and CES | Nov 20 | Nov 20 | S | Fixed date | #36, #37, #38, #40, #41 |
 | #44 CES demo script and booth plan | Junior | Program and CES | Nov 30 | Dec 11 | S | Fixed date | #43 |
 | #45 Open-hardware release pack for the CES demos | Junior | Program and CES | Dec 7 | Dec 18 | M | Intangible | #27, #43 |
 | #46 Through-the-lens demo videos and photos | Junior | Program and CES | Dec 14 | Dec 18 | S | Standard | #30, #43 |
-| #47 Demo freeze: build kits, spares and travel case | Pair | Program and CES | Dec 14 | Dec 18 | M | Fixed date | #30, #43 |
+| #47 Demo freeze: three units of each demo, spares and travel case | Pair | Program and CES | Dec 14 | Dec 18 | M | Fixed date | #30, #43, #49 |
+| #49 Order two more units of each demo chosen at M3 | Senior | Program and CES | Nov 20 | Nov 24 | S | Fixed date | #43 |
 | #48 CES dry run and pack | Pair | Program and CES | Jan 4 | Jan 5 | S | Fixed date | #47 |
 
 ## Risks

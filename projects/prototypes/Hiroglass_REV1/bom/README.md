@@ -8,21 +8,23 @@ Orderable bills of materials for the Hiroglass REV1 build options. `make_bom.py`
 
 | Option | Builds | Order total | Per build | Files |
 |---|---|---|---|---|
-| Bench kit A: Beetle ESP32-C3 (reuse goggl1) | 3 | $286 | $95 | [`bench-a-beetle.csv`](bench-a-beetle.csv) |
-| Bench kit B: QT Py ESP32-C3, all STEMMA QT | 3 | $298 | $99 | [`bench-b-qtpy.csv`](bench-b-qtpy.csv) |
+| Bench kit A: Beetle ESP32-C3 (reuse goggl1) | 3 | $291 | $97 | [`bench-a-beetle.csv`](bench-a-beetle.csv) |
+| Bench kit B: QT Py ESP32-C3, all STEMMA QT | 3 | $303 | $101 | [`bench-b-qtpy.csv`](bench-b-qtpy.csv) |
 | Pod-0 custom PCB set (pod + puck) | 3 | $284 | $95 | [`pod0-pcb.csv`](pod0-pcb.csv) |
-| Optics and mechanical for Pod-0 (Edmund tier) | 3 | $613 | $204 | [`optics-mech.csv`](optics-mech.csv) |
+| Optics and mechanical for Pod-0 (Edmund tier) | 3 | $800 | $267 | [`optics-mech.csv`](optics-mech.csv) |
 | Concept 4: micro-OLED driver experiment (one team set) | 1 | $592 | $592 | [`concept4-microoled.csv`](concept4-microoled.csv) |
 | Concept 5: Linux puck + Monado (one team set) | 1 | $364 | $364 | [`concept5-linux-puck.csv`](concept5-linux-puck.csv) |
 
-The Pod-0 PCB total includes two spares of each chip for hand assembly and cut-tape minimums on passives. Team-shared items (lux meter, header pack, PCB order) are split across builders in the per-build column.
+**Three of everything:** each option builds three units, two dev units (one at each site) and one demo unit. Bench tools (lux meter, ND filter, header pack, screws, inserts) are one per site; the PCB fab order is one for the team. Shared items are split across builds in the per-build column.
+
+The Pod-0 PCB total includes two spares of each chip for hand assembly and cut-tape minimums on passives.
 
 ## Suggested combinations
 
 - **Start this week, cheapest:** bench kit A (reuses goggl1 boards) plus the AliExpress optics tier. The bench kits are complete for electronics; optics come from optics-mech.
-- **Recommended first order:** bench kit A or B for all three builders, plus optics-mech (Edmund tier). This builds Pod-0 cartridges A and B on the bench and runs the brightness test.
+- **Recommended first order:** bench kit A for all three builds, plus optics-mech (Edmund tier). This builds Pod-0 cartridges A and B on the bench and runs the brightness test.
 - **Once Pod-0 works on the bench:** the Pod-0 PCB set. Order the OLED panels first; they are the long-lead item.
-- **Experimental branch, month 3:** concept 4 or concept 5, one set for the team.
+- **Experimental branch:** concept 4 and concept 5 start as one exploration set each. If a concept is picked for CES at the go/no-go review (Nov 20), order two more sets so it also has three units.
 
 ## Bench kit A: Beetle ESP32-C3 (reuse goggl1)
 

@@ -18,7 +18,9 @@ import math
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-TEAM = 3  # builders
+TEAM = 3  # builds: two dev units (one per site) and one demo unit
+SITES = 2  # work happens at two sites; bench tools are one per site
+PER_SITE = SITES / TEAM
 
 # Each line: ref, description, mfr, mpn, digikey, mouser, other, unit, qty_per_kit,
 #            status, note. qty_per_kit may be a float for team-shared items
@@ -44,7 +46,7 @@ SHARED_PUCK = [
     ("USB", "USB-A to USB-C cable", "Adafruit", "4474", "", "", "", 2.95, 2, "estimate", ""),
     ("BB", "Half-size breadboard", "Adafruit", "64", "", "", "", 5.00, 1, "estimate", ""),
     ("JMP", "Jumper wires, male/male", "Adafruit", "758", "", "", "", 3.95, 1, "estimate", ""),
-    ("HDR", "Header strip pack (one per team)", "Adafruit", "392", "", "", "", 4.95, 1 / TEAM,
+    ("HDR", "Header strip pack (one per site)", "Adafruit", "392", "", "", "", 4.95, PER_SITE,
      "estimate", ""),
 ]
 SENSORS = [
@@ -177,16 +179,16 @@ OPTICS = [
     ("LENS-B", "Eyepiece lens 15 mm x f22.5 mm VIS AR (cartridge B)", "Edmund Optics", "(page 8041)",
      "", "", "edmundoptics.com", 41.00, 1, "vendor", "or Thorlabs LA1951-A"),
     ("ND", "ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test", "Edmund Optics",
-     "(page 8291)", "", "", "edmundoptics.com", 51.50, 1 / TEAM, "vendor", "one per team"),
+     "(page 8291)", "", "", "edmundoptics.com", 51.50, PER_SITE, "vendor", "one per site"),
     ("MAG", "N52 disc magnet 6.35 x 2.54 mm", "Radial Magnets", "9150", "", "", "", 0.35, 10,
      "snapshot", "rated 80 °C: keep away from the LiPo"),
     ("SCR", "M2 x 6 pan-head screws (100)", "Essentra / Würth", "(pick at order)", "", "", "", 10.00,
-     1 / TEAM, "estimate", "DigiKey hardware category"),
+     PER_SITE, "estimate", "DigiKey hardware category; one per site"),
     ("STO", "M2 standoffs", "Würth", "(pick at order)", "", "", "", 0.45, 6, "estimate", ""),
     ("INS", "M2 heat-set inserts (100)", "Ruthex / McMaster 94180A307", "", "", "", "McMaster", 15.00,
-     1 / TEAM, "estimate", "not at DigiKey"),
-    ("LUX", "Lux meter", "Extech", "LT45", "", "", "", 110.00, 1 / TEAM, "estimate",
-     "DigiKey carries Extech; a luminance meter (Konica Minolta LS-150) is quote-only, borrow one"),
+     PER_SITE, "estimate", "not at DigiKey; one per site"),
+    ("LUX", "Lux meter", "Extech", "LT45", "", "", "", 110.00, PER_SITE, "estimate",
+     "one per site. DigiKey carries Extech; a luminance meter (Konica Minolta LS-150) is quote-only, borrow one"),
 ]
 option("optics-mech", "Optics and mechanical for Pod-0 (Edmund tier)", TEAM,
        "DigiKey and Mouser do not stock usable lenses or beamsplitters, so optics come from "
@@ -237,7 +239,7 @@ option("concept5-linux-puck", "Concept 5: Linux puck + Monado (one team set)", 1
 # ---------------------------------------------------------------------------
 def order_qty(line, kits, loose_parts):
     ref, *_ , unit, qpk, status, note = line
-    need = qpk * kits
+    need = round(qpk * kits, 6)
     if not loose_parts:
         return math.ceil(need)
     if unit < 0.25:          # passives come on cut tape in tens
@@ -293,20 +295,26 @@ def readme(rows):
         out.append(f"| {o['title']} | {o['kits']} | ${total:,.0f} | ${total / o['kits']:,.0f} | "
                    f"[`{key}.csv`]({key}.csv) |")
     out += ["",
+            "**Three of everything:** each option builds three units, two dev units (one at "
+            "each site) and one demo unit. Bench tools (lux meter, ND filter, header pack, "
+            "screws, inserts) are one per site; the PCB fab order is one for the team. "
+            "Shared items are split across builds in the per-build column.",
+            "",
             "The Pod-0 PCB total includes two spares of each chip for hand assembly and "
-            "cut-tape minimums on passives. Team-shared items (lux meter, header pack, "
-            "PCB order) are split across builders in the per-build column.",
+            "cut-tape minimums on passives.",
             "",
             "## Suggested combinations", "",
             "- **Start this week, cheapest:** bench kit A (reuses goggl1 boards) plus the "
             "AliExpress optics tier. The bench kits are complete for electronics; optics come "
             "from optics-mech.",
-            "- **Recommended first order:** bench kit A or B for all three builders, plus "
+            "- **Recommended first order:** bench kit A for all three builds, plus "
             "optics-mech (Edmund tier). This builds Pod-0 cartridges A and B on the bench and "
             "runs the brightness test.",
             "- **Once Pod-0 works on the bench:** the Pod-0 PCB set. Order the OLED panels first; "
             "they are the long-lead item.",
-            "- **Experimental branch, month 3:** concept 4 or concept 5, one set for the team.",
+            "- **Experimental branch:** concept 4 and concept 5 start as one exploration set each. "
+            "If a concept is picked for CES at the go/no-go review (Nov 20), order two more sets "
+            "so it also has three units.",
             ""]
     for key, o, total in rows:
         out += [f"## {o['title']}", "", o["summary"], ""]

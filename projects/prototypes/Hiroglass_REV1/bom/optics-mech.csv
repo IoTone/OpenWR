@@ -2,9 +2,9 @@ ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_
 LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics,63-480,,,edmundoptics.com,34.00,1,3,102.00,vendor,budget: Edmund 15 x f22.5 clearance $18.20
 BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics,43-736,,,edmundoptics.com,61.00,1,3,183.00,vendor,30R/70T VIS is #34-412 at $222
 LENS-B,Eyepiece lens 15 mm x f22.5 mm VIS AR (cartridge B),Edmund Optics,(page 8041),,,edmundoptics.com,41.00,1,3,123.00,vendor,or Thorlabs LA1951-A
-ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,(page 8291),,,edmundoptics.com,51.50,0.333,1,51.50,vendor,one per team
+ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,(page 8291),,,edmundoptics.com,51.50,0.667,2,103.00,vendor,one per site
 MAG,N52 disc magnet 6.35 x 2.54 mm,Radial Magnets,9150,,,,0.35,10,30,10.50,snapshot,rated 80 °C: keep away from the LiPo
-SCR,M2 x 6 pan-head screws (100),Essentra / Würth,(pick at order),,,,10.00,0.333,1,10.00,estimate,DigiKey hardware category
+SCR,M2 x 6 pan-head screws (100),Essentra / Würth,(pick at order),,,,10.00,0.667,2,20.00,estimate,DigiKey hardware category; one per site
 STO,M2 standoffs,Würth,(pick at order),,,,0.45,6,18,8.10,estimate,
-INS,M2 heat-set inserts (100),Ruthex / McMaster 94180A307,,,,McMaster,15.00,0.333,1,15.00,estimate,not at DigiKey
-LUX,Lux meter,Extech,LT45,,,,110.00,0.333,1,110.00,estimate,"DigiKey carries Extech; a luminance meter (Konica Minolta LS-150) is quote-only, borrow one"
+INS,M2 heat-set inserts (100),Ruthex / McMaster 94180A307,,,,McMaster,15.00,0.667,2,30.00,estimate,not at DigiKey; one per site
+LUX,Lux meter,Extech,LT45,,,,110.00,0.667,2,220.00,estimate,"one per site. DigiKey carries Extech; a luminance meter (Konica Minolta LS-150) is quote-only, borrow one"
