@@ -139,6 +139,9 @@ static int gap_event(struct ble_gap_event *ev, void *arg)
     case BLE_GAP_EVENT_ADV_COMPLETE:
         s_advertising = false;
         return 0;
+    case BLE_GAP_EVENT_CONN_UPDATE:
+        ESP_LOGI(TAG, "connection update (status %d)", ev->conn_update.status);
+        return 0;
     case BLE_GAP_EVENT_MTU:
         s_mtu = ev->mtu.value;
         return 0;
@@ -321,9 +324,36 @@ static void w_pair(void)    { ble_pair_window(180); }
 static void w_unpair(void)  { ble_pair_close(); }
 static void w_ble_on(void)  { forth_push(ble_console_state() ? -1 : 0); }
 
+/* ble-conn ( -- ) the link as the central set it: interval, latency,
+ * supervision timeout, MTU */
+static void w_ble_conn(void)
+{
+    struct ble_gap_conn_desc d;
+    if (s_conn == BLE_HS_CONN_HANDLE_NONE || ble_gap_conn_find(s_conn, &d) != 0) { con_printf("ble: no link\n"); return; }
+    int us = d.conn_itvl * 1250;
+    con_printf("ble: interval %d.%02d ms, latency %d, timeout %d ms, mtu %d\n",
+               us / 1000, (us % 1000) / 10, d.conn_latency, d.supervision_timeout * 10, s_mtu);
+}
+
+/* ble-conn! ( min max -- ) ask the central for a connection interval, in
+ * 1.25 ms units (6 = 7.5 ms); it may refuse or pick something in between. A
+ * short interval moves more notifications a second; ask for it around a
+ * transfer and give it back after. */
+static void w_ble_conn_store(void)
+{
+    int max = (int)forth_pop(), min = (int)forth_pop();
+    if (s_conn == BLE_HS_CONN_HANDLE_NONE) { con_printf("ble: no link\n"); return; }
+    if (min < 6 || max < min || max > 3200) { con_printf("? ble-conn! bad args\n"); return; }
+    struct ble_gap_upd_params p = { .itvl_min = min, .itvl_max = max, .latency = 0, .supervision_timeout = 400 };
+    int rc = ble_gap_update_params(s_conn, &p);
+    if (rc != 0) con_printf("ble: update refused here (rc %d)\n", rc);
+}
+
 void ble_console_register_words(void)
 {
     forth_register_word("pair",    w_pair);
     forth_register_word("unpair",  w_unpair);
     forth_register_word("ble-on?", w_ble_on);
+    forth_register_word("ble-conn", w_ble_conn);
+    forth_register_word("ble-conn!", w_ble_conn_store);
 }

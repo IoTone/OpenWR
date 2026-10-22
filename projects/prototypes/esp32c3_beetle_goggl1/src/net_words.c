@@ -286,6 +286,19 @@ static void w_clock_ok(void)  { forth_push(clock_ok() ? -1 : 0); }
 static void w_clock_s(void)   { forth_push((intptr_t)clock_unix()); }
 static void w_clock_hm(void)  { int h, m; clock_local_hm(&h, &m); forth_push(h); forth_push(m); }
 
+/* clock! ( unix utc-offset-s -- ) the time from a phone or the glasses, for
+ * when there is no WiFi. SNTP and the forecast's offset still win when they
+ * come. */
+static void w_clock_store(void)
+{
+    int32_t off = (int32_t)forth_pop();
+    uint32_t t = (uint32_t)forth_pop();
+    if (t < 1700000000u || off < -14 * 3600 || off > 14 * 3600) { con_printf("? clock! bad args\n"); return; }
+    struct timeval tv = { .tv_sec = (time_t)t, .tv_usec = 0 };
+    settimeofday(&tv, NULL);
+    clock_set_offset(off);
+}
+
 static void w_net_ip(void)
 {
     uint32_t a = net_ok() ? s_ip.addr : 0;
@@ -314,4 +327,5 @@ void net_register_words(void)
     forth_register_word("clock-ok?", w_clock_ok);
     forth_register_word("clock-hm", w_clock_hm);
     forth_register_word("clock-s",  w_clock_s);
+    forth_register_word("clock!",   w_clock_store);
 }

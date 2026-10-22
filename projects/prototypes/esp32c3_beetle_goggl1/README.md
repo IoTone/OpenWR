@@ -242,7 +242,7 @@ ok> wx-fetch .     \ force a forecast fetch, -1 on success
 ```
 
 Words added by the HUD firmware, all documented in the headers:
-`net-ok? wifi! net-ip clock-ok? clock-hm clock-s`,
+`net-ok? wifi! net-ip clock-ok? clock-hm clock-s clock!`,
 `geo-ok? geo-lat geo-lon geo-city geo! geo-fetch`,
 `wx-ok? wx-age wx-hour0 wx-temp wx-feels wx-pop wx-precip wx-snow wx-wind
 wx-gust wx-wdir wx-code wx-cloud wx-uv wx-day? wx-fetch wx-test units! units@

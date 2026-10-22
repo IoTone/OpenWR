@@ -12,6 +12,7 @@
  *   sd?         ( -- flag )             card mounted
  *   roll-ls     ( -- )                  list the roll
  *   roll-get    ( n -- )                print frame n as hex lines (for the phone)
+ *   roll-b64    ( n -- )                frame n as base64 lines, a third shorter (for the glasses)
  *   roll-save   ( -- n )                canvas + grey frame to the card
  *
  * Only built for the S3; on the C3 the words are absent.
@@ -333,6 +334,32 @@ static void w_roll_get(void)
     fclose(f);
 }
 
+/* Base64 in lines of 76 (57 bytes), no padding inside: two thirds of the
+ * hex, and over a 20-byte BLE MTU the line count is what costs. */
+static void w_roll_b64(void)
+{
+    static const char A[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    int n = POP();
+    char path[48];
+    snprintf(path, sizeof path, "/sd/roll/%04d.bin", n);
+    FILE *f = fopen(path, "rb");
+    if (!f) { con_printf("roll-b64: no frame %d\n", n); return; }
+    uint8_t buf[57];
+    size_t k;
+    while ((k = fread(buf, 1, sizeof buf, f)) > 0) {
+        char line[80]; int o = 0;
+        for (size_t i = 0; i < k; i += 3) {
+            uint32_t v = (uint32_t)buf[i] << 16 | (i + 1 < k ? (uint32_t)buf[i + 1] << 8 : 0) | (i + 2 < k ? buf[i + 2] : 0);
+            line[o++] = A[v >> 18 & 63]; line[o++] = A[v >> 12 & 63];
+            line[o++] = i + 1 < k ? A[v >> 6 & 63] : '=';
+            line[o++] = i + 2 < k ? A[v & 63] : '=';
+        }
+        line[o] = 0;
+        con_printf("%s\n", line);
+    }
+    fclose(f);
+}
+
 /* ---- the Snapshot ------------------------------------------------------ */
 
 /* photo across the safe area, the inset top-right, a caption band at the
@@ -377,7 +404,7 @@ void cam_register_words(void)
     static const struct { const char *name; void (*fn)(void); } words[] = {
         { "cam?", w_cam_q }, { "cam-scan", w_cam_scan }, { "cam-snap", w_cam_snap }, { "epd-photo", w_epd_photo },
         { "inset!", w_inset_store }, { "inset-hex!", w_inset_hex }, { "inset-draw", w_inset_draw },
-        { "snap", w_snap }, { "sd?", w_sd_q }, { "roll-ls", w_roll_ls }, { "roll-get", w_roll_get }, { "roll-save", w_roll_save },
+        { "snap", w_snap }, { "sd?", w_sd_q }, { "roll-ls", w_roll_ls }, { "roll-get", w_roll_get }, { "roll-b64", w_roll_b64 }, { "roll-save", w_roll_save },
     };
     for (size_t i = 0; i < sizeof words / sizeof words[0]; i++) forth_register_word(words[i].name, words[i].fn);
 }

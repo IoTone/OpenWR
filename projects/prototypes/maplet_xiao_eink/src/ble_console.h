@@ -11,6 +11,8 @@
  *   pair      ( -- )        open a 3-minute pairing window
  *   unpair    ( -- )        close it and drop any connection
  *   ble-on?   ( -- flag )   advertising or connected
+ *   ble-conn  ( -- )        print interval, latency, timeout, MTU
+ *   ble-conn! ( min max -- ) ask for a connection interval (1.25 ms units)
  *
  * Licensed under the Apache License, Version 2.0
  */

@@ -214,6 +214,7 @@ net-ip       ( -- a b c d )
 clock-ok?    ( -- flag )
 clock-hm     ( -- h m )          local time
 clock-s      ( -- unix )
+clock!       ( unix utc-offset-s -- )   set from a phone or the glasses (0.6.1)
 
 \ location
 geo-ok?      ( -- flag )

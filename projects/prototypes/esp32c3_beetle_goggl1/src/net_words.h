@@ -9,6 +9,7 @@
  *   clock-ok?  ( -- flag )            SNTP synced and a UTC offset is known
  *   clock-hm   ( -- h m )             local time
  *   clock-s    ( -- unix )
+ *   clock!     ( unix utc-offset-s -- )  set the time without WiFi (0.6.1)
  *
  * Licensed under the Apache License, Version 2.0
  */
