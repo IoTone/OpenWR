@@ -1,0 +1,44 @@
+studioVersion:
+  major: 5
+  minor: 15
+  patch: 4
+  build: 26022322
+  type: Public
+coreVersion: 330
+clientVersion: 13.60
+updateCheckpoint: 76
+sceneId: 0a1ccb1a-fe88-4fbb-9883-e3af3c75fd99
+metaInfo:
+  hints:
+    []
+  tags:
+    []
+  lensName: SpecsSwitchbackXR
+  lensDescriptors:
+    - EXPERIMENTAL_API
+    - GEN_AI_ICON
+  lensApplicability:
+    - Front
+    - Back
+  lensClientCompatibilities:
+    - Spectacles
+  platformBundlesEnabled: false
+  iconHash: 2216c107de42925269b56fdb3a44cb4c
+  videoPreviewHash: ""
+  fromTemplateName: Default
+  fromTemplateUrl: Lens Studio 5.10.1.25061003
+  activationCamera: Front
+  sourceMapEnabled: false
+  usingMinClientVersions: false
+  androidMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
+  iOSMinClientVersion:
+    major: 0
+    minor: 0
+    patch: 0
+    build: 0
+  documentId: 2d8a16aa-4023-47a9-bc84-67254495d680
+  originalDocumentId: 8e2619c3-92a7-486d-94c0-394789670f89

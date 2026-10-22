@@ -1,0 +1,80 @@
+- !<AssetImportMetadata/e4f5df41-cbee-4028-a435-48dbd22d9828>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> a420362d-b584-4cb4-a83e-8132d024b29c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> a420362d-b584-4cb4-a83e-8132d024b29c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 41af910f-c6f0-4fc8-b7e0-06f066c40e71
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/41af910f-c6f0-4fc8-b7e0-06f066c40e71>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 1fc7c9b0-f2c0-4cac-8d4b-33cfc537547f
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bluetoothModule: false
+    bpmText: false
+    camera: false
+    demoMode: false
+    distance: false
+    drop: false
+    frame: false
+    goggleName: false
+    labelText: false
+    maxHr: false
+    ring: false
+    rowText: false
+    statusText: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
+      goggleName: goggl1
+      maxHr: !<float> 185.000000
+      bpmText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      labelText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      rowText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      ring: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      demoMode: false
+      frame: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distance: !<float> 45.000000
+      drop: !<float> 6.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
+    - "// @input string goggleName = \"goggl1\" {\"hint\":\"goggl1's advertised name\"}"
+    - '// @input float maxHr = 185 {"hint":"Your max heart rate; zones are 60/70/80/90 % of it, as on the phone"}'
+    - // @input Component.Text bpmText
+    - // @input Component.Text labelText
+    - // @input Component.Text rowText
+    - // @input Component.Text statusText
+    - '// @input AssignableType ring {"hint":"The zone gauge"}'
+    - '// @input bool demoMode {"hint":"Fake the strap (sweeps 60-180 bpm) for the editor preview; no Bluetooth"}'
+    - '// @input SceneObject frame {"hint":"The ContainerFrame to place in front of the wearer at start"}'
+    - '// @input SceneObject camera {"hint":"The camera (Camera Object)"}'
+    - '// @input float distance = 85 {"hint":"How far in front of the eyes the panel starts, cm. It scales with distance, so it looks the same size; nearer than ~60 cm is hard to focus on"}'
+    - '// @input float drop = 6 {"hint":"How far below eye level the panel starts, cm (at 45 cm; scales with distance)"}'

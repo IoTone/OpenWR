@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/c8e6e0e7-41c5-4e02-82fd-9e0c9e5031b2>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> a9c29cad-9aa9-4200-9d73-ae36a7090e4b
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> a9c29cad-9aa9-4200-9d73-ae36a7090e4b
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 3f5ca5ed-37c1-4d8f-9066-a82e58f5aac7
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/3f5ca5ed-37c1-4d8f-9066-a82e58f5aac7>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: c4fcf36b-686e-4080-b4ad-626bfd5864c4
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bluetoothModule: false
+    deviceName: false
+    output: false
+    rounds: false
+    startDelay: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
+      deviceName: maplet
+      rounds: !<float> 20.000000
+      startDelay: !<float> 0.000000
+      output: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
+    - '// @input string deviceName = "maplet" {"hint":"Advertised name to connect to: maplet, goggl1, ..."}'
+    - '// @input float rounds = 20 {"hint":"Round trips to time for each write mode"}'
+    - '// @input float startDelay {"hint":"Seconds to wait before scanning (stagger probes; one scan at a time)"}'
+    - '// @input Component.Text output {"hint":"Optional Text to show results in the glasses"}'

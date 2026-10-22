@@ -1,0 +1,468 @@
+<title>SpecsSwitchbackXR</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the Switchback proposal's reading column, with full-width "lens" panels: a canvas
+   trail scene behind an additive display layer (screen blend), so black reads as clear glass.
+   Page palette is the PNW brand; the lens layers use the glass tokens of section 3. */
+:root {
+  --bg: #f3f4f1; --surface: #ffffff; --fg: #1b1f1d; --muted: #5f6a64; --rule: #d8ddd8;
+  --ever: #1f4d3a; --river: #2e6f8e; --glow: #e0683f; --ever-soft: #e3ece6;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+  /* glass tokens: what each brand colour becomes as light on an additive display */
+  --g-fog: #f3f4f1; --g-moss: #7fc8a3; --g-glacier: #78b7d4; --g-glow: #f08a62;
+  --g-amber: #f2a33a; --g-hivis: #ffd23f; --lens-edge: #0b0d0c;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a201c; --fg: #e6ebe7; --muted: #99a59d; --rule: #2a332d;
+  --ever: #7fc8a3; --river: #78b7d4; --glow: #f08a62; --ever-soft: #1f2e26; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a201c; --fg: #e6ebe7; --muted: #99a59d; --rule: #2a332d;
+  --ever: #7fc8a3; --river: #78b7d4; --glow: #f08a62; --ever-soft: #1f2e26; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 900px; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; line-height: 1.1; }
+h1 { font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; letter-spacing: -.02em; margin: .2rem 0 .5rem; }
+h2 { font-size: 1.6rem; font-weight: 700; margin: 3rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+h3 { font-size: 1.15rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+p, li { max-width: 68ch; }
+p { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.3rem; margin: 0 0 1rem; }
+li { margin-bottom: .35rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ever); }
+.motto { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 4vw, 1.9rem); letter-spacing: .02em; line-height: 1.15; margin: 0 0 1rem; }
+.motto span { display: inline-block; margin-right: .6em; }
+.motto .o { color: var(--ever); } .motto .w1 { color: var(--river); } .motto .w2 { color: var(--glow); }
+.meta { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; font-size: .9rem; color: var(--muted); margin: .75rem 0 1.5rem; }
+.meta b { color: var(--fg); }
+code { font-family: var(--font-mono); font-size: .86em; background: var(--ever-soft); padding: .1em .35em; border-radius: 3px; }
+pre { font-family: var(--font-mono); font-size: .82rem; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; overflow-x: auto; line-height: 1.5; margin: 0 0 1rem; }
+pre code { background: none; padding: 0; }
+.tbl { overflow-x: auto; margin: 0 0 1rem; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--font-mono); font-weight: 500; color: var(--muted); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+.note { border-left: 3px solid var(--glow); padding: .1rem 0 .1rem 1rem; max-width: 68ch; margin: 0 0 1rem; }
+.note b { color: var(--glow); }
+.ok { color: var(--ever); font-weight: 700; }
+a { color: var(--river); }
+
+/* ---- proof strip ---- */
+.proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: 1rem 0 1.25rem; }
+.proof div { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .7rem .8rem; min-width: 0; }
+.proof b { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.7rem; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.proof span { font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+
+/* ---- device roles ---- */
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.role { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .9rem 1rem; min-width: 0; }
+.role h4 { margin: 0 0 .1rem; font-size: 1.05rem; }
+.role .k { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ever); margin-bottom: .45rem; }
+.role p { font-size: .92rem; margin: 0; }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .5rem; overflow-x: auto; margin: 0 0 1rem; }
+.diagram svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.diagram text { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.diagram .nm { font-family: var(--font-display); font-weight: 700; font-size: 14px; fill: var(--fg); }
+.diagram .box { fill: var(--bg); stroke: var(--rule); }
+.diagram .hub { fill: var(--ever-soft); stroke: var(--ever); }
+.diagram .ln { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.diagram .ln.new { stroke: var(--glow); stroke-dasharray: 5 4; }
+
+/* ---- glass swatches (always on black: that is the point) ---- */
+.glass-sw { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: .5rem; background: #000; border-radius: 10px; padding: .8rem; margin: .75rem 0 1rem; }
+.glass-sw div { font-family: var(--font-mono); font-size: .68rem; line-height: 1.35; color: #8f8777; padding: .4rem .2rem; }
+.glass-sw b { display: block; font-family: var(--font-display); font-size: 1.15rem; font-weight: 800; margin-bottom: .15rem; }
+.glass-sw s { color: #4a4a4a; }
+
+/* ---- lens mockups ---- */
+.lens { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 26px; overflow: hidden;
+  background: var(--lens-edge); box-shadow: 0 12px 34px rgba(0,0,0,.28), inset 0 0 0 10px var(--lens-edge); margin: 1.25rem 0 .5rem; }
+.lens canvas.scene { position: absolute; inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); border-radius: 18px; }
+.lens .hud { position: absolute; inset: 10px; border-radius: 18px; mix-blend-mode: screen; container-type: inline-size; }
+.lens .hud * { box-sizing: border-box; }
+.lens::after { content: ""; position: absolute; inset: 10px; border-radius: 18px; pointer-events: none;
+  box-shadow: inset 0 0 60px rgba(0,0,0,.55); }
+.cap { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); text-align: center; margin: 0 0 1.25rem; }
+.mono { font-family: var(--font-mono); }
+.disp { font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; line-height: .85; }
+
+/* Pulse (dawn glass) */
+.pulse { position: absolute; left: 5cqw; bottom: 7cqw; display: flex; align-items: center; gap: 2.2cqw; color: var(--g-fog); }
+.pulse svg { width: 17cqw; height: 17cqw; }
+.pulse .bpm { font-size: 11cqw; }
+.pulse .lbl { font-size: 1.5cqw; letter-spacing: .14em; text-transform: uppercase; color: var(--g-moss); margin-top: .8cqw; }
+.pulse .row { display: flex; gap: 2.4cqw; margin-top: 1.4cqw; font-size: 1.9cqw; color: var(--g-fog); opacity: .85; }
+.pulse .row b { color: var(--g-glow); font-weight: 500; }
+.chiprow { position: absolute; top: 4cqw; right: 4cqw; display: flex; gap: 1cqw; }
+.gchip { font-family: var(--font-mono); font-size: 1.45cqw; padding: .55cqw 1.2cqw; border-radius: 99px; border: 1px solid currentColor; letter-spacing: .04em; white-space: nowrap; }
+.mirror { position: absolute; right: 4cqw; bottom: 6cqw; width: 23cqw; }
+.mirror img { width: 100%; display: block; image-rendering: pixelated; border-radius: 1cqw; opacity: .95; }
+.mirror div { font-family: var(--font-mono); font-size: 1.3cqw; color: var(--g-moss); margin-top: .8cqw; text-align: right; letter-spacing: .06em; }
+
+/* Pin board */
+.plate-wrap { position: absolute; left: 50%; top: 52%; width: 50cqw; transform: translate(-50%, -50%); perspective: 60cqw; }
+.plate { width: 100%; transform: rotateX(28deg); transform-origin: 50% 70%; }
+.plate canvas { width: 100%; display: block; }
+.world-pin { position: absolute; display: flex; flex-direction: column; align-items: center; font-family: var(--font-mono); color: var(--g-glow); }
+.world-pin .flag { width: 2.2cqw; height: 4.6cqw; border-left: .3cqw solid currentColor; position: relative; }
+.world-pin .flag::after { content: ""; position: absolute; left: 0; top: 0; width: 1.9cqw; height: 1.3cqw; background: currentColor; }
+.world-pin .t { font-size: 1.5cqw; white-space: nowrap; text-align: center; line-height: 1.25; }
+.world-pin .t b { display: block; font-family: var(--font-display); font-size: 2.2cqw; font-weight: 800; letter-spacing: -.01em; }
+.controls { position: absolute; left: 50%; bottom: 4cqw; transform: translateX(-50%); display: flex; gap: 1cqw; color: var(--g-moss); }
+.controls .gchip.on { background: var(--g-moss); color: #000; border-color: var(--g-moss); font-weight: 500; }
+
+/* Roll (headlamp glass) */
+.roll { position: absolute; left: 4cqw; right: 4cqw; bottom: 5cqw; color: var(--g-amber); }
+.strip { display: flex; gap: 1.2cqw; align-items: flex-end; }
+.strip canvas { width: 13cqw; image-rendering: pixelated; border-radius: .4cqw; opacity: .65; outline: 1px solid rgba(242,163,58,.35); outline-offset: .5cqw; }
+.strip canvas.sel { width: 30cqw; opacity: 1; outline-color: var(--g-amber); }
+.roll .bar { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.6cqw; font-family: var(--font-mono); font-size: 1.6cqw; letter-spacing: .06em; }
+.roll .bar b { font-family: var(--font-display); font-size: 3cqw; font-weight: 800; letter-spacing: -.01em; }
+.roll .acts { display: flex; gap: 1cqw; margin-top: 1.8cqw; }
+.roll .acts .on { background: var(--g-amber); color: #000; border-color: var(--g-amber); font-weight: 500; }
+
+/* Remote (squall glass) */
+.warnbar { position: absolute; left: 4cqw; right: 4cqw; top: 4cqw; color: var(--g-hivis); font-family: var(--font-mono); font-size: 1.8cqw;
+  border: 1px solid var(--g-hivis); border-radius: 1.2cqw; padding: 1cqw 1.6cqw; display: flex; justify-content: space-between; gap: 1cqw; flex-wrap: wrap; }
+.warnbar b { font-family: var(--font-display); font-weight: 800; font-size: 2.2cqw; }
+.faces { position: absolute; left: 4cqw; right: 4cqw; bottom: 5cqw; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6cqw; }
+.face { color: var(--g-glacier); font-family: var(--font-mono); font-size: 1.4cqw; letter-spacing: .06em; text-transform: uppercase; }
+.face img { width: 100%; display: block; image-rendering: pixelated; border-radius: .8cqw; opacity: .55; margin-bottom: .8cqw; }
+.face.on { color: var(--g-hivis); }
+.face.on img { opacity: 1; outline: .35cqw solid var(--g-hivis); outline-offset: .5cqw; }
+
+/* goggle renders */
+.oled { background: #0c0c10; border-radius: 8px; padding: .7rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: .8rem; margin: .75rem 0 1rem; }
+.oled figure { margin: 0; min-width: 0; }
+.oled img { width: 100%; display: block; image-rendering: pixelated; }
+.oled figcaption { font-family: var(--font-mono); font-size: .72rem; color: #8fb8c0; margin-top: .35rem; }
+.phases td:first-child { white-space: nowrap; font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">OpenWR · design proposal · the glasses</div>
+  <h1>SpecsSwitchbackXR</h1>
+  <p class="motto"><span class="o">Open.</span><span class="w1">Weird.</span><span class="w2">Wild.</span><span>Strong.</span></p>
+  <div class="meta">
+    <span><b>Status</b> G1 running: strap → glasses → goggl1, 2026-10-22</span>
+    <span><b>Runs on</b> Snap Spectacles ('24), Lens Studio, TypeScript</span>
+    <span><b>Talks to</b> goggl1 and the heart-rate strap over BLE, no bonding</span>
+  </div>
+
+  <p>Switchback on your face. The phone stays basecamp: it plans the route, builds the maps and holds the big data. goggl1 stays the glance: one colour, always on, readable in sun and rain. SpecsSwitchbackXR is the lookout, the view you raise when you want more than a glance: your heart rate as a ring, your pins standing in the landscape, the session's roll as a contact sheet, and a remote for whatever the goggle shows next.</p>
+
+  <h2>1. What we proved</h2>
+  <p>The question was whether the glasses can talk to our devices without bonding, because Lens Studio's Bluetooth API cannot bond at all (no <code>createBond()</code>; SkywriterBLE's keyboard hung until bonding was turned off in its firmware). Our devices never ask for it: the console is an open Nordic UART service. The probe lens <code>NusProbe.ts</code> ran on the glasses against a maplet:</p>
+  <div class="proof">
+    <div><b>70 ms</b><span>subscribe, no bonding</span></div>
+    <div><b>100 ms</b><span>median round trip, writeValue</span></div>
+    <div><b>787 ms</b><span>connect</span></div>
+    <div><b>765 ms</b><span>scan to found</span></div>
+    <div><b>51 B</b><span>line in 20 B chunks, intact</span></div>
+  </div>
+  <p>A hundred milliseconds a line is fast enough for a once-a-second HUD and for pushing a 1 KB goggle frame in a couple of seconds. <span class="ok">BLE is the transport.</span> WebSockets stay a fallback we do not need.</p>
+  <div class="note"><b>The rule that shapes everything:</b> a lens that uses Bluetooth gets no open internet. The first run failed with <code>PERMISSION_DENIED</code> until the WebView demos came out. Snap's docs go further: Bluetooth also turns off the camera frame, location and the microphone for that lens. SkywriterBLE's <code>GPS_RAW</code> denial fits that, and a camera probe will confirm it. Extended Permissions lifts the rule on a developer's glasses, but such lenses cannot be published.</div>
+  <p>So the glasses cannot know where they are, and in a shipping lens they cannot take the photo. The phone has GPS; the maplet has a camera and a card. The design follows from that.</p>
+
+  <h2>2. Three devices, three jobs</h2>
+  <div class="roles">
+    <div class="role"><div class="k">Basecamp</div><h4>Phone · Switchback</h4><p>GPS, weather, terrain tiles, route plans, the pins you set before you go. Renders maps to 1-bit for the glass. Keeps every session, pin and roll.</p></div>
+    <div class="role"><div class="k">Glance</div><h4>goggl1</h4><p>Always on. Heart rate, the arrow to your next pin, a minimap with you on it, a dithered photo. Holds the session's pins and the current position so the glasses can read them.</p></div>
+    <div class="role"><div class="k">Lookout</div><h4>Spectacles</h4><p>Raised when you want it. Reads the strap directly, shows pins in the world, browses the roll, picks what goggl1 shows. Bluetooth only, no internet.</p></div>
+    <div class="role"><div class="k">Card</div><h4>maplet (S3 Sense)</h4><p>The camera and the microSD. Its roll is what the glasses browse and what goggl1 can show, one 1 KB frame at a time.</p></div>
+  </div>
+  <div class="diagram" role="img" aria-label="Connection diagram: phone and Spectacles both connect to goggl1; Spectacles reads the heart-rate strap; the phone talks to the maplet">
+    <svg viewBox="0 0 720 230">
+      <rect class="box" x="20" y="20" width="170" height="64" rx="8"/><text class="nm" x="36" y="46">Phone</text><text x="36" y="66">GPS · maps · plans</text>
+      <rect class="box" x="530" y="20" width="170" height="64" rx="8"/><text class="nm" x="546" y="46">Spectacles</text><text x="546" y="66">lookout · BLE only</text>
+      <rect class="hub" x="275" y="140" width="170" height="70" rx="8"/><text class="nm" x="291" y="168">goggl1</text><text x="291" y="188">pins · position · HUD</text>
+      <rect class="box" x="20" y="150" width="150" height="56" rx="8"/><text class="nm" x="36" y="174">maplet</text><text x="36" y="194">camera · microSD</text>
+      <rect class="box" x="560" y="150" width="140" height="56" rx="8"/><text class="nm" x="576" y="174">HR strap</text><text x="576" y="194">0x2A37 · 2 Hz</text>
+      <path class="ln" d="M150 84 C 200 130, 250 150, 275 165"/><text x="168" y="128">here! pin! img</text>
+      <path class="ln new" d="M570 84 C 520 130, 470 150, 445 165"/><text x="470" y="124">sess-hr! view! pins.</text>
+      <path class="ln" d="M95 84 L95 150"/><text x="102" y="124">roll</text>
+      <path class="ln new" d="M630 84 L630 150"/><text x="638" y="124">bpm</text>
+    </svg>
+  </div>
+  <p><b>The glasses talk to each device directly</b>: goggl1 for the glance, the maplet for its roll and its own e-paper, the strap for heart rate. They hold several links at once (strap and goggl1 measured together); one scan runs at a time, so the lens queues them.</p>
+  <p><b>goggl1 takes two links.</b> Today it allows one connection, so the phone and the glasses would fight for it. Raising NimBLE to two connections makes goggl1 the hub: the phone writes position and pins, the glasses read them and write heart rate and screen changes. There is one Forth interpreter, so each received line runs whole and its output goes back only to the link that sent it; screen and session updates go to both.</p>
+  <p><b>Storage.</b> goggl1 (Beetle ESP32-C3) has no card slot; the microSD lives on the maplet. After goggl1's two OTA slots there are 128 KB of flash free: room for every pin of a long day and about a hundred 1 KB frames. A goggle with its own microSD is a hardware revision, not a blocker.</p>
+
+  <h2>3. The glass language</h2>
+  <p>Spectacles draw with light. Black is clear glass, so dark colours vanish and nothing can sit on a filled panel the way it does on a phone. Switchback's three experiences carry over by turning each brand colour into the light it would be: Evergreen becomes Moss, River becomes Glacier, and the warm notes stay warm.</p>
+  <div class="glass-sw">
+    <div><b style="color:#f3f4f1">Fog</b>#F3F4F1<br>numbers, the main read</div>
+    <div><b style="color:#7fc8a3">Moss</b>#7FC8A3<br>Evergreen as light<br><s>#1F4D3A is invisible</s></div>
+    <div><b style="color:#78b7d4">Glacier</b>#78B7D4<br>River as light: water, wind</div>
+    <div><b style="color:#f08a62">Alpenglow</b>#F08A62<br>pins, the zone, the route</div>
+    <div><b style="color:#f2a33a">Headlamp</b>#F2A33A<br>night: everything amber</div>
+    <div><b style="color:#ffd23f">Hi-vis</b>#FFD23F<br>squall: what matters now</div>
+  </div>
+  <p>Type stays the same: Bricolage Grotesque for the one number that matters, IBM Plex Mono for labels and data, Atkinson Hyperlegible for the rare sentence. Lines are hairlines, never fills. Everything is drawn with SpaceSVG (meshes, no WebView), so it stays inside the Bluetooth-only rule. The goggle's own pixels appear in the glasses at their true 128×64, so you always see exactly what the glance will show.</p>
+
+  <h2>4. Four views</h2>
+
+  <h3>Pulse · heart rate first</h3>
+  <p>Head-locked low and to the left, where you would look at a watch. Bpm large, the zone as five arcs (zones at 60, 70, 80 and 90 % of your max, as in the phone app), time and cadence underneath. The glasses read the strap themselves and send <code>sess-hr!</code> to goggl1 every second, so the glance and the lookout always agree. Bottom right: the goggle's current frame, pixel for pixel.</p>
+  <div class="lens"><canvas class="scene" data-mood="dawn"></canvas>
+    <div class="hud">
+      <div class="chiprow" style="color:var(--g-moss)"><span class="gchip">● Rhythm 24 · 92%</span><span class="gchip">● goggl1</span></div>
+      <div class="pulse">
+        <svg viewBox="0 0 100 100" aria-hidden="true" id="zoneRing"></svg>
+        <div>
+          <div class="disp bpm">148</div>
+          <div class="mono lbl">bpm · zone 4 of 5</div>
+          <div class="mono row"><span>32:14</span><span>172 spm</span><span><b>max 185</b></span></div>
+        </div>
+      </div>
+      <div class="mirror"><img src="images/goggle-pulse.png" alt="goggl1 Pulse frame"><div>ON GOGGL1 NOW</div></div>
+    </div>
+  </div>
+  <div class="cap">Pulse · Dawn Patrol glass · the strap read by the glasses, mirrored to goggl1</div>
+
+  <h3>Pin board · where you are, where you are going</h3>
+  <p>The phone's map floats as a tilted plate: contours, your track solid, the planned leg dashed, pins on top. Each pin also stands in the world at its true bearing, with its distance, so the destination hangs over the ridge it sits behind. Your position comes from the phone through goggl1 (<code>here!</code>), not from the glasses. Pin now, or let it pin every 1, 5 or 15 minutes; every pin also moves the goggle's arrow.</p>
+  <div class="lens"><canvas class="scene" data-mood="day"></canvas>
+    <div class="hud">
+      <div class="chiprow" style="color:var(--g-moss)"><span class="gchip">you · 14:05</span><span class="gchip">3 pins</span></div>
+      <div class="world-pin" style="left:71%;top:13%"><div class="t"><b>Wildwood TH</b>1.4 km · +180 m</div><div class="flag"></div></div>
+      <div class="world-pin" style="left:22%;top:24%;color:var(--g-glacier)"><div class="t"><b>Creek</b>0.6 km</div><div class="flag"></div></div>
+      <div class="plate-wrap"><div class="plate"><canvas id="plate" width="640" height="300"></canvas></div></div>
+      <div class="controls"><span class="gchip on">Pin now</span><span class="gchip">every 5 min</span><span class="gchip">Go to Wildwood</span><span class="gchip">Map on goggl1</span></div>
+    </div>
+  </div>
+  <div class="cap">Pin board · plate from the phone, pins placed in the world by bearing</div>
+
+  <h3>Roll · the session's pictures</h3>
+  <p>The maplet's roll as a contact sheet, in the 1-bit look it was shot in. Pick a frame: send it to goggl1 (dithered again to 128×56, 1 KB, about two seconds), or pin it where it was taken. Shown here in Headlamp amber, because the best frames come at the end of the day. On a developer's glasses with Extended Permissions, the glasses' own camera can feed the same roll.</p>
+  <div class="lens"><canvas class="scene" data-mood="dusk"></canvas>
+    <div class="hud">
+      <div class="roll">
+        <div class="bar"><span><b>Roll 07</b>&nbsp; Balch Creek</span><span>5 frames · 14:12</span></div>
+        <div class="strip" id="strip"></div>
+        <div class="acts"><span class="gchip on">Send to goggl1 · 1 KB</span><span class="gchip">Pin here</span><span class="gchip">Keep on phone</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="cap">Roll · Headlamp glass · frames from the maplet's card</div>
+
+  <h3>Remote · what the goggle shows</h3>
+  <p>Looks, in the air. The goggle's screens as true-pixel cards; look and pinch to send <code>view!</code>. In Squall the warning bar takes the top of the view, and the choice leans toward the pin arrow and the turn-back time.</p>
+  <div class="lens"><canvas class="scene" data-mood="squall"></canvas>
+    <div class="hud">
+      <div class="warnbar"><span><b>Rain 17:00 · 85 %</b></span><span>gust 52 · turn back by 16:30</span></div>
+      <div class="faces">
+        <div class="face"><img src="images/goggle-pulse.png" alt="Pulse">Pulse</div>
+        <div class="face on"><img src="images/goggle-pin.png" alt="Pin">Pin · on goggl1</div>
+        <div class="face"><img src="images/goggle-map.png" alt="Map">Map</div>
+        <div class="face"><img src="images/goggle-photo.png" alt="Photo">Photo</div>
+      </div>
+    </div>
+  </div>
+  <div class="cap">Remote · Squall glass · cards are the goggle's real frames</div>
+
+  <h3>G1, running</h3>
+  <p>The glasses read the strap, draw the gauge in a frame you can grab and move, and send <code>sess-hr!</code> to goggl1 once a second. Both links hold at once with no bonding: strap live 3 s after the lens starts, goggl1 replies about 100 ms a line. Left, the gauge drawn off the glasses from its real geometry (<code>tools/pulse_preview.py</code>) at no reading, 72, 118, 148 and 171 bpm. Below, goggl1 on the bench with the glasses streaming.</p>
+  <div class="oled" style="grid-template-columns:1fr">
+    <figure><img src="images/pulse-preview.png" alt="Pulse gauge at five heart rates" style="image-rendering:auto"><figcaption>ZoneRing · zones below dim, current bright and thicker, the rest faint (black is clear glass)</figcaption></figure>
+    <figure><img src="images/goggl1-pulse-photo.jpg" alt="goggl1 showing 76 bpm, zone 1 of 5, 01:52" style="image-rendering:auto"><figcaption>goggl1 · weather-hud 0.8 · 76 bpm from the strap, through the glasses</figcaption></figure>
+  </div>
+
+  <h2>5. On goggl1</h2>
+  <p>Four new screens, drawn by the goggle's own <code>ssd1309.c</code> through the hud_mock harness (<code>tools/goggle_frames.py</code>). If it fits here, it fits on the glass. All keep the shared status strip at the bottom.</p>
+  <div class="oled">
+    <figure><img src="images/goggle-pulse.png" alt="Pulse: 148 bpm, zone 4 of 5"><figcaption>Pulse · bpm at 4×, zone cells, time and cadence</figcaption></figure>
+    <figure><img src="images/goggle-pin.png" alt="Pin: arrow, 1.4 km to Wildwood TH"><figcaption>Pin · arrow relative to your heading, distance, name, climb, ETA</figcaption></figure>
+    <figure><img src="images/goggle-map.png" alt="Map: contours, track, pins, you"><figcaption>Map · phone draws the base once; goggl1 draws you and the pins live</figcaption></figure>
+    <figure><img src="images/goggle-photo.png" alt="Photo: dithered ridge at dusk"><figcaption>Photo · a roll frame, Floyd–Steinberg, light where the light was</figcaption></figure>
+  </div>
+  <p>The map screen is the clever one. The phone sends the contour base as an image once, with its corner coordinates. After that only coordinates travel: goggl1 places you and every pin on the base itself, so a new position costs one short line, not a new picture.</p>
+
+  <h2>6. The device contract</h2>
+  <p>As always, no protocol: new console words, usable from the Console tab the day they land. Coordinates are whole numbers in 1e-5 degrees (about a metre), which fit Forth's cells.</p>
+<pre><code>here!      ( lat5 lon5 cog -- )         position from the phone, course over ground in degrees
+pin!       ( id lat5 lon5 kind -- )     kind 0 waypoint, 1 destination, 2 photo, 3 breadcrumb
+pin-name!  ( id c-addr u -- )           what the pin is called
+pin-go     ( id -- )                    point the arrow at it
+pin-del    ( id -- )   pins-clear ( -- )
+pins.      ( -- )                       one line per pin, for the glasses and the phone
+sess-hr!   ( bpm zone cad kind -- )     from the glasses; the phone keeps sending pace and distance
+img-begin  ( slot -- )                  then img-hex! lines, 128x64, 1 bit, 1 024 bytes
+img-hex!   ( c-addr u -- )              40 bytes a line, 26 lines
+img-end    ( -- flag )                  checks the length, keeps the slot in flash
+map-geo!   ( lat5 lon5 lat5 lon5 -- )   corners of the map image in slot 0
+view!      ( n -- )                     0 weather, 1 session, 2 pulse, 3 pin, 4 map, 5 photo</code></pre>
+  <div class="tbl"><table>
+    <tr><th>Traffic</th><th>Size</th><th>Time at 100 ms a line</th></tr>
+    <tr><td>heart rate, once a second</td><td>~16 B</td><td>one line</td></tr>
+    <tr><td>position or a pin</td><td>~30 B</td><td>one line</td></tr>
+    <tr><td>goggle frame or map base</td><td>1 024 B</td><td>26 lines, under 3 s</td></tr>
+    <tr><td>maplet roll frame to the glasses</td><td>2 808 B</td><td>36 lines, about 3 s</td></tr>
+  </table></div>
+
+  <h2>7. Pins</h2>
+  <ul>
+    <li><b>Where they come from.</b> Planned on the phone before you go; dropped from the glasses (pinch "Pin now"); dropped on goggl1 with a double press of BOOT; or dropped by the clock, every 1, 5 or 15 minutes, as a breadcrumb.</li>
+    <li><b>What a pin is.</b> A position, a time, a kind, an optional name and an optional roll frame. Destinations get the arrow; breadcrumbs only show on the map.</li>
+    <li><b>Where they live.</b> goggl1 holds the session's pins so either link can read them. The phone keeps them with the session log at Stop, and the maplet's Postcard draws them.</li>
+    <li><b>Refresh is free.</b> The OLED and the glasses redraw as often as we like, so the map follows you every time a position arrives. Only the e-paper maplet waits for Stop.</li>
+  </ul>
+
+  <h2>8. Phasing</h2>
+  <div class="tbl"><table class="phases">
+    <tr><th>Phase</th><th>Delivers</th><th>Done when</th></tr>
+    <tr><td>G0 Probes</td><td>BLE without bonding <span class="ok">✓</span>; strap read by the glasses <span class="ok">✓</span>; strap and goggl1 at once <span class="ok">✓</span></td><td>done 2026-10-22; three links (with the maplet) still to measure</td></tr>
+    <tr><td>G1 Pulse</td><td>Pulse view on the glasses from the strap <span class="ok">✓</span>; <code>sess-hr!</code> and the Pulse screen on goggl1, bundle 0.8 <span class="ok">✓</span></td><td>running on the bench; next, an outdoor run</td></tr>
+    <tr><td>G2 Two links</td><td>goggl1 at two connections, output routed per link; phone sends <code>here!</code></td><td>Phone and glasses connected together for a whole session</td></tr>
+    <tr><td>G3 Pins</td><td>Pin words, the pin board, the arrow screen, the pin clock</td><td>Walk to a planned pin following the arrow</td></tr>
+    <tr><td>G4 Pictures</td><td><code>img</code> words, the map screen with live pins, the roll view</td><td>A roll frame shown on goggl1 from the glasses</td></tr>
+    <tr><td>G5 Experimental</td><td>Glasses camera to goggl1 under Extended Permissions</td><td>A photo taken in the glasses on the goggle</td></tr>
+  </table></div>
+
+  <h2>9. Open questions</h2>
+  <ol>
+    <li><b>How many links can the glasses hold?</b> Strap plus goggl1 is the minimum. G0 answers it.</li>
+    <li><b>Roll path.</b> The glasses could pull frames straight from the maplet (another link) or the phone could relay them through goggl1. Direct is simpler; relay keeps the link count down.</li>
+    <li><b>Extended Permissions</b> for our own test glasses: worth it for the camera experiments, never for a release.</li>
+    <li><b>goggl1 with microSD</b> on the next hardware revision, so the goggle carries its own roll.</li>
+  </ol>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const MOODS = {
+    day:    { sky: ["#8fb4cc", "#cfdde2"], far: "#5f7d86", near: "#33473f", trees: "#1c2a23", trail: "#a99c84" },
+    dawn:   { sky: ["#5d7896", "#e9b48e"], far: "#6a6f7c", near: "#36403d", trees: "#1a2220", trail: "#b49a86" },
+    dusk:   { sky: ["#141b2b", "#a5603f"], far: "#2e2f3a", near: "#16191b", trees: "#08090a", trail: "#4b4036" },
+    squall: { sky: ["#3c4a55", "#77858d"], far: "#4f5c62", near: "#2c3639", trees: "#182022", trail: "#6f6d66" },
+  };
+  function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+  function ridge(ctx, w, h, base, amp, f1, f2, color) {
+    ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, h);
+    for (let x = 0; x <= w; x += 6) ctx.lineTo(x, base + amp * Math.sin(x * f1) + amp * 0.35 * Math.sin(x * f2 + 1.3));
+    ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+  }
+  function fir(ctx, x, base, ht, color) {
+    ctx.fillStyle = color;
+    for (let k = 0; k < 7; k++) {
+      const t0 = base - ht + k * ht / 8, w = ht * 0.3 * (k + 2) / 8;
+      ctx.beginPath(); ctx.moveTo(x, t0); ctx.lineTo(x - w, t0 + ht / 3.2); ctx.lineTo(x + w, t0 + ht / 3.2); ctx.closePath(); ctx.fill();
+    }
+  }
+  function paintScene(cv) {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(320, Math.round(r.width * dpr)), h = Math.max(180, Math.round(r.height * dpr));
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext("2d"), m = MOODS[cv.dataset.mood] || MOODS.day, rnd = rng(7);
+    const g = ctx.createLinearGradient(0, 0, 0, h * 0.62);
+    g.addColorStop(0, m.sky[0]); g.addColorStop(1, m.sky[1]);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    ridge(ctx, w, h, h * 0.50, h * 0.06, 2.6 / w * 3, 9 / w * 3, m.far);
+    ridge(ctx, w, h, h * 0.64, h * 0.05, 1.7 / w * 3, 7 / w * 3, m.near);
+    ctx.fillStyle = m.trail; ctx.beginPath();
+    ctx.moveTo(w * 0.40, h); ctx.lineTo(w * 0.60, h); ctx.lineTo(w * 0.515, h * 0.70); ctx.lineTo(w * 0.50, h * 0.70); ctx.closePath(); ctx.fill();
+    for (let i = 0; i < 9; i++) {
+      const left = i % 2 === 0, x = left ? rnd() * w * 0.3 : w * 0.7 + rnd() * w * 0.3;
+      fir(ctx, x, h * (0.72 + rnd() * 0.3), h * (0.35 + rnd() * 0.45), m.trees);
+    }
+    if (cv.dataset.mood === "squall") {
+      ctx.strokeStyle = "rgba(220,230,240,.18)"; ctx.lineWidth = Math.max(1, dpr);
+      for (let i = 0; i < 160; i++) { const x = rnd() * w, y = rnd() * h; ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - h * .02, y + h * .06); ctx.stroke(); }
+    }
+  }
+
+  // zone ring: five arcs, filled to zone 4
+  (function () {
+    const svg = document.getElementById("zoneRing"); if (!svg) return;
+    const cx = 50, cy = 50, R = 42, zone = 4, gap = 6, start = -210, sweep = 240, seg = (sweep - gap * 4) / 5;
+    let out = "";
+    for (let i = 0; i < 5; i++) {
+      const a0 = (start + i * (seg + gap)) * Math.PI / 180, a1 = (start + i * (seg + gap) + seg) * Math.PI / 180;
+      const p0 = [cx + R * Math.cos(a0), cy + R * Math.sin(a0)], p1 = [cx + R * Math.cos(a1), cy + R * Math.sin(a1)];
+      const on = i < zone, cur = i === zone - 1;
+      out += '<path d="M' + p0[0].toFixed(2) + " " + p0[1].toFixed(2) + " A" + R + " " + R + " 0 0 1 " + p1[0].toFixed(2) + " " + p1[1].toFixed(2) +
+        '" fill="none" stroke="' + (on ? "#f08a62" : "#3a3a3a") + '" stroke-width="' + (cur ? 9 : 5) + '" stroke-linecap="round" opacity="' + (on && !cur ? .65 : 1) + '"/>';
+    }
+    out += '<text x="50" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#7fc8a3" letter-spacing="1">Z4</text>';
+    svg.innerHTML = out;
+  })();
+
+  // terrain shared by the plate and the roll
+  function terrainFn(w, h, seed) {
+    const r = rng(seed), bumps = [];
+    for (let i = 0; i < 16; i++) bumps.push([r() * w * 1.2 - w * .1, r() * h * 1.2 - h * .1, (0.06 + r() * .1) * w, (r() * 2 - 0.8) * 40]);
+    return (x, y) => { let v = 1.6 * (h - y) / h * 100 + 1.1 * x / w * 120;
+      for (const b of bumps) v += b[3] * Math.exp(-((x - b[0]) ** 2 + (y - b[1]) ** 2) / (2 * b[2] * b[2])); return v; };
+  }
+  function drawPlate(cv) {
+    const ctx = cv.getContext("2d"), w = cv.width, h = cv.height, z = terrainFn(w, h, 11), step = 12;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(127,200,163,.06)"; ctx.fillRect(0, 0, w, h);
+    const img = ctx.getImageData(0, 0, w, h), d = img.data;
+    for (let y = 0; y < h - 1; y++) for (let x = 0; x < w - 1; x++) {
+      const b = Math.floor(z(x, y) / step), br = Math.floor(z(x + 1, y) / step), bd = Math.floor(z(x, y + 1) / step);
+      if (b !== br || b !== bd) { const idx = Math.max(b, br, bd) % 5 === 0, i = (y * w + x) * 4;
+        d[i] = 127; d[i + 1] = 200; d[i + 2] = 163; d[i + 3] = idx ? 230 : 110; }
+    }
+    ctx.putImageData(img, 0, 0);
+    ctx.strokeStyle = "rgba(127,200,163,.8)"; ctx.lineWidth = 2; ctx.strokeRect(1, 1, w - 2, h - 2);
+    const track = [[40, 270], [90, 240], [130, 246], [180, 205], [230, 196], [270, 160], [320, 150]];
+    const plan = [[320, 150], [380, 120], [440, 108], [500, 80], [560, 60]];
+    const path = (pts) => { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.stroke(); };
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.strokeStyle = "#f08a62"; ctx.lineWidth = 6; ctx.setLineDash([]); path(track);
+    ctx.lineWidth = 4; ctx.setLineDash([12, 10]); path(plan); ctx.setLineDash([]);
+    const pin = (x, y, c) => { ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(x - 11, y - 26); ctx.lineTo(x + 11, y - 26); ctx.lineTo(x, y - 6); ctx.closePath(); ctx.fill();
+      ctx.fillRect(x - 1.5, y - 8, 3, 8); };
+    pin(440, 108, "#78b7d4"); pin(180, 205, "#78b7d4");
+    ctx.strokeStyle = "#f08a62"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(560, 62); ctx.lineTo(560, 22); ctx.stroke();
+    ctx.fillStyle = "#f08a62"; ctx.fillRect(560, 22, 24, 14);
+    ctx.strokeStyle = "#f3f4f1"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(320, 150, 15, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "#f3f4f1"; ctx.beginPath(); ctx.arc(320, 150, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.font = "500 16px 'IBM Plex Mono', monospace"; ctx.fillStyle = "#7fc8a3"; ctx.fillText("500 m", 18, 30);
+    ctx.fillRect(18, 38, 80, 2);
+  }
+
+  // roll frames: tiny ridge scenes dithered to 1 bit, tinted amber
+  function rollFrame(seed, W, H) {
+    const c = document.createElement("canvas"); c.width = W; c.height = H;
+    const ctx = c.getContext("2d"), r = rng(seed), lum = new Float32Array(W * H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const horizon = H * (0.45 + 0.12 * Math.sin(x / W * 5 + seed) + 0.05 * Math.sin(x / W * 17 + seed * 2));
+      let v = y < horizon ? Math.exp(-(horizon - y) / (H * (0.25 + 0.2 * r()))) * 0.95 : 0.12 * Math.exp(-(y - horizon) / (H * .2));
+      lum[y * W + x] = v;
+    }
+    for (let t = 0; t < 3; t++) {
+      const tx = r() * W, base = H * (0.75 + r() * 0.3), ht = H * (0.4 + r() * 0.5);
+      for (let y = Math.max(0, Math.floor(base - ht)); y < Math.min(H, base); y++) {
+        const half = (y - (base - ht)) / ht * ht * 0.18;
+        for (let x = Math.max(0, Math.floor(tx - half)); x < Math.min(W, tx + half); x++) lum[y * W + x] = 0;
+      }
+    }
+    const img = ctx.createImageData(W, H), d = img.data, e = lum.slice();
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = y * W + x, on = e[i] > 0.5 ? 1 : 0, err = e[i] - on;
+      if (x + 1 < W) e[i + 1] += err * 7 / 16;
+      if (y + 1 < H) { if (x > 0) e[i + W - 1] += err * 3 / 16; e[i + W] += err * 5 / 16; if (x + 1 < W) e[i + W + 1] += err / 16; }
+      const o = i * 4; d[o] = on ? 242 : 0; d[o + 1] = on ? 163 : 0; d[o + 2] = on ? 58 : 0; d[o + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0); return c;
+  }
+
+  function init() {
+    document.querySelectorAll("canvas.scene").forEach(paintScene);
+    const plate = document.getElementById("plate"); if (plate) drawPlate(plate);
+    const strip = document.getElementById("strip");
+    if (strip && !strip.childElementCount) {
+      [3, 9, 14, 21, 27].forEach((s, i) => { const f = rollFrame(s, 212, 104); if (i === 2) f.className = "sel"; f.setAttribute("aria-label", "roll frame " + (i + 1)); strip.appendChild(f); });
+    }
+  }
+  init();
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => document.querySelectorAll("canvas.scene").forEach(paintScene), 150); });
+})();
+</script>

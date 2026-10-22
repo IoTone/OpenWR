@@ -1,0 +1,50 @@
+- !<AssetImportMetadata/a98f9612-498b-4b69-9bb2-87593199c9a9>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 99ff379f-2ff8-40d9-a4f6-84db39071efe
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 99ff379f-2ff8-40d9-a4f6-84db39071efe
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 22eaf4bc-fcac-476f-87c5-355162bdc11a
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/22eaf4bc-fcac-476f-87c5-355162bdc11a>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: de95a0a5-1683-417c-83b5-031a737d3a38
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    material: false
+    worldHeight: false
+    worldWidth: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      worldWidth: !<float> 20.000000
+      worldHeight: !<float> 20.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material material {"hint":"Unlit material for mesh rendering (e.g., LegitUnlit)"}'
+    - '// @input float worldWidth = 20 {"hint":"World-space width of the SVG output"}'
+    - '// @input float worldHeight = 20 {"hint":"World-space height of the SVG output"}'
