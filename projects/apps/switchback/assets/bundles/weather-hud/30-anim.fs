@@ -97,7 +97,7 @@ p-scatter
 
 \ --- the hook ---------------------------------------------------------
 : hud-anim  ( -- )
-  anim-on @ hud-fresh? and if
+  anim-on @ hud-fresh? pulse-on? @ or and if
     frame @ 1 + frame !
-    hud-frame fx fx-settle oled-show
+    hud-frame pulse-on? @ if 0 oled-invert else fx fx-settle then oled-show
   then ;

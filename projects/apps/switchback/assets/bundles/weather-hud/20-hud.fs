@@ -17,7 +17,7 @@
 
 : hud-frame  ( -- )
   oled-clear 1 oled-color 0 oled-dir 1 oled-scale
-  hud-fresh? if hud-draw else hud-wait then
+  pulse-live? if pulse-draw else hud-fresh? if hud-draw else hud-wait then then
   hud-status ;
 
 \ dim the glass at night: the panel is in front of an eye
