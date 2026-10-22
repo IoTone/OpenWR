@@ -26,15 +26,14 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    bluetoothModule: false
     bpmText: false
     camera: false
     demoMode: false
     distance: false
     drop: false
     frame: false
-    goggleName: false
     labelText: false
+    links: false
     maxHr: false
     ring: false
     rowText: false
@@ -48,14 +47,13 @@
   Attachments:
     []
   DefaultScriptInputs:
-    - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
-      goggleName: goggl1
+    - links: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
       maxHr: !<float> 185.000000
       bpmText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       labelText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       rowText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       statusText: !<reference.Text> 00000000-0000-0000-0000-000000000000
-      ring: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      ring: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
       demoMode: false
       frame: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
       camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
@@ -65,14 +63,13 @@
     -
       {}
   InputLines:
-    - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
-    - "// @input string goggleName = \"goggl1\" {\"hint\":\"goggl1's advertised name\"}"
+    - "// @input AssignableType links {\"hint\":\"The lens's Bluetooth links (strap, goggl1, maplet)\"}"
     - '// @input float maxHr = 185 {"hint":"Your max heart rate; zones are 60/70/80/90 % of it, as on the phone"}'
     - // @input Component.Text bpmText
     - // @input Component.Text labelText
     - // @input Component.Text rowText
     - // @input Component.Text statusText
-    - '// @input AssignableType ring {"hint":"The zone gauge"}'
+    - '// @input AssignableType_1 ring {"hint":"The zone gauge"}'
     - '// @input bool demoMode {"hint":"Fake the strap (sweeps 60-180 bpm) for the editor preview; no Bluetooth"}'
     - '// @input SceneObject frame {"hint":"The ContainerFrame to place in front of the wearer at start"}'
     - '// @input SceneObject camera {"hint":"The camera (Camera Object)"}'
