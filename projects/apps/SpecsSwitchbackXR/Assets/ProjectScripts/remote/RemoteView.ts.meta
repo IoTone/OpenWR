@@ -1,0 +1,83 @@
+- !<AssetImportMetadata/3d9deaa5-04fa-457b-b2d9-fbfabd9103ca>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> a1c9c5df-a6d7-497e-9e18-1d5c1df3aa29
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> a1c9c5df-a6d7-497e-9e18-1d5c1df3aa29
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 9b059bda-1376-4977-88fb-ca75c3c7fa0c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/9b059bda-1376-4977-88fb-ca75c3c7fa0c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: a9092dc5-ebc7-40f8-bc4d-a7e14741dd47
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    camera: false
+    captionText: false
+    cardWidth: false
+    distance: false
+    drop: false
+    frame: false
+    glanceTexture: false
+    imageMaterial: false
+    labelText: false
+    links: false
+    pulseTexture: false
+    ribbonTexture: false
+    stripTexture: false
+    yaw: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - links: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      imageMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      stripTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      glanceTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      ribbonTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      pulseTexture: !<reference.Texture> 00000000-0000-0000-0000-000000000000
+      labelText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      captionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      frame: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distance: !<float> 85.000000
+      drop: !<float> 6.000000
+      yaw: !<float> -32.000000
+      cardWidth: 7.600000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType links
+    - '// @input Asset.Material imageMaterial {"hint":"Unlit material with a base texture"}'
+    - // @input Asset.Texture stripTexture
+    - // @input Asset.Texture glanceTexture
+    - // @input Asset.Texture ribbonTexture
+    - // @input Asset.Texture pulseTexture
+    - '// @input Component.Text labelText {"hint":"A Text to copy for the card labels"}'
+    - // @input Component.Text captionText
+    - // @input SceneObject frame
+    - // @input SceneObject camera
+    - // @input float distance = 85
+    - // @input float drop = 6
+    - '// @input float yaw = -32 {"hint":"Degrees to the side; negative is left"}'
+    - '// @input float cardWidth = 7.6 {"hint":"Card width, cm (at 45 cm)"}'

@@ -4,7 +4,8 @@
 //
 // Nordic UART: write lines to RX, read replies from TX notifications until
 // the "ok>" prompt, one line in flight at a time (there is one Forth
-// interpreter on the device). Writes go in 20-byte pieces because the lens
+// interpreter on the device); lines from several views queue behind each
+// other. Writes go in 20-byte pieces because the lens
 // cannot raise the MTU, and with response because on the glasses that was
 // the faster mode (median 100 ms against 149 ms). No bonding: the console
 // is an open service. The link is held for the whole lens and retried.
@@ -26,6 +27,8 @@ export class GoggleLink {
   private buf = "";
   private waiter: ((reply: string) => void) | null = null;
   private busy = false;
+  private queue: Promise<unknown> = Promise.resolve();
+  private queued = 0;
   private seen = false;
   private stopped = false;
 
@@ -38,7 +41,8 @@ export class GoggleLink {
   ) {}
 
   get live(): boolean { return this.state === "live"; }
-  get idle(): boolean { return this.live && !this.busy; }
+  // nothing in flight or waiting: a periodic sender (Pulse) only sends then
+  get idle(): boolean { return this.live && !this.busy && this.queued === 0; }
 
   start() {
     this.stopped = false;
@@ -50,11 +54,23 @@ export class GoggleLink {
   }
 
   // Send one console line and resolve with what the device printed before
-  // the prompt. Rejects if a line is already in flight, the link is down or
-  // the device does not answer in 3 s.
-  send(line: string): Promise<string> {
+  // the prompt. Lines queue: each waits for the one before to answer.
+  // Rejects if the link is down or the device does not answer in time
+  // (default 3 s; roll-get of a 4.7 KB frame needs about 30).
+  send(line: string, timeoutMs = REPLY_MS): Promise<string> {
     if (!this.live) return Promise.reject(new Error(this.deviceName + " not connected"));
-    if (this.busy) return Promise.reject(new Error(this.deviceName + " busy"));
+    this.queued++;
+    const run = () => {
+      this.queued--;
+      return this.sendNow(line, timeoutMs);
+    };
+    const p = this.queue.then(run, run);
+    this.queue = p.catch(() => null);
+    return p;
+  }
+
+  private sendNow(line: string, timeoutMs: number): Promise<string> {
+    if (!this.live) return Promise.reject(new Error(this.deviceName + " not connected"));
     this.busy = true;
     const t0 = Date.now();
     return new Promise<string>((resolve, reject) => {
@@ -63,7 +79,7 @@ export class GoggleLink {
         this.waiter = null;
         this.busy = false;
         reject(new Error("no reply to '" + line + "'"));
-      }, REPLY_MS / 1000);
+      }, timeoutMs / 1000);
       this.waiter = (reply) => {
         t.cancel();
         this.busy = false;
@@ -129,7 +145,7 @@ export class GoggleLink {
       const body = this.buf.substring(0, at).replace(/\r/g, "");
       this.buf = "";
       w(body);
-    } else if (!this.waiter && this.buf.length > 512) {
+    } else if (!this.waiter && this.buf.length > 16384) {
       this.buf = "";                         // unsolicited chatter: drop it
     }
   }

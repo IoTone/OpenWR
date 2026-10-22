@@ -1,0 +1,74 @@
+- !<AssetImportMetadata/1c337d46-f761-4c9c-9e27-6edc60269748>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 89c29d68-ec2f-4acb-b5e6-1cf7a6c7b189
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 89c29d68-ec2f-4acb-b5e6-1cf7a6c7b189
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 928658a4-8d29-4127-89a8-b916fb13749d
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/928658a4-8d29-4127-89a8-b916fb13749d>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: c348542f-3ffd-4a8b-8c54-231678e8c260
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bigWidth: false
+    camera: false
+    captionText: false
+    demoMode: false
+    distance: false
+    drop: false
+    frame: false
+    imageMaterial: false
+    links: false
+    titleText: false
+    yaw: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - links: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      imageMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      titleText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      captionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      demoMode: false
+      frame: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distance: !<float> 85.000000
+      drop: !<float> 6.000000
+      yaw: !<float> 32.000000
+      bigWidth: !<float> 16.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType links
+    - '// @input Asset.Material imageMaterial {"hint":"Unlit material with a base texture"}'
+    - // @input Component.Text titleText
+    - // @input Component.Text captionText
+    - '// @input bool demoMode {"hint":"Stand-in frames for the editor preview"}'
+    - // @input SceneObject frame
+    - // @input SceneObject camera
+    - // @input float distance = 85
+    - // @input float drop = 6
+    - '// @input float yaw = 32 {"hint":"Degrees to the side; negative is left"}'
+    - '// @input float bigWidth = 16 {"hint":"Width of the large frame, cm (at 45 cm)"}'

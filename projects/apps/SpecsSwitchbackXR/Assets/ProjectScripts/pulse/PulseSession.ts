@@ -23,9 +23,10 @@
 // demoMode fakes the strap (a sweep through all five zones) so the view can
 // be checked in the Lens Studio preview, where there is no Bluetooth.
 
-import { BleHub } from "../ble/BleHub";
 import { GoggleLink } from "../ble/GoggleLink";
 import { HrStrap, hrZone } from "../ble/HrStrap";
+import { Links } from "../ble/Links";
+import { placeInFront } from "../ui/Place";
 import { ZoneRing } from "./ZoneRing";
 
 const FOG = new vec4(0.953, 0.957, 0.945, 1);
@@ -37,12 +38,8 @@ const DIM = new vec4(0.35, 0.35, 0.35, 1);
 export class PulseSession extends BaseScriptComponent {
 
   @input
-  @hint("Bluetooth Central Module asset")
-  bluetoothModule: Bluetooth.BluetoothCentralModule;
-
-  @input
-  @hint("goggl1's advertised name")
-  goggleName: string = "goggl1";
+  @hint("The lens's Bluetooth links (strap, goggl1, maplet)")
+  links: Links;
 
   @input
   @hint("Your max heart rate; zones are 60/70/80/90 % of it, as on the phone")
@@ -80,9 +77,8 @@ export class PulseSession extends BaseScriptComponent {
   @hint("How far below eye level the panel starts, cm (at 45 cm; scales with distance)")
   drop: number = 6;
 
-  private hub: BleHub;
-  private strap: HrStrap;
-  private goggle: GoggleLink;
+  private get strap(): HrStrap { return this.links.strap; }
+  private get goggle(): GoggleLink { return this.links.goggle; }
   private startedAt = 0;
   private shownZone = -1;
   private sent = 0;
@@ -90,32 +86,20 @@ export class PulseSession extends BaseScriptComponent {
   private ticks = 0;
 
   onAwake() {
-    this.hub = new BleHub(this.bluetoothModule, (ms) => new Promise<void>((r) => this.after(r, ms / 1000)));
-    const changed = () => this.drawStatus();
-    this.strap = new HrStrap(this.hub, changed, (fn, s) => this.after(fn, s));
-    this.goggle = new GoggleLink(this.goggleName, this.hub, changed, (fn, s) => this.after(fn, s),
-      (fn, s) => this.cancellable(fn, s));
-
     // other components (the ring) are not awake yet: draw from OnStart
     this.createEvent("OnStartEvent").bind(() => {
       this.paint(this.bpmText, FOG, "--");
       this.paint(this.labelText, MOSS, "BPM");
       this.paint(this.rowText, FOG, "");
       this.drawRing(0);
+      this.links.onChange(() => this.drawStatus());
       this.drawStatus();
-      this.after(() => this.placeInFront(), 0.3);  // once head tracking has a pose
+      this.after(() => this.place(), 0.3);  // once head tracking has a pose
       this.after(() => this.logSizes(), 2);   // text meshes exist after a frame or two
-      if (!this.demoMode) {
-        // strap first: it is the point of G1; goggl1 queues behind it
-        this.strap.start();
-        this.goggle.start();
-      }
       this.tick();
     });
     this.createEvent("OnDestroyEvent").bind(() => {
       if (this.goggle.idle) this.goggle.send("pulse-off").catch(() => {});
-      this.strap.stop();
-      this.goggle.stop();
     });
   }
 
@@ -140,7 +124,9 @@ export class PulseSession extends BaseScriptComponent {
     if (zone !== this.shownZone) this.drawRing(zone);
 
     if (demo && this.ticks % 5 === 0) print("[pulse] demo " + bpm + " bpm zone " + zone + " " + row);
-    if (this.goggle.idle) {
+    // only once there is a strap: an empty line would switch goggl1 to Pulse just to show --
+    // and not while the Remote has goggl1 on a weather theme
+    if (this.goggle.idle && (demo || this.strap.state === "live") && this.links.goggleView === "pulse") {
       // every 10th line also asks whether the goggle is showing Pulse
       const ask = this.sent % 10 === 0;
       const line = secs + " " + bpm + " " + zone + " " + Math.max(0, cad) + " " + (cad >= 0 ? 1 : 0) + " sess-hr!"
@@ -190,26 +176,10 @@ export class PulseSession extends BaseScriptComponent {
 
   // Text size is in points; the layout is in cm. Log what each line measures
   // so the sizes can be set to the cap heights in tools/pulse_preview.py.
-  // World origin is the head pose at lens start on the glasses but not in the
-  // editor preview, so place the frame relative to the camera instead: level
-  // in front of the eyes, a little low, turned to face them. After that it is
-  // the wearer's to move (the frame's own grab, follow and billboarding).
-  private placeInFront() {
+  private place() {
     if (!this.frame || !this.camera) return;
-    const cam = this.camera.getTransform();
-    const fwd = cam.back;                       // a camera looks down its -Z
-    const flat = new vec3(fwd.x, 0, fwd.z);
-    const dir = flat.length > 0.01 ? flat.normalize() : new vec3(0, 0, -1);
-    // The layout is designed in cm at 45 cm from the eyes (tools/pulse_preview.py).
-    // Further away it is scaled up by the same factor, so it subtends the same
-    // angle: the right size, without the eyes converging on something close.
-    const k = this.distance / 45;
-    const pos = cam.getWorldPosition().add(dir.uniformScale(this.distance)).add(new vec3(0, -this.drop * k, 0));
-    const tr = this.frame.getTransform();
-    tr.setWorldPosition(pos);
-    tr.setWorldRotation(quat.lookAt(dir.uniformScale(-1), vec3.up()));
-    tr.setWorldScale(new vec3(k, k, k));
-    print("[pulse] frame placed " + this.distance + " cm ahead, scale " + k.toFixed(2) + ", at " + pos.toString());
+    placeInFront(this.frame, this.camera, this.distance, this.drop);
+    print("[pulse] frame placed " + this.distance + " cm ahead");
   }
 
   private logSizes() {
@@ -241,13 +211,5 @@ export class PulseSession extends BaseScriptComponent {
     const ev = this.createEvent("DelayedCallbackEvent");
     ev.bind(() => { this.removeEvent(ev); fn(); });
     ev.reset(seconds);
-  }
-
-  private cancellable(fn: () => void, seconds: number): { cancel: () => void } {
-    const ev = this.createEvent("DelayedCallbackEvent");
-    let live = true;
-    ev.bind(() => { this.removeEvent(ev); if (live) fn(); });
-    ev.reset(seconds);
-    return { cancel: () => { live = false; } };
   }
 }
