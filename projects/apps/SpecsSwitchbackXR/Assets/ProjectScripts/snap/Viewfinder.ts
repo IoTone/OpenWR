@@ -34,6 +34,8 @@ const AMBER: Rgb = [242, 163, 58];
 const PAPER = [160, 108, 38, 255];
 const INK = [0, 0, 0, 255];
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
+const SHOW_SECONDS = 5;                 // a shot stays in the target, then joins the Roll
+const SKIP_FRAMES = 2;                  // camera frames to let pass after the pinch
 const LINE_BYTES = 78;                 // as tools/push_map.py: 36 lines for 2808 B
 
 @component
@@ -70,6 +72,7 @@ export class Viewfinder extends BaseScriptComponent {
   private status: Text;
   private camChip: Text;
   private camTex: Texture = null;
+  private lastShot: Uint8Array = null;
   private cameraModule = require("LensStudio:CameraModule") as CameraModule;
   private frameW = 212;
   private frameH = 104;
@@ -183,16 +186,39 @@ export class Viewfinder extends BaseScriptComponent {
     }, (e) => print("[snap] epd-size@: " + e));
   }
 
+  // The first frame event after the pinch can still hold the previous image,
+  // so a few frames pass first, and a shot identical to the last one is
+  // taken again.
   private shoot() {
     if (this.shooting || !this.camTex) return;
     this.shooting = true;                          // the target holds still
+    this.clearPreview();
     this.say("SHOOTING");
+    this.grab(SKIP_FRAMES, 5);
+  }
+
+  private grab(skip: number, tries: number) {
     const provider = this.camTex.control as CameraTextureProvider;
     let reg: EventRegistration = null;
     reg = provider.onNewFrame.add(() => {
+      if (skip-- > 0) return;
       provider.onNewFrame.remove(reg);
       try {
-        this.capture();
+        const bits = this.capture();
+        if (this.lastShot && same(bits, this.lastShot) && tries > 1) {
+          print("[snap] stale frame, again");
+          this.grab(1, tries - 1);
+          return;
+        }
+        this.lastShot = bits;
+        this.showPreview(bits);
+        this.say("SHOT · SEND IT FROM THE ROLL");
+        this.links.after(() => {                   // time to look at it, then into the Roll
+          this.roll.addShot(this.frameW, this.frameH, bits);
+          this.clearPreview();
+          this.shooting = false;
+          if (this.open) this.say("AIM, THEN SHOOT");
+        }, SHOW_SECONDS);
       } catch (e) {
         print("[snap] capture: " + e);
         this.say("CAPTURE FAILED");
@@ -201,7 +227,7 @@ export class Viewfinder extends BaseScriptComponent {
     });
   }
 
-  private capture() {
+  private capture(): Uint8Array {
     const t0 = Date.now();
     const copy = ProceduralTextureProvider.createFromTexture(this.camTex);
     const cw = copy.getWidth(), ch = copy.getHeight();
@@ -224,14 +250,7 @@ export class Viewfinder extends BaseScriptComponent {
     const src: Source = { rgba: px, w: bw, h: bh, bottomUp: true };
     const bits = toFrame(src, corners.map(([x, y]) => [x - x0, y - y0]), this.frameW, this.frameH);
     print("[snap] camera " + cw + "x" + ch + ", target box " + bw + "x" + bh + " at " + x0 + "," + y0 + " -> " + this.frameW + "x" + this.frameH + " in " + (Date.now() - t0) + " ms");
-    this.showPreview(bits);
-    this.roll.addShot(this.frameW, this.frameH, bits);
-    this.say("SHOT · SEND IT FROM THE ROLL");
-    this.links.after(() => {                       // a moment to see it, then aim again
-      this.clearPreview();
-      this.shooting = false;
-      if (this.open) this.say("AIM, THEN SHOOT");
-    }, 1.5);
+    return bits;
   }
 
   private showPreview(bits: Uint8Array) {
@@ -290,4 +309,10 @@ export class Viewfinder extends BaseScriptComponent {
 
 function clamp(v: number, lo: number, hi: number): number {
   return Math.min(hi, Math.max(lo, v));
+}
+
+function same(a: Uint8Array, b: Uint8Array): boolean {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return false;
+  return true;
 }
