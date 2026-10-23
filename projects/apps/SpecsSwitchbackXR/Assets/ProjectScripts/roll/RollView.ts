@@ -13,6 +13,9 @@
 // `roll-b64` instead (a third fewer characters) and is asked for a short
 // connection interval while the roll comes over.
 //
+// Shots from the glasses (snap/Viewfinder.ts) join the strip first, marked
+// NEW until SEND puts them on the maplet; SEND works for any selected frame.
+//
 // demoMode draws stand-in frames (a dithered ridge at dusk) for the editor
 // preview, where there is no Bluetooth.
 
@@ -26,7 +29,8 @@ const INK = [0, 0, 0, 255];           // clear glass
 const AMBER = new vec4(0.949, 0.639, 0.227, 1);
 const MAX_FRAMES = 6;
 
-interface Frame { n: number; w: number; h: number; bits: Uint8Array; thumb: SceneObject | null; }
+// n is the frame number on the maplet card; -1 for a shot not sent yet.
+export interface Frame { n: number; w: number; h: number; bits: Uint8Array; thumb: SceneObject | null; }
 
 @component
 export class RollView extends BaseScriptComponent {
@@ -142,18 +146,51 @@ export class RollView extends BaseScriptComponent {
     this.paint(this.captionText, this.describe());
   }
 
-  // Lay out: the large frame centred near the top, thumbnails in a row below.
-  private add(f: Frame) {
-    const i = this.frames.length;
-    this.frames.push(f);
-    const root = this.getSceneObject();
-    const tw = this.bigWidth / 3.4, th = tw * f.h / f.w;
-    const x = -this.bigWidth / 2 + tw / 2 + i * (tw + 0.5);
-    f.thumb = makeQuad(root, "Thumb" + f.n, tw, th, this.imageMaterial, makeTexture(f.w, f.h, unpack(f.bits, f.w, f.h, INK, PAPER)));
-    f.thumb.getTransform().setLocalPosition(new vec3(x, -4.6, Z_IMAGE));
-    makeTappable(f.thumb, tw, th, () => this.select(i));
-    if (this.selected < 0) this.select(i);
+  // A frame the glasses just shot: first in the strip, selected, not on the card yet.
+  addShot(w: number, h: number, bits: Uint8Array) {
+    this.add({ n: -1, w, h, bits, thumb: null }, true);
+    this.select(0);
+  }
+
+  selectedFrame(): Frame | null {
+    return this.frames[this.selected] || null;
+  }
+
+  // The maplet saved a shot as frame n.
+  saved(f: Frame, n: number) {
+    f.n = n;
+    if (this.frames[this.selected] === f) this.paint(this.captionText, this.describe());
+  }
+
+  say(s: string) {
+    this.paint(this.captionText, s);
+  }
+
+  // Lay out: the large frame centred near the top, the newest MAX_FRAMES as
+  // thumbnails in a row below.
+  private add(f: Frame, front = false) {
+    if (front) this.frames.unshift(f); else this.frames.push(f);
+    if (front && this.selected >= 0) this.selected++;
+    const tw = this.thumbWidth(), th = tw * f.h / f.w;
+    f.thumb = makeQuad(this.getSceneObject(), "Thumb" + f.n, tw, th, this.imageMaterial, makeTexture(f.w, f.h, unpack(f.bits, f.w, f.h, INK, PAPER)));
+    makeTappable(f.thumb, tw, th, () => this.select(this.frames.indexOf(f)));
+    this.layout();
+    if (this.selected < 0) this.select(this.frames.indexOf(f));
     else this.paint(this.captionText, this.describe());
+  }
+
+  private thumbWidth(): number {
+    return (this.bigWidth - 0.4 * (MAX_FRAMES - 1)) / MAX_FRAMES;
+  }
+
+  private layout() {
+    const tw = this.thumbWidth();
+    this.frames.forEach((g, k) => {
+      if (!g.thumb) return;
+      g.thumb.enabled = k < MAX_FRAMES;
+      g.thumb.getTransform().setLocalPosition(new vec3(-this.bigWidth / 2 + tw / 2 + k * (tw + 0.4), -4.6, Z_IMAGE));
+      g.thumb.getTransform().setLocalScale(k === this.selected ? new vec3(1.12, 1.12, 1) : vec3.one());
+    });
   }
 
   private select(i: number) {
@@ -166,9 +203,7 @@ export class RollView extends BaseScriptComponent {
     if (this.big) this.big.destroy();
     this.big = makeQuad(this.getSceneObject(), "Selected", bw, bh, this.imageMaterial, tex);
     this.big.getTransform().setLocalPosition(new vec3(0, 1.6, Z_IMAGE));
-    this.frames.forEach((g, k) => {
-      if (g.thumb) g.thumb.getTransform().setLocalScale(k === i ? new vec3(1.12, 1.12, 1) : vec3.one());
-    });
+    this.layout();
     this.paint(this.captionText, this.describe());
   }
 
@@ -179,7 +214,8 @@ export class RollView extends BaseScriptComponent {
   private describe(): string {
     const f = this.frames[this.selected];
     if (!f) return "";
-    return "FRAME " + ("000" + f.n).slice(-4) + " · " + f.w + "×" + f.h + " · " + this.frames.length + " ON THE CARD";
+    const name = f.n < 0 ? "NEW SHOT · NOT SENT" : "FRAME " + ("000" + f.n).slice(-4);
+    return name + " · " + f.w + "×" + f.h + " · " + this.frames.filter((g) => g.n >= 0).length + " ON THE CARD";
   }
 
   private paint(t: Text, s: string) {

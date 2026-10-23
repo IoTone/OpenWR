@@ -21,6 +21,11 @@ import { ALPEN, contours, drawMap, FOG, GLACIER, M_PER_PX, MAP_H, MAP_W, MapPin,
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
 const WALK = 1.4;                     // m/s, demo
 const INTERVALS = [0, 1, 5, 15];      // minutes; 0 = off
+const FLAG_LIFT = 25;                  // cm above eye level, a flag at your feet
+const FLAG_LIFT_PER_KM = 20;           // cm more per doubling of (1 + km)
+const LABEL_CM_26 = 0.2;               // layout cm per character, 26 pt
+const LABEL_CM_16 = 0.125;             // and 16 pt
+const LABEL_H = 1.9;                   // layout cm, name and the line under it
 
 interface Pin extends MapPin { flag: SceneObject | null; sub: Text | null; }
 interface Chip { text: Text; quad: SceneObject; w: number; on: Texture; off: Texture; }
@@ -220,23 +225,45 @@ export class PinView extends BaseScriptComponent {
     p.flag = o;
   }
 
+  // Every flag stands pinDistance away on its bearing, so far pins on
+  // similar bearings would print over each other. A flag rises with its real
+  // distance (further is higher, like a horizon), and labels are placed
+  // nearest first: one that would cover a label already placed climbs above it.
   private paintFlags() {
     if (!this.world) return;
-    this.pins.forEach((p, i) => {
-      if (!p.flag) return;
-      const dx = (p.x - this.you[0]) * M_PER_PX, dy = (p.y - this.you[1]) * M_PER_PX;
+    const k = this.pinDistance / DESIGN_DISTANCE;
+    const laid: { bearing: number; y: number; w: number }[] = [];
+    const flags = this.pins.map((p, i) => ({ p, i, dx: (p.x - this.you[0]) * M_PER_PX, dy: (p.y - this.you[1]) * M_PER_PX }))
+      .filter((f) => f.p.flag)
+      .sort((a, b) => Math.hypot(a.dx, a.dy) - Math.hypot(b.dx, b.dy));
+    for (const { p, i, dx, dy } of flags) {
+      const m = Math.hypot(dx, dy);
       const bearing = Math.atan2(dx, -dy);                 // clockwise from map up
+      const climb = Math.round(this.z(p.x, p.y) - this.z(this.you[0], this.you[1]));
+      p.sub.text = dist(m) + " · " + (climb >= 0 ? "+" : "-") + Math.abs(climb) + " m";
+      // label width in cm: name at 26 pt and the line under it at 16 pt
+      const w = Math.max(p.name.length * LABEL_CM_26, p.sub.text.length * LABEL_CM_16) * k;
+      let y = FLAG_LIFT + FLAG_LIFT_PER_KM * Math.log2(1 + m / 1000);
+      // y only climbs, by at least 1 cm a step (an exact o.y + H can still
+      // test as overlapping in floating point), and at most once per label
+      const h = LABEL_H * k;
+      for (let pass = 0, moved = true; moved && pass <= laid.length; pass++) {
+        moved = false;
+        for (const o of laid) {
+          const apart = this.pinDistance * Math.abs(wrapAngle(bearing - o.bearing));
+          if (apart < (w + o.w) / 2 + 4 && Math.abs(y - o.y) < h) { y = o.y + h + 1; moved = true; }
+        }
+      }
+      laid.push({ bearing, y, w });
       const dir = quat.angleAxis(-bearing, vec3.up()).multiplyVec3(this.ahead);
-      p.flag.getTransform().setWorldPosition(this.anchor.add(dir.uniformScale(this.pinDistance)).add(new vec3(0, 25, 0)));
+      p.flag.getTransform().setWorldPosition(this.anchor.add(dir.uniformScale(this.pinDistance)).add(new vec3(0, y, 0)));
       const col = rgba(i === this.dest ? ALPEN : GLACIER);
       for (const name of ["Pole", "Cloth"]) {
         const vis = findChild(p.flag, name).getComponent("Component.RenderMeshVisual") as RenderMeshVisual;
         vis.mainMaterial.mainPass.baseColor = col;
       }
-      const climb = Math.round(this.z(p.x, p.y) - this.z(this.you[0], this.you[1]));
-      p.sub.text = dist(Math.hypot(dx, dy)) + " · " + (climb >= 0 ? "+" : "-") + Math.abs(climb) + " m";
       p.sub.textFill.color = col;
-    });
+    }
   }
 
   // Flags turn about the vertical to face you.
@@ -328,4 +355,8 @@ function hhmm(d: Date): string {
 
 function dist(m: number): string {
   return m < 1000 ? Math.round(m / 10) * 10 + " m" : (m / 1000).toFixed(1) + " km";
+}
+
+function wrapAngle(a: number): number {
+  return Math.atan2(Math.sin(a), Math.cos(a));
 }
