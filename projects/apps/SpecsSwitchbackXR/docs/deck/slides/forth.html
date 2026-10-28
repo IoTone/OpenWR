@@ -1,0 +1,12 @@
+<section id="forth" data-transition="fade" style="background:#16291F;color:#F3F4F1;font-family:'Bricolage Grotesque', Arial, sans-serif;padding:128px;display:grid;grid-template-columns:1fr 760px;gap:96px;align-items:center">
+<div style="display:flex;flex-direction:column;gap:40px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#F08A62;letter-spacing:4px;text-transform:uppercase">How it was built</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">The devices are Forth prompts. The lens just types.</h2>
+<p style="font-size:32px;line-height:1.45;color:#BFD3C9">Both boards run ESPIDFORTH, with the prompt over a Bluetooth serial link. A new feature is often one new word, tried live before it’s flashed.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#0F1F19;border:2px solid #2C4A3C;border-radius:20px;padding:48px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#7FC8A3">added this week</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;line-height:1.6">\ goggl1 0.6.1<br><span style="color:#F2A33A">1792700000 -25200 clock!</span><br><br>\ maplet 0.3.2<br><span style="color:#78B7D4">3 roll-b64</span><br><span style="color:#78B7D4">6 12 ble-conn!</span><br><br>\ the e-paper canvas<br><span style="color:#F08A62">s" ff00…" epd-hex!  epd-show</span></p>
+</div>
+<aside>This is what made three days possible. goggl1 and the maplet both run ESPIDFORTH, our Forth for ESP-IDF, and the prompt is exposed over Bluetooth. The lens doesn’t need a protocol — it sends lines of Forth and reads the replies. When a feature needed something new on a device, like setting the goggle’s clock or sending photos as base64, it was one new word. We could try it live at the prompt, then flash it. The clock! example is illustrative.</aside>
+</section>

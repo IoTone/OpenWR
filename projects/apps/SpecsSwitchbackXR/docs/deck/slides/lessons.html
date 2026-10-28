@@ -1,0 +1,16 @@
+<section id="lessons" data-transition="fade" style="background:#0F1F19;color:#F3F4F1;font-family:'Bricolage Grotesque', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#F08A62;letter-spacing:4px;text-transform:uppercase">What we learned</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Six Spectacles gotchas, so you skip them</h2>
+</div>
+<table style="font-size:28px;color:#F3F4F1">
+<tr><th style="width:38%;color:#7FC8A3;text-align:left">What happened</th><th style="width:62%;color:#7FC8A3;text-align:left">What fixed it</th></tr>
+<tr><td>Lens Bluetooth can’t bond; MTU stays 23</td><td>No encryption on our devices; write in 20-byte chunks</td></tr>
+<tr><td>WebView plus Bluetooth: denied</td><td>Keep the WebView package out of a Bluetooth lens</td></tr>
+<tr><td>Camera plus Bluetooth: denied</td><td>Declare the Internet module: one prompt, then allowed</td></tr>
+<tr><td>Images flickered on the panels</td><td>Z-fighting with the frame’s glass; sit 3–4 mm in front</td></tr>
+<tr><td>Panels grabbed pinches from far away</td><td>Container frame border was 50 cm; set it to 4</td></tr>
+<tr><td>Log says “InternalError: interrupted”</td><td>That’s a hung script being killed, not a restart</td></tr>
+</table>
+<aside>Six things that cost us time, so you don’t have to lose it. The permission ones are the big ones: a Bluetooth lens can’t include WebView, and it can’t use the camera unless it also declares the Internet module, which turns it into a Transparent Permission lens. The display ones are about the additive glass and the UI kit’s container frames. And if your Lens Studio log says InternalError interrupted, look for an infinite loop — ours froze the lens on launch.</aside>
+</section>

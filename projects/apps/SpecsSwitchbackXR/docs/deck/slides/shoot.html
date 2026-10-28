@@ -1,0 +1,29 @@
+<section id="shoot" data-transition="fade" style="background:#0F1F19;color:#F3F4F1;font-family:'Bricolage Grotesque', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#F08A62;letter-spacing:4px;text-transform:uppercase">5 · Shoot and send</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">Take a photo with the glasses, print it on e-paper</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:24px">
+<div style="display:flex;flex-direction:column;gap:16px;background:#16291F;border:2px solid #2C4A3C;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#F2A33A">Aim</p>
+<p style="font-size:28px;line-height:1.4;color:#BFD3C9">A head-locked target at the e-paper’s shape</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#16291F;border:2px solid #2C4A3C;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#F2A33A">Shoot</p>
+<p style="font-size:28px;line-height:1.4;color:#BFD3C9">Only what’s inside the target, mapped into the camera image</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#16291F;border:2px solid #2C4A3C;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#F2A33A">Dither</p>
+<p style="font-size:28px;line-height:1.4;color:#BFD3C9">Grey, contrast-stretched, Floyd–Steinberg to 1 bit</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;background:#16291F;border:2px solid #2C4A3C;border-radius:20px;padding:36px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#F2A33A">Send</p>
+<p style="font-size:28px;line-height:1.4;color:#BFD3C9">Drawn on the maplet and saved to its roll</p>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:center;background:#16291F;border-left:6px solid #F08A62;border-radius:12px;padding:32px 40px">
+<x-icon name="Key" style="color:#F08A62;width:56px;height:56px"></x-icon>
+<p style="font-size:30px;line-height:1.4;color:#F3F4F1"><b>The permission trick:</b> Bluetooth plus camera is refused. Declare the Internet module too and it becomes a Transparent Permission lens: one prompt, then it works.</p>
+</div>
+<aside>The newest feature. CAMERA opens a target locked to your head at the maplet’s aspect ratio. SHOOT grabs a fresh camera frame and crops exactly what’s inside the target — its four corners are projected into the camera image, so a slight tilt still comes out straight. It’s turned grey, stretched and dithered to 1 bit, shown for five seconds, then lands in the Roll. SEND puts any selected frame on the maplet’s e-paper and saves new shots to its card. The gotcha: Spectacles refuse a lens that uses Bluetooth together with the camera. Declaring the Internet module as well — we never use it — makes it a Transparent Permission lens, and after one prompt it all works.</aside>
+</section>

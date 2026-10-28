@@ -1,0 +1,19 @@
+<section id="map" data-transition="fade" style="background:#16291F;color:#F3F4F1;font-family:'Bricolage Grotesque', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;color:#F08A62;letter-spacing:4px;text-transform:uppercase">How it hangs together</p>
+<h2 style="font-size:72px;font-weight:700;line-height:1.1">The glasses are the hub</h2>
+</div>
+<div style="position:relative;flex:1">
+<p style="position:absolute;left:640px;top:200px;width:384px;background:#F3F4F1;color:#0F1F19;font-size:36px;font-weight:700;text-align:center;padding:36px 24px;border-radius:24px">Spectacles<br><span style="color:#1F4D3A">the lens</span></p>
+<p style="position:absolute;left:0px;top:0px;width:400px;background:#0F1F19;border:2px solid #F08A62;font-size:32px;font-weight:700;text-align:center;padding:28px 24px;border-radius:20px">Heart-rate strap</p>
+<p style="position:absolute;left:0px;top:420px;width:400px;background:#0F1F19;border:2px solid #7FC8A3;font-size:32px;font-weight:700;text-align:center;padding:28px 24px;border-radius:20px">Phone · Switchback</p>
+<p style="position:absolute;left:1264px;top:0px;width:400px;background:#0F1F19;border:2px solid #F2A33A;font-size:32px;font-weight:700;text-align:center;padding:28px 24px;border-radius:20px">goggl1 HUD</p>
+<p style="position:absolute;left:1264px;top:420px;width:400px;background:#0F1F19;border:2px solid #78B7D4;font-size:32px;font-weight:700;text-align:center;padding:28px 24px;border-radius:20px">maplet camera</p>
+<x-connector x1="400" y1="50" x2="640" y2="240" head="end" route="straight" style="color:#F08A62;border-width:4px"></x-connector>
+<x-connector x1="1024" y1="240" x2="1264" y2="50" head="both" route="straight" style="color:#F2A33A;border-width:4px"></x-connector>
+<x-connector x1="1024" y1="320" x2="1264" y2="470" head="both" route="straight" style="color:#78B7D4;border-width:4px"></x-connector>
+<x-connector x1="400" y1="470" x2="640" y2="320" head="both" route="straight" style="color:#7FC8A3;border-width:4px;border-style:dashed"></x-connector>
+<p style="position:absolute;left:0px;top:600px;width:1664px;font-size:28px;color:#BFD3C9;text-align:center">Three Bluetooth links live at once. Phone link (dashed) is next: real GPS for the pin board.</p>
+</div>
+<aside>The glasses sit in the middle. The strap streams heart rate straight to the lens. goggl1 and the maplet each expose a Nordic UART serial service, which is really a Forth prompt — the lens just types commands. All three links run at the same time through one scan queue. The phone link is the next step; today the pin board walks a demo route.</aside>
+</section>

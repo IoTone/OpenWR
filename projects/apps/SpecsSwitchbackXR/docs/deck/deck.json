@@ -1,0 +1,17 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-27T18:00:00Z"},
+  "lists": "css",
+  "title": "SwitchbackXR",
+  "order": ["cover", "kit", "map", "ble", "pulse", "remote", "roll", "pins", "shoot", "forth", "lessons", "numbers", "thanks"],
+  "sections": {
+    "s1": {"description": "What SwitchbackXR is and what it is made of", "start": "cover"},
+    "s2": {"description": "The five things it does on the glasses", "start": "pulse"},
+    "s3": {"description": "How it was built and what we learned", "start": "forth"}
+  },
+  "faces": {
+    "bricolage-grotesque": {"family": "Bricolage Grotesque", "href": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..800&display=swap"},
+    "jetbrains-mono": {"family": "JetBrains Mono", "href": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"}
+  },
+  "designSystems": []
+}
