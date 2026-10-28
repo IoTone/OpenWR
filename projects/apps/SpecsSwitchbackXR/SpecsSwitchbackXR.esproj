@@ -16,14 +16,13 @@ metaInfo:
   lensName: SpecsSwitchbackXR
   lensDescriptors:
     - EXPERIMENTAL_API
-    - GEN_AI_ICON
   lensApplicability:
     - Front
     - Back
   lensClientCompatibilities:
     - Spectacles
   platformBundlesEnabled: false
-  iconHash: 2216c107de42925269b56fdb3a44cb4c
+  iconHash: 3cf7053ab8e43b7d157c643620f09152
   videoPreviewHash: ""
   fromTemplateName: Default
   fromTemplateUrl: Lens Studio 5.10.1.25061003
