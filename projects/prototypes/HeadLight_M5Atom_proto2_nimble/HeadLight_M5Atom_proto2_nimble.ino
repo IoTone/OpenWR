@@ -324,7 +324,11 @@ void loop() {
       delay(100);
       M5.dis.clear();
       */
-      FastLED.clear(true);
+
+      fill_gradient_RGB(leds,
+                  0, CRGB::White,
+                  NUM_LEDS,  CRGB::Yellow );
+      // FastLED.clear(true);
     } else {
       // M5.dis.drawpix(0, 0x7fff00); /* GREEN */
       if (gToggleState == TOGGLE_STATE_0) {
