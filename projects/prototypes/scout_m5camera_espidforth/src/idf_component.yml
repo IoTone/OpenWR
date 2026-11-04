@@ -1,0 +1,4 @@
+## Scout: the OV2640 driver
+dependencies:
+  idf: ">=5.0"
+  espressif/esp32-camera: "^2.0.13"
