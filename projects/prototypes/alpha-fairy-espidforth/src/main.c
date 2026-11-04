@@ -18,6 +18,7 @@
 #include "driver/uart.h"
 #include "driver/gpio.h"
 #include "esp_system.h"
+#include "esp_timer.h"
 
 #include "forth_core.h"
 #include "forth_version.h"
@@ -25,8 +26,9 @@
 #include "net_words.h"
 #include "ble_console.h"
 #include "sony_http.h"
+#include "display.h"
 
-#define AF_VERSION      "0.1.0"
+#define AF_VERSION      "0.2.0"
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
@@ -119,6 +121,7 @@ static void friend_task(void *arg)
         for (int i = 0; i < 20; i++) {
             vTaskDelay(pdMS_TO_TICKS(50));
             if (s_ble) ble_console_flush();
+            if (i & 1) display_pulse((uint32_t)(esp_timer_get_time() / 1000));
             if (gpio_get_level(PIN_BTN_A) == 0) {
                 if (++held == 20) forth_eval("cam-join");     /* hold A 1 s: find the camera again */
             } else {
@@ -131,6 +134,7 @@ static void friend_task(void *arg)
             ble_console_poll();
             if (ble_console_state() == 0) ble_pair_window(600);
         }
+        display_tick();
         if (forth_word_exists("friend-tick")) forth_eval("friend-tick");
     }
 }
@@ -149,6 +153,9 @@ void app_main(void)
     console_print("  AlphaFriend on M5StickC Plus SE; Sony camera code from Alpha Fairy (MIT)\r\n");
     console_print("============================================\r\n");
 
+    bool screen = display_init();                  /* before Wi-Fi: the AXP192 powers the panel */
+    if (!screen) console_print("display: not found\r\n");
+
     int rc = forth_init(FORTH_HEAP_SIZE);
     if (rc != 0) { console_printf("forth_init failed (rc=%d)\r\n", rc); return; }
 
@@ -158,6 +165,7 @@ void app_main(void)
     sony_register_words();
     forth_register_word("ble!", w_ble_store);
     forth_register_word("reboot", w_reboot);
+    display_register_words();
     int32_t ble = 1;
     kv_get_i32("ble", &ble);
     s_ble = ble != 0;
