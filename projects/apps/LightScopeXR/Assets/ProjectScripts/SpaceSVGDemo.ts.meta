@@ -1,0 +1,59 @@
+- !<AssetImportMetadata/7161b89b-0367-48b5-9022-6fba74a4094f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> e1c744d1-09ea-429c-9589-2548457a5ca5
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> e1c744d1-09ea-429c-9589-2548457a5ca5
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> cd11dd9e-0c89-457d-a9ef-8ba31d64ea39
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/cd11dd9e-0c89-457d-a9ef-8ba31d64ea39>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 0cd37edd-99d7-4a3c-abf2-b2d26cab8aca
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    buttonPrefab: false
+    cycleInterval: false
+    demoIndex: false
+    material: false
+    worldHeight: false
+    worldWidth: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      worldWidth: !<float> 20.000000
+      worldHeight: !<float> 20.000000
+      demoIndex: !<float> 0.000000
+      cycleInterval: !<float> 0.000000
+      buttonPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material material {"hint":"Unlit material for mesh rendering (e.g., LegitUnlit)"}'
+    - '// @input float worldWidth = 20 {"hint":"World-space width"}'
+    - '// @input float worldHeight = 20 {"hint":"World-space height"}'
+    - '// @input float demoIndex {"hint":"Which demo to show (0-based index)"}'
+    - '// @input float cycleInterval {"hint":"Seconds between demos when cycling (0 to disable)"}'
+    - '// @input Asset.ObjectPrefab buttonPrefab {"hint":"Optional: Button prefab from SpectaclesUIKit (e.g., FrameButton) for prev/next navigation"}'

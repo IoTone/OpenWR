@@ -1,0 +1,77 @@
+- !<AssetImportMetadata/b8aea3b3-e7a8-4df1-84ad-e1e7ed0dbb1a>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 28b0f42a-86ef-4cf0-81d3-af5abec9c543
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 28b0f42a-86ef-4cf0-81d3-af5abec9c543
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 4d3a0631-8850-4520-99dd-f69d9047305e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/4d3a0631-8850-4520-99dd-f69d9047305e>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: fb0f70fd-e420-479e-a7bf-18351e6609b0
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    camera: false
+    captionText: false
+    distance: false
+    drop: false
+    frame: false
+    imageMaterial: false
+    monoText: false
+    nameText: false
+    pinDistance: false
+    plateWidth: false
+    titleText: false
+    yaw: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - imageMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      nameText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      monoText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      titleText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      captionText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      frame: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distance: !<float> 85.000000
+      drop: !<float> 22.000000
+      yaw: !<float> 0.000000
+      pinDistance: !<float> 400.000000
+      plateWidth: 19.200001
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material imageMaterial {"hint":"Unlit material with a base texture"}'
+    - '// @input Component.Text nameText {"hint":"A Text to copy for pin names (display face)"}'
+    - '// @input Component.Text monoText {"hint":"A Text to copy for chips and small labels (mono)"}'
+    - // @input Component.Text titleText
+    - // @input Component.Text captionText
+    - // @input SceneObject frame
+    - // @input SceneObject camera
+    - // @input float distance = 85
+    - '// @input float drop = 22 {"hint":"cm below eye level at 45 cm; below Pulse"}'
+    - // @input float yaw
+    - '// @input float pinDistance = 400 {"hint":"How far away the flags in the room stand, cm"}'
+    - '// @input float plateWidth = 19.2 {"hint":"Plate width, cm (at 45 cm)"}'

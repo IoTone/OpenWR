@@ -1,0 +1,62 @@
+- !<AssetImportMetadata/96b1577b-f46f-4812-a7f8-4a0a5dd7e5c9>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 5eed1ce8-1e6f-40ca-b147-a99d2691416c
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 5eed1ce8-1e6f-40ca-b147-a99d2691416c
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> bf9277c9-7fef-49c7-ba48-96005d3bdd13
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/bf9277c9-7fef-49c7-ba48-96005d3bdd13>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: a8897ee1-2d5e-4f2a-ac0b-3ace29547cb3
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    camera: false
+    distance: false
+    imageMaterial: false
+    links: false
+    monoText: false
+    roll: false
+    width: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - links: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      roll: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      imageMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      monoText: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      distance: !<float> 100.000000
+      width: !<float> 34.000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - // @input AssignableType links
+    - // @input AssignableType_1 roll
+    - '// @input Asset.Material imageMaterial {"hint":"Unlit material with a base texture"}'
+    - '// @input Component.Text monoText {"hint":"A Text to copy for chips and labels (mono)"}'
+    - '// @input SceneObject camera {"hint":"The scene camera (it follows the head)"}'
+    - '// @input float distance = 60 {"hint":"How far ahead the target floats, cm (nearer than the panels)"}'
+    - '// @input float width = 26 {"hint":"Target width, cm, at that distance"}'

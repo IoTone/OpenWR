@@ -1,0 +1,839 @@
+<title>LightScopeXR</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the SwitchbackXR proposal's reading column, with one full-width working lens (canvas scene behind an
+   additive HUD in screen blend, so black reads as clear glass). Page palette is the PNW brand; the lens uses glass tokens. */
+:root {
+  --bg: #f3f4f1; --surface: #ffffff; --fg: #1b1f1d; --muted: #5f6a64; --rule: #d8ddd8;
+  --ever: #1f4d3a; --river: #2e6f8e; --glow: #e0683f; --ever-soft: #e3ece6;
+  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Atkinson Hyperlegible", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", Menlo, Consolas, monospace;
+  --g-fog: #f3f4f1; --g-moss: #7fc8a3; --g-glacier: #78b7d4; --g-glow: #f08a62;
+  --g-amber: #f2a33a; --g-hivis: #ffd23f; --lens-edge: #0b0d0c;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a201c; --fg: #e6ebe7; --muted: #99a59d; --rule: #2a332d;
+  --ever: #7fc8a3; --river: #78b7d4; --glow: #f08a62; --ever-soft: #1f2e26; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a201c; --fg: #e6ebe7; --muted: #99a59d; --rule: #2a332d;
+  --ever: #7fc8a3; --river: #78b7d4; --glow: #f08a62; --ever-soft: #1f2e26; color-scheme: dark; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 920px; margin: 0 auto; padding-block: 2.5rem 4rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; line-height: 1.1; }
+h1 { font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 800; letter-spacing: -.02em; margin: .2rem 0 .5rem; }
+h2 { font-size: 1.6rem; font-weight: 700; margin: 3rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+h3 { font-size: 1.15rem; font-weight: 700; margin: 1.75rem 0 .5rem; }
+p, li { max-width: 68ch; }
+p { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.3rem; margin: 0 0 1rem; }
+li { margin-bottom: .35rem; }
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ever); }
+.motto { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 4vw, 1.9rem); letter-spacing: .02em; line-height: 1.15; margin: 0 0 1rem; }
+.motto span { display: inline-block; margin-right: .6em; }
+.motto .o { color: var(--ever); } .motto .w1 { color: var(--river); } .motto .w2 { color: var(--glow); }
+.meta { display: flex; flex-wrap: wrap; gap: .4rem 1.5rem; font-size: .9rem; color: var(--muted); margin: .75rem 0 1.5rem; }
+.meta b { color: var(--fg); }
+code { font-family: var(--font-mono); font-size: .86em; background: var(--ever-soft); padding: .1em .35em; border-radius: 3px; }
+pre { font-family: var(--font-mono); font-size: .82rem; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: .9rem 1rem; overflow-x: auto; line-height: 1.5; margin: 0 0 1rem; }
+pre code { background: none; padding: 0; }
+.tbl { overflow-x: auto; margin: 0 0 1rem; }
+table { border-collapse: collapse; width: 100%; font-size: .92rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: .5rem .6rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-family: var(--font-mono); font-weight: 500; color: var(--muted); font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+.note { border-left: 3px solid var(--glow); padding: .1rem 0 .1rem 1rem; max-width: 68ch; margin: 0 0 1rem; }
+.note b { color: var(--glow); }
+.ok { color: var(--ever); font-weight: 700; }
+.no { color: var(--muted); }
+a { color: var(--river); }
+.diagram { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: .5rem; overflow-x: auto; margin: 0 0 1rem; }
+.diagram svg { display: block; width: 100%; min-width: 600px; height: auto; }
+.diagram text { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+.diagram .nm { font-family: var(--font-display); font-weight: 700; font-size: 14px; fill: var(--fg); }
+.diagram .box { fill: var(--bg); stroke: var(--rule); }
+.diagram .hub { fill: var(--ever-soft); stroke: var(--ever); }
+.diagram .ln { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+.diagram .ln.wifi { stroke: var(--river); stroke-width: 2; }
+.diagram .ln.new { stroke: var(--glow); stroke-dasharray: 5 4; }
+.phases td:first-child { white-space: nowrap; font-weight: 700; }
+
+/* ---- the lens ---- */
+.lens { position: relative; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; border-radius: 26px; overflow: hidden;
+  background: var(--lens-edge); box-shadow: 0 12px 34px rgba(0,0,0,.28), inset 0 0 0 10px var(--lens-edge); margin: 1.25rem 0 .5rem; }
+.lens canvas.scene { position: absolute; inset: 10px; width: calc(100% - 20px); height: calc(100% - 20px); border-radius: 18px; }
+.lens .hud { position: absolute; inset: 10px; border-radius: 18px; mix-blend-mode: screen; container-type: inline-size; color: var(--g-fog); }
+.lens .hud * { box-sizing: border-box; }
+.lens::after { content: ""; position: absolute; inset: 10px; border-radius: 18px; pointer-events: none; box-shadow: inset 0 0 60px rgba(0,0,0,.55); }
+.cap { font-family: var(--font-mono); font-size: .75rem; color: var(--muted); text-align: center; margin: 0 0 1.25rem; }
+.disp { font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; line-height: .9; }
+.m { font-family: var(--font-mono); }
+.gchip { font-family: var(--font-mono); font-size: 1.4cqw; padding: .5cqw 1.15cqw; border-radius: 99px; border: 1px solid currentColor; letter-spacing: .04em;
+  white-space: nowrap; background: none; color: inherit; cursor: pointer; line-height: 1.3; }
+.gchip:focus-visible, .card:focus-visible, .thumb:focus-visible, .shutter:focus-visible, .step:focus-visible { outline: .3cqw solid var(--g-hivis); outline-offset: .3cqw; }
+.gchip.on { background: currentColor; }
+.gchip.on > span { color: #000; font-weight: 500; }
+.gchip.static { cursor: default; }
+.top { position: absolute; top: 3.2cqw; left: 3.6cqw; right: 3.6cqw; display: flex; justify-content: space-between; gap: 1cqw; flex-wrap: wrap; }
+.tabs, .chips { display: flex; gap: .8cqw; flex-wrap: wrap; }
+.tabs { color: var(--g-moss); }
+.view { position: absolute; inset: 0; }
+.hint { position: absolute; left: 3.6cqw; bottom: 2.6cqw; font-family: var(--font-mono); font-size: 1.25cqw; color: var(--g-moss); opacity: .8; letter-spacing: .04em; }
+.flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; border-radius: 18px; }
+.flash.go { animation: flash .35s ease-out; }
+@keyframes flash { from { opacity: .55; } to { opacity: 0; } }
+
+/* Rack */
+.rack { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 12cqw; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5cqw; }
+.card { border: 1px solid currentColor; border-radius: 1.4cqw; padding: 1.3cqw; background: none; color: inherit; text-align: left; cursor: pointer; font: inherit; opacity: .62; }
+.card.on { opacity: 1; outline: .3cqw solid currentColor; outline-offset: .5cqw; }
+.card canvas { width: 100%; display: block; image-rendering: pixelated; border-radius: .5cqw; margin-bottom: 1cqw; }
+.card .nm { font-family: var(--font-display); font-weight: 800; font-size: 2.7cqw; letter-spacing: -.01em; line-height: 1; }
+.card .k { font-family: var(--font-mono); font-size: 1.15cqw; letter-spacing: .05em; text-transform: uppercase; margin: .5cqw 0 .9cqw; opacity: .85; }
+.card .st { font-family: var(--font-mono); font-size: 1.25cqw; line-height: 1.55; }
+.card.add { border-style: dashed; color: var(--g-moss); display: flex; flex-direction: column; justify-content: center; gap: .8cqw; opacity: .8; }
+.card.add .nm { font-size: 2.4cqw; }
+
+/* Shot */
+.dials { position: absolute; left: 3.6cqw; top: 12cqw; width: 54cqw; display: flex; flex-direction: column; gap: 1.6cqw; }
+.dial { display: grid; grid-template-columns: 7cqw 3cqw 1fr 3cqw; align-items: center; gap: .6cqw; }
+.dial .lb { font-family: var(--font-mono); font-size: 1.25cqw; letter-spacing: .1em; text-transform: uppercase; color: var(--g-moss); }
+.tape { display: flex; justify-content: center; align-items: baseline; gap: 2.2cqw; overflow: hidden; border-bottom: 1px solid rgba(127,200,163,.45); padding-bottom: .5cqw;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent); }
+.tape span { font-family: var(--font-mono); font-size: 1.5cqw; opacity: .45; white-space: nowrap; }
+.tape span.cur { font-family: var(--font-display); font-weight: 800; font-size: 3.4cqw; opacity: 1; letter-spacing: -.02em; }
+.step { background: none; border: 1px solid rgba(127,200,163,.6); color: var(--g-moss); border-radius: 99px; font-family: var(--font-mono); font-size: 1.6cqw; line-height: 1; padding: .55cqw 0; cursor: pointer; }
+.step:disabled { opacity: .25; cursor: default; }
+.meter { position: absolute; left: 3.6cqw; bottom: 7cqw; width: 54cqw; color: var(--g-fog); }
+.meter svg { width: 100%; display: block; }
+.meter .lb { font-family: var(--font-mono); font-size: 1.25cqw; color: var(--g-moss); letter-spacing: .08em; margin-bottom: .6cqw; display: flex; justify-content: space-between; }
+.shootbox { position: absolute; right: 5cqw; bottom: 6cqw; width: 26cqw; display: flex; flex-direction: column; align-items: center; gap: 1.4cqw; }
+.shutter { width: 17cqw; height: 17cqw; border-radius: 50%; border: .45cqw solid var(--g-hivis); background: none; cursor: pointer; display: grid; place-items: center; padding: 0; color: var(--g-hivis); }
+.shutter i { width: 12.5cqw; height: 12.5cqw; border-radius: 50%; border: 1px solid var(--g-hivis); display: grid; place-items: center; font-style: normal;
+  font-family: var(--font-mono); font-size: 1.6cqw; letter-spacing: .14em; transition: transform .12s; }
+.shutter:active i { transform: scale(.92); }
+.shootbox .chips { justify-content: center; }
+.shotinfo { position: absolute; right: 3.6cqw; top: 11.5cqw; text-align: right; font-family: var(--font-mono); font-size: 1.35cqw; line-height: 1.6; }
+.shotinfo b { font-family: var(--font-display); font-size: 4.4cqw; font-weight: 800; display: block; line-height: 1; letter-spacing: -.02em; }
+.recdot { color: var(--g-glow); }
+
+/* Peek */
+.peekframe { position: absolute; left: 3.6cqw; top: 11.5cqw; width: 58cqw; }
+.peekframe .pf { position: relative; }
+.peekframe canvas { width: 100%; display: block; image-rendering: pixelated; border-radius: .6cqw; }
+.peekframe svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.peekframe .pc { font-family: var(--font-mono); font-size: 1.25cqw; margin-top: .9cqw; display: flex; justify-content: space-between; gap: 1cqw; flex-wrap: wrap; letter-spacing: .03em; }
+.bar { height: .35cqw; background: rgba(127,200,163,.25); margin-top: .8cqw; border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--g-moss); }
+.peekside { position: absolute; right: 3.6cqw; top: 11.5cqw; width: 28cqw; display: flex; flex-direction: column; gap: 1.6cqw; }
+.peekside .lb { font-family: var(--font-mono); font-size: 1.2cqw; color: var(--g-moss); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5cqw; }
+.peekside svg { width: 100%; display: block; }
+.peekside .chips { gap: .8cqw; }
+.peekside .big { font-family: var(--font-display); font-weight: 800; font-size: 3cqw; letter-spacing: -.02em; line-height: 1.05; }
+
+/* Sheet */
+.sheet { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 11cqw; display: grid; grid-template-columns: 29cqw 1fr; gap: 2.4cqw; }
+.reels { display: grid; gap: .8cqw; align-content: start; }
+.reel .rh { font-family: var(--font-mono); font-size: 1.05cqw; letter-spacing: .05em; text-transform: uppercase; display: flex; align-items: baseline; gap: 1cqw; margin-bottom: .5cqw; }
+.reel .rh b { font-family: var(--font-display); font-size: 1.55cqw; font-weight: 800; text-transform: none; letter-spacing: -.01em; }
+.reel .strip { display: flex; gap: 1cqw; align-items: flex-end; }
+.reel .thumb canvas { width: auto; height: 3.7cqw; }
+.reel .thumb span { font-size: .95cqw; margin-top: .5cqw; }
+.reel .pg { margin-left: auto; display: flex; gap: .6cqw; align-self: center; }
+.reel .pg .gchip { font-size: 1.1cqw; padding: .35cqw .9cqw; }
+.sheet .sel canvas { width: 100%; display: block; image-rendering: pixelated; border-radius: .6cqw; }
+.sheet .sel .pc { font-family: var(--font-mono); font-size: 1.3cqw; margin-top: .9cqw; line-height: 1.5; }
+.sheet .sel .pc b { font-family: var(--font-display); font-size: 2.4cqw; font-weight: 800; display: block; letter-spacing: -.01em; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2cqw; align-content: start; }
+.thumb { background: none; border: none; padding: 0; cursor: pointer; color: inherit; text-align: left; opacity: .6; }
+.thumb.on { opacity: 1; }
+.thumb canvas { width: 100%; display: block; image-rendering: pixelated; border-radius: .4cqw; outline: 1px solid currentColor; outline-offset: .35cqw; }
+.thumb span { display: block; font-family: var(--font-mono); font-size: 1.05cqw; margin-top: .7cqw; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sheet .acts { display: flex; gap: .8cqw; flex-wrap: wrap; margin-top: 1.4cqw; color: var(--g-amber); }
+
+/* Sequence */
+.seq { position: absolute; left: 3.6cqw; right: 3.6cqw; top: 11.5cqw; }
+.seq .modes { color: var(--g-moss); margin-bottom: 2cqw; }
+.seq .plan { display: flex; align-items: baseline; gap: 2.6cqw; flex-wrap: wrap; }
+.seq .plan .disp { font-size: 6.4cqw; }
+.seq .plan .m { font-size: 1.5cqw; line-height: 1.6; }
+.seq svg.tl { width: 100%; display: block; margin: 2.4cqw 0 1.6cqw; }
+.seq .who { display: flex; gap: .8cqw; flex-wrap: wrap; align-items: center; font-family: var(--font-mono); font-size: 1.3cqw; }
+.seq .go { color: var(--g-hivis); }
+
+/* AlphaFriend screens */
+.stick { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1rem; background: #0c0c10; border-radius: 10px; padding: 1rem; margin: .75rem 0 1rem; }
+.stick figure { margin: 0; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.stick .body { background: #e8e4dc; border-radius: 14px; padding: 12px 10px 26px; box-shadow: inset 0 -3px 0 rgba(0,0,0,.15); }
+.stick canvas { width: 135px; height: 240px; display: block; border-radius: 2px; }
+.stick figcaption { font-family: var(--font-mono); font-size: .72rem; color: #8fb8c0; margin-top: .55rem; text-align: center; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">OpenWR · design proposal · the glasses as a camera remote</div>
+  <h1>LightScopeXR</h1>
+  <p class="motto"><span class="o">Open.</span><span class="w1">Luminous.</span><span class="w2">Control.</span></p>
+  <div class="meta">
+    <span><b>Status</b> proposal and clickable prototype, 2026-11-03</span>
+    <span><b>Runs on</b> Snap Spectacles ('24), Lens Studio, TypeScript</span>
+    <span><b>Cameras</b> Sony α7R III via AlphaFriend, plus ESP32 cameras over BLE</span>
+  </div>
+
+  <p>Imaging Edge Mobile, moved from your hand to your eyes. The α7R III sits on the tripod; you walk to the edge of the frame, raise the glasses, and set the shot: f-stop, shutter speed, ISO and EV on dials you pinch; a low-res peek through the viewfinder every few seconds; shoot, and the postview drops into a contact sheet. A small ESP32 camera can stand anywhere else as a second angle, and the glasses run them all.</p>
+
+  <h2>1. How it connects</h2>
+  <p>A Bluetooth lens gets no internet and no raw sockets, and a lens can't bond. The α7R III speaks Wi-Fi. So a StickC Plus SE, <b>AlphaFriend</b>, sits between them: Bluetooth to the glasses, Wi-Fi to the camera's own access point (<i>Ctrl w/ Smartphone</i>), where it drives Sony's JSON-RPC API and shrinks liveview frames before they cross the slow Bluetooth hop. ESP32 cameras need no friend: they are Bluetooth devices themselves.</p>
+  <div class="diagram" role="img" aria-label="Spectacles connect over Bluetooth to AlphaFriend, which connects over Wi-Fi to the alpha 7R III; Spectacles also connect directly to a Scout ESP32 camera and to the maplet">
+    <svg viewBox="0 0 760 250">
+      <rect class="box" x="20" y="90" width="170" height="70" rx="8"/><text class="nm" x="36" y="118">Spectacles</text><text x="36" y="138">LightScopeXR · BLE only</text>
+      <rect class="hub" x="300" y="20" width="180" height="70" rx="8"/><text class="nm" x="316" y="48">AlphaFriend</text><text x="316" y="68">StickC Plus SE · proxy</text>
+      <rect class="box" x="580" y="20" width="160" height="70" rx="8"/><text class="nm" x="596" y="48">α7R III</text><text x="596" y="68">Ctrl w/ Smartphone AP</text>
+      <rect class="box" x="300" y="165" width="180" height="62" rx="8"/><text class="nm" x="316" y="191">Scout</text><text x="316" y="210">ESP32-CAM · OV2640</text>
+      <rect class="box" x="580" y="165" width="160" height="62" rx="8"/><text class="nm" x="596" y="191">maplet</text><text x="596" y="210">S3 Sense · OV5640</text>
+      <path class="ln" d="M190 112 C 240 90, 260 60, 300 55"/><text x="196" y="72">NUS lines</text>
+      <path class="ln wifi" d="M480 55 L580 55"/><text x="494" y="46">Wi-Fi · JSON-RPC</text>
+      <path class="ln new" d="M480 75 C 530 95, 560 90, 600 90"/><text x="500" y="108">BT remote · later</text>
+      <path class="ln" d="M190 140 C 240 170, 260 196, 300 196"/><text x="200" y="190">NUS lines</text>
+      <path class="ln" d="M110 160 C 120 240, 520 246, 600 227"/><text x="370" y="244">NUS · today's maplet words</text>
+    </svg>
+  </div>
+  <div class="note"><b>Why not straight to the camera?</b> A lens can hold Bluetooth or internet, not both, unless the glasses run Extended Permissions, and then the lens can't be published. A lens also has no plain TCP or HTTP to a LAN address. The direct path stays an experiment on our developer glasses.</div>
+
+  <h2>2. The prototype</h2>
+  <p>The lens below works. Switch views along the top, change camera on the Rack (the fourth card is the glasses' own camera), turn the dials, shoot, then page back through each camera's reel. The viewfinder peek is real 80×53, one bit per pixel, which is what fits through Bluetooth in under a second; the exposure meter and the peek both react to your settings against a golden-hour scene at EV 12.</p>
+
+  <div class="lens" id="lens"><canvas class="scene" data-mood="golden"></canvas>
+    <div class="hud" id="hud">
+      <div class="top">
+        <div class="tabs" role="tablist" aria-label="Views" id="tabs"></div>
+        <div class="chips" id="camchips"></div>
+      </div>
+      <div class="view" id="view"></div>
+      <div class="flash" id="flash"></div>
+    </div>
+  </div>
+  <div class="cap" id="cap">LightScopeXR · golden glass · click anything with an outline</div>
+
+  <h3>The five views</h3>
+  <div class="tbl"><table>
+    <tr><th>View</th><th>What it does</th><th>Over the link</th></tr>
+    <tr><td><b>Rack</b></td><td>Every camera the glasses know: link, battery, shots left, a recent peek. Pinch one to make it active. <b>+ Add</b> scans for AlphaFriends and cameras.</td><td><code>cam?</code> <code>caps?</code> every 5 s per camera</td></tr>
+    <tr><td><b>Shot</b></td><td>The dials this camera has, an exposure meter, AF (half-press), shoot, record. A camera without f-stop gets no f-stop dial.</td><td><code>f!</code> <code>ss!</code> <code>iso!</code> <code>ev!</code> <code>af</code> <code>shoot</code> <code>rec</code></td></tr>
+    <tr><td><b>Peek</b></td><td>The viewfinder, low-res: thirds, AF brackets, a histogram from the same pixels. <b>Stream</b> (the default), every 3 s, or on tap.</td><td><code>lv+</code> pushes changed rows; <code>lv</code> is one whole frame (530 B)</td></tr>
+    <tr><td><b>Reels</b></td><td>One film strip per camera, newest first, pageable back through everything that camera has stored. Pick a frame to see it big. <b>Bigger</b> pulls a 240×160 version of a Sony or Scout frame that sharpens in four passes. Send one to the maplet's e-paper.</td><td><code>last</code> after each shot; <code>roll-th</code> per page of 4; <code>pv</code> for Bigger</td></tr>
+    <tr><td><b>Sequence</b></td><td>Intervalometer, exposure bracket, and Sync: fire several cameras together.</td><td>timed by the device; glasses only arm and watch</td></tr>
+  </table></div>
+
+  <h3>Photo streaming</h3>
+  <p>Pictures leave the camera at three sizes, and each size has its own path. The camera's liveview is a stream of 640-wide JPEGs at up to 30 fps, and its postview is a 2 MP JPEG. Bluetooth to the glasses carries about 1.4 KB/s. So everything that reaches the glasses is made on AlphaFriend, small enough to fit through.</p>
+  <div class="tbl"><table>
+    <tr><th>Stream</th><th>What crosses Bluetooth</th><th>Rate</th><th>How</th></tr>
+    <tr><td><b>Liveview stream</b></td><td>80×53, 1 bit; only the rows that changed, 1 byte of row number each</td><td>~1–2 fps when holding still, ~1 fps panning; the prototype counts it live</td><td>AlphaFriend reads the liveview JPEG stream, decodes every frame it can at 1/8 scale (TJpgDec), and dithers with a fixed Bayer pattern. Floyd–Steinberg would flicker and change every row; Bayer keeps still parts still.</td></tr>
+    <tr><td><b>Postview</b></td><td>80×53 right after the shot; 240×160 at 2 bits on request, in four interlaced passes</td><td>first pass in 0.2 s, sharp in about 9 s</td><td>After <code>actTakePicture</code> the camera returns a postview URL. AlphaFriend fetches it, scales it down and keeps it until the next shot, so the glasses can ask again.</td></tr>
+    <tr><td><b>Full resolution</b></td><td>nothing</td><td>—</td><td>A 42 MP JPEG is about 15 MB: three hours over Bluetooth. It stays on the camera's card. At the end of the session AlphaFriend lets go of the camera's AP, and the camera's own <i>Send to Smartphone</i> moves the keepers. The Sheet marks which ones to keep.</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Only one camera streams.</b> The link is shared, so the active camera streams and the others stay quiet. Switching cameras on the Rack moves the stream.</li>
+    <li><b>Shooting comes first.</b> A command line (<code>shoot</code>, <code>f!</code>) goes ahead of the next stream frame, so streaming never delays a shot by more than one row.</li>
+    <li><b>The Scout streams the same way</b> at 96×72 and 2 bits. Its own camera and PSRAM do the shrinking, and it doesn't need Wi-Fi.</li>
+    <li><b>A faster path is an experiment.</b> On our Extended Permissions glasses, AlphaFriend could run its own Wi-Fi AP next to the camera link and serve MJPEG. That only works if a lens can reach a LAN address, and the lens could never be published. It's a probe for later.</li>
+  </ul>
+
+  <h3>Specs as a camera</h3>
+  <p>The glasses have a camera too, and SwitchbackXR already shoots with it (<code>snap/Viewfinder.ts</code>, <code>snap/Dither.ts</code>): a head-locked target, the camera frame cropped to it, dithered on the lens. LightScopeXR puts that on the Rack as a fourth camera called <b>Specs</b>. It needs no link, so its peek runs at the lens's own frame rate.</p>
+  <ul>
+    <li><b>Stylized on purpose.</b> Like the maplet, a Specs frame is the picture: 1-bit <i>grain</i> (Floyd–Steinberg), 1-bit <i>screen</i> (Bayer) or 2-bit, cropped to the maplet's 212×104, 3:2 or square. Nothing is a stand-in for a full-resolution original.</li>
+    <li><b>Stored on an SD card.</b> The lens keeps the last few; each shot is also written to the card of a linked Scout or maplet with <code>roll-put</code>. A 212×104 1-bit frame is 2.7 KB, about 2.7 s over Bluetooth, in the background. A card holds millions of them.</li>
+    <li><b>The lens needs a camera permission.</b> As in SwitchbackXR, declaring <code>InternetModule</code> lets the camera and Bluetooth run together in a Transparent Permission lens, which can still be published.</li>
+    <li><b>It joins Sync.</b> Fire all can include the glasses, so the α7R III, the Scout and your own point of view take the same moment.</li>
+  </ul>
+
+  <h3>A reel per camera</h3>
+  <p>Every camera keeps its own roll, maplet style, and the Reels view shows one strip per camera. What a strip can reach depends on where the frames live.</p>
+  <div class="tbl"><table>
+    <tr><th>Camera</th><th>Where its reel lives</th><th>How far back</th></tr>
+    <tr><td><b>α7R III</b></td><td>AlphaFriend's flash: the 80×53 postview of every shot it took, 530 B each</td><td>every session AlphaFriend has run; about 2 000 frames in a 1 MB LittleFS partition. Shots taken without it are on the card only; listing them needs the camera's Contents Transfer mode (open question 5).</td></tr>
+    <tr><td><b>Scout</b></td><td>its microSD: the frame and a thumbnail, as the maplet does today</td><td>everything on the card</td></tr>
+    <tr><td><b>maplet</b></td><td>its microSD, the existing <code>roll-save</code> rolls</td><td>everything on the card</td></tr>
+    <tr><td><b>Specs</b></td><td>the lens (the last few) and the Scout's or maplet's card</td><td>everything on that card</td></tr>
+  </table></div>
+  <p>The strip asks for 4 thumbnails at a time (<code>roll-th</code>, about 2 s a page), caches them on the lens and pages back on <b>older</b>. A whole frame comes over only when you pick it.</p>
+
+  <h2>3. N cameras</h2>
+  <p>Every camera is a link in <code>Links.ts</code> with a driver and a list of capabilities (Specs is a local driver with no link). The view draws what the camera reports, so the α7R III gets four exposure dials, the Scout gets resolution, quality and flash, and the maplet gets a shutter and nothing else. Adding a camera type means a new driver, not a new view.</p>
+<pre><code>interface CameraLink {
+  id: string; name: string; tint: GlassTint;          // Fog, Glacier, Headlamp, ...
+  via: "alphafriend" | "direct";                      // proxy or the camera itself
+  caps: { dials: DialSpec[]; af: boolean; rec: boolean;
+          lv: { w: number; h: number; bits: 1 | 2 } | null; last: boolean };
+  state: { link: "scan"|"up"|"lost"; rssi: number; battery?: number; left?: string };
+  send(line: string): Promise&lt;string&gt;;             // one NUS line, one reply
+}</code></pre>
+  <ul>
+    <li><b>Link budget.</b> The glasses held three Bluetooth links at once in SwitchbackXR. Plan for three cameras, test four. Only the active camera peeks; the others answer <code>cam?</code> every 5 s.</li>
+    <li><b>One AlphaFriend per Sony.</b> The camera's access point takes one client, so a second Sony means a second StickC. The contract is the same, so the lens does not care.</li>
+    <li><b>Sync fire.</b> The glasses write <code>shoot</code> to each link in turn: about one Bluetooth write apart, 40–100 ms. For tighter sync, a later <code>arm</code>/<code>fire</code> pair: each device arms, then a single short write fires all of them.</li>
+    <li><b>Scout hardware.</b> AI-Thinker ESP32-CAM (OV2640, 4 MB PSRAM, microSD) or the XIAO S3 Sense we already use for the maplet. With PSRAM it can afford a 96×72 two-bit peek.</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Can</th><th>α7R III via AlphaFriend</th><th>Scout (ESP32-CAM)</th><th>maplet</th><th>Specs</th></tr>
+    <tr><td>Shoot</td><td class="ok">yes</td><td class="ok">yes, to SD</td><td class="ok">yes, to SD</td><td class="ok">yes, to a linked SD</td></tr>
+    <tr><td>AF half-press</td><td class="ok">yes</td><td class="no">fixed focus</td><td class="no">no</td><td class="no">no</td></tr>
+    <tr><td>f, shutter, ISO, EV</td><td class="ok">yes, if the API lists them</td><td class="no">no; res, quality, flash</td><td class="no">no</td><td class="no">no; style and frame</td></tr>
+    <tr><td>Record video</td><td class="ok">yes</td><td class="no">no</td><td class="no">no</td><td class="no">no</td></tr>
+    <tr><td>Peek</td><td>80×53 · 1 bit · ~1–2 fps stream</td><td>96×72 · 2 bit · ~1 per 2 s</td><td class="no">no liveview; last frame</td><td class="ok">local, full frame rate</td></tr>
+    <tr><td>Postview</td><td>shrunk from the 2 MP postview</td><td>shrunk on the device</td><td>roll frames, as today</td><td>the frame itself</td></tr>
+    <tr><td>Reel</td><td>AlphaFriend flash</td><td>SD</td><td>SD</td><td>lens + linked SD</td></tr>
+  </table></div>
+
+  <h2>4. AlphaFriend at setup time</h2>
+  <p>The StickC's 135×240 screen answers the questions you have when it isn't working yet: did it find the camera's network, does the API answer, are the glasses connected, what was the last thing asked. The big button re-scans; the side button cycles saved cameras.</p>
+  <div class="stick" id="stick"></div>
+
+  <h2>5. The contract</h2>
+  <p>Plain lines over the Nordic UART service, one reply each, the same shape as goggl1 and the maplet. The Scout implements the subset its caps list.</p>
+<pre><code>cam?                 -> cam ready ILCE-7RM3 -52 bat 64 left 1204   state: off|join|api|ready|err
+caps?                -> caps f ss iso ev af rec lv:80x53x1 last
+shoot                -> ok 1205                     actTakePicture
+af / af-                half-press / release
+rec / rec-              startMovieRec / stopMovieRec
+f!  56                  setFNumber 5.6
+ss! 1/250               setShutterSpeed
+iso! 100 | auto         setIsoSpeedRate
+ev! -3                  thirds of a stop: -1.0 EV
+lv                   -> lv 80 53 1 &lt;base64&gt;      one whole shrunk liveview frame
+lv+ / lv-               start / stop the stream; then pushed:
+                     -> lvd &lt;seq&gt; &lt;row&gt; &lt;base64 row&gt; ...   changed rows only, Bayer dither
+                     -> lvk &lt;seq&gt;                 frame done (a key frame every 10 s)
+last                 -> last 80 53 1 &lt;base64&gt;    the last postview, shrunk
+pv 240 160 2         -> pvp &lt;pass&gt; &lt;base64&gt; ...    progressive postview, 4 interlaced passes
+roll?                -> roll 1284 sd 3.1G            frames stored here
+roll-th &lt;n&gt; 4         -> rth &lt;n&gt; 80 53 1 &lt;base64&gt; ...  4 reel thumbnails from frame n back
+roll-b64 &lt;n&gt;         -> one whole stored frame (the maplet's word today)
+roll-put &lt;w&gt; &lt;h&gt; &lt;bits&gt; &lt;base64...&gt; -> ok &lt;n&gt;   store a Specs frame on this card
+seq int 10 120          intervalometer, run on the device
+seq brk 3 3             3 frames, 3 thirds apart
+arm / fire              sync across cameras (later)
+evt f 8                 pushed when the camera reports a change</code></pre>
+  <div class="tbl"><table>
+    <tr><th>Traffic</th><th>Size</th><th>Time at ~1.4 KB/s</th></tr>
+    <tr><td>a dial change or a shot</td><td>~12 B</td><td>one line, ~100 ms</td></tr>
+    <tr><td>peek, α7R III</td><td>530 B as 720 base64 characters</td><td>about 0.5 s</td></tr>
+    <tr><td>stream frame, holding still</td><td>10–25 changed rows × 11 B</td><td>0.2–0.35 s</td></tr>
+    <tr><td>Bigger postview, 240×160 · 2 bit</td><td>9 600 B in 4 passes</td><td>first look 0.2 s, sharp about 9 s</td></tr>
+    <tr><td>peek, Scout</td><td>1 728 B</td><td>about 1.3 s</td></tr>
+    <tr><td>postview thumbnail</td><td>1–2 KB</td><td>1–1.5 s</td></tr>
+    <tr><td>a reel page, 4 thumbnails</td><td>4 × 530 B</td><td>about 2 s</td></tr>
+    <tr><td>a Specs frame to SD, 212×104 · 1 bit</td><td>2 756 B</td><td>about 2.7 s, in the background</td></tr>
+  </table></div>
+
+  <h2>6. AlphaFriend firmware: Alpha Fairy on ESPIDFORTH</h2>
+  <p>Alpha Fairy is written for Arduino (arduino-esp32, which itself runs on ESP-IDF); there is no ESP-IDF fork of it that we could find. So we fork it for its camera knowledge and port that knowledge onto the stack goggl1 and the maplet already run: ESPIDFORTH on ESP-IDF 5.3, NimBLE NUS console, bundles and OTA. ESPIDFORTH already builds for the plain ESP32 (<code>env:esp32</code>), which is what the Plus SE's PICO-D4 is.</p>
+  <div class="tbl"><table>
+    <tr><th>Alpha Fairy</th><th>Becomes</th><th>When</th></tr>
+    <tr><td><code>libraries/SonyHttpCamera/</code> (~43 KB): JSON-RPC over HTTP, liveview, postview</td><td><code>src/sony_http.c</code> on <code>esp_http_client</code> + cJSON; C words <code>cam-join</code> <code>cam-rpc</code> <code>shoot</code> <code>f!</code> <code>ss!</code> <code>iso!</code> <code>ev!</code></td><td>first: this is the α7R III's path</td></tr>
+    <tr><td><code>AutoConnect.ino</code>, <code>WifiUtils.ino</code>: find and join the camera's AP</td><td>the maplet's <code>net_words.c</code> (Wi-Fi station, NVS), plus an SSID scan for <code>DIRECT-*</code></td><td>first</td></tr>
+    <tr><td><code>libraries/PtpIpCamera/</code> (~85 KB): PTP/IP on port 15740, Sony property decoding</td><td><code>src/ptpip.c</code> on lwIP sockets, behind the same words</td><td>only if PC Remote over Wi-Fi works on this body, or for newer Sonys</td></tr>
+    <tr><td><code>Intervalometer.ino</code>, <code>FocusStack.ino</code>, <code>ShutterStep.ino</code></td><td>Forth words over the C words: <code>seq int</code>, <code>seq brk</code>, focus stacking later</td><td>L5</td></tr>
+    <tr><td>menus, tilt (IMU), Lepton, sound trigger, IR remote</td><td>left behind: the Plus SE has no IMU, and the glasses are the menu</td><td>—</td></tr>
+  </table></div>
+  <ul>
+    <li><b>C for the wire, Forth for the policy.</b> HTTP, JSON, JPEG decode and dithering are C words, the same split as the maplet's <code>cam_words.c</code>. Retries, sequences, what to push and when are Forth, so they change by bundle without a reflash.</li>
+    <li><b>No PSRAM.</b> One liveview JPEG buffer (~40 KB), decoded straight to 80×53 with the TJpgDec that is already in the ESP32's ROM. No frame is ever held whole in RAM.</li>
+    <li><b>The screen.</b> ST7789 135×240 on <code>esp_lcd</code>; the three states in section 4.</li>
+    <li><b>Keep the license.</b> Alpha Fairy is MIT: the fork keeps its notice, and the ported files say where they came from.</li>
+  </ul>
+
+  <h2>7. Phasing</h2>
+  <div class="tbl"><table class="phases">
+    <tr><th>Phase</th><th>Delivers</th><th>Done when</th></tr>
+    <tr><td>L0 Go/no-go</td><td>α7R III firmware ≥ 3.00; from a Mac on the camera AP: <code>getAvailableApiList</code>, shoot, f-stop, one liveview frame; Alpha Fairy on the Plus SE</td><td>The Mac sets f/8 and shoots</td></tr>
+    <tr><td>L1 Proxy</td><td>AlphaFriend on ESPIDFORTH: <code>sony_http.c</code>, NimBLE NUS, the contract, setup screens</td><td>Round trips from the Mac with Wi-Fi up</td></tr>
+    <tr><td>L2 Shot</td><td>Rack (one camera, plus Specs from SwitchbackXR's Viewfinder), Shot view with caps-driven dials</td><td>Shoot from the glasses</td></tr>
+    <tr><td>L3 Peek</td><td><code>lv</code>, <code>lv+</code> row-delta stream, <code>last</code>, <code>pv</code>; AlphaFriend's reel in LittleFS; Peek and Reels views</td><td>Compose a shot through the glasses at 1 fps or better</td></tr>
+    <tr><td>L4 Scout</td><td>Scout firmware (the maplet's camera and SD words on the same contract); <code>roll-put</code> for Specs frames; Rack with N cameras; Sync</td><td>Two cameras fire from one pinch</td></tr>
+    <tr><td>L5 Sequence</td><td>Interval and bracket on the device; BT remote bond as a backup trigger</td><td>A 10-minute interval runs with the glasses off</td></tr>
+  </table></div>
+
+  <h2>8. Open questions</h2>
+  <ol>
+    <li><b>Which API methods does this α7R III list?</b> Some bodies return 40404 for exposure calls. L0 answers it.</li>
+    <li><b>Wi-Fi and Bluetooth on one PICO radio.</b> Liveview over Wi-Fi while serving NUS: measure the round trip when both are busy.</li>
+    <li><b>BT remote while in Ctrl w/ Smartphone?</b> If the camera allows both, AlphaFriend gets a shutter that survives a Wi-Fi drop.</li>
+    <li><b>PC Remote over Wi-Fi on the α7R III?</b> If it works, port <code>PtpIpCamera</code> too: PTP/IP gives more properties and faster liveview than JSON-RPC.</li>
+    <li><b>Can AlphaFriend list the card?</b> The JSON-RPC <code>avContent</code> service (<code>getContentList</code>) needs Contents Transfer mode, which may not coexist with remote shooting. Without it, the α7R III reel holds only the shots AlphaFriend saw.</li>
+  </ol>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  // ---------- scene behind the glass ----------
+  const MOODS = { golden: { sky: ["#3b4a6b", "#f0b47a"], far: "#6b5f6a", near: "#3a3633", trees: "#14130f", trail: "#8a6c50" } };
+  function rng(seed) { let s = seed >>> 0; return () => ((s = (s * 1664525 + 1013904223) >>> 0) / 4294967296); }
+  function ridge(ctx, w, h, base, amp, f1, f2, color) {
+    ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(0, h);
+    for (let x = 0; x <= w; x += 6) ctx.lineTo(x, base + amp * Math.sin(x * f1) + amp * 0.35 * Math.sin(x * f2 + 1.3));
+    ctx.lineTo(w, h); ctx.closePath(); ctx.fill();
+  }
+  function fir(ctx, x, base, ht, color) {
+    ctx.fillStyle = color;
+    for (let k = 0; k < 7; k++) { const t0 = base - ht + k * ht / 8, w = ht * 0.3 * (k + 2) / 8;
+      ctx.beginPath(); ctx.moveTo(x, t0); ctx.lineTo(x - w, t0 + ht / 3.2); ctx.lineTo(x + w, t0 + ht / 3.2); ctx.closePath(); ctx.fill(); }
+  }
+  function paintScene(cv) {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(320, Math.round(r.width * dpr)), h = Math.max(180, Math.round(r.height * dpr));
+    cv.width = w; cv.height = h;
+    const ctx = cv.getContext("2d"), m = MOODS.golden, rnd = rng(5);
+    const g = ctx.createLinearGradient(0, 0, 0, h * 0.62); g.addColorStop(0, m.sky[0]); g.addColorStop(1, m.sky[1]);
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+    const sun = ctx.createRadialGradient(w * .68, h * .5, 0, w * .68, h * .5, h * .35);
+    sun.addColorStop(0, "rgba(255,226,170,.9)"); sun.addColorStop(1, "rgba(255,226,170,0)");
+    ctx.fillStyle = sun; ctx.fillRect(0, 0, w, h);
+    ridge(ctx, w, h, h * 0.52, h * 0.06, 2.6 / w * 3, 9 / w * 3, m.far);
+    ridge(ctx, w, h, h * 0.66, h * 0.05, 1.7 / w * 3, 7 / w * 3, m.near);
+    // tripod with the camera, down-left
+    ctx.strokeStyle = "#0e0d0b"; ctx.lineWidth = Math.max(2, h * .006); ctx.lineCap = "round";
+    const tx = w * .22, ty = h * .74;
+    [[-.05, .26], [0, .27], [.05, .26]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx + dx * w, ty + dy * h); ctx.stroke(); });
+    ctx.fillStyle = "#0e0d0b"; ctx.fillRect(tx - w * .03, ty - h * .055, w * .06, h * .05); ctx.fillRect(tx + w * .02, ty - h * .045, w * .025, h * .03);
+    for (let i = 0; i < 8; i++) { const left = i % 2 === 0, x = left ? rnd() * w * 0.16 : w * 0.82 + rnd() * w * 0.18;
+      fir(ctx, x, h * (0.74 + rnd() * 0.3), h * (0.35 + rnd() * 0.45), m.trees); }
+  }
+
+  // ---------- tiny camera frames ----------
+  // luminance of a little landscape; pan moves the camera a touch between refreshes
+  function frameLum(seed, W, H, pan, gain) {
+    const r = rng(seed), lum = new Float32Array(W * H), sunX = (0.66 + pan * 0.004) * W, sunY = H * 0.42;
+    const trees = []; for (let t = 0; t < 4; t++) trees.push([r() * W, H * (0.75 + r() * 0.3), H * (0.35 + r() * 0.5)]);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const xx = x + pan * 0.6;
+      const horizon = H * (0.5 + 0.1 * Math.sin(xx / W * 5 + seed) + 0.04 * Math.sin(xx / W * 17 + seed * 2));
+      let v;
+      if (y < horizon) { const d = Math.hypot(x - sunX, y - sunY) / H; v = 0.35 + 0.25 * (y / horizon) + 0.7 * Math.exp(-d * d * 18); }
+      else v = 0.1 * Math.exp(-(y - horizon) / (H * .25)) + 0.04;
+      lum[y * W + x] = v;
+    }
+    for (const [tx0, base, ht] of trees) { const tx = tx0 - pan * 0.6;
+      for (let y = Math.max(0, Math.floor(base - ht)); y < Math.min(H, base); y++) {
+        const half = (y - (base - ht)) / ht * ht * 0.18;
+        for (let x = Math.max(0, Math.floor(tx - half)); x < Math.min(W, tx + half); x++) lum[y * W + x] = 0.02;
+      } }
+    for (let i = 0; i < lum.length; i++) lum[i] = Math.min(1.2, lum[i] * gain);
+    return lum;
+  }
+  function hexRGB(h) { return [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]; }
+  // Floyd-Steinberg (stills) or 4x4 Bayer (stream: stable from frame to frame, so row deltas stay small)
+  // to 1 or 2 bits, tinted; black stays black (clear glass). Returns the quantized levels.
+  const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+  function ditherTo(cv, lum, W, H, bits, tint, bayer) {
+    cv.width = W; cv.height = H;
+    const ctx = cv.getContext("2d"), img = ctx.createImageData(W, H), d = img.data, e = lum.slice(), levels = bits === 2 ? 3 : 1, c = hexRGB(tint);
+    const out = new Uint8Array(W * H);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const i = y * W + x;
+      let lv;
+      if (bayer) lv = Math.max(0, Math.min(levels, Math.floor(e[i] * levels + BAYER[(y & 3) * 4 + (x & 3)] / 16)));
+      else {
+        lv = Math.max(0, Math.min(levels, Math.round(e[i] * levels)));
+        const err = e[i] - lv / levels;
+        if (x + 1 < W) e[i + 1] += err * 7 / 16;
+        if (y + 1 < H) { if (x > 0) e[i + W - 1] += err * 3 / 16; e[i + W] += err * 5 / 16; if (x + 1 < W) e[i + W + 1] += err / 16; }
+      }
+      out[i] = lv; const q = lv / levels, o = i * 4;
+      d[o] = c[0] * q; d[o + 1] = c[1] * q; d[o + 2] = c[2] * q; d[o + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    return out;
+  }
+
+  // ---------- cameras ----------
+  const F = [1.4, 2, 2.8, 4, 5.6, 8, 11, 16, 22];
+  const SS = ["1/8000","1/4000","1/2000","1/1000","1/500","1/250","1/125","1/60","1/30","1/15","1/8","1/4","1/2","1\""];
+  const ISO = [100, 200, 400, 800, 1600, 3200, 6400];
+  const EV = [-9,-8,-7,-6,-5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9];
+  const RES = ["QQVGA","QVGA","VGA","SVGA","XGA","UXGA"];
+  const QUAL = ["low","mid","high"];
+  const FLASH = ["off","on"];
+  const STY = ["1-bit grain","1-bit screen","2-bit"];          // Floyd-Steinberg, Bayer, 2-bit FS
+  const FR = [["maplet", 212, 104], ["3:2", 120, 80], ["square", 96, 96]];
+  const sec = (s) => s.endsWith("\"") ? parseFloat(s) : 1 / parseFloat(s.split("/")[1]);
+  const evFmt = (t) => (t === 0 ? "±0" : (t > 0 ? "+" : "−") + (Math.abs(t) / 3).toFixed(1));
+  const CAMS = [
+    { id: "a7r3", name: "α7R III", kind: "Sony · via AlphaFriend", tint: "#f3f4f1", seed: 3, via: "AlphaFriend · Wi-Fi DIRECT-Q1",
+      dials: [["f", "f-stop", F, 5, (v) => "f/" + v], ["ss", "shutter", SS, 5, (v) => v], ["iso", "ISO", ISO, 0, (v) => String(v)], ["ev", "EV", EV, 9, evFmt]],
+      af: true, rec: true, lv: [80, 53, 1], meter: true, rssi: -52, bat: 64, left: 1204, mode: "M", shots: 0 },
+    { id: "scout", name: "Scout", kind: "ESP32-CAM · direct", tint: "#78b7d4", seed: 11, via: "direct BLE · OV2640",
+      dials: [["res", "size", RES, 5, (v) => v], ["q", "quality", QUAL, 2, (v) => v], ["fl", "flash", FLASH, 0, (v) => v]],
+      af: false, rec: false, lv: [96, 72, 2], meter: false, rssi: -67, bat: null, left: "SD 3.1 GB", mode: "auto", shots: 0 },
+    { id: "maplet", name: "maplet", kind: "S3 Sense · e-paper", tint: "#f2a33a", seed: 21, via: "direct BLE · OV5640",
+      dials: [], af: false, rec: false, lv: null, meter: false, rssi: -61, bat: 81, left: "roll 07 · 12", mode: "1-bit", shots: 0 },
+    { id: "specs", name: "Specs", kind: "the glasses’ camera", tint: "#c9b3f0", seed: 31, via: "on the lens · no link", local: true,
+      dials: [["sty", "style", STY, 0, (v) => v], ["fr", "frame", FR, 0, (v) => v[0] + " " + v[1] + "×" + v[2]]],
+      af: false, rec: false, lv: [212, 104, 1], meter: false, rssi: null, bat: null, left: "to the Scout’s SD", mode: "stylized", shots: 0 },
+  ];
+  // how far back each camera's stored reel goes (frames on SD or in AlphaFriend's flash)
+  const ROLL = { a7r3: 342, scout: 1284, maplet: 212, specs: 37 };
+  const STORE = { a7r3: "AlphaFriend flash", scout: "Scout SD", maplet: "maplet SD", specs: "lens + Scout SD" };
+  const camById = (id) => CAMS.find((k) => k.id === id);
+  // the frame a camera makes: Specs follows its style and frame dials
+  function lvOf(c) {
+    if (c.id !== "specs") return c.lv;
+    const f = FR[c.v.fr]; return [f[1], f[2], c.v.sty === 2 ? 2 : 1];
+  }
+  const bayerOf = (c, stream) => c.id === "specs" ? c.v.sty === 1 : !!stream;
+  CAMS.forEach((c) => { c.v = {}; c.dials.forEach((d) => { c.v[d[0]] = d[3]; }); });
+  const SCENE_EV = 12; // golden hour
+
+  const S = { view: "shot", cam: 0, pan: 0, af: false, rec: false, recT: 0, peekMode: "stream", thirds: true, peekAge: 0, frameT: 3, prev: null, pv: null,
+    sheet: [], sel: 0, page: {}, seqMode: "int", seqRun: false, seqNext: 10, seqDone: 0, seqWho: { a7r3: true, scout: true, maplet: false, specs: true } };
+  const cam = () => CAMS[S.cam];
+
+  function exposureOffset(c) {
+    if (!c.meter) return 0;
+    const N = F[c.v.f], t = sec(SS[c.v.ss]), iso = ISO[c.v.iso];
+    const settingEV = Math.log2(N * N / t) - Math.log2(iso / 100);
+    return SCENE_EV - settingEV + EV[c.v.ev] / 3; // + is over-exposed
+  }
+  function camGain(c) { return Math.pow(2, Math.max(-4, Math.min(4, exposureOffset(c)))); }
+  function camLum(c, W, H) { return frameLum(c.seed, W, H, S.pan + c.seed, camGain(c)); }
+  // Time to move b bytes as base64 lines at ~1.4 KB/s, plus ~80 ms per frame of line overhead
+  const bleSecs = (b) => (b * 4 / 3) / 1400 + 0.08;
+
+  // ---------- rendering ----------
+  const $ = (id) => document.getElementById(id);
+  const VIEWS = [["rack", "Rack"], ["shot", "Shot"], ["peek", "Peek"], ["sheet", "Reels"], ["seq", "Sequence"]];
+  function chip(label, act, on, extra) {
+    return '<button class="gchip' + (on ? " on" : "") + '" data-act="' + act + '"' + (extra || "") + '><span>' + label + "</span></button>";
+  }
+  function renderTop() {
+    $("tabs").innerHTML = VIEWS.map(([k, l]) => chip(l, "view:" + k, S.view === k, ' role="tab" aria-selected="' + (S.view === k) + '"')).join("");
+    const c = cam();
+    $("camchips").style.color = c.tint;
+    $("camchips").innerHTML = '<span class="gchip static">● ' + c.name + " · " + (c.local ? "on the lens" : c.rssi + " dBm") + "</span>" +
+      (S.rec ? '<span class="gchip static recdot">● REC ' + fmtT(S.recT) + "</span>" : "") +
+      (S.seqRun ? '<span class="gchip static" style="color:var(--g-hivis)">' + seqLabel() + " · next " + S.seqNext + " s</span>" : "");
+  }
+  function fmtT(t) { return String(Math.floor(t / 60)).padStart(2, "0") + ":" + String(t % 60).padStart(2, "0"); }
+
+  function renderRack() {
+    let h = '<div class="rack">';
+    CAMS.forEach((c, i) => {
+      h += '<button class="card' + (i === S.cam ? " on" : "") + '" style="color:' + c.tint + '" data-act="cam:' + i + '" aria-pressed="' + (i === S.cam) + '">' +
+        '<canvas data-thumb="' + i + '"></canvas><div class="nm">' + c.name + '</div><div class="k">' + c.kind + '</div><div class="st">' +
+        (c.local ? "● no link needed<br>glasses battery<br>" : "● link " + c.rssi + " dBm<br>" + (c.bat == null ? "USB power" : "battery " + c.bat + " %") + "<br>") +
+        (typeof c.left === "number" ? c.left.toLocaleString() + " shots left" : c.left) + "<br>" + (c.local ? "peek local, live" : c.lv ? "peek " + c.lv[0] + "×" + c.lv[1] : "no liveview") + "</div></button>";
+    });
+    h += '<button class="card add" data-act="add"><div class="nm">+ Add camera</div><div class="st">Scan for an AlphaFriend or a camera that speaks NUS. 3 links of the 3–4 the glasses hold; Specs needs none.</div></button></div>';
+    h += '<div class="hint">Pinch a card to make it the active camera · only the active camera peeks; the rest report every 5 s</div>';
+    $("view").innerHTML = h;
+    document.querySelectorAll("canvas[data-thumb]").forEach((cv) => {
+      const c = CAMS[+cv.dataset.thumb], W = 80, H = 53;
+      ditherTo(cv, camLum(c, W, H), W, H, c.lv ? lvOf(c)[2] : 1, c.tint, bayerOf(c));
+    });
+  }
+
+  function renderShot() {
+    const c = cam();
+    let h = '<div class="dials">';
+    if (!c.dials.length) h += '<div class="m" style="font-size:1.5cqw;color:' + c.tint + ';max-width:44cqw;line-height:1.6">The maplet has a shutter and nothing else. Its frames go to the card and the Sheet, and its e-paper shows the last one.</div>';
+    c.dials.forEach(([k, label, list, , fmt]) => {
+      const i = c.v[k];
+      let tape = "";
+      for (let j = i - 2; j <= i + 2; j++) tape += j >= 0 && j < list.length ? "<span" + (j === i ? ' class="cur"' : "") + ">" + fmt(list[j]) + "</span>" : "<span style=\"visibility:hidden\">·</span>";
+      h += '<div class="dial" style="color:' + c.tint + '"><div class="lb">' + label + '</div><button class="step" data-act="dial:' + k + ':-1" aria-label="' + label + ' down"' + (i <= 0 ? " disabled" : "") + '>‹</button><div class="tape">' + tape + '</div><button class="step" data-act="dial:' + k + ':1" aria-label="' + label + ' up"' + (i >= list.length - 1 ? " disabled" : "") + ">›</button></div>";
+    });
+    h += "</div>";
+    if (c.meter) h += '<div class="meter"><div class="lb"><span>METER · M · scene EV ' + SCENE_EV + '</span><span id="meterv"></span></div><svg viewBox="0 0 540 40" id="meter"></svg></div>';
+    h += '<div class="shotinfo" style="color:' + c.tint + '"><b>' + c.name + "</b>" + c.mode + " · " + (typeof c.left === "number" ? c.left.toLocaleString() + " left" : c.left) + "<br>" + c.shots + " shot" + (c.shots === 1 ? "" : "s") + " this session</div>";
+    h += '<div class="shootbox"><button class="shutter" data-act="shoot" aria-label="Shoot"><i>SHOOT</i></button><div class="chips" style="color:var(--g-hivis)">' +
+      (c.af ? chip(S.af ? "AF ● locked" : "AF half-press", "af", S.af) : "") +
+      (c.rec ? '<span style="color:var(--g-glow)">' + chip(S.rec ? "■ stop" : "● REC", "rec", S.rec) + "</span>" : "") + "</div></div>";
+    h += '<div class="hint">' + (c.local ? "SHOOT crops the lens camera to a head-locked target and dithers it like the maplet · then roll-put to the Scout’s SD, about 2.7 s" : "Pinch a dial’s arrows, or pinch and drag the tape · each change is one line, about 100 ms") + "</div>";
+    $("view").innerHTML = h;
+    if (c.meter) drawMeter(c);
+  }
+  function drawMeter(c) {
+    const off = exposureOffset(c), cl = Math.max(-3, Math.min(3, off)), x = (v) => 20 + (v + 3) / 6 * 500;
+    let s = "";
+    for (let t = -9; t <= 9; t++) { const v = t / 3, big = t % 3 === 0;
+      s += '<line x1="' + x(v) + '" x2="' + x(v) + '" y1="' + (big ? 6 : 11) + '" y2="20" stroke="#7fc8a3" stroke-width="' + (big ? 2 : 1) + '" opacity="' + (big ? .9 : .5) + '"/>';
+      if (big) s += '<text x="' + x(v) + '" y="36" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="#7fc8a3">' + (v > 0 ? "+" + v : v) + "</text>"; }
+    const col = Math.abs(off) > 3 ? "#f08a62" : "#ffd23f";
+    s += '<path d="M' + x(cl) + ' 22 l-7 -14 h14 z" fill="' + col + '"/>';
+    $("meter").innerHTML = s;
+    $("meterv").textContent = (off >= 0 ? "+" : "−") + Math.abs(off).toFixed(1) + " EV" + (Math.abs(off) > 3 ? " · off scale" : Math.abs(off) < 0.35 ? " · on the money" : off > 0 ? " · over" : " · under");
+  }
+
+  function renderPeek() {
+    const c = cam();
+    if (!c.lv) {
+      $("view").innerHTML = '<div class="peekframe" style="color:' + c.tint + '"><div class="pf"><canvas id="pk"></canvas></div><div class="pc"><span>The maplet has no liveview. This is its last frame, 212×104, from the roll.</span></div></div>' +
+        '<div class="hint">Switch to the α7R III or the Scout on the Rack to peek</div>';
+      const W = 212, H = 104; ditherTo($("pk"), frameLum(c.seed, W, H, 0, 1), W, H, 1, c.tint); return;
+    }
+    const [W, H, bits] = lvOf(c);
+    let h = '<div class="peekframe" style="color:' + c.tint + '"><div class="pf"><canvas id="pk"></canvas><svg class="ov" viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" id="ov"></svg></div>' +
+      '<div class="pc"><span id="pstat"></span><span id="age">fresh</span></div><div class="bar"><i id="pbar"></i></div></div>';
+    h += '<div class="peekside" style="color:' + c.tint + '"><div><div class="lb">' + c.name + '</div><div class="big">' + (c.meter ? "f/" + F[c.v.f] + " · " + SS[c.v.ss] + "<br>ISO " + ISO[c.v.iso] + " · " + evFmt(EV[c.v.ev]) : c.local ? STY[c.v.sty] + "<br>" + FR[c.v.fr][0] + " " + W + "×" + H : RES[c.v.res] + " · " + QUAL[c.v.q]) + "</div></div>" +
+      '<div><div class="lb">histogram · from the peek</div><svg viewBox="0 0 100 34" id="hist" preserveAspectRatio="none"></svg></div>' +
+      (c.local ? "" : '<div class="chips" style="color:var(--g-moss)">' + chip("Stream", "pmode:stream", S.peekMode === "stream") + chip("every 3 s", "pmode:auto", S.peekMode === "auto") + chip("on tap", "pmode:tap", S.peekMode === "tap") + "</div>") +
+      '<div class="chips" style="color:var(--g-moss)">' + chip("Peek now", "peek") + chip("thirds", "thirds", S.thirds) + "</div>" +
+      '<div class="chips" style="color:var(--g-hivis)">' + chip("Shoot", "shoot") + (c.af ? chip(S.af ? "AF ● locked" : "AF", "af", S.af) : "") + "</div></div>";
+    h += '<div class="hint">' + (c.local ? "The lens’s own camera, cropped and dithered on the glasses · nothing crosses Bluetooth until a frame goes to the card" : "The StickC decodes liveview at 1/8 scale and dithers it. In Stream it pushes only the rows that changed, as fast as Bluetooth allows") + "</div>";
+    $("view").innerHTML = h;
+    S.prev = null;
+    drawPeek();
+  }
+  function drawPeek() {
+    const c = cam(); if (!c.lv || !$("pk")) return;
+    const [W, H, bits] = lvOf(c), lum = camLum(c, W, H), stream = c.local || S.peekMode === "stream";
+    const q = ditherTo($("pk"), lum, W, H, bits, c.tint, bayerOf(c, stream));
+    const rowB = Math.ceil(W * bits / 8), full = rowB * H;
+    let rows = H;
+    if (stream && S.prev && S.prev.length === q.length) {
+      rows = 0;
+      for (let y = 0; y < H; y++) { for (let x = 0; x < W; x++) if (q[y * W + x] !== S.prev[y * W + x]) { rows++; break; } }
+    }
+    const sent = rows === H ? full : rows * (rowB + 1);
+    S.prev = q; S.frameT = c.local ? 0.2 : stream ? Math.max(0.25, bleSecs(sent)) : 3;
+    const st = $("pstat");
+    if (st) st.textContent = c.local ? "on the lens · " + W + "×" + H + " · " + bits + " bit · no Bluetooth · live" : stream
+      ? "stream · " + (1 / S.frameT).toFixed(1) + " fps · " + rows + " of " + H + " rows changed · " + sent.toLocaleString() + " B"
+      : W + "×" + H + " · " + bits + " bit · " + full.toLocaleString() + " B · ≈" + bleSecs(full).toFixed(1) + " s over BLE";
+    let o = "";
+    const stroke = c.tint;
+    if (S.thirds) for (let k = 1; k < 3; k++) o += '<line x1="' + W * k / 3 + '" x2="' + W * k / 3 + '" y1="0" y2="' + H + '" stroke="' + stroke + '" stroke-width=".25" opacity=".55"/><line y1="' + H * k / 3 + '" y2="' + H * k / 3 + '" x1="0" x2="' + W + '" stroke="' + stroke + '" stroke-width=".25" opacity=".55"/>';
+    if (c.af) { const fx = W * .62, fy = H * .5, s = W * .06, col = S.af ? "#7fc8a3" : "#ffd23f";
+      [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => { o += '<path d="M' + (fx + a * s) + " " + (fy + b * s * .6 - b * s * .35) + " V" + (fy + b * s * .6) + " H" + (fx + a * s - a * s * .35) + '" fill="none" stroke="' + col + '" stroke-width=".5"/>'; }); }
+    $("ov").innerHTML = o;
+    // histogram of the undithered peek
+    const bins = new Array(20).fill(0); for (const v of lum) bins[Math.min(19, Math.floor(Math.min(1, v) * 20))]++;
+    const mx = Math.max(...bins); let hs = "";
+    bins.forEach((b, i) => { const hh = b / mx * 30; hs += '<rect x="' + (i * 5 + .5) + '" y="' + (32 - hh) + '" width="4" height="' + hh + '" fill="' + c.tint + '" opacity="' + (i === 19 && b > 0 ? 1 : .7) + '"/>'; });
+    hs += '<line x1="0" x2="100" y1="32.5" y2="32.5" stroke="#7fc8a3" stroke-width=".5"/>';
+    $("hist").innerHTML = hs;
+    S.peekAge = 0;
+  }
+
+  const PAGE = 4;
+  function renderSheet() {
+    if (!S.sheet.length) seedSheet();
+    S.sel = Math.min(S.sel, S.sheet.length - 1);
+    const s = S.sheet[S.sel], c = camById(s.cam);
+    const pvOn = S.pv && S.pv.i === S.sel, canBig = !!c.lv && !c.local;
+    let h = '<div class="sheet"><div class="sel" style="color:' + c.tint + '"><canvas id="selc"></canvas><div class="pc"><b>' + c.name + " · #" + s.n + "</b>" + s.set + " · " + s.at +
+      '<br><span id="pvst">' + (s.big ? "240×160 · 2 bit · 9.6 KB, all four passes in" : (c.local ? "stylized frame " : c.id === "maplet" ? "roll frame " : "postview ") + s.w + "×" + s.h) + "</span></div>" +
+      '<div class="acts">' + (s.big || pvOn || !canBig ? "" : chip("Bigger", "pv")) + chip("To maplet", "toast:Sent to the maplet: 296×128, about 4 s") +
+      (c.local || c.id === "maplet" ? "" : chip("Keep", "toast:Kept: the original stays on the card")) + '</div></div><div class="reels">';
+    CAMS.forEach((rc) => {
+      const mine = []; S.sheet.forEach((f, i) => { if (f.cam === rc.id) mine.push(i); });
+      const pg = S.page[rc.id] || 0, show = mine.slice(pg * PAGE, pg * PAGE + PAGE), total = ROLL[rc.id] + rc.shots;
+      const oldest = mine.length ? S.sheet[mine[mine.length - 1]].n : total + 1;
+      h += '<div class="reel" style="color:' + rc.tint + '"><div class="rh"><b>' + rc.name + "</b><span>" + STORE[rc.id] + " · " + total.toLocaleString() + " frames</span></div><div class=\"strip\">";
+      show.forEach((i) => { const f = S.sheet[i];
+        h += '<button class="thumb' + (i === S.sel ? " on" : "") + '" data-act="sel:' + i + '"><canvas data-sh="' + i + '"></canvas><span>#' + f.n + " · " + f.at + "</span></button>"; });
+      if (!show.length) h += '<span class="m" style="font-size:1.1cqw;opacity:.7">nothing yet</span>';
+      h += '<span class="pg">' + (pg > 0 ? chip("‹ newer", "pg:" + rc.id + ":-1") : "") + (oldest > 1 ? chip("older ›", "pg:" + rc.id + ":1") : "") + "</span></div></div>";
+    });
+    h += '</div></div><div class="hint" id="toast">One reel per camera, newest first · older pages come from each card, 4 thumbnails a page, about 2 s</div>';
+    $("view").innerHTML = h;
+    if (s.big) paintPass($("selc"), s, 3); else if (pvOn && S.pv.pass >= 0) paintPass($("selc"), s, S.pv.pass); else paintShot($("selc"), s);
+    document.querySelectorAll("canvas[data-sh]").forEach((cv) => paintShot(cv, S.sheet[+cv.dataset.sh]));
+  }
+  function paintShot(cv, s) { ditherTo(cv, s.lum, s.w, s.h, s.bits, camById(s.cam).tint, s.bayer); }
+  // progressive postview: four passes, each doubling the resolution, 240x160 at 2 bits when done
+  const PASSES = [[30, 20], [60, 40], [120, 80], [240, 160]];
+  // interlaced: each pass sends only the pixels the last one lacked, so pass k is in once W*H*2/8 bytes have arrived
+  const passAt = PASSES.map(([w, h]) => bleSecs(w * h * 2 / 8));
+  function paintPass(cv, s, k) {
+    const [W, H] = PASSES[k];
+    ditherTo(cv, frameLum(s.seed, W, H, s.pan, s.gain), W, H, 2, camById(s.cam).tint);
+  }
+  function settingsOf(c) {
+    if (c.meter) return "f/" + F[c.v.f] + " · " + SS[c.v.ss] + " · ISO " + ISO[c.v.iso] + " · " + evFmt(EV[c.v.ev]);
+    if (c.local) return STY[c.v.sty] + " · " + FR[c.v.fr][0];
+    if (c.dials.length) return RES[c.v.res] + " · " + QUAL[c.v.q] + " · flash " + FLASH[c.v.fl];
+    return "1-bit · roll 07";
+  }
+  // one frame as the camera stores it; the maplet's roll frames are 106x52 halves of its panel
+  function frameOf(c, n, at, pan) {
+    const lv = c.lv ? lvOf(c) : [106, 52, 1], [W, H, bits] = lv;
+    return { cam: c.id, n, lum: frameLum(c.seed, W, H, pan, camGain(c)), w: W, h: H, bits, bayer: bayerOf(c), set: settingsOf(c), at,
+      seed: c.seed, pan, gain: camGain(c), big: false };
+  }
+  function snapOf(c, at) {
+    c.shots++; if (typeof c.left === "number") c.left--;
+    return frameOf(c, ROLL[c.id] + c.shots, at, S.pan + c.seed);
+  }
+  function clock(offsetMin) { const d = new Date(2026, 10, 3, 17, 42 + offsetMin);
+    const t = String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0");
+    return d.getDate() === 3 ? t : (d.getMonth() + 1) + "/" + d.getDate() + " " + t; }
+  function seedSheet() {
+    // the last few frames each camera had stored when the glasses linked
+    const plan = [["specs", -11, 3], ["scout", -9, 4], ["a7r3", -7, 8], ["a7r3", -5, 2], ["maplet", -4, 0], ["specs", -3, 9], ["scout", -2, 6], ["a7r3", -1, 14]];
+    const seen = {};
+    plan.reverse().forEach(([id, t, p]) => { const c = camById(id); seen[id] = (seen[id] || 0);
+      S.sheet.push(frameOf(c, ROLL[id] - seen[id]++, clock(t), p + c.seed)); });
+  }
+  // "older": the next page comes from the card (roll-th); make it if the lens hasn't cached it yet
+  function pageOlder(c) {
+    const mine = S.sheet.filter((f) => f.cam === c.id), pg = (S.page[c.id] || 0) + 1;
+    let oldest = mine.length ? mine[mine.length - 1] : null;
+    const r = rng(c.seed * 97 + pg);
+    while (mine.length < (pg + 1) * PAGE && (!oldest || oldest.n > 1)) {
+      const n = oldest ? oldest.n - 1 : ROLL[c.id] + c.shots, back = (ROLL[c.id] + c.shots - n) * (c.id === "specs" ? 40 : 25) + 12;
+      const f = frameOf(c, n, clock(-back), Math.floor(r() * 30) + c.seed);
+      S.sheet.push(f); mine.push(f); oldest = f;
+    }
+    S.page[c.id] = pg;
+  }
+
+  function seqLabel() { return S.seqMode === "int" ? "interval" : S.seqMode === "brk" ? "bracket" : "sync"; }
+  function renderSeq() {
+    const modes = '<div class="chips modes">' + chip("Interval", "seq:int", S.seqMode === "int") + chip("Bracket", "seq:brk", S.seqMode === "brk") + chip("Sync fire", "seq:sync", S.seqMode === "sync") + "</div>";
+    let plan = "", tl = "";
+    if (S.seqMode === "int") {
+      plan = '<div class="disp">every 10 s × 120</div><div class="m">20 minutes · α7R III at f/' + F[CAMS[0].v.f] + " " + SS[CAMS[0].v.ss] + "<br>runs on AlphaFriend; the glasses can sleep</div>";
+      for (let i = 0; i <= 40; i++) { const x = 10 + i * 24.5, done = i < S.seqDone;
+        tl += '<line x1="' + x + '" x2="' + x + '" y1="' + (i % 6 === 0 ? 4 : 10) + '" y2="26" stroke="' + (done ? "#ffd23f" : "#7fc8a3") + '" stroke-width="' + (done ? 2.5 : 1.2) + '" opacity="' + (done ? 1 : .55) + '"/>'; }
+      tl += '<text x="10" y="40" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7fc8a3">0:00</text><text x="990" y="40" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7fc8a3">6:40 of 20:00</text>';
+    } else if (S.seqMode === "brk") {
+      plan = '<div class="disp">3 frames · ±1 EV</div><div class="m">−1.0, ±0, +1.0 around ' + "f/" + F[CAMS[0].v.f] + " " + SS[CAMS[0].v.ss] + "<br>ev! between frames, about 250 ms each</div>";
+      [-1, 0, 1].forEach((e, i) => { const x = 180 + i * 320, done = i < S.seqDone;
+        tl += '<rect x="' + (x - 70) + '" y="2" width="140" height="26" rx="13" fill="none" stroke="' + (done ? "#ffd23f" : "#7fc8a3") + '" stroke-width="' + (done ? 2.5 : 1.2) + '"/><text x="' + x + '" y="20" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="13" fill="' + (done ? "#ffd23f" : "#7fc8a3") + '">' + (e > 0 ? "+1.0" : e < 0 ? "−1.0" : "±0") + " EV</text>"; });
+    } else {
+      const n = Object.values(S.seqWho).filter(Boolean).length;
+      plan = '<div class="disp">' + n + " camera" + (n === 1 ? "" : "s") + ' · one pinch</div><div class="m">one <code style="background:none;padding:0">shoot</code> per link, in turn<br>skew ≈ one BLE write, 40–100 ms; arm/fire later</div>';
+      CAMS.forEach((c, i) => { const x = 60 + i * 60; if (!S.seqWho[c.id]) return;
+        tl += '<line x1="' + x + '" x2="' + x + '" y1="2" y2="26" stroke="' + c.tint + '" stroke-width="3"/><text x="' + (x + 6) + '" y="40" font-family="IBM Plex Mono, monospace" font-size="11" fill="' + c.tint + '">' + c.name + "</text>"; });
+      tl += '<line x1="40" x2="990" y1="26" y2="26" stroke="#7fc8a3" stroke-width="1" opacity=".5"/><text x="990" y="20" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="11" fill="#7fc8a3">60 ms per tick</text>';
+    }
+    let who = "";
+    if (S.seqMode === "sync") who = '<div class="who">' + CAMS.map((c) => '<span style="color:' + c.tint + '">' + chip((S.seqWho[c.id] ? "✓ " : "") + c.name, "who:" + c.id, S.seqWho[c.id]) + "</span>").join("") + "</div>";
+    const go = S.seqMode === "sync" ? chip("Fire all", "fire") : chip(S.seqRun ? "■ Stop" : "▶ Start", "seqgo", S.seqRun);
+    $("view").innerHTML = '<div class="seq">' + modes + '<div class="plan">' + plan + '</div><svg class="tl" viewBox="0 0 1000 44">' + tl + "</svg>" +
+      '<div class="who">' + who + '<span class="go">' + go + "</span>" + (S.seqRun ? '<span class="m" style="color:var(--g-hivis)">' + S.seqDone + " done · next in " + S.seqNext + " s</span>" : "") + "</div></div>" +
+      '<div class="hint">Sequences run on the camera’s device, so a dropped link doesn’t stop them</div>';
+  }
+
+  function render() {
+    renderTop();
+    ({ rack: renderRack, shot: renderShot, peek: renderPeek, sheet: renderSheet, seq: renderSeq })[S.view]();
+    $("cap").textContent = "LightScopeXR · " + VIEWS.find((v) => v[0] === S.view)[1] + " · " + cam().name + " · click anything with an outline";
+  }
+
+  function shoot(c, quiet) {
+    c = c || cam();
+    S.pan += 1;
+    S.sheet.unshift(snapOf(c, clock(0))); S.sel = 0; S.page[c.id] = 0;
+    if (!quiet) { const f = $("flash"); f.classList.remove("go"); void f.offsetWidth; f.classList.add("go"); }
+  }
+
+  $("hud").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-act]"); if (!b || b.disabled) return;
+    const [a, x, y] = b.dataset.act.split(":");
+    const c = cam();
+    if (a === "view") S.view = x;
+    else if (a === "cam") { S.cam = +x; S.af = false; if (!cam().rec) S.rec = false; }
+    else if (a === "add") { b.querySelector(".st").textContent = "Scanning… found nothing new nearby. Hold the big button on an AlphaFriend to advertise."; return; }
+    else if (a === "dial") { const d = c.dials.find((k) => k[0] === x); c.v[x] = Math.max(0, Math.min(d[2].length - 1, c.v[x] + +y)); }
+    else if (a === "shoot") { shoot(); }
+    else if (a === "af") S.af = !S.af;
+    else if (a === "rec") { S.rec = !S.rec; S.recT = 0; }
+    else if (a === "peek") { S.pan += 1; drawPeek(); return; }
+    else if (a === "pmode") { S.peekMode = x; S.prev = null; }
+    else if (a === "pv") S.pv = { i: S.sel, t: 0, pass: -1 };
+    else if (a === "thirds") S.thirds = !S.thirds;
+    else if (a === "sel") S.sel = +x;
+    else if (a === "pg") { const pc = camById(x); if (+y > 0) pageOlder(pc); else S.page[x] = Math.max(0, (S.page[x] || 0) - 1);
+      const first = S.sheet.findIndex((f, i) => f.cam === x && S.sheet.slice(0, i).filter((g) => g.cam === x).length === S.page[x] * PAGE);
+      if (first >= 0) S.sel = first; }
+    else if (a === "toast") { $("toast").textContent = b.dataset.act.slice(6); return; }
+    else if (a === "seq") { S.seqMode = x; S.seqRun = false; S.seqDone = 0; }
+    else if (a === "who") S.seqWho[x] = !S.seqWho[x];
+    else if (a === "seqgo") { S.seqRun = !S.seqRun; S.seqDone = 0; S.seqNext = S.seqMode === "int" ? 3 : 1; }
+    else if (a === "fire") { CAMS.forEach((k) => { if (S.seqWho[k.id]) shoot(k, true); });
+      const f = $("flash"); f.classList.remove("go"); void f.offsetWidth; f.classList.add("go"); }
+    render();
+  });
+
+  // ticks: peek auto-refresh, record timer, sequences
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let tick = 0;
+  setInterval(() => {
+    tick++;
+    if (S.view === "peek" && cam().lv) {
+      S.peekAge += 0.1;
+      const bar = $("pbar"), age = $("age");
+      if (bar) bar.style.width = S.peekMode === "tap" && !cam().local ? "0%" : Math.min(100, S.peekAge / S.frameT * 100) + "%";
+      if (age) age.textContent = S.peekAge < 0.2 ? "fresh" : S.peekAge.toFixed(1) + " s old";
+      if ((S.peekMode === "stream" || cam().local) && S.peekAge >= S.frameT) { S.pan += reduce ? 0 : (cam().local ? 0.15 : 0.35); drawPeek(); }
+      if (S.peekMode === "auto" && !cam().local && S.peekAge >= 3) { S.pan += reduce ? 0 : 1; drawPeek(); }
+    }
+    if (S.pv) {
+      S.pv.t += 0.1;
+      const s = S.sheet[S.pv.i], k = passAt.filter((t) => S.pv.t >= t).length - 1;
+      if (!s) S.pv = null;
+      else if (k > S.pv.pass) {
+        S.pv.pass = k;
+        if (k === 3) { s.big = true; S.pv = null; }
+        if (S.view === "sheet") renderSheet();
+      }
+      const st = $("pvst");
+      if (S.pv && st && S.view === "sheet" && S.sel === S.pv.i)
+        st.textContent = "pass " + (S.pv.pass + 1) + " of 4 · " + (S.pv.pass >= 0 ? PASSES[S.pv.pass].join("×") : "—") + " · " + S.pv.t.toFixed(1) + " s of ≈" + passAt[3].toFixed(1) + " s";
+    }
+    if (tick % 10 === 0) {
+      if (S.rec) { S.recT++; renderTop(); }
+      if (S.seqRun) {
+        S.seqNext--;
+        if (S.seqNext <= 0) {
+          const c = CAMS[0];
+          if (S.seqMode === "brk") { const keep = c.v.ev; c.v.ev = Math.max(0, Math.min(EV.length - 1, 9 + (S.seqDone - 1) * 3)); shoot(c, true); c.v.ev = keep; }
+          else shoot(c, true);
+          S.seqDone++; S.seqNext = S.seqMode === "int" ? 3 : 1;
+          if (S.seqMode === "brk" && S.seqDone >= 3) S.seqRun = false;
+          if (S.seqMode === "int" && S.seqDone >= 40) S.seqRun = false;
+        }
+        renderTop(); if (S.view === "seq") renderSeq();
+      }
+    }
+  }, 100);
+
+  // ---------- AlphaFriend screens (135x240 ST7789) ----------
+  function stickScreen(cv, st) {
+    const dpr = 2; cv.width = 135 * dpr; cv.height = 240 * dpr;
+    const x = cv.getContext("2d"); x.scale(dpr, dpr);
+    x.fillStyle = "#000"; x.fillRect(0, 0, 135, 240);
+    x.fillStyle = "#7fc8a3"; x.fillRect(0, 0, 135, 22);
+    x.fillStyle = "#000"; x.font = "700 12px 'Bricolage Grotesque', Arial, sans-serif"; x.fillText("AlphaFriend", 6, 15);
+    x.font = "500 9px 'IBM Plex Mono', monospace"; x.fillText(st.bat, 104, 15);
+    let y = 40;
+    const row = (k, v, col) => { x.fillStyle = "#6b7a72"; x.font = "500 8px 'IBM Plex Mono', monospace"; x.fillText(k, 6, y);
+      x.fillStyle = col || "#f3f4f1"; x.font = "500 10px 'IBM Plex Mono', monospace"; x.fillText(v, 6, y + 12); y += 30; };
+    st.rows.forEach((r) => row(r[0], r[1], r[2]));
+    if (st.big) { x.fillStyle = st.bigCol; x.font = "800 30px 'Bricolage Grotesque', Arial, sans-serif"; x.fillText(st.big, 6, 222); }
+  }
+  function renderStick() {
+    const states = [
+      { cap: "1 · finding the camera", bat: "92%", rows: [["CAMERA AP", "DIRECT-Q1:ILCE…", "#f2a33a"], ["WI-FI", "joining…", "#f2a33a"], ["API", "—", "#6b7a72"], ["GLASSES", "advertising", "#78b7d4"], ["BIG BTN", "re-scan"]], big: "…", bigCol: "#f2a33a" },
+      { cap: "2 · ready", bat: "88%", rows: [["CAMERA", "ILCE-7RM3 · M"], ["WI-FI", "-52 dBm · ok", "#7fc8a3"], ["API", "ready · 31 methods", "#7fc8a3"], ["GLASSES", "● linked", "#7fc8a3"], ["LAST", "f! 80  ok"]], big: "f/8", bigCol: "#f3f4f1" },
+      { cap: "3 · shooting from the glasses", bat: "87%", rows: [["CAMERA", "ILCE-7RM3 · M"], ["SET", "1/250 · ISO 100"], ["LV", "80×53 · 0.5 s", "#78b7d4"], ["GLASSES", "● linked", "#7fc8a3"], ["LAST", "shoot  ok 1205", "#ffd23f"]], big: "1205", bigCol: "#ffd23f" },
+    ];
+    $("stick").innerHTML = states.map((s, i) => '<figure><div class="body"><canvas id="st' + i + '" aria-label="AlphaFriend screen: ' + s.cap + '"></canvas></div><figcaption>' + s.cap + "</figcaption></figure>").join("");
+    states.forEach((s, i) => stickScreen($("st" + i), s));
+  }
+
+  function init() {
+    document.querySelectorAll("canvas.scene").forEach(paintScene);
+    seedSheet(); render(); renderStick();
+  }
+  init();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderStick);
+  let t; window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => document.querySelectorAll("canvas.scene").forEach(paintScene), 150); });
+})();
+</script>
