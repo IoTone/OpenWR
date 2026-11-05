@@ -23,6 +23,7 @@
 #include "forth_core.h"
 #include "console.h"
 #include "scout_net.h"
+#include "scout_wdog.h"
 
 static const char *TAG = "net";
 #define NS "scout"
@@ -136,6 +137,7 @@ void scout_net_init(void)
 }
 
 bool scout_net_up(void) { return s_up; }
+bool scout_net_configured(void) { return s_started; }
 
 /* ---- web server --------------------------------------------------------- */
 
@@ -166,6 +168,7 @@ static camera_fb_t *fresh(void)
     camera_fb_t *fb = esp_camera_fb_get();
     if (fb) { esp_camera_fb_return(fb); fb = esp_camera_fb_get(); }
     if (fb && fb->format != PIXFORMAT_JPEG) { esp_camera_fb_return(fb); fb = NULL; }
+    scout_wdog_cam(fb != NULL);
     return fb;
 }
 
@@ -191,6 +194,7 @@ static esp_err_t h_stream(httpd_req_t *r)
     char hdr[96];
     for (;;) {
         camera_fb_t *fb = esp_camera_fb_get();
+        scout_wdog_cam(fb != NULL);
         if (!fb) return ESP_FAIL;
         int n = snprintf(hdr, sizeof hdr, "\r\n--" BOUNDARY "\r\nContent-Type: image/jpeg\r\nContent-Length: %u\r\n\r\n", (unsigned)fb->len);
         esp_err_t e = httpd_resp_send_chunk(r, hdr, n);
@@ -276,6 +280,9 @@ static void web_start(void)
     };
     for (size_t i = 0; i < sizeof u / sizeof u[0]; i++) httpd_register_uri_handler(s_httpd, &u[i]);
 }
+
+bool scout_net_web_up(void) { return s_httpd != NULL; }
+void scout_net_web_retry(void) { if (s_up) web_start(); }
 
 /* ---- words -------------------------------------------------------------- */
 

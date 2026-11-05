@@ -26,8 +26,10 @@
 #include "ble_console.h"
 #include "scout_cam.h"
 #include "scout_net.h"
+#include "scout_wdog.h"
+#include "esp_task_wdt.h"
 
-#define SCOUT_VERSION   "0.5.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
+#define SCOUT_VERSION   "0.6.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
@@ -100,11 +102,13 @@ static void w_version(void) { con_printf("scout v%s\n", SCOUT_VERSION); }
 
 static void scout_task(void *arg)
 {
+    esp_task_wdt_add(NULL);                     /* a hang here reboots (scout_wdog.h) */
     for (;;) {
         for (int i = 0; i < 20; i++) {
             vTaskDelay(pdMS_TO_TICKS(50));
             ble_console_flush();
         }
+        esp_task_wdt_reset();
         ble_console_poll();
         /* The glasses can't bond and have no pairing gesture, so Scout
          * advertises whenever nobody is connected. */
@@ -138,9 +142,11 @@ void app_main(void)
 
     xTaskCreate(scout_task, "scout", 4096, NULL, tskIDLE_PRIORITY + 1, NULL);
     ble_pair_window(600);
+    scout_wdog_register_words();
+    scout_wdog_init();
 
     console_printf("camera %s, roll %d frames\r\n", scout_cam_up() ? "up" : "DOWN", scout_roll_count());
-    console_print("Words: caps? cam? shoot last lv sty! fr! sty? fr? flip! roll? roll-ls roll-b64 roll-th\r\n       wifi! wifi-ps! net? url? web?\r\n");
+    console_print("Words: caps? cam? shoot last lv sty! fr! sty? fr? flip! roll? roll-ls roll-b64 roll-th\r\n       wifi! wifi-ps! net? url? web?  boot? wdog? wdog!\r\n");
     forth_repl(console_getchar, console_putchar);
     forth_deinit();
 }

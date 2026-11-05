@@ -26,5 +26,8 @@
 void scout_net_init(void);          /* after nvs_flash_init and the camera */
 void scout_net_register_words(void);
 bool scout_net_up(void);
+bool scout_net_configured(void);    /* has credentials, so it should be up */
+bool scout_net_web_up(void);
+void scout_net_web_retry(void);
 
 #endif

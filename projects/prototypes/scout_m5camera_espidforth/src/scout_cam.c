@@ -44,6 +44,7 @@
 #include "forth_core.h"
 #include "console.h"
 #include "scout_cam.h"
+#include "scout_wdog.h"
 
 static const char *TAG = "scout";
 #define POP() ((int)forth_pop())
@@ -118,6 +119,7 @@ static bool grab(void)
     for (int i = 0; i < 2; i++) {
         if (fb) esp_camera_fb_return(fb);
         fb = esp_camera_fb_get();
+        scout_wdog_cam(fb != NULL);
         if (!fb) return false;
     }
     bool ok = fb->width == CAM_W && fb->height == CAM_H && fmt2rgb888(fb->buf, fb->len, fb->format, s_rgb);

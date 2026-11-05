@@ -65,3 +65,13 @@ CONFIG_BT_NIMBLE_MEM_ALLOC_MODE_EXTERNAL=y
 CONFIG_LWIP_TCP_SND_BUF_DEFAULT=32768
 CONFIG_LWIP_TCP_WND_DEFAULT=16384
 CONFIG_LWIP_TCP_RECVMBOX_SIZE=16
+# Watchdog (src/scout_wdog.h): ESP32-CAM boards hang their radios now and
+# then; a stuck housekeeping or wdog task panics and reboots after 15 s.
+# Idle-task checks off: a long Forth word (roll-format) must not reboot.
+CONFIG_ESP_TASK_WDT_EN=y
+CONFIG_ESP_TASK_WDT_INIT=y
+CONFIG_ESP_TASK_WDT_PANIC=y
+CONFIG_ESP_TASK_WDT_TIMEOUT_S=15
+# CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU0 is not set
+# CONFIG_ESP_TASK_WDT_CHECK_IDLE_TASK_CPU1 is not set
+CONFIG_ESP_SYSTEM_PANIC_PRINT_REBOOT=y
