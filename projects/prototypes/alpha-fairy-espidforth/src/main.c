@@ -28,7 +28,7 @@
 #include "sony_http.h"
 #include "display.h"
 
-#define AF_VERSION      "0.2.0"
+#define AF_VERSION      "0.2.1"
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256

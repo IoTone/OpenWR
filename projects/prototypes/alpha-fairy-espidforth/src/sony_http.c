@@ -431,9 +431,22 @@ static void w_cam_rpc(void)
     con_printf("rpc %d %.200s\n", code, s_reply);
 }
 
+/* In Continuous drive the camera drops actTakePicture from its API list
+ * (the call fails); it still offers setContShootingMode, so switch the
+ * drive to Single and try once more. The drive stays Single. */
 static void w_shoot(void)
 {
     int code = shc_call("actTakePicture", "", NULL);
+    if (code != 0 && code != 40403 &&
+        shc_call("setContShootingMode", "{\"contShootingMode\": \"Single\"}", NULL) == 0) {
+        con_printf("drive Single\n");
+        /* the first try right after the switch can still fail (40400) */
+        for (int t = 0; t < 3; t++) {
+            vTaskDelay(pdMS_TO_TICKS(t ? 1000 : 500));
+            code = shc_call("actTakePicture", "", NULL);
+            if (code != 40400) break;
+        }
+    }
     if (code == 40403) code = shc_call("awaitTakePicture", "", NULL);   /* long exposure still running */
     if (code == 0) {
         const char *u = strstr(s_reply, "http");
