@@ -126,7 +126,8 @@ export class RollView extends BaseScriptComponent {
     // on a refresh only the frames not here yet, oldest first, each in front
     const have = new Set(this.frames.filter((f) => f.n >= 0).map((f) => f.n));
     const front = have.size > 0;
-    let take = ns.filter((n) => !have.has(n)).slice(0, MAX_FRAMES);
+    const newest = front ? Math.max(...Array.from(have)) : -1;   // a refresh adds only frames shot since
+    let take = ns.filter((n) => !have.has(n) && n > newest).slice(0, MAX_FRAMES);
     if (take.length === 0) { this.paint(this.captionText, this.describe()); return; }
     if (front) take = take.reverse();
     const v = /v(\d+)\.(\d+)\.(\d+)/.exec(await m.send("version"));

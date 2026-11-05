@@ -15,9 +15,14 @@
 // roll and answers `ok <n>`, and the Roll pulls it. Frame requests pause
 // while it shoots, so the shot doesn't fight the stream for the camera.
 // SHOOT α7 sends `shoot` to AlphaFriend, which fires the α7R III over the
-// camera's Wi-Fi (switching Continuous drive to Single if it has to). The
-// line above the picture is the Sony's state from `cam?` and `cam-evt`.
-// LIVE pauses and resumes the stream.
+// camera's Wi-Fi (switching Continuous drive to Single if it has to), then
+// `pv`: AlphaFriend streams the shot's postview through TJpgDec and answers
+// with a 198x132 dithered frame in base64, which joins the Roll. The line
+// above the picture is the Sony's state from `cam?` and `cam-evt`.
+// The view chip cycles VIEW SCOUT -> VIEW α7 -> PAUSED. VIEW α7 loops `lv`
+// on AlphaFriend: one liveview frame from the camera's stream, decoded at
+// 1/4 and dithered to 160x106 (~2.1 KB, ~1 fps over BLE), shown in a 3:2
+// quad where Scout's picture was. Scout's socket is let go meanwhile.
 //
 // If the socket drops or stalls, it reconnects; after a few failures it asks
 // Scout for its address again (its DHCP lease may have moved).
@@ -25,7 +30,8 @@
 require("LensStudio:InternetModule");
 
 import { Links } from "../ble/Links";
-import { makeQuad, makeTappable, makeTexture, setQuadTexture, Z_BACK, Z_IMAGE } from "../ui/Bitmap";
+import { GoggleLink } from "../ble/GoggleLink";
+import { b64ToBytes, makeQuad, makeTappable, makeTexture, setQuadTexture, unpack, Z_BACK, Z_IMAGE } from "../ui/Bitmap";
 import { placeInFront } from "../ui/Place";
 import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
@@ -39,6 +45,10 @@ const FAILS_BEFORE_ASK = 3;       // reconnects before asking url? again
 const SHOOT_MS = 10000;
 const SONY_SHOOT_MS = 25000;      // AF in AF-S can hold a shot ~15 s before it fails
 const SONY_POLL_S = 15;
+const PV_MS = 30000;
+const LV_MS = 6000;
+const LV_PAPER = [235, 222, 196, 255];        // warm white: the liveview reads as a picture, not a roll frame
+const LV_INK = [0, 0, 0, 255];              // fetch + decode on AlphaFriend (~2 s) and ~4.4 KB of base64 over BLE
 
 @component
 export class LiveView extends BaseScriptComponent {
@@ -93,6 +103,11 @@ export class LiveView extends BaseScriptComponent {
   private wsUrl = "";
   private asking = false;
   private on = true;
+  private view: "scout" | "a7" | "paused" = "scout";
+  private a7Quad: SceneObject;
+  private a7Run = 0;              // bumps to stop a running lv loop
+  private a7Shown = 0;
+  private a7At = 0;
   private ws: WebSocket = null;
   private wsSerial = 0;
   private fails = 0;
@@ -119,7 +134,7 @@ export class LiveView extends BaseScriptComponent {
       this.tick();
       this.sonyPoll();
     });
-    this.createEvent("OnDestroyEvent").bind(() => this.close());
+    this.createEvent("OnDestroyEvent").bind(() => this.close(true));
   }
 
   // ---- the panel ----------------------------------------------------------
@@ -133,10 +148,13 @@ export class LiveView extends BaseScriptComponent {
       .getTransform().setLocalPosition(new vec3(0, y0, Z_BACK));
     this.picture = makeQuad(root, "Picture", w, h, this.imageMaterial, makeTexture(1, 1, new Uint8Array([0, 0, 0, 255])));
     this.picture.getTransform().setLocalPosition(new vec3(0, y0, Z_IMAGE));
+    this.a7Quad = makeQuad(root, "A7", w, w * 2 / 3, this.imageMaterial, makeTexture(1, 1, new Uint8Array([0, 0, 0, 255])));
+    this.a7Quad.getTransform().setLocalPosition(new vec3(0, y0, Z_IMAGE));
+    this.a7Quad.enabled = false;
     const cy = y0 - h / 2 - 1.6;
-    this.chip(root, "SHOOT SCOUT", 6.0, new vec3(-5.0, cy, 0), () => this.shoot());
-    this.chip(root, "SHOOT α7", 5.0, new vec3(0.9, cy, 0), () => this.shootSony());
-    this.liveChip = this.chip(root, "LIVE", 3.6, new vec3(6.2, cy, 0), () => this.toggle());
+    this.chip(root, "SHOOT SCOUT", 5.6, new vec3(-5.4, cy, 0), () => this.shoot());
+    this.chip(root, "SHOOT α7", 4.6, new vec3(0.0, cy, 0), () => this.shootSony());
+    this.liveChip = this.chip(root, "VIEW SCOUT", 5.6, new vec3(5.4, cy, 0), () => this.toggle());
     if (this.captionText) this.captionText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 - h / 2 - 3.6, 0.2));
     if (this.sonyText) this.sonyText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 + h / 2 + 1.0, 0.2));
     this.say("WAITING FOR SCOUT");
@@ -196,6 +214,7 @@ export class LiveView extends BaseScriptComponent {
     }, (e) => {
       this.asking = false;
       print("[live] url?: " + e);
+      this.say("SCOUT NOT ANSWERING");
       this.links.after(() => this.askUrl(), 5);
     });
   }
@@ -231,12 +250,15 @@ export class LiveView extends BaseScriptComponent {
     this.sonyBusy = true;
     this.sony("α7R III · SHOOTING");
     const t0 = Date.now();
-    a.send("shoot", SONY_SHOOT_MS).then((r) => {
+    a.send("shoot", SONY_SHOOT_MS).then(async (r) => {
       const ms = Date.now() - t0, txt = r.trim();
       print("[live] α7 shoot: " + txt.replace(/\n/g, " | ") + " in " + ms + " ms");
       const err = /err\s+(-?\d+)/.exec(txt);
-      this.note = err ? "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"
-        : /\bok\b/.test(txt) ? "α7 SHOT · " + (ms / 1000).toFixed(1) + " S" : "α7: " + txt.toUpperCase();
+      if (err) { this.note = "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"; return; }
+      if (!/\bok\b/.test(txt)) { this.note = "α7: " + txt.toUpperCase(); return; }
+      this.note = "α7 SHOT · FETCHING THE POSTVIEW";
+      this.say(this.note);
+      await this.postview(a);
     }, (e) => {
       this.note = "α7 SHOOT: NO ANSWER";
       print("[live] α7 shoot: " + e);
@@ -245,6 +267,30 @@ export class LiveView extends BaseScriptComponent {
       this.links.after(() => { this.note = ""; }, 5);
       this.sonyRead();
     });
+  }
+
+  // `pv` -> "pv <w> <h>" then base64 lines: a 1-bit frame for the Roll.
+  private async postview(a: GoggleLink) {
+    const t0 = Date.now();
+    try {
+      const r = await a.send("pv", PV_MS);
+      const head = /pv\s+(\d+)\s+(\d+)/.exec(r);
+      if (!head) { this.note = "α7 POSTVIEW: " + r.trim().toUpperCase().slice(0, 30); print("[live] pv: " + r.trim()); return; }
+      const w = +head[1], h = +head[2];
+      let text = "";
+      for (const l of r.split("\n")) {
+        const t = l.trim();
+        if (/^[A-Za-z0-9+/]+=*$/.test(t)) text += t;
+      }
+      const bits = b64ToBytes(text);
+      if (bits.length !== ((w + 7) >> 3) * h) { this.note = "α7 POSTVIEW CUT SHORT"; print("[live] pv: " + bits.length + " B for " + w + "x" + h); return; }
+      print("[live] pv " + w + "x" + h + " in " + (Date.now() - t0) + " ms");
+      if (this.roll) this.roll.addShot(w, h, bits);
+      this.note = "α7 SHOT · IN THE ROLL";
+    } catch (e) {
+      this.note = "α7 POSTVIEW: NO ANSWER";
+      print("[live] pv: " + e);
+    }
   }
 
   // On connect and every SONY_POLL_S: `cam?` and, when the camera is linked,
@@ -277,6 +323,7 @@ export class LiveView extends BaseScriptComponent {
       this.sony(parts.filter((x) => x).join(" · "));
     } catch (e) {
       print("[live] α7 read: " + e);
+      this.sony("α7R III · ALPHAFRIEND NOT ANSWERING");
     }
   }
 
@@ -289,15 +336,60 @@ export class LiveView extends BaseScriptComponent {
 
   // ---- frames over Wi-Fi --------------------------------------------------
 
+  // VIEW SCOUT -> VIEW α7 -> PAUSED -> VIEW SCOUT
   private toggle() {
-    this.on = !this.on;
-    this.liveChip.text = this.on ? "LIVE" : "PAUSED";
-    if (this.on) {
+    this.view = this.view === "scout" ? "a7" : this.view === "a7" ? "paused" : "scout";
+    this.liveChip.text = this.view === "scout" ? "VIEW SCOUT" : this.view === "a7" ? "VIEW α7" : "PAUSED";
+    this.a7Run++;                                        // any lv loop stops
+    this.on = this.view === "scout";
+    this.picture.enabled = this.view !== "a7";
+    this.a7Quad.enabled = this.view === "a7";
+    if (this.view === "scout") {
       if (this.wsUrl) this.open(); else this.askUrl();
     } else {
-      this.close();
-      this.say("PAUSED");
+      this.close(true);
+      this.say(this.view === "a7" ? "α7 · STARTING THE LIVEVIEW" : "PAUSED");
+      if (this.view === "a7") this.a7Loop(this.a7Run);
     }
+  }
+
+  // One `lv` at a time while VIEW α7 is on; a shot goes first.
+  private async a7Loop(run: number) {
+    while (run === this.a7Run) {
+      const a = this.links.alpha;
+      if (!a || !a.live) { this.note = "α7 · WAITING FOR ALPHAFRIEND"; await this.pause(2); continue; }
+      if (this.sonyBusy) { await this.pause(0.5); continue; }
+      try {
+        const r = await a.send("lv", LV_MS);
+        if (run !== this.a7Run) return;
+        const head = /lv\s+(\d+)\s+(\d+)/.exec(r);
+        if (!head) {
+          this.note = "α7 LIVEVIEW: " + r.trim().toUpperCase().slice(0, 30);
+          print("[live] lv: " + r.trim());
+          await this.pause(2);
+          continue;
+        }
+        const w = +head[1], h = +head[2];
+        let text = "";
+        for (const l of r.split("\n")) {
+          const t = l.trim();
+          if (/^[A-Za-z0-9+/]+=*$/.test(t)) text += t;
+        }
+        const bits = b64ToBytes(text);
+        if (bits.length !== ((w + 7) >> 3) * h) { print("[live] lv: " + bits.length + " B for " + w + "x" + h); continue; }
+        setQuadTexture(this.a7Quad, makeTexture(w, h, unpack(bits, w, h, LV_INK, LV_PAPER)));
+        this.a7Shown++;
+        if (/^α7 (LIVEVIEW|· WAITING)/.test(this.note)) this.note = "";   // a shot's note stays its 5 s
+      } catch (e) {
+        print("[live] lv: " + e);
+        this.note = "α7 LIVEVIEW: NO ANSWER";
+        await this.pause(1);
+      }
+    }
+  }
+
+  private pause(seconds: number): Promise<void> {
+    return new Promise((r) => this.links.after(r, seconds));
   }
 
   private open() {
@@ -325,7 +417,10 @@ export class LiveView extends BaseScriptComponent {
     ws.onclose = () => this.failed(serial);
     ws.onmessage = (e) => {
       if (serial !== this.wsSerial) return;
-      if (typeof e.data === "string") return;
+      if (typeof e.data === "string") {             // "err no-frame": Scout's camera was busy; ask again
+        this.links.after(() => { if (serial === this.wsSerial) this.request(); }, 0.2);
+        return;
+      }
       this.lastFrameAt = Date.now();
       this.request();                                   // ask for the next while this one decodes
       if (this.decoding >= MAX_DECODING) { this.dropped++; return; }
@@ -354,11 +449,22 @@ export class LiveView extends BaseScriptComponent {
     if (this.ws) for (let i = 0; i < n; i++) this.request();
   }
 
-  private close() {
+  // Drop the socket. WebSocket.close() on a stalled connection held the
+  // lens's script for ~27 s on the glasses (2026-11-04), freezing every
+  // panel, so a dead socket is only abandoned: its handlers go quiet (serial)
+  // and the glasses' stack times it out. close() is called only when the
+  // socket is still answering (LIVE paused, lens closing).
+  private close(graceful = false) {
     this.wsSerial++;
     const ws = this.ws;
     this.ws = null;
-    if (ws) try { ws.close(); } catch (e) { /* already closed */ }
+    if (!ws) return;
+    ws.onmessage = () => {};
+    ws.onerror = () => {};
+    ws.onclose = () => {};
+    if (graceful && this.lastFrameAt && Date.now() - this.lastFrameAt < 1000) {
+      try { ws.close(); } catch (e) { /* already closed */ }
+    }
   }
 
   // The socket closed, errored or stalled: try again shortly, and after a few
@@ -390,7 +496,12 @@ export class LiveView extends BaseScriptComponent {
     if (this.fpsAt) this.fps = this.shown * 1000 / Math.max(1, now - this.fpsAt);
     this.fpsAt = now;
     this.shown = 0;
-    if (this.ws && this.on && !this.holding) {
+    if (this.view === "a7") {
+      const fps = this.a7Shown * 1000 / Math.max(1, now - (this.a7At || now - 1000));
+      this.a7At = now;
+      this.a7Shown = 0;
+      this.say(this.note || "α7 LIVE " + fps.toFixed(1) + " FPS");
+    } else if (this.ws && this.on && !this.holding) {
       const ble = this.links.scout && this.links.scout.live ? "" : " · BLE DOWN";
       this.say(this.note || ("LIVE " + this.fps.toFixed(1) + " FPS" + (this.dropped ? " · " + this.dropped + " DROPPED" : "") + ble));
       this.dropped = 0;

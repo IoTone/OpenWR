@@ -10,10 +10,12 @@
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
 
 // Known frame sizes by byte count: maplet 212x104 (2.13in) and 296x128 (2.9in),
-// goggl1 128x64, Scout's other framings 120x80 (3:2) and 96x96.
+// goggl1 128x64, Scout's other framings 120x80 (3:2) and 96x96, AlphaFriend's
+// postview 198x132.
 export function frameSize(bytes: number): [number, number] | null {
   if (bytes === 2808) return [212, 104];
   if (bytes === 1200) return [120, 80];
+  if (bytes === 3300) return [198, 132];          // AlphaFriend's α7 postview
   if (bytes === 1152) return [96, 96];
   if (bytes === 4736) return [296, 128];
   if (bytes === 1024) return [128, 64];

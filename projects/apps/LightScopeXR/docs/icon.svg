@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+<defs>
+ <radialGradient id="g" cx="50%" cy="50%" r="50%">
+  <stop offset="0" stop-color="#3a2410"/><stop offset="0.55" stop-color="#1c140c"/><stop offset="1" stop-color="#0d0a07"/>
+ </radialGradient>
+ <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+  <stop offset="0" stop-color="#ff8200" stop-opacity="0.45"/><stop offset="1" stop-color="#ff8200" stop-opacity="0"/>
+ </radialGradient>
+ <clipPath id="c"><circle cx="160" cy="160" r="128"/></clipPath>
+</defs>
+<circle cx="160" cy="160" r="158" fill="#ffffff"/>
+<circle cx="160" cy="160" r="151" fill="#111"/>
+<circle cx="160" cy="160" r="144" fill="url(#g)"/>
+<circle cx="160" cy="160" r="128" fill="none" stroke="#f2a33a" stroke-opacity="0.85" stroke-width="5"/>
+<g clip-path="url(#c)" stroke="#f2a33a" stroke-opacity="0.7" stroke-width="5" stroke-linecap="round"><line x1="224.1" y1="197.0" x2="50.9" y2="297.0"/><line x1="160.0" y1="234.0" x2="-13.2" y2="134.0"/><line x1="95.9" y1="197.0" x2="95.9" y2="-3.0"/><line x1="95.9" y1="123.0" x2="269.1" y2="23.0"/><line x1="160.0" y1="86.0" x2="333.2" y2="186.0"/><line x1="224.1" y1="123.0" x2="224.1" y2="323.0"/></g>
+<circle cx="160" cy="160" r="96" fill="url(#glow)"/>
+<g fill="none" stroke="#ff8200" stroke-width="17" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M171.1,128.1 A41.6,41.6 0 1 0 171.1,191.9"/>
+ <path d="M171.1,128.1 L222.4,222.4"/>
+ <path d="M171.1,191.9 L222.4,97.6"/>
+</g>
+<circle cx="222" cy="104" r="0" fill="#ff1810"/>
+</svg>
