@@ -32,6 +32,11 @@
 // AlphaFriend's A button, which the lens notices through `shots?`) as
 // AlphaFriend's `pvj` colour thumbnail, before the dithered `pv` for the Roll.
 //
+// Over the α7 view, A7Screen draws the camera's own rear screen (settings
+// from `cam-evt`, every 4 s) and steps shutter, aperture, EV and ISO with
+// `cam-step`; a step goes ahead of the next liveview frame. The chips take
+// the body's family name (α7, α6) once AlphaFriend reports the model.
+//
 // Each shot plays its camera's shutter (ui/Sound.ts, sounds in Assets/Sounds,
 // credits in README.md).
 //
@@ -48,6 +53,7 @@ import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
 import { RealReel } from "../reel/RealReel";
 import { playOnce, setUiSounds, uiFail } from "../ui/Sound";
+import { A7Screen, A7State, cameraName, cameraShort } from "./A7Screen";
 
 const AMBER: Rgb = [242, 163, 58];
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
@@ -147,6 +153,15 @@ export class LiveView extends BaseScriptComponent {
   private view: "scout" | "a7" = "scout";
   private a7Quad: SceneObject;
   private a7Colour = true;        // lvj (colour) or lv (1-bit)
+  private a7Frames = 0;
+  private camState = "";
+  private screen: A7Screen;
+  private steps: [number, number][] = [];   // cam-step (which, dir) waiting for the lv loop
+  private afWanted = false;
+  private evtAt = 0;
+  private evStep = 1;
+  private model = "";
+  private shootA7Text: Text;
   private a7Run = 0;              // bumps to stop a running lv loop
   private a7Shown = 0;
   private a7At = 0;
@@ -207,7 +222,12 @@ export class LiveView extends BaseScriptComponent {
     });
     const cy = y0 - h / 2 - 1.6;
     this.chip(root, "SHOOT SCOUT", 5.6, new vec3(-5.4, cy, 0), () => this.shoot());
-    this.chip(root, "SHOOT α7", 4.6, new vec3(0.0, cy, 0), () => this.shootSony());
+    this.shootA7Text = this.chip(root, "SHOOT α7", 4.6, new vec3(0.0, cy, 0), () => this.shootSony());
+    this.screen = new A7Screen(root, this.monoText.font, this.imageMaterial, w, w * 2 / 3, y0,
+      (which, dir) => { if (this.steps.length < 4) this.steps.push([which, dir]); },
+      () => { this.afWanted = true; },
+      (msg) => { this.note = msg; this.links.after(() => { if (this.note === msg) this.note = ""; }, 3); });
+    this.screen.setVisible(false);
     this.viewSwitch(root, 5.6, 1.6, new vec3(5.4, cy, 0));
     if (this.captionText) this.captionText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 - h / 2 - 3.6, 0.2));
     if (this.sonyText) this.sonyText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 + h / 2 + 1.0, 0.2));
@@ -495,6 +515,9 @@ export class LiveView extends BaseScriptComponent {
     this.sonyAsked = true;
     try {
       const c = /cam\s+(\S+)\s+(\S+)/.exec(await a.send("cam?"));
+      if (c && c[2] !== "-" && c[2] !== this.model) this.named(c[2]);
+      const st = c ? c[1] + " " + c[2] : "?";
+      if (st !== this.camState) { print("[live] camera " + st); this.camState = st; }
       if (!c || c[1] !== "ready") {
         this.sony("α7R III · " + (c ? "CAMERA " + c[1].toUpperCase() : "?") + " · JOIN ON ALPHAFRIEND");
         return;
@@ -504,14 +527,25 @@ export class LiveView extends BaseScriptComponent {
         const m = /^evt\s+(\S+)\s+(.+)$/.exec(l.trim());
         if (m) v[m[1]] = m[2].trim();
       }
-      const ev = v.ev !== undefined && !isNaN(+v.ev) ? ((+v.ev >= 0 ? "+" : "") + (+v.ev / 3).toFixed(1) + " EV") : "";
+      this.evStep = +(v.evstep || 1) === 2 ? 2 : 1;
+      const evv = +v.ev / (this.evStep === 2 ? 2 : 3);
+      const ev = v.ev !== undefined && !isNaN(+v.ev) ? ((evv >= 0 ? "+" : "") + evv.toFixed(1) + " EV") : "";
+      this.screen.update(v as A7State);
       const parts = [modeShort(v.mode), v.ss, v.f ? "f/" + v.f : "", v.iso ? "ISO " + v.iso : "", ev].filter((x) => x);
       this.exposure = parts.join(" · ");
-      this.sony([c[2] === "ILCE-7RM3" ? "α7R III" : c[2]].concat(parts).join(" · "));
+      this.sony([cameraName(c[2])].concat(parts).join(" · "));
     } catch (e) {
       print("[live] α7 read: " + e);
       this.sony("α7R III · ALPHAFRIEND NOT ANSWERING");
     }
+  }
+
+  // the chips and the switch say which body: α7, α6
+  private named(model: string) {
+    this.model = model;
+    const n = cameraShort(model);
+    this.shootA7Text.text = "SHOOT " + n;
+    if (this.viewLabels[1]) this.viewLabels[1].text = n;
   }
 
   private sony(s: string) {
@@ -533,6 +567,9 @@ export class LiveView extends BaseScriptComponent {
     this.on = v === "scout";
     this.picture.enabled = v === "scout";
     this.a7Quad.enabled = v === "a7";
+    this.screen.setVisible(v === "a7");
+    if (this.sonyText) this.sonyText.getSceneObject().enabled = v === "scout";
+    this.evtAt = 0;
     if (v === "scout") {
       if (this.wsUrl) this.open(); else this.askUrl();
     } else {
@@ -548,6 +585,9 @@ export class LiveView extends BaseScriptComponent {
       const a = this.links.alpha;
       if (!a || !a.live) { this.note = "α7 · WAITING FOR ALPHAFRIEND"; await this.pause(2); continue; }
       if (this.sonyBusy) { await this.pause(0.5); continue; }
+      if (this.afWanted) { this.afWanted = false; await this.doAf(a); continue; }
+      if (this.steps.length) { await this.doStep(a, this.steps.shift()); continue; }
+      if (Date.now() - this.evtAt > 4000) { this.evtAt = Date.now(); await this.sonyRead(); continue; }
       try {
         const colour = this.a7Colour;
         const r = await a.send(colour ? "lvj" : "lv", LV_MS);
@@ -582,6 +622,41 @@ export class LiveView extends BaseScriptComponent {
     }
   }
 
+  // `<which> <dir> cam-step` -> "step <name> <value>" | "step <name> err <code>"
+  private async doStep(a: GoggleLink, s: [number, number]) {
+    try {
+      const r = await a.send(s[0] + " " + s[1] + " cam-step", 6000);
+      const m = /step\s+(\S+)\s+(.+)/.exec(r);
+      if (!m || /^err/.test(m[2])) {
+        this.note = "α7 · COULD NOT CHANGE " + (m ? m[1].toUpperCase() + " (" + m[2].trim().toUpperCase() + ")" : "IT");
+        print("[live] cam-step: " + r.trim());
+        uiFail();
+        return;
+      }
+      this.screen.stepped(m[1], m[2].trim(), this.evStep);
+      this.evtAt = Date.now() - 2500;                // read the rest back soon
+    } catch (e) {
+      this.note = "α7 · NO ANSWER";
+      uiFail();
+    }
+  }
+
+  // `cam-af` -> "af Focused" | "af Failed" | "af err <code>"
+  private async doAf(a: GoggleLink) {
+    try {
+      const r = await a.send("cam-af", 6000);
+      const m = /af\s+(\S+)/.exec(r);
+      const st = m ? m[1] : "?";
+      this.screen.focusShown(st);
+      this.note = st === "Focused" ? "α7 · FOCUSED" : st === "Failed" ? "α7 · COULD NOT FOCUS" : "α7 · AF: " + r.trim().toUpperCase().slice(0, 24);
+      if (st !== "Focused") uiFail();
+      this.links.after(() => { this.screen.focusShown("idle"); if (/^α7 · (FOCUSED|COULD NOT|AF:)/.test(this.note)) this.note = ""; }, 3);
+    } catch (e) {
+      this.note = "α7 · AF: NO ANSWER";
+      uiFail();
+    }
+  }
+
   // "lvj <bytes> <w> <h>" then base64 lines of a colour JPEG
   private async showLvj(r: string) {
     const head = /lvj\s+(\d+)\s+(\d+)\s+(\d+)/.exec(r);
@@ -598,6 +673,7 @@ export class LiveView extends BaseScriptComponent {
     }
     await new Promise<void>((done) => Base64.decodeTextureAsync(b64, (tex) => {
       if (this.view === "a7") setQuadTexture(this.a7Quad, tex);
+      if (!this.a7Frames++) print("[live] α7 first colour frame " + head[2] + "x" + head[3] + ", " + head[1] + " B");
       this.a7Shown++;
       if (/^α7 (LIVEVIEW|· WAITING)/.test(this.note)) this.note = "";
       done();
@@ -717,7 +793,7 @@ export class LiveView extends BaseScriptComponent {
       const fps = this.a7Shown * 1000 / Math.max(1, now - (this.a7At || now - 1000));
       this.a7At = now;
       this.a7Shown = 0;
-      this.say(this.note || "α7 LIVE " + (this.a7Colour ? "COLOUR " : "1-BIT ") + fps.toFixed(1) + " FPS · PINCH TO SWITCH");
+      this.say(this.note || (this.model ? cameraName(this.model) : "α7") + " · " + (this.a7Colour ? "COLOUR " : "1-BIT ") + fps.toFixed(1) + " FPS · PINCH PICTURE: " + (this.a7Colour ? "1-BIT" : "COLOUR"));
     } else if (this.ws && this.on && !this.holding) {
       const ble = this.links.scout && this.links.scout.live ? "" : " · BLE DOWN";
       this.say(this.note || ("LIVE " + this.fps.toFixed(1) + " FPS" + (this.dropped ? " · " + this.dropped + " DROPPED" : "") + ble));
