@@ -29,7 +29,7 @@ import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
 import { DESIGN_DISTANCE } from "../ui/Place";
 import { Source, toFrame, toHex } from "./Dither";
-import { playOnce } from "../ui/Sound";
+import { playOnce, uiFail } from "../ui/Sound";
 
 const AMBER: Rgb = [242, 163, 58];
 const PAPER = [160, 108, 38, 255];
@@ -279,7 +279,7 @@ export class Viewfinder extends BaseScriptComponent {
   private async sendSelected() {
     const f = this.roll.selectedFrame(), m = this.links.maplet;
     if (this.sending || !f) return;
-    if (!m || !m.live) { this.roll.say("SEND · MAPLET NOT CONNECTED"); return; }
+    if (!m || !m.live) { this.roll.say("SEND · MAPLET NOT CONNECTED"); uiFail(); return; }
     this.sending = true;
     const t0 = Date.now();
     try {
@@ -305,6 +305,7 @@ export class Viewfinder extends BaseScriptComponent {
     } catch (e) {
       print("[snap] send: " + e);
       this.roll.say("SEND FAILED: " + e);
+      uiFail();
     }
     this.sending = false;
   }

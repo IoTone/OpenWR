@@ -8,6 +8,7 @@
 // go into procedural textures on flat quads; quads can be made pinchable.
 
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
+import { uiClick } from "./Sound";
 
 // Known frame sizes by byte count: maplet 212x104 (2.13in) and 296x128 (2.9in),
 // goggl1 128x64, Scout's other framings 120x80 (3:2) and 96x96, AlphaFriend's
@@ -105,6 +106,6 @@ export function makeTappable(quad: SceneObject, w: number, h: number, onTap: () 
   shape.size = new vec3(w, h, 0.4);
   col.shape = shape;
   const it = quad.createComponent(Interactable.getTypeName()) as Interactable;
-  it.onTriggerEnd.add(() => onTap());
+  it.onTriggerEnd.add(() => { uiClick(); onTap(); });
   return it;
 }

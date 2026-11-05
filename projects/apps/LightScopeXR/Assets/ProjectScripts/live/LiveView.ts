@@ -19,7 +19,10 @@
 // `pv`: AlphaFriend streams the shot's postview through TJpgDec and answers
 // with a 198x132 dithered frame in base64, which joins the Roll. The line
 // above the picture is the Sony's state from `cam?` and `cam-evt`.
-// The SCOUT | α7 switch picks what the picture shows (kept for next launch). α7 loops `lv`
+// α7 shows `lvj` frames by default: the same liveview frame as a 160x106
+// colour JPEG (~1.3 KB, re-encoded on AlphaFriend), so it looks like Scout's
+// picture. A pinch on the picture switches to the 1-bit `lv` and back (kept).
+// The SCOUT | α7 switch picks what the picture shows (kept for next launch). The 1-bit view loops `lv`
 // on AlphaFriend: one liveview frame from the camera's stream, decoded at
 // 1/4 and dithered to 160x106 (~2.1 KB, ~1 fps over BLE), shown in a 3:2
 // quad where Scout's picture was. Scout's socket is let go meanwhile.
@@ -44,7 +47,7 @@ import { placeInFront } from "../ui/Place";
 import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
 import { RealReel } from "../reel/RealReel";
-import { playOnce } from "../ui/Sound";
+import { playOnce, setUiSounds, uiFail } from "../ui/Sound";
 
 const AMBER: Rgb = [242, 163, 58];
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
@@ -59,7 +62,8 @@ const PV_MS = 30000;
 const LV_MS = 6000;
 const LV_PAPER = [235, 222, 196, 255];        // warm white: the liveview reads as a picture, not a roll frame
 const LV_INK = [0, 0, 0, 255];
-const VIEW_KEY = "lightscope.view";              // fetch + decode on AlphaFriend (~2 s) and ~4.4 KB of base64 over BLE
+const VIEW_KEY = "lightscope.view";
+const A7_LOOK_KEY = "lightscope.a7look";              // fetch + decode on AlphaFriend (~2 s) and ~4.4 KB of base64 over BLE
 
 @component
 export class LiveView extends BaseScriptComponent {
@@ -103,6 +107,16 @@ export class LiveView extends BaseScriptComponent {
 
   @input
   @allowUndefined
+  @hint("Click for every button and switch (all panels)")
+  uiClickSound: AudioTrackAsset;
+
+  @input
+  @allowUndefined
+  @hint("When a shot or send fails (all panels)")
+  uiFailSound: AudioTrackAsset;
+
+  @input
+  @allowUndefined
   frame: SceneObject;
 
   @input
@@ -126,13 +140,13 @@ export class LiveView extends BaseScriptComponent {
 
   private picture: SceneObject;
   private viewLabels: Text[] = [];
-  private viewFill: SceneObject;
   private exposure = "";          // the α7's settings, from the last cam-evt
   private wsUrl = "";
   private asking = false;
   private on = true;
   private view: "scout" | "a7" = "scout";
   private a7Quad: SceneObject;
+  private a7Colour = true;        // lvj (colour) or lv (1-bit)
   private a7Run = 0;              // bumps to stop a running lv loop
   private a7Shown = 0;
   private a7At = 0;
@@ -154,9 +168,11 @@ export class LiveView extends BaseScriptComponent {
   private sonyAsked = false;
 
   onAwake() {
+    setUiSounds(this.getSceneObject(), this.uiClickSound, this.uiFailSound);
     this.createEvent("OnStartEvent").bind(() => {
       this.build();
-      if (storedView() === "a7") this.setView("a7");
+      this.a7Colour = stored(A7_LOOK_KEY) !== "bits";
+      if (stored(VIEW_KEY) === "a7") this.setView("a7");
       this.links.after(() => {
         if (this.frame && this.camera) placeInFront(this.frame, this.camera, this.distance, this.drop, this.yaw);
       }, 0.3);
@@ -183,6 +199,12 @@ export class LiveView extends BaseScriptComponent {
     this.a7Quad = makeQuad(root, "A7", w, w * 2 / 3, this.imageMaterial, makeTexture(1, 1, new Uint8Array([0, 0, 0, 255])));
     this.a7Quad.getTransform().setLocalPosition(new vec3(0, y0, Z_IMAGE));
     this.a7Quad.enabled = false;
+    makeTappable(this.a7Quad, w, w * 2 / 3, () => {
+      this.a7Colour = !this.a7Colour;
+      store(A7_LOOK_KEY, this.a7Colour ? "colour" : "bits");
+      this.note = this.a7Colour ? "α7 · COLOUR" : "α7 · 1-BIT";
+      this.links.after(() => { if (/^α7 · (COLOUR|1-BIT)$/.test(this.note)) this.note = ""; }, 2);
+    });
     const cy = y0 - h / 2 - 1.6;
     this.chip(root, "SHOOT SCOUT", 5.6, new vec3(-5.4, cy, 0), () => this.shoot());
     this.chip(root, "SHOOT α7", 4.6, new vec3(0.0, cy, 0), () => this.shootSony());
@@ -216,16 +238,12 @@ export class LiveView extends BaseScriptComponent {
     return t;
   }
 
-  // SCOUT | α7: one outline, the side in view filled amber with dark text.
+  // SCOUT | α7: a pill, the side in view filled to its rounded end and cut
+  // straight at the middle (half a jellybean), with dark text on it.
   private viewSwitch(parent: SceneObject, w: number, h: number, at: vec3) {
-    const r = new Raster(Math.round(w * 40), Math.round(h * 40)), rad = r.h / 2 - 1;
-    for (let y = 0; y < r.h; y++) for (let x = 0; x < r.w; x++) {
-      const cx = Math.min(Math.max(x, rad + 1), r.w - rad - 1), d = Math.hypot(x - cx, y - r.h / 2);
-      if (Math.abs(d - rad + 1) <= 1.1 || (Math.abs(x - r.w / 2) <= 1 && y > 3 && y < r.h - 4)) r.plot(x, y, AMBER);
-    }
-    makeQuad(parent, "Chip VIEW", w, h, this.imageMaterial, r.texture(), 9)
-      .getTransform().setLocalPosition(new vec3(at.x, at.y, Z_BACK));
-    this.viewFill = makeQuad(parent, "View Fill", w / 2 - 0.5, h - 0.35, this.imageMaterial, makeTexture(1, 1, new Uint8Array([242, 163, 58, 255])), 10);
+    this.viewTex = [this.pillTexture(w, h, -1), this.pillTexture(w, h, 1)];
+    this.viewPill = makeQuad(parent, "Chip VIEW", w, h, this.imageMaterial, this.viewTex[0], 9);
+    this.viewPill.getTransform().setLocalPosition(new vec3(at.x, at.y, Z_BACK));
     const sides: ["scout" | "a7", string, number][] = [["scout", "SCOUT", -w / 4], ["a7", "α7", w / 4]];
     for (const [v, s, dx] of sides) {
       const hit = global.scene.createSceneObject("View " + s);       // a tap area, nothing drawn
@@ -244,15 +262,28 @@ export class LiveView extends BaseScriptComponent {
       t.setRenderOrder(12);
       this.viewLabels.push(t);
     }
-    this.viewAt = at;
     this.paintSwitch();
   }
 
-  private viewAt = vec3.zero();
+  // side -1: the left half filled, 1: the right
+  private pillTexture(w: number, h: number, side: number): Texture {
+    const r = new Raster(Math.round(w * 40), Math.round(h * 40)), rad = r.h / 2 - 1, mid = r.w / 2;
+    for (let y = 0; y < r.h; y++) for (let x = 0; x < r.w; x++) {
+      const cx = Math.min(Math.max(x, rad + 1), r.w - rad - 1), d = Math.hypot(x - cx, y - r.h / 2);
+      const inside = d <= rad - 1.5, edge = Math.abs(d - rad + 1) <= 1.1;
+      const filled = inside && (side < 0 ? x < mid - 1 : x > mid + 1);
+      const cut = inside && Math.abs(x - mid) <= 1;
+      if (edge || filled || cut) r.plot(x, y, AMBER);
+    }
+    return r.texture();
+  }
+
+  private viewPill: SceneObject;
+  private viewTex: Texture[] = [];
 
   private paintSwitch() {
     const a7 = this.view === "a7";
-    this.viewFill.getTransform().setLocalPosition(new vec3(this.viewAt.x + (a7 ? 1 : -1) * 5.6 / 4, this.viewAt.y, (Z_BACK + Z_IMAGE) / 2));
+    setQuadTexture(this.viewPill, this.viewTex[a7 ? 1 : 0]);
     this.viewLabels[0].textFill.color = a7 ? rgba(AMBER) : new vec4(0, 0, 0, 1);
     this.viewLabels[1].textFill.color = a7 ? new vec4(0, 0, 0, 1) : rgba(AMBER);
   }
@@ -295,7 +326,7 @@ export class LiveView extends BaseScriptComponent {
   private shoot() {
     const s = this.links.scout;
     if (this.holding) return;
-    if (!s || !s.live) { this.say("SHOOT · SCOUT NOT CONNECTED"); return; }
+    if (!s || !s.live) { this.say("SHOOT · SCOUT NOT CONNECTED"); uiFail(); return; }
     this.holding = true;
     this.say("SHOOTING");
     const t0 = Date.now();
@@ -310,10 +341,12 @@ export class LiveView extends BaseScriptComponent {
         else job.fail(m ? "NO LIVE FRAME TO KEEP" : "SHOT FAILED");
       }
       this.note = m ? "SHOT " + ("000" + m[1]).slice(-4) + " ON SCOUT" : "SHOOT: " + r.trim().toUpperCase();
+      if (!m) uiFail();
       print("[live] shoot " + r.trim() + " in " + (Date.now() - t0) + " ms");
       if (m && this.roll) this.roll.refresh();
     }, (e) => {
       this.note = "SHOOT FAILED";
+      uiFail();
       print("[live] shoot: " + e);
       if (job) job.fail("NO ANSWER");
     }).then(() => {
@@ -328,7 +361,7 @@ export class LiveView extends BaseScriptComponent {
   private shootSony() {
     const a = this.links.alpha;
     if (this.sonyBusy) return;
-    if (!a || !a.live) { this.note = "α7 · ALPHAFRIEND NOT CONNECTED"; this.links.after(() => { this.note = ""; }, 4); return; }
+    if (!a || !a.live) { this.note = "α7 · ALPHAFRIEND NOT CONNECTED"; uiFail(); this.links.after(() => { this.note = ""; }, 4); return; }
     this.sonyBusy = true;
     this.sony("α7R III · SHOOTING");
     const t0 = Date.now();
@@ -336,13 +369,14 @@ export class LiveView extends BaseScriptComponent {
       const ms = Date.now() - t0, txt = r.trim();
       print("[live] α7 shoot: " + txt.replace(/\n/g, " | ") + " in " + ms + " ms");
       const err = /err\s+(-?\d+)/.exec(txt);
-      if (err) { this.note = "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"; return; }
-      if (!/\bok\b/.test(txt)) { this.note = "α7: " + txt.toUpperCase(); return; }
+      if (err) { uiFail(); this.note = "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"; return; }
+      if (!/\bok\b/.test(txt)) { uiFail(); this.note = "α7: " + txt.toUpperCase(); return; }
       playOnce(this.getSceneObject(), this.alphaShutter);
       this.knownShots = await this.shotsQ(a, this.knownShots);
       await this.afterSonyShot(a, "α7 · LENS");
     }, (e) => {
       this.note = "α7 SHOOT: NO ANSWER";
+      uiFail();
       print("[live] α7 shoot: " + e);
     }).then(() => {
       this.sonyBusy = false;
@@ -403,7 +437,7 @@ export class LiveView extends BaseScriptComponent {
     try {
       const r = await a.send("pv", PV_MS);
       const head = /pv\s+(\d+)\s+(\d+)/.exec(r);
-      if (!head) { this.note = "α7 POSTVIEW: " + r.trim().toUpperCase().slice(0, 30); print("[live] pv: " + r.trim()); return; }
+      if (!head) { uiFail(); this.note = "α7 POSTVIEW: " + r.trim().toUpperCase().slice(0, 30); print("[live] pv: " + r.trim()); return; }
       const w = +head[1], h = +head[2];
       let text = "";
       for (const l of r.split("\n")) {
@@ -417,6 +451,7 @@ export class LiveView extends BaseScriptComponent {
       this.note = "α7 SHOT · IN THE ROLL";
     } catch (e) {
       this.note = "α7 POSTVIEW: NO ANSWER";
+      uiFail();
       print("[live] pv: " + e);
     }
   }
@@ -492,7 +527,7 @@ export class LiveView extends BaseScriptComponent {
   private setView(v: "scout" | "a7") {
     if (v === this.view && (v === "scout" || this.a7Quad.enabled)) return;
     this.view = v;
-    storeView(v);
+    store(VIEW_KEY, v);
     this.paintSwitch();
     this.a7Run++;                                        // any lv loop stops
     this.on = v === "scout";
@@ -514,8 +549,13 @@ export class LiveView extends BaseScriptComponent {
       if (!a || !a.live) { this.note = "α7 · WAITING FOR ALPHAFRIEND"; await this.pause(2); continue; }
       if (this.sonyBusy) { await this.pause(0.5); continue; }
       try {
-        const r = await a.send("lv", LV_MS);
+        const colour = this.a7Colour;
+        const r = await a.send(colour ? "lvj" : "lv", LV_MS);
         if (run !== this.a7Run) return;
+        if (colour) {
+          await this.showLvj(r);
+          continue;
+        }
         const head = /lv\s+(\d+)\s+(\d+)/.exec(r);
         if (!head) {
           this.note = "α7 LIVEVIEW: " + r.trim().toUpperCase().slice(0, 30);
@@ -540,6 +580,28 @@ export class LiveView extends BaseScriptComponent {
         await this.pause(1);
       }
     }
+  }
+
+  // "lvj <bytes> <w> <h>" then base64 lines of a colour JPEG
+  private async showLvj(r: string) {
+    const head = /lvj\s+(\d+)\s+(\d+)\s+(\d+)/.exec(r);
+    if (!head) {
+      this.note = "α7 LIVEVIEW: " + r.trim().toUpperCase().slice(0, 30);
+      print("[live] lvj: " + r.trim());
+      await this.pause(2);
+      return;
+    }
+    let b64 = "";
+    for (const l of r.split("\n")) {
+      const t = l.trim();
+      if (/^[A-Za-z0-9+/]+=*$/.test(t)) b64 += t;
+    }
+    await new Promise<void>((done) => Base64.decodeTextureAsync(b64, (tex) => {
+      if (this.view === "a7") setQuadTexture(this.a7Quad, tex);
+      this.a7Shown++;
+      if (/^α7 (LIVEVIEW|· WAITING)/.test(this.note)) this.note = "";
+      done();
+    }, () => { print("[live] lvj: did not decode"); done(); }));
   }
 
   private pause(seconds: number): Promise<void> {
@@ -655,7 +717,7 @@ export class LiveView extends BaseScriptComponent {
       const fps = this.a7Shown * 1000 / Math.max(1, now - (this.a7At || now - 1000));
       this.a7At = now;
       this.a7Shown = 0;
-      this.say(this.note || "α7 LIVE " + fps.toFixed(1) + " FPS");
+      this.say(this.note || "α7 LIVE " + (this.a7Colour ? "COLOUR " : "1-BIT ") + fps.toFixed(1) + " FPS · PINCH TO SWITCH");
     } else if (this.ws && this.on && !this.holding) {
       const ble = this.links.scout && this.links.scout.live ? "" : " · BLE DOWN";
       this.say(this.note || ("LIVE " + this.fps.toFixed(1) + " FPS" + (this.dropped ? " · " + this.dropped + " DROPPED" : "") + ble));
@@ -680,10 +742,10 @@ function modeShort(m: string): string {
   return k[m] || m.toUpperCase();
 }
 
-function storedView(): string {
-  try { return global.persistentStorageSystem.store.getString(VIEW_KEY); } catch (e) { return ""; }
+function stored(key: string): string {
+  try { return global.persistentStorageSystem.store.getString(key); } catch (e) { return ""; }
 }
 
-function storeView(v: string) {
-  try { global.persistentStorageSystem.store.putString(VIEW_KEY, v); } catch (e) { /* not kept */ }
+function store(key: string, v: string) {
+  try { global.persistentStorageSystem.store.putString(key, v); } catch (e) { /* not kept */ }
 }

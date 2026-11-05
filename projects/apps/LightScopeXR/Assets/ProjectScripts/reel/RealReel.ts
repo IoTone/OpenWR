@@ -18,6 +18,7 @@
 import { makeQuad, makeTappable, makeTexture, setQuadTexture, Z_BACK, Z_IMAGE } from "../ui/Bitmap";
 import { placeInFront } from "../ui/Place";
 import { Links } from "../ble/Links";
+import { uiFail } from "../ui/Sound";
 
 const AMBER = new vec4(0.949, 0.639, 0.227, 1);
 const MAX_SHOTS = 6;
@@ -151,6 +152,7 @@ export class RealReel extends BaseScriptComponent {
   abandon(job: ReelJob, why: string) {
     this.jobs = this.jobs.filter((j) => j !== job);
     this.note = job.label + " · " + why;
+    uiFail();
     print("[reel] " + this.note);
     this.redraw();
   }
