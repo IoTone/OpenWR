@@ -32,6 +32,11 @@
 //      (Scout prints it on its console: `url?`)
 //   4. Send to Spectacles; read the Logger ([lan] lines) and Scout's `web?`
 
+// WebView may need the text-input permission (the glasses showed
+// PERMISSION_DENIED INPUT_TEXT when it never became ready): declare it, as
+// the InternetModule declaration does for the network.
+require("LensStudio:TextInputModule");
+
 @component
 export class LanProbe extends BaseScriptComponent {
 
@@ -79,13 +84,21 @@ export class LanProbe extends BaseScriptComponent {
   private media = require("LensStudio:RemoteMediaModule") as RemoteMediaModule;
   private lines: string[] = [];
   private rx: Bluetooth.BluetoothGattCharacteristic = null;
+  private gatt: Bluetooth.BluetoothGatt = null;
   private rxBuf = "";
   private onPrompt: (() => void) | null = null;
   private webview: WebPageTextureProvider = null;
 
   onAwake() {
-    if (this.frameImage) this.frameImage.mainMaterial = this.frameImage.mainMaterial.clone();
-    if (this.webImage) this.webImage.mainMaterial = this.webImage.mainMaterial.clone();
+    // the two panels sit to the right of the text, frames above, the web page below
+    const place = (img: Image, y: number) => {
+      img.mainMaterial = img.mainMaterial.clone();
+      const t = img.getSceneObject().getTransform();
+      t.setLocalPosition(new vec3(19, y, 0));
+      t.setLocalScale(new vec3(8, 8, 8));
+    };
+    if (this.frameImage) place(this.frameImage, 5);
+    if (this.webImage) place(this.webImage, -13);
     this.after(Math.max(0.01, this.startDelay), () => { this.run(); });
   }
 
@@ -113,6 +126,7 @@ export class LanProbe extends BaseScriptComponent {
         const url = await this.bleUrl();
         await this.netSteps(url);
         await this.bleCheck();
+        await this.withoutBle(url);
       } else if (this.order === "net-first") {
         await this.netSteps(this.base(this.scoutUrl));
         const url = await this.bleUrl();
@@ -125,6 +139,19 @@ export class LanProbe extends BaseScriptComponent {
     } catch (e) {
       this.log("FAIL " + e);
     }
+  }
+
+  // Scout has one radio for BLE and Wi-Fi: is a live BLE link what slows the
+  // frames? Drop it, then time fetch and ws again, and ws with 2 in flight.
+  private async withoutBle(url: string) {
+    if (!this.gatt) return;
+    this.log("ble: disconnecting to compare");
+    this.rx = null;
+    this.gatt.disconnect();
+    await this.wait(2000);
+    await this.step("fetch, no BLE", () => this.fetchStep(url));
+    await this.step("ws, no BLE", () => this.wsStep(url, 1));
+    await this.step("ws x2, no BLE", () => this.wsStep(url, 2));
   }
 
   private base(u: string): string {
@@ -149,6 +176,7 @@ export class LanProbe extends BaseScriptComponent {
     }
     if (!found) throw new Error("ble scan found nothing");
     const gatt = await this.bluetoothModule.connectGatt(found.deviceAddress);
+    this.gatt = gatt;
     gatt.onConnectionStateChangedEvent.add((e) => this.log("ble: link state " + e.state));
     let tx: Bluetooth.BluetoothGattCharacteristic = null;
     for (const s of gatt.getServices())
@@ -206,7 +234,9 @@ export class LanProbe extends BaseScriptComponent {
     this.log("net: " + base);
     await this.step("fetch", () => this.fetchStep(base));
     await this.step("media", () => this.mediaStep(base));
-    await this.step("ws", () => this.wsStep(base));
+    await this.step("ws", () => this.wsStep(base, 1));
+    await this.step("ws x2", () => this.wsStep(base, 2));
+    await this.step("ws x4", () => this.wsStep(base, 4));
     await this.step("webview", () => this.webviewStep(base));
   }
 
@@ -254,7 +284,8 @@ export class LanProbe extends BaseScriptComponent {
     return this.rate(this.frames, Date.now() - t0);
   }
 
-  private wsStep(base: string): Promise<string> {
+  // inFlight: how many frame requests are outstanding at once
+  private wsStep(base: string, inFlight: number): Promise<string> {
     const url = base.replace(/^http/, "ws") + "ws";
     return new Promise<string>((resolve, reject) => {
       let ws: WebSocket;
@@ -274,7 +305,7 @@ export class LanProbe extends BaseScriptComponent {
         else resolve(this.rate(n, Date.now() - t0) + (err ? " (then " + err + ")" : ""));
       };
       this.after(this.wsSeconds + 5, () => finish(n ? undefined : "no frames in " + (this.wsSeconds + 5) + " s"));
-      ws.onopen = () => { t0 = Date.now(); ws.send("f"); };
+      ws.onopen = () => { t0 = Date.now(); for (let i = 0; i < inFlight; i++) ws.send("f"); };
       ws.onerror = () => finish("socket error");
       ws.onclose = (e) => finish("closed " + e.code);
       ws.onmessage = async (e) => {
