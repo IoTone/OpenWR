@@ -996,6 +996,7 @@
       imageMaterial: !<reference.Material> bf089e2a-a8df-459f-af57-8519efb75e9d
       monoText: !<reference.Text> a9efd50f-1e6f-4f7d-ad74-f5224069ba8b
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
+      shutter: !<reference.AudioTrackAsset> d4499db7-402f-4c3a-9174-7b1d3c455a73
       distance: !<float> 60.000000
       width: !<float> 26.000000
   ScriptTypes:
@@ -5094,6 +5095,8 @@
       captionText: !<reference.Text> e70f117e-4b6d-416c-ad49-c60961128f5b
       reel: !<MappingBased.AssignableType_2> df8d47b4-b96e-4a92-aae0-6947ee9941fe
       sonyText: !<reference.Text> e4740055-2882-4fba-a35d-be70dba3d490
+      alphaShutter: !<reference.AudioTrackAsset> f83e1f10-5644-4daf-8059-95d1788027f5
+      scoutShutter: !<reference.AudioTrackAsset> b8ffa364-316e-47fb-adeb-8cb8fac0b7d6
       frame: !<reference.SceneObject> dee0d256-cecd-47a5-aee0-0c93ea950d7b
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       distance: !<float> 85.000000

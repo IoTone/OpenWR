@@ -32,6 +32,7 @@
     links: false
     monoText: false
     roll: false
+    shutter: false
     width: false
   ScriptTypesHidden:
     {}
@@ -47,6 +48,7 @@
       imageMaterial: !<reference.Material> 00000000-0000-0000-0000-000000000000
       monoText: !<reference.Text> 00000000-0000-0000-0000-000000000000
       camera: !<reference.SceneObject> 00000000-0000-0000-0000-000000000000
+      shutter: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
       distance: !<float> 100.000000
       width: !<float> 34.000000
   ScriptTypes:
@@ -58,5 +60,6 @@
     - '// @input Asset.Material imageMaterial {"hint":"Unlit material with a base texture"}'
     - '// @input Component.Text monoText {"hint":"A Text to copy for chips and labels (mono)"}'
     - '// @input SceneObject camera {"hint":"The scene camera (it follows the head)"}'
+    - '// @input Asset.AudioTrackAsset shutter {"hint":"Shutter sound for a shot with the glasses"}'
     - '// @input float distance = 60 {"hint":"How far ahead the target floats, cm (nearer than the panels)"}'
     - '// @input float width = 26 {"hint":"Target width, cm, at that distance"}'
