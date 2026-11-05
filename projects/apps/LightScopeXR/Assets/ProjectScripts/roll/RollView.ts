@@ -1,8 +1,9 @@
 // Copyright (c) 2026 IoTone, Inc. MIT/X License — see LICENSE.txt
 //
-// RollView.ts — the maplet's roll, pulled straight from its card.
+// RollView.ts — a camera's roll: the maplet's card, or Scout's flash.
 //
-// When the maplet link is up: `roll-ls` lists the frames (0000.BIN ...),
+// The roll comes from links.rollLink (the maplet when it is linked, else
+// Scout, which speaks the same roll words). When that link is up: `roll-ls` lists the frames (0000.BIN ...),
 // then `n roll-get` brings each back as hex lines, newest first. A frame is
 // the panel it was shot on: 212x104 (2808 B) or 296x128 (4736 B), packed
 // 1-bit, 1 = ink. On the glass, paper is Headlamp amber at half strength and
@@ -74,8 +75,8 @@ export class RollView extends BaseScriptComponent {
 
   onAwake() {
     this.createEvent("OnStartEvent").bind(() => {
-      this.paint(this.titleText, "ROLL · MAPLET");
-      this.paint(this.captionText, this.demoMode ? "DEMO · stand-in frames" : "waiting for the maplet");
+      this.paint(this.titleText, "ROLL");
+      this.paint(this.captionText, this.demoMode ? "DEMO · stand-in frames" : "waiting for a camera");
       this.links.after(() => {
         if (this.frame && this.camera) placeInFront(this.frame, this.camera, this.distance, this.drop, this.yaw);
       }, 0.3);
@@ -90,17 +91,25 @@ export class RollView extends BaseScriptComponent {
   }
 
   private maybeFetch() {
-    const m = this.links.maplet;
+    const m = this.links.rollLink;
     if (!m || !m.live || this.fetching || this.fetched) return;
+    this.paint(this.titleText, "ROLL · " + m.deviceName.toUpperCase());
     this.fetching = true;
     this.fetch().then(() => { this.fetched = true; }, (e) => {
       print("[roll] " + e);
-      this.paint(this.captionText, "maplet: " + e);
+      this.paint(this.captionText, m.deviceName + ": " + e);
     }).then(() => { this.fetching = false; });
   }
 
+  // Fetch the roll again (a camera just shot into it).
+  refresh() {
+    if (this.fetching) return;
+    this.fetched = false;
+    this.maybeFetch();
+  }
+
   private async fetch() {
-    const m = this.links.maplet;
+    const m = this.links.rollLink;
     this.paint(this.captionText, "listing the roll");
     const ls = await m.send("roll-ls", 8000);
     const ns: number[] = [];
@@ -111,10 +120,15 @@ export class RollView extends BaseScriptComponent {
     ns.sort((a, b) => b - a);                  // newest first
     print("[roll] " + ns.length + " frames on the card");
     if (ns.length === 0) {
-      this.paint(this.captionText, "the roll is empty: snap on the maplet");
+      this.paint(this.captionText, "the roll is empty: shoot first");
       return;
     }
-    const take = ns.slice(0, MAX_FRAMES);
+    // on a refresh only the frames not here yet, oldest first, each in front
+    const have = new Set(this.frames.filter((f) => f.n >= 0).map((f) => f.n));
+    const front = have.size > 0;
+    let take = ns.filter((n) => !have.has(n)).slice(0, MAX_FRAMES);
+    if (take.length === 0) { this.paint(this.captionText, this.describe()); return; }
+    if (front) take = take.reverse();
     const v = /v(\d+)\.(\d+)\.(\d+)/.exec(await m.send("version"));
     const b64 = v !== null && +v[1] * 10000 + +v[2] * 100 + +v[3] >= 302;
     if (b64) {
@@ -140,9 +154,10 @@ export class RollView extends BaseScriptComponent {
         continue;
       }
       print("[roll] frame " + n + " " + size[0] + "x" + size[1] + " in " + (Date.now() - t0) + " ms" + (b64 ? " (base64)" : " (hex)"));
-      this.add({ n, w: size[0], h: size[1], bits, thumb: null });
+      this.add({ n, w: size[0], h: size[1], bits, thumb: null }, front);
     }
     if (b64) await m.send("24 40 ble-conn!");        // 30-50 ms again: the roll is in
+    if (front) this.select(0);
     this.paint(this.captionText, this.describe());
   }
 

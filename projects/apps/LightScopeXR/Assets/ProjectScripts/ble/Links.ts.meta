@@ -26,10 +26,12 @@
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
+    alphaName: false
     bluetoothModule: false
     goggleName: false
     mapletName: false
     offline: false
+    scoutName: false
     useStrap: false
   ScriptTypesHidden:
     {}
@@ -41,6 +43,8 @@
     []
   DefaultScriptInputs:
     - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
+      alphaName: AlphaFriend
+      scoutName: Scout
       goggleName: goggl1
       mapletName: maplet
       useStrap: true
@@ -50,7 +54,9 @@
       {}
   InputLines:
     - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
-    - "// @input string goggleName = \"goggl1\" {\"hint\":\"goggl1's advertised name\"}"
-    - "// @input string mapletName = \"maplet\" {\"hint\":\"The maplet's advertised name; empty to leave it alone\"}"
-    - '// @input bool useStrap = true {"hint":"Read the heart-rate strap"}'
+    - "// @input string alphaName = \"AlphaFriend\" {\"hint\":\"AlphaFriend's advertised name; empty to leave it alone\"}"
+    - "// @input string scoutName = \"Scout\" {\"hint\":\"Scout's advertised name; empty to leave it alone\"}"
+    - "// @input string goggleName {\"hint\":\"goggl1's advertised name; empty to leave it alone\"}"
+    - "// @input string mapletName {\"hint\":\"The maplet's advertised name; empty to leave it alone\"}"
+    - '// @input bool useStrap {"hint":"Read the heart-rate strap"}'
     - '// @input bool offline {"hint":"Open no links (the editor preview has no Bluetooth)"}'

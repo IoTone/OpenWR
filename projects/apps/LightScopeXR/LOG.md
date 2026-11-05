@@ -132,6 +132,8 @@ Covers the lens and AlphaFriend
   BLE live in 1.5 s, url over BLE. fetch 1.7 fps, ws 2.3, ws x2 6.0,
   **ws x4 8.3 fps** (121 ms, ~10.5 KB). WebView PASS, ready in 1.7 s. BLE
   still live (117 ms). Without BLE: fetch 2.7, ws 3.8, ws x2 4.8. Media
-  from URL still FAIL. Repeats the fourth run.
+  from URL still FAIL. Repeats the fourth run. No INPUT_TEXT notice this
+  time (same lens: TextInputModule declared, WebView step included), so
+  it showed in runs 1-4 but not here; cause still unknown.
 - Conclusion: control over BLE, frames over `ws` with ~4 requests in
   flight, 5-10 fps, works on the glasses without Extended Permissions.
