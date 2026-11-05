@@ -19,7 +19,7 @@
 // `pv`: AlphaFriend streams the shot's postview through TJpgDec and answers
 // with a 198x132 dithered frame in base64, which joins the Roll. The line
 // above the picture is the Sony's state from `cam?` and `cam-evt`.
-// The view chip cycles VIEW SCOUT -> VIEW α7 -> PAUSED. VIEW α7 loops `lv`
+// The SCOUT | α7 switch picks what the picture shows (kept for next launch). α7 loops `lv`
 // on AlphaFriend: one liveview frame from the camera's stream, decoded at
 // 1/4 and dithered to 160x106 (~2.1 KB, ~1 fps over BLE), shown in a 3:2
 // quad where Scout's picture was. Scout's socket is let go meanwhile.
@@ -28,6 +28,9 @@
 // frame that was up when SHOOT SCOUT went; an α7 shot (from the lens or
 // AlphaFriend's A button, which the lens notices through `shots?`) as
 // AlphaFriend's `pvj` colour thumbnail, before the dithered `pv` for the Roll.
+//
+// Each shot plays its camera's shutter (ui/Sound.ts, sounds in Assets/Sounds,
+// credits in README.md).
 //
 // If the socket drops or stalls, it reconnects; after a few failures it asks
 // Scout for its address again (its DHCP lease may have moved).
@@ -41,6 +44,7 @@ import { placeInFront } from "../ui/Place";
 import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
 import { RealReel } from "../reel/RealReel";
+import { playOnce } from "../ui/Sound";
 
 const AMBER: Rgb = [242, 163, 58];
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
@@ -54,7 +58,8 @@ const SONY_POLL_S = 15;
 const PV_MS = 30000;
 const LV_MS = 6000;
 const LV_PAPER = [235, 222, 196, 255];        // warm white: the liveview reads as a picture, not a roll frame
-const LV_INK = [0, 0, 0, 255];              // fetch + decode on AlphaFriend (~2 s) and ~4.4 KB of base64 over BLE
+const LV_INK = [0, 0, 0, 255];
+const VIEW_KEY = "lightscope.view";              // fetch + decode on AlphaFriend (~2 s) and ~4.4 KB of base64 over BLE
 
 @component
 export class LiveView extends BaseScriptComponent {
@@ -88,6 +93,16 @@ export class LiveView extends BaseScriptComponent {
 
   @input
   @allowUndefined
+  @hint("Shutter sound for an α7 shot")
+  alphaShutter: AudioTrackAsset;
+
+  @input
+  @allowUndefined
+  @hint("Shutter sound for a Scout shot")
+  scoutShutter: AudioTrackAsset;
+
+  @input
+  @allowUndefined
   frame: SceneObject;
 
   @input
@@ -110,11 +125,13 @@ export class LiveView extends BaseScriptComponent {
   private media = require("LensStudio:RemoteMediaModule") as RemoteMediaModule;
 
   private picture: SceneObject;
-  private liveChip: Text;
+  private viewLabels: Text[] = [];
+  private viewFill: SceneObject;
+  private exposure = "";          // the α7's settings, from the last cam-evt
   private wsUrl = "";
   private asking = false;
   private on = true;
-  private view: "scout" | "a7" | "paused" = "scout";
+  private view: "scout" | "a7" = "scout";
   private a7Quad: SceneObject;
   private a7Run = 0;              // bumps to stop a running lv loop
   private a7Shown = 0;
@@ -139,6 +156,7 @@ export class LiveView extends BaseScriptComponent {
   onAwake() {
     this.createEvent("OnStartEvent").bind(() => {
       this.build();
+      if (storedView() === "a7") this.setView("a7");
       this.links.after(() => {
         if (this.frame && this.camera) placeInFront(this.frame, this.camera, this.distance, this.drop, this.yaw);
       }, 0.3);
@@ -168,7 +186,7 @@ export class LiveView extends BaseScriptComponent {
     const cy = y0 - h / 2 - 1.6;
     this.chip(root, "SHOOT SCOUT", 5.6, new vec3(-5.4, cy, 0), () => this.shoot());
     this.chip(root, "SHOOT α7", 4.6, new vec3(0.0, cy, 0), () => this.shootSony());
-    this.liveChip = this.chip(root, "VIEW SCOUT", 5.6, new vec3(5.4, cy, 0), () => this.toggle());
+    this.viewSwitch(root, 5.6, 1.6, new vec3(5.4, cy, 0));
     if (this.captionText) this.captionText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 - h / 2 - 3.6, 0.2));
     if (this.sonyText) this.sonyText.getSceneObject().getTransform().setLocalPosition(new vec3(0, y0 + h / 2 + 1.0, 0.2));
     this.say("WAITING FOR SCOUT");
@@ -196,6 +214,47 @@ export class LiveView extends BaseScriptComponent {
     t.textFill.color = rgba(AMBER);
     t.setRenderOrder(12);
     return t;
+  }
+
+  // SCOUT | α7: one outline, the side in view filled amber with dark text.
+  private viewSwitch(parent: SceneObject, w: number, h: number, at: vec3) {
+    const r = new Raster(Math.round(w * 40), Math.round(h * 40)), rad = r.h / 2 - 1;
+    for (let y = 0; y < r.h; y++) for (let x = 0; x < r.w; x++) {
+      const cx = Math.min(Math.max(x, rad + 1), r.w - rad - 1), d = Math.hypot(x - cx, y - r.h / 2);
+      if (Math.abs(d - rad + 1) <= 1.1 || (Math.abs(x - r.w / 2) <= 1 && y > 3 && y < r.h - 4)) r.plot(x, y, AMBER);
+    }
+    makeQuad(parent, "Chip VIEW", w, h, this.imageMaterial, r.texture(), 9)
+      .getTransform().setLocalPosition(new vec3(at.x, at.y, Z_BACK));
+    this.viewFill = makeQuad(parent, "View Fill", w / 2 - 0.5, h - 0.35, this.imageMaterial, makeTexture(1, 1, new Uint8Array([242, 163, 58, 255])), 10);
+    const sides: ["scout" | "a7", string, number][] = [["scout", "SCOUT", -w / 4], ["a7", "α7", w / 4]];
+    for (const [v, s, dx] of sides) {
+      const hit = global.scene.createSceneObject("View " + s);       // a tap area, nothing drawn
+      hit.setParent(parent);
+      hit.getTransform().setLocalPosition(new vec3(at.x + dx, at.y, Z_BACK));
+      makeTappable(hit, w / 2, h, () => this.setView(v));
+      const o = global.scene.createSceneObject("Label VIEW " + s);
+      o.setParent(parent);
+      o.getTransform().setLocalPosition(new vec3(at.x + dx, at.y, Z_IMAGE));
+      const t = o.createComponent("Component.Text") as Text;
+      t.font = this.monoText.font;
+      t.size = 18;
+      t.text = s;
+      t.horizontalAlignment = HorizontalAlignment.Center;
+      t.verticalAlignment = VerticalAlignment.Center;
+      t.setRenderOrder(12);
+      this.viewLabels.push(t);
+    }
+    this.viewAt = at;
+    this.paintSwitch();
+  }
+
+  private viewAt = vec3.zero();
+
+  private paintSwitch() {
+    const a7 = this.view === "a7";
+    this.viewFill.getTransform().setLocalPosition(new vec3(this.viewAt.x + (a7 ? 1 : -1) * 5.6 / 4, this.viewAt.y, (Z_BACK + Z_IMAGE) / 2));
+    this.viewLabels[0].textFill.color = a7 ? rgba(AMBER) : new vec4(0, 0, 0, 1);
+    this.viewLabels[1].textFill.color = a7 ? new vec4(0, 0, 0, 1) : rgba(AMBER);
   }
 
   // ---- Scout over BLE -----------------------------------------------------
@@ -245,6 +304,7 @@ export class LiveView extends BaseScriptComponent {
     if (job) job.stage("SHOOTING", 1.5);
     s.send("shoot", SHOOT_MS).then((r) => {
       const m = /ok\s+(\d+)/.exec(r);
+      if (m) playOnce(this.getSceneObject(), this.scoutShutter);
       if (job) {
         if (m && colour) job.done(colour, 320, 240, "FRAME " + ("000" + m[1]).slice(-4));
         else job.fail(m ? "NO LIVE FRAME TO KEEP" : "SHOT FAILED");
@@ -278,6 +338,7 @@ export class LiveView extends BaseScriptComponent {
       const err = /err\s+(-?\d+)/.exec(txt);
       if (err) { this.note = "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"; return; }
       if (!/\bok\b/.test(txt)) { this.note = "α7: " + txt.toUpperCase(); return; }
+      playOnce(this.getSceneObject(), this.alphaShutter);
       this.knownShots = await this.shotsQ(a, this.knownShots);
       await this.afterSonyShot(a, "α7 · LENS");
     }, (e) => {
@@ -312,6 +373,7 @@ export class LiveView extends BaseScriptComponent {
   private async colourThumb(a: GoggleLink, label: string) {
     if (!this.reel) return;
     const job = this.reel.begin(label);
+    job.meta = this.exposure;
     job.stage("ALPHAFRIEND FETCHING + ENCODING", 3.5);
     try {
       const r = await a.send("pvj", PV_MS);
@@ -369,6 +431,7 @@ export class LiveView extends BaseScriptComponent {
       else if (n > this.knownShots && !this.sonyBusy) {
         this.knownShots = n;
         print("[live] α7 button shot #" + n);
+        playOnce(this.getSceneObject(), this.alphaShutter);
         this.sonyBusy = true;
         try { await this.afterSonyShot(a, "α7 · BUTTON"); } finally {
           this.sonyBusy = false;
@@ -407,8 +470,9 @@ export class LiveView extends BaseScriptComponent {
         if (m) v[m[1]] = m[2].trim();
       }
       const ev = v.ev !== undefined && !isNaN(+v.ev) ? ((+v.ev >= 0 ? "+" : "") + (+v.ev / 3).toFixed(1) + " EV") : "";
-      const parts = [c[2] === "ILCE-7RM3" ? "α7R III" : c[2], modeShort(v.mode), v.ss, v.f ? "f/" + v.f : "", v.iso ? "ISO " + v.iso : "", ev];
-      this.sony(parts.filter((x) => x).join(" · "));
+      const parts = [modeShort(v.mode), v.ss, v.f ? "f/" + v.f : "", v.iso ? "ISO " + v.iso : "", ev].filter((x) => x);
+      this.exposure = parts.join(" · ");
+      this.sony([c[2] === "ILCE-7RM3" ? "α7R III" : c[2]].concat(parts).join(" · "));
     } catch (e) {
       print("[live] α7 read: " + e);
       this.sony("α7R III · ALPHAFRIEND NOT ANSWERING");
@@ -424,20 +488,22 @@ export class LiveView extends BaseScriptComponent {
 
   // ---- frames over Wi-Fi --------------------------------------------------
 
-  // VIEW SCOUT -> VIEW α7 -> PAUSED -> VIEW SCOUT
-  private toggle() {
-    this.view = this.view === "scout" ? "a7" : this.view === "a7" ? "paused" : "scout";
-    this.liveChip.text = this.view === "scout" ? "VIEW SCOUT" : this.view === "a7" ? "VIEW α7" : "PAUSED";
+  // SCOUT: Scout's stream over Wi-Fi. α7: AlphaFriend's `lv` loop over BLE.
+  private setView(v: "scout" | "a7") {
+    if (v === this.view && (v === "scout" || this.a7Quad.enabled)) return;
+    this.view = v;
+    storeView(v);
+    this.paintSwitch();
     this.a7Run++;                                        // any lv loop stops
-    this.on = this.view === "scout";
-    this.picture.enabled = this.view !== "a7";
-    this.a7Quad.enabled = this.view === "a7";
-    if (this.view === "scout") {
+    this.on = v === "scout";
+    this.picture.enabled = v === "scout";
+    this.a7Quad.enabled = v === "a7";
+    if (v === "scout") {
       if (this.wsUrl) this.open(); else this.askUrl();
     } else {
       this.close(true);
-      this.say(this.view === "a7" ? "α7 · STARTING THE LIVEVIEW" : "PAUSED");
-      if (this.view === "a7") this.a7Loop(this.a7Run);
+      this.say("α7 · STARTING THE LIVEVIEW");
+      this.a7Loop(this.a7Run);
     }
   }
 
@@ -542,7 +608,7 @@ export class LiveView extends BaseScriptComponent {
   // lens's script for ~27 s on the glasses (2026-11-04), freezing every
   // panel, so a dead socket is only abandoned: its handlers go quiet (serial)
   // and the glasses' stack times it out. close() is called only when the
-  // socket is still answering (LIVE paused, lens closing).
+  // socket is still answering (switching to α7, lens closing).
   private close(graceful = false) {
     this.wsSerial++;
     const ws = this.ws;
@@ -612,4 +678,12 @@ function modeShort(m: string): string {
   if (!m) return "";
   const k: { [k: string]: string } = { "Program Auto": "P", "Aperture": "A", "Shutter": "S", "Manual": "M", "Intelligent Auto": "AUTO" };
   return k[m] || m.toUpperCase();
+}
+
+function storedView(): string {
+  try { return global.persistentStorageSystem.store.getString(VIEW_KEY); } catch (e) { return ""; }
+}
+
+function storeView(v: string) {
+  try { global.persistentStorageSystem.store.putString(VIEW_KEY, v); } catch (e) { /* not kept */ }
 }

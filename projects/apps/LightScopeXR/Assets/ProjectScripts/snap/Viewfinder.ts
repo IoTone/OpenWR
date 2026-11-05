@@ -29,6 +29,7 @@ import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
 import { DESIGN_DISTANCE } from "../ui/Place";
 import { Source, toFrame, toHex } from "./Dither";
+import { playOnce } from "../ui/Sound";
 
 const AMBER: Rgb = [242, 163, 58];
 const PAPER = [160, 108, 38, 255];
@@ -55,6 +56,11 @@ export class Viewfinder extends BaseScriptComponent {
   @input
   @hint("The scene camera (it follows the head)")
   camera: SceneObject;
+
+  @input
+  @allowUndefined
+  @hint("Shutter sound for a shot with the glasses")
+  shutter: AudioTrackAsset;
 
   @input
   @hint("How far ahead the target floats, cm (nearer than the panels)")
@@ -192,6 +198,7 @@ export class Viewfinder extends BaseScriptComponent {
   private shoot() {
     if (this.shooting || !this.camTex) return;
     this.shooting = true;                          // the target holds still
+    playOnce(this.getSceneObject(), this.shutter);
     this.clearPreview();
     this.say("SHOOTING");
     this.grab(SKIP_FRAMES, 5);

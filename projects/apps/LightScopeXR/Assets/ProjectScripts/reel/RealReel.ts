@@ -12,7 +12,8 @@
 // long so far, and a bar against how long that step took last time.
 //
 // Newest shot large on top, the rest in a strip below; a pinch on a thumb
-// brings it up.
+// brings it up and writes its details in the caption: where it came from,
+// when, its size, how long it took to get here and (for the α7) the exposure.
 
 import { makeQuad, makeTappable, makeTexture, setQuadTexture, Z_BACK, Z_IMAGE } from "../ui/Bitmap";
 import { placeInFront } from "../ui/Place";
@@ -20,14 +21,16 @@ import { Links } from "../ble/Links";
 
 const AMBER = new vec4(0.949, 0.639, 0.227, 1);
 const MAX_SHOTS = 6;
+const BIG_Y = 2.2;              // clear of the thumb strip (a selected thumb grows 12 %)
 
-interface Shot { tex: Texture; w: number; h: number; label: string; thumb: SceneObject; }
+interface Shot { tex: Texture; w: number; h: number; label: string; info: string; meta: string; took: number; at: string; thumb: SceneObject; }
 
 export class ReelJob {
   private t0 = Date.now();
   private stageAt = Date.now();
   private expect = 3;
   stageName = "";
+  meta = "";                       // the exposure etc., shown with the shot
   constructor(private reel: RealReel, readonly label: string) {}
 
   // A step that should take about expectSec (the reel remembers how long
@@ -102,7 +105,8 @@ export class RealReel extends BaseScriptComponent {
       this.paint(this.captionText, "COLOUR SHOTS LAND HERE");
       const root = this.getSceneObject();
       this.big = makeQuad(root, "Big", this.bigWidth, this.bigWidth * 2 / 3, this.imageMaterial, makeTexture(1, 1, new Uint8Array([0, 0, 0, 255])));
-      this.big.getTransform().setLocalPosition(new vec3(0, 1.6, Z_IMAGE));
+      this.big.getTransform().setLocalPosition(new vec3(0, BIG_Y, Z_IMAGE));
+      if (this.titleText) this.titleText.getSceneObject().getTransform().setLocalPosition(new vec3(0, BIG_Y + this.bigWidth / 3 + 0.9, 0.2));
       const amber = makeTexture(1, 1, new Uint8Array([242, 163, 58, 255]));
       const dim = makeTexture(1, 1, new Uint8Array([70, 46, 16, 255]));
       this.barBack = makeQuad(root, "BarBack", this.bigWidth, 0.35, this.imageMaterial, dim, 9);
@@ -138,9 +142,9 @@ export class RealReel extends BaseScriptComponent {
 
   finish(job: ReelJob, tex: Texture, w: number, h: number, info: string) {
     this.jobs = this.jobs.filter((j) => j !== job);
-    this.add({ tex, w, h, label: job.label, thumb: null });
-    this.note = job.label + " · " + info + " · " + job.elapsed().toFixed(1) + " S";
-    print("[reel] " + this.note);
+    this.add({ tex, w, h, label: job.label, info, meta: job.meta, took: job.elapsed(), at: clock(), thumb: null });
+    this.note = "";                                    // the caption shows the new shot's details
+    print("[reel] " + job.label + " · " + info + " · " + job.elapsed().toFixed(1) + " S");
     this.redraw();
   }
 
@@ -161,7 +165,7 @@ export class RealReel extends BaseScriptComponent {
     }
     const tw = this.thumbWidth(), th = tw * 2 / 3;
     s.thumb = makeQuad(this.getSceneObject(), "Thumb", tw, th, this.imageMaterial, s.tex);
-    makeTappable(s.thumb, tw, th, () => this.select(this.shots.indexOf(s)));
+    makeTappable(s.thumb, tw, th, () => { this.note = ""; this.select(this.shots.indexOf(s)); });
     this.select(0);
   }
 
@@ -200,7 +204,7 @@ export class RealReel extends BaseScriptComponent {
       this.paint(this.captionText, this.note);
     } else if (this.selected >= 0) {
       const s = this.shots[this.selected];
-      this.paint(this.captionText, s.label + " · " + s.w + "×" + s.h);
+      this.paint(this.captionText, details(s));
     }
   }
 
@@ -220,4 +224,15 @@ export class RealReel extends BaseScriptComponent {
     t.text = s.toUpperCase();
     t.textFill.color = AMBER;
   }
+}
+
+function clock(): string {
+  const d = new Date(), two = (n: number) => ("0" + n).slice(-2);
+  return two(d.getHours()) + ":" + two(d.getMinutes()) + ":" + two(d.getSeconds());
+}
+
+// two lines: what and when; size, transfer and exposure
+function details(s: Shot): string {
+  const second = [s.w + "×" + s.h, s.info, s.took.toFixed(1) + " S", s.meta].filter((x) => x);
+  return s.label + " · " + s.at + "\n" + second.join(" · ");
 }
