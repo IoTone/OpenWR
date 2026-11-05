@@ -24,6 +24,11 @@
 // 1/4 and dithered to 160x106 (~2.1 KB, ~1 fps over BLE), shown in a 3:2
 // quad where Scout's picture was. Scout's socket is let go meanwhile.
 //
+// Every shot also goes to RealReel in colour: a Scout shot as the Live
+// frame that was up when SHOOT SCOUT went; an α7 shot (from the lens or
+// AlphaFriend's A button, which the lens notices through `shots?`) as
+// AlphaFriend's `pvj` colour thumbnail, before the dithered `pv` for the Roll.
+//
 // If the socket drops or stalls, it reconnects; after a few failures it asks
 // Scout for its address again (its DHCP lease may have moved).
 
@@ -35,6 +40,7 @@ import { b64ToBytes, makeQuad, makeTappable, makeTexture, setQuadTexture, unpack
 import { placeInFront } from "../ui/Place";
 import { Raster, Rgb } from "../ui/Raster";
 import { RollView } from "../roll/RollView";
+import { RealReel } from "../reel/RealReel";
 
 const AMBER: Rgb = [242, 163, 58];
 const rgba = (c: Rgb) => new vec4(c[0] / 255, c[1] / 255, c[2] / 255, 1);
@@ -69,6 +75,11 @@ export class LiveView extends BaseScriptComponent {
   monoText: Text;
 
   @input captionText: Text;
+
+  @input
+  @allowUndefined
+  @hint("RealReel: colour copies of the shots")
+  reel: RealReel;
 
   @input
   @allowUndefined
@@ -121,6 +132,8 @@ export class LiveView extends BaseScriptComponent {
   private fps = 0;
   private note = "";
   private sonyBusy = false;
+  private knownShots = -1;        // AlphaFriend's shot counter, as last seen
+  private lastScoutTex: Texture = null;
   private sonyAsked = false;
 
   onAwake() {
@@ -133,6 +146,7 @@ export class LiveView extends BaseScriptComponent {
       this.linkChanged();
       this.tick();
       this.sonyPoll();
+      this.buttonPoll();
     });
     this.createEvent("OnDestroyEvent").bind(() => this.close(true));
   }
@@ -226,14 +240,22 @@ export class LiveView extends BaseScriptComponent {
     this.holding = true;
     this.say("SHOOTING");
     const t0 = Date.now();
+    const colour = this.lastScoutTex;                    // what was on the panel when SHOOT went
+    const job = this.reel ? this.reel.begin("SCOUT") : null;
+    if (job) job.stage("SHOOTING", 1.5);
     s.send("shoot", SHOOT_MS).then((r) => {
       const m = /ok\s+(\d+)/.exec(r);
+      if (job) {
+        if (m && colour) job.done(colour, 320, 240, "FRAME " + ("000" + m[1]).slice(-4));
+        else job.fail(m ? "NO LIVE FRAME TO KEEP" : "SHOT FAILED");
+      }
       this.note = m ? "SHOT " + ("000" + m[1]).slice(-4) + " ON SCOUT" : "SHOOT: " + r.trim().toUpperCase();
       print("[live] shoot " + r.trim() + " in " + (Date.now() - t0) + " ms");
       if (m && this.roll) this.roll.refresh();
     }, (e) => {
       this.note = "SHOOT FAILED";
       print("[live] shoot: " + e);
+      if (job) job.fail("NO ANSWER");
     }).then(() => {
       this.holding = false;
       this.links.after(() => { this.note = ""; }, 4);
@@ -256,9 +278,8 @@ export class LiveView extends BaseScriptComponent {
       const err = /err\s+(-?\d+)/.exec(txt);
       if (err) { this.note = "α7 SHOT FAILED (" + err[1] + (err[1] === "40400" ? ", FOCUS?" : "") + ")"; return; }
       if (!/\bok\b/.test(txt)) { this.note = "α7: " + txt.toUpperCase(); return; }
-      this.note = "α7 SHOT · FETCHING THE POSTVIEW";
-      this.say(this.note);
-      await this.postview(a);
+      this.knownShots = await this.shotsQ(a, this.knownShots);
+      await this.afterSonyShot(a, "α7 · LENS");
     }, (e) => {
       this.note = "α7 SHOOT: NO ANSWER";
       print("[live] α7 shoot: " + e);
@@ -267,6 +288,51 @@ export class LiveView extends BaseScriptComponent {
       this.links.after(() => { this.note = ""; }, 5);
       this.sonyRead();
     });
+  }
+
+  // A shot is on the camera: colour thumbnail to RealReel first, then the
+  // dithered postview to the Roll.
+  private async afterSonyShot(a: GoggleLink, label: string) {
+    this.note = "α7 SHOT · FETCHING THE PICTURES";
+    this.say(this.note);
+    await this.colourThumb(a, label + " #" + this.knownShots);
+    await this.postview(a);
+  }
+
+  private async shotsQ(a: GoggleLink, fallback: number): Promise<number> {
+    try {
+      const m = /shots\s+(\d+)/.exec(await a.send("shots?"));
+      return m ? +m[1] : fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  // `pvj` -> "pvj <bytes> <w> <h>" then base64 lines of a colour JPEG.
+  private async colourThumb(a: GoggleLink, label: string) {
+    if (!this.reel) return;
+    const job = this.reel.begin(label);
+    job.stage("ALPHAFRIEND FETCHING + ENCODING", 3.5);
+    try {
+      const r = await a.send("pvj", PV_MS);
+      const head = /pvj\s+(\d+)\s+(\d+)\s+(\d+)/.exec(r);
+      if (!head) { job.fail("PVJ: " + r.trim().toUpperCase().slice(0, 24)); return; }
+      job.stepDone();
+      job.stage("DECODING", 0.3);
+      let b64 = "";
+      for (const l of r.split("\n")) {
+        const t = l.trim();
+        if (/^[A-Za-z0-9+/]+=*$/.test(t)) b64 += t;
+      }
+      const w = +head[2], h = +head[3], bytes = +head[1];
+      await new Promise<void>((done) => Base64.decodeTextureAsync(b64, (tex) => {
+        job.done(tex, w, h, (bytes / 1024).toFixed(1) + " KB");
+        done();
+      }, () => { job.fail("JPEG DID NOT DECODE"); done(); }));
+    } catch (e) {
+      job.fail("NO ANSWER");
+      print("[live] pvj: " + e);
+    }
   }
 
   // `pv` -> "pv <w> <h>" then base64 lines: a 1-bit frame for the Roll.
@@ -291,6 +357,28 @@ export class LiveView extends BaseScriptComponent {
       this.note = "α7 POSTVIEW: NO ANSWER";
       print("[live] pv: " + e);
     }
+  }
+
+  // AlphaFriend's A button shoots without the lens: every 3 s ask `shots?`
+  // and fetch the pictures of any shot we haven't seen.
+  private async buttonPoll() {
+    const a = this.links.alpha;
+    if (a && a.live && a.idle && !this.sonyBusy) {
+      const n = await this.shotsQ(a, this.knownShots);
+      if (this.knownShots < 0) this.knownShots = n;
+      else if (n > this.knownShots && !this.sonyBusy) {
+        this.knownShots = n;
+        print("[live] α7 button shot #" + n);
+        this.sonyBusy = true;
+        try { await this.afterSonyShot(a, "α7 · BUTTON"); } finally {
+          this.sonyBusy = false;
+          this.links.after(() => { this.note = ""; }, 5);
+        }
+      }
+    } else if (!a || !a.live) {
+      this.knownShots = -1;                    // AlphaFriend may reboot; take its count afresh
+    }
+    this.links.after(() => this.buttonPoll(), 3);
   }
 
   // On connect and every SONY_POLL_S: `cam?` and, when the camera is linked,
@@ -429,6 +517,7 @@ export class LiveView extends BaseScriptComponent {
         this.decoding--;
         if (serial !== this.wsSerial) return;
         setQuadTexture(this.picture, t);
+        this.lastScoutTex = t;
         this.shown++;
       }, (m) => {
         this.decoding--;
