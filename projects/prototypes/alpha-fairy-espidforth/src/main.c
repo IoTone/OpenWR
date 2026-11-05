@@ -26,9 +26,10 @@
 #include "net_words.h"
 #include "ble_console.h"
 #include "sony_http.h"
+#include "postview.h"
 #include "display.h"
 
-#define AF_VERSION      "0.2.1"
+#define AF_VERSION      "0.3.0"
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
@@ -135,6 +136,7 @@ static void friend_task(void *arg)
             if (ble_console_state() == 0) ble_pair_window(600);
         }
         display_tick();
+        shc_tick();
         if (forth_word_exists("friend-tick")) forth_eval("friend-tick");
     }
 }
@@ -163,6 +165,7 @@ void app_main(void)
     if (nerr != ESP_OK) console_printf("net_init failed: %s\r\n", esp_err_to_name(nerr));
     net_register_words();
     sony_register_words();
+    postview_register_words();
     forth_register_word("ble!", w_ble_store);
     forth_register_word("reboot", w_reboot);
     display_register_words();

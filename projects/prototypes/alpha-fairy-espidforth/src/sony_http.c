@@ -390,6 +390,23 @@ static bool pop_str(char *buf, size_t cap)
 }
 
 static void w_cam_join(void) { shc_connect(); }
+
+/* Once a second from the housekeeping task: with Wi-Fi up and the camera not
+ * linked, join again every 10 s, so a camera that slept or dropped us comes
+ * back without the button. A link whose Wi-Fi went away is marked off. */
+void shc_tick(void)
+{
+    static int wait;
+    if (!net_ok()) {
+        if (s_state == SHC_READY) { s_state = SHC_OFF; con_printf("cam off (wifi lost)\n"); }
+        wait = 0;
+        return;
+    }
+    if (s_state == SHC_READY || s_state == SHC_JOIN || s_state == SHC_API) { wait = 0; return; }
+    if (++wait < 10) return;
+    wait = 0;
+    shc_connect();
+}
 static void w_cam_q(void)    { con_printf("cam %s %s %d\n", shc_state_name(), s_model, net_rssi()); }
 static void w_cam_dbg(void)  { s_dbg = forth_pop() != 0; }
 
@@ -436,6 +453,11 @@ static void w_cam_rpc(void)
  * drive to Single and try once more. The drive stays Single. */
 static void w_shoot(void)
 {
+    /* Half-press first: on the α7R III in AF-S a bare actTakePicture failed
+     * with 40400 every time, and af then shoot worked every time (even when
+     * the focus reported Failed). */
+    int hp = shc_call("actHalfPressShutter", "", NULL);
+    if (hp == 0) vTaskDelay(pdMS_TO_TICKS(1000));
     int code = shc_call("actTakePicture", "", NULL);
     if (code != 0 && code != 40403 &&
         shc_call("setContShootingMode", "{\"contShootingMode\": \"Single\"}", NULL) == 0) {
@@ -453,7 +475,12 @@ static void w_shoot(void)
         size_t k = 0;
         if (u) while (u[k] && u[k] != '"' && k + 1 < sizeof s_postview_url) { s_postview_url[k] = u[k]; k++; }
         s_postview_url[k] = 0;
+        /* A shot ends liveview, and without liveview the α7R III drops the
+         * client and shuts its AP about 10 s later (seen 2026-11-04). */
+        int lv = shc_call("startLiveview", "", NULL);
+        if (lv != 0) ESP_LOGW(TAG, "startLiveview after shot: %d", lv);
     }
+    if (hp == 0) shc_call("cancelHalfPressShutter", "", NULL);
     reply(code);
 }
 
