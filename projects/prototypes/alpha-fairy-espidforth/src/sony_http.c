@@ -19,6 +19,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 #include "esp_log.h"
 #include "esp_http_client.h"
 #include "lwip/sockets.h"
@@ -296,15 +297,29 @@ static bool fetch_dd(const char *location)
 /* Calls                                                               */
 /* ------------------------------------------------------------------ */
 
+/* One talker to the camera at a time: the console (lens) and the button
+ * shoot from different tasks and share s_reply. */
+static SemaphoreHandle_t s_cam_lock;
+static volatile int      s_shots;
+
+void shc_lock(void)
+{
+    if (!s_cam_lock) s_cam_lock = xSemaphoreCreateRecursiveMutex();
+    xSemaphoreTakeRecursive(s_cam_lock, portMAX_DELAY);
+}
+void shc_unlock(void) { xSemaphoreGiveRecursive(s_cam_lock); }
+int  shc_shots(void)  { return s_shots; }
+
 int shc_call(const char *method, const char *params, const char *version)
 {
     if (!s_service_url[0]) return -1;
+    shc_lock();
     char body[256];
     snprintf(body, sizeof body, "{\"method\": \"%s\", \"params\": [%s], \"id\": %u, \"version\": \"%s\"}",
              method, params ? params : "", s_req_id++, version ? version : "1.0");
     int timeout = strcmp(method, "actTakePicture") == 0 || strcmp(method, "awaitTakePicture") == 0 ? 15000 : 5000;
     int st = http_do(s_service_url, body, timeout);
-    if (st < 0) return -1;
+    if (st < 0) { shc_unlock(); return -1; }
     char e[48];
     int code = 0;
     if (shc_scan_json(s_reply, s_reply_len, "error", NULL, NULL, e, sizeof e)) {
@@ -312,6 +327,7 @@ int shc_call(const char *method, const char *params, const char *version)
     } else if (st != 200) {
         code = st;
     }
+    shc_unlock();
     return code;
 }
 
@@ -451,8 +467,10 @@ static void w_cam_rpc(void)
 /* In Continuous drive the camera drops actTakePicture from its API list
  * (the call fails); it still offers setContShootingMode, so switch the
  * drive to Single and try once more. The drive stays Single. */
-static void w_shoot(void)
+/* The whole shot, from the console (shoot) or AlphaFriend's A button. */
+int shc_shoot(bool verbose)
 {
+    shc_lock();
     /* Half-press first: on the α7R III in AF-S a bare actTakePicture failed
      * with 40400 every time, and af then shoot worked every time (even when
      * the focus reported Failed). */
@@ -461,7 +479,7 @@ static void w_shoot(void)
     int code = shc_call("actTakePicture", "", NULL);
     if (code != 0 && code != 40403 &&
         shc_call("setContShootingMode", "{\"contShootingMode\": \"Single\"}", NULL) == 0) {
-        con_printf("drive Single\n");
+        if (verbose) con_printf("drive Single\n");
         /* the first try right after the switch can still fail (40400) */
         for (int t = 0; t < 3; t++) {
             vTaskDelay(pdMS_TO_TICKS(t ? 1000 : 500));
@@ -481,8 +499,13 @@ static void w_shoot(void)
         if (lv != 0) ESP_LOGW(TAG, "startLiveview after shot: %d", lv);
     }
     if (hp == 0) shc_call("cancelHalfPressShutter", "", NULL);
-    reply(code);
+    if (code == 0) s_shots++;
+    shc_unlock();
+    return code;
 }
+
+static void w_shoot(void)  { reply(shc_shoot(true)); }
+static void w_shots_q(void) { con_printf("shots %d\n", s_shots); }
 
 static void w_af(void)     { reply(shc_call("actHalfPressShutter", "", NULL)); }
 static void w_af_off(void) { reply(shc_call("cancelHalfPressShutter", "", NULL)); }
@@ -541,6 +564,7 @@ void sony_register_words(void)
     forth_register_word("cam-evt",  w_cam_evt);
     forth_register_word("cam-dbg",  w_cam_dbg);
     forth_register_word("shoot",    w_shoot);
+    forth_register_word("shots?",   w_shots_q);
     forth_register_word("af",       w_af);
     forth_register_word("af-",      w_af_off);
     forth_register_word("rec",      w_rec);

@@ -29,7 +29,7 @@
 #include "postview.h"
 #include "display.h"
 
-#define AF_VERSION      "0.3.0"
+#define AF_VERSION      "0.3.1"
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
@@ -115,6 +115,21 @@ static void w_reboot(void) { esp_restart(); }
 
 /* ----- housekeeping: BLE flush, keep advertising for the glasses ----- */
 
+/* A button: one shot on its own task, so BLE keeps flushing meanwhile. The
+ * lens notices through `shots?` and fetches the postview. */
+static volatile bool s_btn_shooting;
+
+static void button_shot(void *arg)
+{
+    int code = shc_shoot(false);
+    char m[24];
+    if (code == 0) snprintf(m, sizeof m, "shot %d", shc_shots());
+    else snprintf(m, sizeof m, "shot err %d", code);
+    display_msg(m);
+    s_btn_shooting = false;
+    vTaskDelete(NULL);
+}
+
 static void friend_task(void *arg)
 {
     int held = 0;
@@ -126,6 +141,12 @@ static void friend_task(void *arg)
             if (gpio_get_level(PIN_BTN_A) == 0) {
                 if (++held == 20) forth_eval("cam-join");     /* hold A 1 s: find the camera again */
             } else {
+                /* a short press (0.1-1 s) with the camera linked takes a picture */
+                if (held >= 2 && held < 20 && shc_state() == SHC_READY && !s_btn_shooting) {
+                    s_btn_shooting = true;
+                    display_msg("shooting");
+                    xTaskCreate(button_shot, "shot", 6144, NULL, tskIDLE_PRIORITY + 2, NULL);
+                }
                 held = 0;
             }
         }

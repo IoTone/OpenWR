@@ -45,7 +45,11 @@ const char *shc_postview(void);           /* URL of the last postview, "" if non
 const char *shc_liveview(void);           /* liveview URL from dd.xml, "" if none */
 
 bool shc_connect(void);
-void shc_tick(void);                      /* each second: rejoin a lost camera every 10 s */                   /* SSDP / dd.xml / startRecMode / getEvent */
+void shc_tick(void);
+int  shc_shoot(bool verbose);            /* half-press, shoot, liveview again; 0 or an error code */
+int  shc_shots(void);                    /* shots taken since boot (console or button) */
+void shc_lock(void);                     /* one talker to the camera at a time */
+void shc_unlock(void);                      /* each second: rejoin a lost camera every 10 s */                   /* SSDP / dd.xml / startRecMode / getEvent */
 
 /* One JSON-RPC call to the camera service. params is the inside of the
  * "params" array, e.g. "" or "\"5.6\"". Returns the Sony error code (0 = ok,
