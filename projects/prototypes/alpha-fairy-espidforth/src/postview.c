@@ -24,6 +24,8 @@
  * so every call is a fresh frame. About 2.1 KB, well under a second over BLE.
  *
  *   lv   ( -- )   lv <w> <h> then base64 lines | lv none | lv err <what>
+ *   lvj  ( -- )   lvj <bytes> <w> <h> then base64 lines: the same frame as a
+ *                 colour JPEG (re-encoded from the 1/4 decode, ~2-3 KB)
  *
  * Licensed under the Apache License, Version 2.0
  */
@@ -328,41 +330,51 @@ static bool read_n(esp_http_client_handle_t h, uint8_t *buf, int n)
     return true;
 }
 
-static void w_lv_locked(void);
-static void w_lv(void) { shc_lock(); w_lv_locked(); shc_unlock(); }
-static void w_lv_locked(void)
+/* Open the camera's liveview stream and read packets up to an image one;
+ * c->http is left at its JPEG with c->left = its size. who: "lv" or "lvj"
+ * for the error lines. Returns the JPEG size, 0 after printing an error. */
+static int lv_open(pv_ctx_t *c, const char *who)
 {
     const char *raw = shc_liveview();
     const char *u0 = raw ? strstr(raw, "http") : NULL;
-    if (!u0) { con_printf("lv none\n"); return; }
+    if (!u0) { con_printf("%s none\n", who); return 0; }
     char url[256];
     size_t j = 0;
     for (size_t i = 0; u0[i] && u0[i] != '"' && u0[i] != ']' && j + 1 < sizeof url; i++) if (u0[i] != '\\') url[j++] = u0[i];
     url[j] = 0;
 
+    esp_http_client_config_t cfg = { .url = url, .timeout_ms = 4000, .buffer_size = 1024 };
+    c->http = esp_http_client_init(&cfg);
+    if (!c->http) { con_printf("%s err memory\n", who); return 0; }
+    if (esp_http_client_open(c->http, 0) != ESP_OK) { con_printf("%s err connect\n", who); return 0; }
+    esp_http_client_fetch_headers(c->http);
+    int status = esp_http_client_get_status_code(c->http);
+    if (status != 200) { con_printf("%s err http %d\n", who, status); return 0; }
+
+    /* packets until an image one: 8-byte common header, 128-byte payload header */
+    for (int tries = 0; tries < 8; tries++) {
+        uint8_t ch[8], ph[128];
+        if (!read_n(c->http, ch, 8) || ch[0] != 0xFF) { con_printf("%s err stream\n", who); return 0; }
+        if (!read_n(c->http, ph, 128) || ph[0] != 0x24 || ph[1] != 0x35 || ph[2] != 0x68 || ph[3] != 0x79) { con_printf("%s err header\n", who); return 0; }
+        int size = ph[4] << 16 | ph[5] << 8 | ph[6], pad = ph[7];
+        if (ch[1] == 0x01) { c->left = size; return size; }
+        if (!read_n(c->http, NULL, size + pad)) { con_printf("%s err stream\n", who); return 0; }
+    }
+    con_printf("%s err no-image\n", who);
+    return 0;
+}
+
+static void w_lv_locked(void);
+static void w_lv(void) { shc_lock(); w_lv_locked(); shc_unlock(); }
+static void w_lv_locked(void)
+{
     int64_t t0 = esp_timer_get_time();
     pv_ctx_t c = { .left = -1 };
     void *pool = malloc(POOL_SZ);
     uint8_t *frame = malloc((LV_W + 7) / 8 * LV_H);
-    esp_http_client_config_t cfg = { .url = url, .timeout_ms = 4000, .buffer_size = 1024 };
-    c.http = esp_http_client_init(&cfg);
-    if (!pool || !frame || !c.http) { con_printf("lv err memory\n"); goto out; }
-    if (esp_http_client_open(c.http, 0) != ESP_OK) { con_printf("lv err connect\n"); goto out; }
-    esp_http_client_fetch_headers(c.http);
-    int status = esp_http_client_get_status_code(c.http);
-    if (status != 200) { con_printf("lv err http %d\n", status); goto out; }
-
-    /* packets until an image one: 8-byte common header, 128-byte payload header */
     int jpeg = 0;
-    for (int tries = 0; tries < 8 && !jpeg; tries++) {
-        uint8_t ch[8], ph[128];
-        if (!read_n(c.http, ch, 8) || ch[0] != 0xFF) { con_printf("lv err stream\n"); goto out; }
-        if (!read_n(c.http, ph, 128) || ph[0] != 0x24 || ph[1] != 0x35 || ph[2] != 0x68 || ph[3] != 0x79) { con_printf("lv err header\n"); goto out; }
-        int size = ph[4] << 16 | ph[5] << 8 | ph[6], pad = ph[7];
-        if (ch[1] == 0x01) { jpeg = size; c.left = size; break; }
-        if (!read_n(c.http, NULL, size + pad)) { con_printf("lv err stream\n"); goto out; }
-    }
-    if (!jpeg) { con_printf("lv err no-image\n"); goto out; }
+    if (!pool || !frame) { con_printf("lv err memory\n"); goto out; }
+    if (!(jpeg = lv_open(&c, "lv"))) goto out;
 
     JDEC jd;
     JRESULT r = jd_prepare(&jd, pv_in, pool, POOL_SZ, &c);
@@ -389,8 +401,51 @@ out:
     free(pool);
 }
 
+/* lvj: one liveview frame in colour. The camera's JPEG (640x424, ~14 KB)
+ * is decoded at 1/4 and its MCU strips (160 x 4 rows) go straight into jpge:
+ * a 160x106 colour JPEG of ~2-3 KB, about the same over BLE as `lv`'s
+ * 2.1 KB of dithered bits, but it looks like the scene. */
+static void w_lvj_locked(void);
+static void w_lvj(void) { shc_lock(); w_lvj_locked(); shc_unlock(); }
+static void w_lvj_locked(void)
+{
+    int64_t t0 = esp_timer_get_time();
+    pv_ctx_t c = { .left = -1 };
+    void *pool = malloc(POOL_SZ);
+    uint8_t *out = malloc(THUMB_CAP);
+    int len = 0, jpeg = 0;
+    if (!pool || !out) { con_printf("lvj err memory\n"); goto out; }
+    if (!(jpeg = lv_open(&c, "lvj"))) goto out;
+
+    JDEC jd;
+    JRESULT r = jd_prepare(&jd, pv_in, pool, POOL_SZ, &c);
+    if (r != JDR_OK) { con_printf("lvj err jpeg %d\n", r); goto out; }
+    int scale = 2;                                      /* 1/4: 640x424 -> 160x106 */
+    while (scale > 0 && ((int)jd.width >> scale) < LV_W) scale--;
+    c.sw = ((int)jd.width + (1 << scale) - 1) >> scale;
+    int sh = ((int)jd.height + (1 << scale) - 1) >> scale;
+    c.strip = malloc(c.sw * (16 >> scale) * 3);         /* an MCU row: 16 lines, scaled */
+    c.enc = c.strip ? thumb_stream_begin(c.sw, sh, THUMB_Q, out, THUMB_CAP) : NULL;
+    if (!c.enc) { con_printf("lvj err memory, free %u\n", (unsigned)heap_caps_get_free_size(MALLOC_CAP_8BIT)); goto out; }
+    r = jd_decomp(&jd, pvj_out, scale);
+    len = thumb_stream_end(c.enc);
+    c.enc = NULL;
+    if (r != JDR_OK || !len) { con_printf("lvj err %s %d\n", r != JDR_OK ? "decode" : "encode", r); goto out; }
+    ESP_LOGI(TAG, "lvj %dx%d from %d B, %d B, %lld ms", c.sw, sh, jpeg, len, (esp_timer_get_time() - t0) / 1000);
+    con_printf("lvj %d %d %d\n", len, c.sw, sh);
+    b64_lines(out, len);
+
+out:
+    if (c.enc) thumb_stream_end(c.enc);
+    if (c.http) { esp_http_client_close(c.http); esp_http_client_cleanup(c.http); }
+    free(c.strip);
+    free(out);
+    free(pool);
+}
+
 void postview_register_words(void)
 {
+    forth_register_word("lvj", w_lvj);
     forth_register_word("pv", w_pv);
     forth_register_word("lv", w_lv);
     forth_register_word("pvj", w_pvj);
