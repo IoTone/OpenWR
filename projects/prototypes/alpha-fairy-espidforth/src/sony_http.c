@@ -331,6 +331,101 @@ int shc_call(const char *method, const char *params, const char *version)
     return code;
 }
 
+/* The integer after "key": (the first one in the reply). Numbers are not
+ * strings, so shc_scan_json can't read them. */
+static bool json_int(const char *key, int *out)
+{
+    char pat[48];
+    snprintf(pat, sizeof pat, "\"%s\"", key);
+    const char *p = strstr(s_reply, pat);
+    if (!p) return false;
+    p += strlen(pat);
+    while (*p == ' ' || *p == ':') p++;
+    if (*p != '-' && (*p < '0' || *p > '9')) return false;
+    *out = (int)strtol(p, NULL, 10);
+    return true;
+}
+
+/* The settings cam-step can move, in its numbering. type: the getEvent
+ * entry's "type"; cand/cur: its keys; how the setter wants the value. */
+enum { P_STR, P_NUM, P_DRIVE, P_WB };
+static const struct step_def {
+    const char *name, *type, *cur, *cand, *set;
+    int param;
+} STEPS[] = {
+    { "ss",    "shutterSpeed",     "currentShutterSpeed", "shutterSpeedCandidates", "setShutterSpeed",  P_STR },
+    { "f",     "fNumber",          "currentFNumber",      "fNumberCandidates",      "setFNumber",       P_STR },
+    { "iso",   "isoSpeedRate",     "currentIsoSpeedRate", "isoSpeedRateCandidates", "setIsoSpeedRate",  P_STR },
+    { "ev",    "exposureCompensation", NULL, NULL,                                  "setExposureCompensation", P_NUM },
+    { "wb",    "whiteBalance",     NULL, NULL,                                      "setWhiteBalance",  P_WB },
+    { "drive", "contShootingMode", "contShootingMode",    "candidate",              "setContShootingMode", P_DRIVE },
+    { "timer", "selfTimer",        "currentSelfTimer",    "selfTimerCandidates",    "setSelfTimer",     P_NUM },
+    { "focus", "focusMode",        "currentFocusMode",    "focusModeCandidates",    "setFocusMode",     P_STR },
+};
+#define STEP_N ((int)(sizeof STEPS / sizeof STEPS[0]))
+
+static bool has_api(const char *method)
+{
+    char pat[48];
+    snprintf(pat, sizeof pat, "\"%s\"", method);
+    return strstr(s_reply, pat) != NULL;
+}
+
+/* "key":[ with something before the ] */
+static bool has_values(const char *key)
+{
+    char pat[48];
+    snprintf(pat, sizeof pat, "\"%s\":[", key);
+    const char *p = strstr(s_reply, pat);
+    return p && p[strlen(pat)] != ']';
+}
+
+/* the getEvent object whose "type" is t: [*s, *e] in s_reply */
+static bool event_obj(const char *t, int *s, int *e)
+{
+    char pat[48];
+    snprintf(pat, sizeof pat, "\"type\":\"%s\"", t);
+    const char *p = strstr(s_reply, pat);
+    if (!p) return false;
+    int i = p - s_reply, depth = 0;
+    for (; i >= 0; i--) {                    /* back to this object's { */
+        if (s_reply[i] == '}') depth++;
+        else if (s_reply[i] == '{') { if (depth == 0) break; depth--; }
+    }
+    if (i < 0) return false;
+    *s = i;
+    depth = 0;
+    for (int j = i; j < s_reply_len; j++) {
+        if (s_reply[j] == '{') depth++;
+        else if (s_reply[j] == '}' && --depth == 0) { *e = j; return true; }
+    }
+    return false;
+}
+
+/* the raw token after "key": between s and e (a string without its quotes,
+ * escapes kept; or a number) */
+static bool raw_value(int s, int e, const char *key, char *out, size_t cap)
+{
+    char pat[48];
+    snprintf(pat, sizeof pat, "\"%s\":", key);
+    size_t pl = strlen(pat);
+    for (int i = s; i + (int)pl <= e; i++) {
+        if (memcmp(s_reply + i, pat, pl) != 0) continue;
+        int j = i + pl;
+        while (j <= e && s_reply[j] == ' ') j++;
+        size_t k = 0;
+        if (s_reply[j] == '"') {
+            j++;
+            while (j <= e && !(s_reply[j] == '"' && s_reply[j - 1] != '\\') && k + 1 < cap) out[k++] = s_reply[j++];
+        } else {
+            while (j <= e && s_reply[j] != ',' && s_reply[j] != '}' && s_reply[j] != ']' && k + 1 < cap) out[k++] = s_reply[j++];
+        }
+        out[k] = 0;
+        return k > 0;
+    }
+    return false;
+}
+
 /* get_event + parse_event: refresh, print the keys we know */
 static int get_event(bool print)
 {
@@ -345,8 +440,11 @@ static int get_event(bool print)
     if (code != 0 || !print) return code;
     static const struct { const char *json, *key; } keys[] = {
         { "cameraStatus", "status" }, { "currentExposureMode", "mode" }, { "currentFNumber", "f" },
-        { "currentShutterSpeed", "ss" }, { "currentIsoSpeedRate", "iso" }, { "currentExposureCompensation", "ev" },
+        { "currentShutterSpeed", "ss" }, { "currentIsoSpeedRate", "iso" },
         { "currentFocusMode", "focus" }, { "focusStatus", "af" }, { "currentShootMode", "shoot" },
+        /* for the camera-screen layout on the glasses */
+        { "currentWhiteBalanceMode", "wb" }, { "currentAspect", "aspect" }, { "stillQuality", "quality" },
+        { "contShootingMode", "drive" }, { "storageID", "card" },
     };
     char val[40], clean[40];
     for (size_t i = 0; i < sizeof keys / sizeof keys[0]; i++) {
@@ -354,8 +452,150 @@ static int get_event(bool print)
         copy_no_slash(clean, val, sizeof clean);
         con_printf("evt %s %s\n", keys[i].key, clean);
     }
+    /* numbers: EV is an index in steps (stepIndex 1 = 1/3 EV), battery a fraction */
+    static const struct { const char *json, *key; } nums[] = {
+        { "currentExposureCompensation", "ev" }, { "minExposureCompensation", "evmin" },
+        { "maxExposureCompensation", "evmax" }, { "stepIndexOfExposureCompensation", "evstep" },
+        { "numberOfRecordableImages", "left" },
+    };
+    int n, d;
+    for (size_t i = 0; i < sizeof nums / sizeof nums[0]; i++)
+        if (json_int(nums[i].json, &n)) con_printf("evt %s %d\n", nums[i].key, n);
+    if (json_int("levelNumer", &n) && json_int("levelDenom", &d) && n >= 0 && d > 0)
+        con_printf("evt bat %d\n", n * 100 / d);
+    if (json_int("currentSelfTimer", &n)) con_printf("evt timer %d\n", n);
+    /* What the remote may change now: the body lists the setter in
+     * availableApiList AND offers values. (The α7R III sends fNumber with no
+     * candidates in S mode, and drops setExposureCompensation while the EV
+     * dial is off 0.) */
+    char can[96]; int cl = 0;
+    can[0] = 0;
+    for (int i = 0; i < STEP_N; i++) {
+        bool ok = has_api(STEPS[i].set);
+        if (ok && STEPS[i].cand) ok = has_values(STEPS[i].cand);
+        if (ok) cl += snprintf(can + cl, sizeof can - cl, " %s", STEPS[i].name);
+    }
+    if (has_api("actHalfPressShutter")) cl += snprintf(can + cl, sizeof can - cl, " af");
+    con_printf("evt can%s\n", can);
     if (s_reply_trunc) con_printf("evt cut %d\n", s_reply_len);
     return 0;
+}
+
+/* One notch of a setting (STEPS[which]) among the values the body offers
+ * now: getEvent's candidate lists (white balance: getAvailableWhiteBalance).
+ * now gets the value it is at afterwards. */
+static int cam_step(int which, int dir, char *now, size_t cap)
+{
+    const struct step_def *d = &STEPS[which];
+    now[0] = 0;
+    shc_lock();
+    int code = get_event(false);
+    if (code) goto done;
+    if (!has_api(d->set)) { code = -2; goto done; }
+
+    if (which == 3) {                                  /* EV: an index between min and max */
+        int cur, lo, hi;
+        if (!json_int("currentExposureCompensation", &cur) || !json_int("minExposureCompensation", &lo) ||
+            !json_int("maxExposureCompensation", &hi)) { code = -2; goto done; }
+        int next = cur + dir;
+        if (next < lo) next = lo;
+        if (next > hi) next = hi;
+        char p[16];
+        snprintf(p, sizeof p, "%d", next);
+        if (next != cur) {
+            code = shc_call("setExposureCompensation", p, NULL);
+            if (code == 3) { snprintf(p, sizeof p, "\"%d\"", next); code = shc_call("setExposureCompensation", p, NULL); }
+        }
+        if (code == 0) snprintf(now, cap, "%d", next);
+        goto done;
+    }
+
+    static char vals[64][24];                          /* under the camera lock */
+    char cur[24] = "";
+    int nv = 0, at = -1;
+    if (d->param == P_WB) {
+        /* [{"whiteBalanceMode":"Auto WB",...}, [{"whiteBalanceMode":...}, ...]]:
+         * the first is the current one; Color Temperature needs a K, skipped */
+        code = shc_call("getAvailableWhiteBalance", "", NULL);
+        if (code) goto done;
+        const char *p = s_reply;
+        bool first = true;
+        while ((p = strstr(p, "\"whiteBalanceMode\":\"")) && nv < 64) {
+            p += 20;
+            size_t k = 0;
+            char v[24];
+            while (*p && *p != '"' && k + 1 < sizeof v) v[k++] = *p++;
+            v[k] = 0;
+            if (first) { strcpy(cur, v); first = false; continue; }
+            if (strcmp(v, "Color Temperature") == 0) continue;
+            strcpy(vals[nv], v);
+            if (strcmp(v, cur) == 0) at = nv;
+            nv++;
+        }
+    } else {
+        int s, e;
+        if (!event_obj(d->type, &s, &e) || !raw_value(s, e, d->cur, cur, sizeof cur)) { code = -2; goto done; }
+        char pat[48];
+        snprintf(pat, sizeof pat, "\"%s\":[", d->cand);
+        char *q = strstr(s_reply + s, pat);
+        if (!q || q - s_reply > e) { code = -2; goto done; }
+        int i = q - s_reply + strlen(pat);
+        while (i <= e && s_reply[i] != ']' && nv < 64) {
+            if (s_reply[i] == '"') {
+                int j = ++i;
+                while (j <= e && !(s_reply[j] == '"' && s_reply[j - 1] != '\\')) j++;
+                int len = j - i;
+                if (len > 0 && len < (int)sizeof vals[0]) { memcpy(vals[nv], s_reply + i, len); vals[nv][len] = 0; nv++; }
+                i = j + 1;
+            } else if (s_reply[i] == '-' || (s_reply[i] >= '0' && s_reply[i] <= '9')) {
+                int j = i;
+                while (j <= e && s_reply[j] != ',' && s_reply[j] != ']') j++;
+                int len = j - i;
+                if (len < (int)sizeof vals[0]) { memcpy(vals[nv], s_reply + i, len); vals[nv][len] = 0; nv++; }
+                i = j;
+            } else {
+                i++;
+            }
+        }
+        for (int k = 0; k < nv; k++) if (strcmp(vals[k], cur) == 0) at = k;
+    }
+    if (nv == 0) { code = -2; goto done; }
+    if (at < 0) at = dir > 0 ? -1 : nv;               /* not in the list (e.g. Color Temperature): start at an end */
+    int next = at + dir;
+    if (next < 0) next = 0;
+    if (next >= nv) next = nv - 1;
+    if (next != at) {
+        char p[64];
+        switch (d->param) {
+        case P_NUM:   snprintf(p, sizeof p, "%s", vals[next]); break;
+        case P_DRIVE: snprintf(p, sizeof p, "{\"contShootingMode\": \"%s\"}", vals[next]); break;
+        case P_WB:    snprintf(p, sizeof p, "\"%s\", false, -1", vals[next]); break;
+        default:      snprintf(p, sizeof p, "\"%s\"", vals[next]); break;
+        }
+        code = shc_call(d->set, p, NULL);
+    }
+    if (code == 0) copy_no_slash(now, vals[next], cap);
+done:
+    shc_unlock();
+    return code;
+}
+
+/* AF as the shutter's half-press: focus, read focusStatus, let go (in AF-S
+ * the lens stays where it focused). -> af <status> | af err <code> */
+static void w_cam_af(void)
+{
+    shc_lock();
+    int code = shc_call("actHalfPressShutter", "", NULL);
+    if (code) { shc_unlock(); con_printf("af err %d\n", code); return; }
+    char st[24] = "?";
+    for (int t = 0; t < 8; t++) {                      /* up to ~2 s for Focused / Failed */
+        vTaskDelay(pdMS_TO_TICKS(250));
+        if (get_event(false) == 0 && shc_scan_json(s_reply, s_reply_len, "focusStatus", NULL, NULL, st, sizeof st) &&
+            (strcmp(st, "Focused") == 0 || strcmp(st, "Failed") == 0)) break;
+    }
+    shc_call("cancelHalfPressShutter", "", NULL);
+    shc_unlock();
+    con_printf("af %s\n", st);
 }
 
 bool shc_connect(void)
@@ -425,6 +665,13 @@ void shc_tick(void)
 }
 static void w_cam_q(void)    { con_printf("cam %s %s %d\n", shc_state_name(), s_model, net_rssi()); }
 static void w_cam_dbg(void)  { s_dbg = forth_pop() != 0; }
+
+/* the whole last reply, 100 characters a line (to learn a body's getEvent) */
+static void w_cam_dump(void)
+{
+    for (int i = 0; i < s_reply_len; i += 100) con_printf("raw %.100s\n", s_reply + i);
+    con_printf("raw %d B%s\n", s_reply_len, s_reply_trunc ? " cut" : "");
+}
 
 static void w_cam_evt(void)
 {
@@ -505,6 +752,18 @@ int shc_shoot(bool verbose)
 }
 
 static void w_shoot(void)  { reply(shc_shoot(true)); }
+
+/* cam-step ( which dir -- )  which 0 ss 1 f 2 iso 3 ev 4 wb 5 drive 6 timer 7 focus; dir -1 or 1
+ *   -> step <name> <value now> | step <name> err <code> (-2 not settable now) */
+static void w_cam_step(void)
+{
+    int dir = (int)forth_pop(), which = (int)forth_pop();
+    if (which < 0 || which >= STEP_N || (dir != 1 && dir != -1)) { con_printf("? cam-step ( which dir -- ) 0 ss 1 f 2 iso 3 ev 4 wb 5 drive 6 timer 7 focus\n"); return; }
+    char now[24];
+    int code = cam_step(which, dir, now, sizeof now);
+    if (code) con_printf("step %s err %d\n", STEPS[which].name, code);
+    else con_printf("step %s %s\n", STEPS[which].name, now);
+}
 static void w_shots_q(void) { con_printf("shots %d\n", s_shots); }
 
 static void w_af(void)     { reply(shc_call("actHalfPressShutter", "", NULL)); }
@@ -563,8 +822,11 @@ void sony_register_words(void)
     forth_register_word("cam-rpc",  w_cam_rpc);
     forth_register_word("cam-evt",  w_cam_evt);
     forth_register_word("cam-dbg",  w_cam_dbg);
+    forth_register_word("cam-dump", w_cam_dump);
     forth_register_word("shoot",    w_shoot);
     forth_register_word("shots?",   w_shots_q);
+    forth_register_word("cam-step", w_cam_step);
+    forth_register_word("cam-af",   w_cam_af);
     forth_register_word("af",       w_af);
     forth_register_word("af-",      w_af_off);
     forth_register_word("rec",      w_rec);
