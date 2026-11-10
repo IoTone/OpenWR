@@ -248,7 +248,7 @@ enclosure as rendered; weights are estimates without the lanyard.
 | **SR-8 Quiet Pass** | lanyard | 4.2in 400×300 1-bit | XIAO nRF52840 Plus on Seeed **EE05**, **no Wi-Fi** | 3 keys (on the EE05) | plain | 86 × 138 × 13 | 95 | yes | USB drive + UF2 | $47 | $35 |
 | **SR-9 Roadie** | lanyard | 4.2in 400×300 1-bit | ESP32-C5 PCB | **PSP thumbstick** (Adafruit 444) + OK / BACK | plain | 88 × 149 × 14.5 | 105 | yes | charge, Web Serial | $42 | $25 |
 | **SR-15 Dial Pass** | lanyard | 4.2in 400×300 1-bit | Elecrow CrowPanel 4.2in (ESP32-S3), finished board | **thumb dial** (up / down / push) + MENU + EXIT | plain | 95 × 140 × 16 | 150 | yes | charge, Web Serial (CH340) | $39 | $27 |
-| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys (hand-wired) | plain | 64 × 112 × 12 | 70 | no | charge, Web Serial | $37 | $24 |
+| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys on the right edge (hand-wired) | plain | 64 × 120 × 12 | 72 | no | charge, Web Serial | $37 | $24 |
 
 Depth with pocket/clip included; SR-2/SR-7 are 15.5 mm without the pocket,
 SR-4 13.5 mm, SR-5's body 16 mm.
@@ -387,7 +387,8 @@ its own controls. Because the controls differ, it is its own pass rather than an
 A pass the size of a real backstage laminate, from off-the-shelf parts: Elecrow's bare 3.7in
 panel (DIE04037S, $11.90, 240×416, UC8253, ~130 dpi, 47 × 82 mm active area) on Seeed's
 ePaper Driver Board for XIAO V2 with a XIAO ESP32-C5, three hand-wired keys and a 1200 mAh
-cell. Portrait, half the width of SR-1, sharper than any other 1-bit pass.
+cell. Portrait, two-thirds the width of SR-1, sharper than any other 1-bit pass. The keys sit
+on the long right edge, so there is no key row under the screen.
 
 - **Panel.** UC8253, not a Solomon controller. GxEPD2 has a driver for Good Display's
   GDEY037T03 (240×416 UC8253): partial refresh ~350 ms, full ~1.5 s. It has the standard 24-pin
@@ -402,7 +403,7 @@ cell. Portrait, half the width of SR-1, sharper than any other 1-bit pass.
   1200 mAh), so a heavy reader should expect closer to half that.
 - **Size check.** The listing gives the panel as 53 × 93 × 1 mm but also a 67 × 93.4 × 2.6 mm
   "PCB size" and 50 g, so it may arrive on a carrier board. Measure one before printing; the
-  64 × 112 × 12 mm pass assumes the bare panel.
+  64 × 120 × 12 mm pass assumes the bare panel.
 - **Cost:** $37.09 a pass at 5 ($45.69 landed: Seeed, Elecrow, DigiKey and Amazon orders),
   $24.46 at 100. The panel rides the same Elecrow order as SR-15's board.
 

@@ -295,6 +295,7 @@ tr[data-v]:hover td{background:var(--paper-2)}
 
 
 
+
 <section>
   <h2>Radios, storage, loading</h2>
   <div class="two">
@@ -490,8 +491,8 @@ const V = [
    p5:40.04,p100:31.94,dims:"86 × 138 × 12.5",g:95,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"XIAO ESP32-S3 Plus on the Seeed EE05 board",radio:"Wi-Fi 4, 2.4 GHz only; BLE 5",keys:"PREV · MENU · NEXT",sdT:"No (books live in 16 MB flash)",usb:"Charge, USB drive, console",back:"Plain, spec label",wear:"Lanyard",tag:"No custom PCB: the EE05 board carries the panel driver, keys and battery switch."},
   {key:"SR-15",name:"Dial Pass",band:"SOUNDCHECK",W:95,T:16,Hfix:140,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#b23a8f",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"dial",ctrl:14,zine:"basement",lanyard:true,sd:true,
    p5:38.50,p100:26.80,dims:"95 × 140 × 16",g:150,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"Elecrow CrowPanel 4.2in (ESP32-S3, finished board)",radio:"Wi-Fi 4, 2.4 GHz only; BLE 5",keys:"Thumb dial (up · down · push) · MENU · EXIT",sdT:"Yes (on the board)",usb:"Charge, console (CH340), Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"A finished CrowPanel board in our shell; the thumb dial turns pages."},
-  {key:"SR-16",name:"Setlist",band:"SETLIST",W:64,T:12,Hfix:112,aa:[47.04,81.54],res:[240,416],depth:"1",em:3.3,body:"#1f8f84",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:12,zine:"basement",lanyard:true,sd:false,
-   p5:37.09,p100:24.46,dims:"64 × 112 × 12",g:70,panel:"3.7in 240×416, 1-bit (Elecrow DIE04037S, UC8253)",pshort:"3.7in e-paper · 240×416 · 1-bit",chip:"XIAO ESP32-C5 + Seeed ePaper Driver Board",radio:C5,keys:"PREV · MENU · NEXT",sdT:"No (books live in flash)",usb:"Charge, console, Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"The slim pass: a sharp 3.7in portrait panel, laminate-sized, off-the-shelf parts."},
+  {key:"SR-16",name:"Setlist",band:"SETLIST",W:64,T:12,Hfix:120,aa:[47.04,81.54],res:[240,416],depth:"1",em:3.3,body:"#1f8f84",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"edge3",ctrl:0,zine:"basement",lanyard:true,sd:false,
+   p5:37.09,p100:24.46,dims:"64 × 120 × 12",g:72,panel:"3.7in 240×416, 1-bit (Elecrow DIE04037S, UC8253)",pshort:"3.7in e-paper · 240×416 · 1-bit",chip:"XIAO ESP32-C5 + Seeed ePaper Driver Board",radio:C5,keys:"PREV · MENU · NEXT on the right edge",sdT:"No (books live in flash)",usb:"Charge, console, Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"The slim pass: a sharp 3.7in portrait panel, laminate-sized, off-the-shelf parts."},
   {key:"SR-1C",name:"Laminate C5",band:"GUEST",W:86,T:13,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#2a6fe2",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:15,zine:"basement",lanyard:true,sd:false,
    p5:43.45,p100:34.39,dims:"86 × 138 × 13",g:100,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"DFRobot FireBeetle 2 ESP32-C5 + Crystalfontz CFA-10084 adapter",radio:C5,keys:"PREV · MENU · NEXT",sdT:"No (books live in flash)",usb:"Charge, console, Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"SR-1 with dual-band Wi-Fi: FireBeetle 2 C5, hand-wired keys."},
   {key:"SR-1D",name:"Laminate Direct",band:"GUEST",W:86,T:12.5,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#d8b21f",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:15,zine:"basement",lanyard:true,sd:false,
@@ -907,6 +908,9 @@ function build(v) {
     const r = v.edge.filter(e => e[0] > 0).map(e => e[3]).join(" · "), l = v.edge.filter(e => e[0] < 0).map(e => e[3]).join(" · ");
     lab("Edge keys · " + r, [W / 2 + 1.5, L.scr + v.edge[0][1], zMid], [1, 0, 0.1]);
     if (l) lab("Edge key · " + l, [-W / 2 - 1.5, L.scr + v.edge.find(e => e[0] < 0)[1], zMid], [-1, 0, 0.1]);
+  } else if (c === "edge3") {
+    [[L.scr + 22, 10], [L.scr + 8, 7], [L.scr - 6, 10]].forEach(([y, len]) => sideKey(1, y, len));
+    lab("Side keys · PREV · MENU · NEXT", [W / 2 + 1.5, L.scr + 8, zMid], [1, 0, 0.1]);
   } else if (c === "side3") {
     [[L.scr + 24, 12], [L.scr + 9, 7], [L.scr - 6, 12]].forEach(([y, len]) => sideKey(1, y, len));
     key(0, L.ctrl, 2.2, "HOME", rubber, 1.2);
@@ -1156,6 +1160,7 @@ start();
 })();
 
 </script>
+
 
 
 

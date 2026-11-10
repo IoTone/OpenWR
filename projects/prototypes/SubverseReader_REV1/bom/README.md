@@ -8,6 +8,8 @@ Bills of materials for the sixteen SubverseReader variants (nineteen BOMs: SR-14
 
 **Ordering:** `order.py` writes [order/ORDER.md](order/ORDER.md): landed cost (parts + shipping per vendor), the date the parts are in hand, DigiKey one-click cart links and Newark paste lists for each variant. `python3 order.py --live` refreshes it from the DigiKey, Mouser and Newark APIs when their keys are set.
 
+**Build costs:** `make_build_sheet.py` writes [build/SubverseReader-SR15-SR16-build.xlsx](build/SubverseReader-SR15-SR16-build.xlsx) from the planner snapshot. It has a sheet per variant where you enter the actual price, quantity, shipping, duty and tax for each order, and a Profit sheet for passes that are kept, given away or sold at cost. It needs openpyxl, and it won't overwrite a workbook that already holds your actuals unless you pass `--force`.
+
 Target: **$50 or less per unit.**
 
 | Variant | Order total (5) | Per unit @5 | Per unit @100 | Under $50? | Files |
@@ -56,7 +58,7 @@ Dimensions are the enclosure as rendered (width x height x depth, mm). Weights a
 | SR-14W | 80 x 155 x 12.5 | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5, NFC reader + tag | yes | charge, console, Web Serial loader |
 | SR-14B | 80 x 155 x 12.5 | 95 | BLE 5 only, NFC reader + tag | yes | charge, USB drive, UF2 updates |
 | SR-15 | 95 x 140 x 16 | 150 | Wi-Fi 4 2.4 GHz, BLE 5 | yes | charge, console (CH340), Web Serial loader |
-| SR-16 | 64 x 112 x 12 | 70 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
+| SR-16 | 64 x 120 x 12 | 72 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
 
 ## Battery
 
@@ -82,6 +84,7 @@ Stock cell (M) as in the BOM, with the thin (S) and extended (L) options. *Reade
 | SR-14W | 500 mAh, 9.5 mm | 1200 mAh, 12.5 mm | 2000 mAh, 16.5 mm | 10 mo | 8 mo | 139,886 |
 | SR-14B | 500 mAh, 9.5 mm | 1200 mAh, 12.5 mm | 2000 mAh, 16.5 mm | 1 yr+ | 1 yr+ | 368,675 |
 | SR-15 | 1000 mAh, 15 mm | 1200 mAh, 16 mm | 1500 mAh, 16 mm | 7 mo | 8 mo | 138,305 |
+| SR-16 | 1000 mAh, 11 mm | 1200 mAh, 12 mm | 1500 mAh, 12 mm | 10 mo | 11 mo | 161,053 |
 
 ## SR-1 Laminate: XIAO ESP32-S3 Plus on the Seeed EE05 board + 4.2in, no custom PCB
 
@@ -298,7 +301,7 @@ Files: [`SR-15.csv`](SR-15.csv) · [`SR-15.digikey-import.csv`](SR-15.digikey-im
 
 The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, half the width of SR-1. No custom PCB; hand-wired keys as on SR-1D.
 
-**64 x 112 x 12 mm · ~70 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
+**64 x 120 x 12 mm · ~72 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
 
 - Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys also go to D4, D5 and D9 so the firmware can tell them apart.
 - Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 (240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.

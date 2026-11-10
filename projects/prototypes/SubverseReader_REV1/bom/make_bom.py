@@ -659,7 +659,7 @@ variant("SR-16", "SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait,
          "assumes the bare panel.",
          "Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes "
          "about twice the page turns; the battery figures assume the same 300 turns a day as the others."],
-        dims="64 x 112 x 12", grams=70, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        dims="64 x 120 x 12", grams=72, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
         sd="no", usb="charge, console, Web Serial loader")
 
 
