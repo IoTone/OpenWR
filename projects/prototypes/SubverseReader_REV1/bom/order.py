@@ -35,6 +35,7 @@ VENDORS = {
     "Mouser":       (7.99, 1, 4, "Mansfield, TX"),
     "Newark":       (8.95, 1, 4, "Gaffney, SC"),
     "Adafruit":     (9.00, 2, 4, "New York, NY"),
+    "Crystalfontz": (9.00, 1, 4, "Spokane, WA (fee estimated)"),
     "Seeed":        (15.00, 3, 7, "Shenzhen (some US warehouse stock)"),
     "buyepaper":    (25.00, 3, 6, "Dalian (Good Display), DHL"),
     "LCSC":         (20.00, 2, 6, "Shenzhen, DHL"),
@@ -46,6 +47,18 @@ VENDORS = {
     "sticker shop": (6.00, 4, 4, "US print shop"),
     "broker":       (25.00, 5, 7, "Win Source / Unikey, part sourced to order"),
     "own printer":  (0.00, 2, 0, "your bench"),
+}
+# Passes shipped somewhere other than the US: per-vendor (fee, handling days, transit days) to
+# that country. Estimates for a small parcel; vendors not listed keep their US figures.
+SHIP_TO = {"SR-1D": "JP"}
+VENDORS_TO = {
+    "JP": {
+        "Seeed":       (12.00, 3, 5, "Shenzhen to Japan, courier (estimate)"),
+        "buyepaper":   (20.00, 3, 4, "Dalian to Japan, DHL (estimate)"),
+        "AliExpress":  (0.00, 3, 8, "AliExpress Choice / Standard to Japan (estimate)"),
+        "own printer": (0.00, 2, 0, "your bench"),
+        "sticker shop": (0.00, 4, 3, "local print shop or print it yourself"),
+    },
 }
 # DigiKey, Mouser and Newark carry the same catalog parts: a builder places ONE distributor
 # order, so they share one fee and one arrival date.
@@ -60,6 +73,7 @@ def group_of(vendor):
 SEARCH = {
     "Amazon": "https://www.amazon.com/s?k=",
     "Adafruit": "https://www.adafruit.com/search?q=",
+    "Crystalfontz": "https://www.crystalfontz.com/search.php?q=",
     "Seeed": "https://www.seeedstudio.com/catalogsearch/result/?q=",
     "buyepaper": "https://buyepaper.com/search?q=",
     "LCSC": "https://www.lcsc.com/search?q=",
@@ -93,7 +107,7 @@ def vendor_of(r):
     o = r["other_vendor"].lower()
     if "amazon" in o:
         return "Amazon"  # cells, ferrite, screws: US stock, two days
-    for name in ("adafruit", "seeed", "buyepaper", "lcsc", "jlcpcb", "aliexpress", "m5stack",
+    for name in ("adafruit", "crystalfontz", "seeed", "buyepaper", "lcsc", "jlcpcb", "aliexpress", "m5stack",
                  "ponoko", "sticker shop", "own printer", "newark"):
         if name in o:
             return {"buyepaper": "buyepaper", "m5stack": "M5Stack", "own printer": "own printer",
@@ -252,7 +266,7 @@ def live(boms, date):
     cache = json.load(open(cache_f)) if os.path.exists(cache_f) else {}
     for rows in boms.values():
         for r in rows:
-            if not (r["mpn"] or r["digikey_pn"] or r["mouser_pn"]) or r["vendor"] in ("Seeed", "buyepaper", "Adafruit", "M5Stack"):
+            if not (r["mpn"] or r["digikey_pn"] or r["mouser_pn"]) or r["vendor"] in ("Seeed", "buyepaper", "Adafruit", "Crystalfontz", "M5Stack"):
                 continue
             quotes = []
             for d in dists:
@@ -327,7 +341,8 @@ def plan(key, rows, date):
         elif hit:
             lead = (hit[1], hit[2])
         g = group_of(r["vendor"])
-        fee, hand, transit, _ = VENDORS["DigiKey" if g == "Distributor" else r["vendor"]]
+        vk = "DigiKey" if g == "Distributor" else r["vendor"]
+        fee, hand, transit, _ = VENDORS_TO.get(SHIP_TO.get(key), {}).get(vk) or VENDORS[vk]
         days = hand + transit if lead is None else lead[0]
         why = "in stock" if lead is None else lead[1]
         if days is not None and r["vendor"] == "JLCPCB" and "PCB" in r["ref"]:

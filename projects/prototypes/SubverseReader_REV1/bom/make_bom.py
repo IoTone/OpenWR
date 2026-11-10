@@ -145,9 +145,10 @@ variant("SR-1C", "SR-1C Laminate C5: DFRobot FireBeetle 2 ESP32-C5 + 4.2in, no c
            "0.5 A charger, PH2.0 battery socket, 21 uA deep sleep), 25.4 x 60 mm", "DFRobot",
            "DFR1222", "1738-DFR1222-ND", "", "", 8.62, 7.90, 1, "vendor",
            "DigiKey 148 in stock 2026-11-09; DFRobot direct $7.90"),
-         L("DRV", "24-pin SPI e-paper adapter with boost (Adafruit 4224 eInk Breakout Friend or "
-           "Good Display DESPI-C02)", "Adafruit", "", "", "", "Adafruit 4224", 9.95, 8.00, 1,
-           "estimate", "price and SSD1683 boost setting not checked"),
+         L("DRV", "Crystalfontz CFA-10084 e-paper adapter: 24-pin ZIF, boost, RESE jumper (open 3 ohm / "
+           "shorted 0.47 ohm), 8-pin header (3.3V GND SCK MOSI CS D/C RST BUSY), 3.3-5.5 V", "Crystalfontz",
+           "CFA-10084", "", "", "Crystalfontz", 11.68, 11.68, 1, "vendor",
+           "leave RESE open (3 ohm, the default); US stock. Good Display DESPI-C02 (2.2 ohm) is the China-only exact match"),
          GDEY042,
          L("KEY", "Tact switch 6x6 mm THT (PREV, MENU, NEXT)", "Omron", "B3F-1000",
            "SW400-ND", "653-B3F-1000", "", 0.35, 0.12, 3, "estimate",
@@ -157,14 +158,62 @@ variant("SR-1C", "SR-1C Laminate C5: DFRobot FireBeetle 2 ESP32-C5 + 4.2in, no c
          L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "", 0.50, 0.20, 1, "estimate", ""),
          bat(1000, "503450", 4.20, 2.60),
          *ENCLOSURE, LANYARD],
-        ["Panel wiring (the GDI pins, so DFRobot's own SPI map holds): SCK 23, MOSI 24, CS 27 (D6), "
-         "DC 8 (D2), RST 26 (D3), BUSY 6 (D12). Adapter 3.3 V from 3V3_C, which GPIO0 switches "
-         "(off by default), so the panel is unpowered in sleep.",
+        ["Panel wiring, FireBeetle -> CFA-10084 (the GDI pins, so DFRobot's own SPI map holds): "
+         "SCK 23 -> SCK, MOSI 24 -> MOSI, CS 27 (D6) -> CS, DC 8 (D2) -> D/C, RST 26 (D3) -> RST, "
+         "BUSY 6 (D12) -> BUSY (high while busy), 3V3_C -> 3.3V, GND -> GND. 3V3_C is switched by "
+         "GPIO0 (off by default), so the panel is unpowered in sleep. GxEPD2 driver: GxEPD2_420_GDEY042T81.",
+         "The panel datasheet's reference circuit (p. 31) uses a 2.2 ohm RESE resistor, as does the EE05. "
+         "The CFA-10084 offers 3 ohm (jumper open, default) or 0.47 ohm: use 3 ohm, the nearest; if refresh "
+         "is faint or fails, short the jumper. Panel faces the same way as the board's parts (datasheet).",
          "Battery voltage on GPIO1 (on-board divider). Keep GPIO2 free: strapping/JTAG.",
          "The board is 25.4 x 60 mm, longer than a XIAO stack; it lies beside the cell in SR-1's "
          "86 mm-wide shell. Check the shell layout before printing.",
          "4 MB flash, no PSRAM: fine for 1-bit 400x300 pages (15 KB a frame); no microSD."],
         dims="86 x 138 x 13", grams=100, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        sd="no", usb="charge, console, Web Serial loader")
+
+variant("SR-1D", "SR-1D Laminate Direct: all from China, shipped to Japan; XIAO ESP32-C5 + 4.2in",
+        "The cheapest SR-1: one Seeed parcel (XIAO C5, driver board and the same 4.2in glass) plus "
+        "one AliExpress order for keys, switch, cell and hardware. Hand-wired keys. Priced for "
+        "delivery to Japan.",
+        [L("MCU", "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)", "Seeed", "", "", "",
+           "Seeed 100010048", 6.90, 6.50, 1, "vendor", "Seeed $6.90 (2026-11-09); Switch Science JP sold out"),
+         L("DRV", "ePaper Driver Board for XIAO V2 (24-pin SPI, boost)", "Seeed", "", "", "",
+           "Seeed 114993558", 5.99, 4.90, 1, "vendor",
+           "RESE fixed at 0.47 ohm; Seeed lists this board for its own 4.2in GDEY042T81 panel"),
+         L("EPD", "4.2in e-paper 400x300 B/W, SSD1683 (Seeed 104990857 = Good Display GDEY042T81)",
+           "Seeed", "", "", "", "Seeed 104990857", 19.95, 10.00, 1, "vendor",
+           "same parcel as the XIAO; buy-lcd sells the same glass at $13.80 but 0 in stock and ships separately"),
+         L("KEY", "Tact switch 6x6 mm THT (PREV, MENU, NEXT), 50-pc pack", "", "", "", "", "AliExpress",
+           0.05, 0.02, 3, "estimate", "pack ~$1.09; check the listing's normal price, not the new-buyer deal"),
+         L("DIO", "Schottky diode 1N5819 / BAT43, any-key wake line", "", "", "", "", "AliExpress",
+           0.03, 0.01, 3, "estimate", "Schottky, not 1N4148: the drop must stay under the C5's low threshold"),
+         L("PWR", "Slide switch SS12D00, battery disconnect, 20-pc pack", "", "", "", "", "AliExpress",
+           0.06, 0.03, 1, "estimate", ""),
+         L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "AliExpress", 0.20, 0.10, 1, "estimate", ""),
+         L("BAT", "LiPo 1000 mAh 503450, PCM, JST-PH 2.0 lead", "", "", "", "",
+           "AliExpress (check Japan delivery for cells); Akizuki Denshi fallback", 6.50, 2.60, 1,
+           "estimate", "lithium cells often can't go by post to Japan: pick a courier option or buy locally"),
+         L("ENC", "Enclosure, 3D-printed PETG, front + back shell (~45 g)", "", "", "", "", "own printer",
+           0.90, 0.60, 1, "estimate", "STEP/STL from enclosure/"),
+         L("CAP", "Key caps, printed TPU", "", "", "", "", "own printer", 0.10, 0.05, 1, "estimate", ""),
+         L("LAM", "Laminate band: printed vinyl sticker", "", "", "", "", "sticker shop", 0.15, 0.05, 1,
+           "estimate", "print locally"),
+         L("HW", "M2x6 screws + M2 heat-set inserts, 4 each", "", "", "", "", "AliExpress", 0.20, 0.10, 1,
+           "estimate", "packs of 50-100"),
+         L("LNY", "Lanyard 20 mm with swivel hook + 25 mm split ring", "", "", "", "", "AliExpress", 0.60,
+           0.43, 1, "estimate", "no plain stock listing checked; printed lots ~$0.43 each at 100")],
+        ["Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. That uses both "
+         "LP GPIOs on the edge (D0, D1), so the any-key wake line goes to an LP GPIO on the back JTAG "
+         "pads (GPIO3, MTDI), through one Schottky per key; the keys also go to D4, D5 and D9 so the "
+         "firmware can tell them apart.",
+         "The driver board's boost resistor is 0.47 ohm, not the panel datasheet's 2.2; Seeed sells this "
+         "pair together, so it should work. If refresh is faint, replace R2 with 2.2 ohm.",
+         "Per-unit prices for AliExpress packs are per piece; you buy one pack for 5 builds.",
+         "Japan: Seeed's OCS service is 4-7 working days (orders under $300); import consumption tax "
+         "applies above the small-parcel threshold. Fees here are estimates; Seeed and AliExpress "
+         "price shipping at checkout."],
+        dims="86 x 138 x 12.5", grams=95, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
         sd="no", usb="charge, console, Web Serial loader")
 
 variant("SR-2", "SR-2 All Access: ESP32-S3 custom PCB + 5.83in, card pocket",
@@ -555,11 +604,15 @@ AVAIL = {  # match key (MPN, or a description fragment): (rating, where/stock, m
     "XIAO ESP32-C5": ("ok", "Seeed in stock $6.99; DigiKey 13-week lead",
                       "buy direct from Seeed"),
     "XIAO nRF52840": ("ok", "Seeed in stock $10.40", ""),
+    "104990857": ("ok", "Seeed $19.95; reseller Pakronics 30 in stock (2026-11-09)",
+                  "buy-lcd GDEY042T81 $13.80 (0 in stock 2026-11-09)"),
     "XIAO ESP32-S3 Plus": ("ok", "Seeed in stock $7.90 (2026-11-09)", ""),
     "XIAO ePaper Display Board EE05": ("ok", "Seeed in stock $10.99, $9.99 at 10+ (2026-11-09)",
                                        "Seeed's 114993558 driver board + hand-wired keys"),
     "DFR1222": ("ok", "DigiKey 148 in stock, 2-week lead (2026-11-09)", "DFRobot direct $7.90"),
-    "eInk Breakout Friend": ("watch", "not checked", "Good Display DESPI-C02; Seeed 114993558 wired by hand"),
+    "CFA-10084": ("ok", "Crystalfontz (Spokane, WA) 506 in stock, $11.68 (2026-11-09)",
+                  "Waveshare e-Paper Driver HAT 13512 on 3R (RobotShop US, backorder); Good Display DESPI-C02 "
+                  "on 2.2 ohm (China, 0 in stock); not Seeed 114993558 (fixed 0.47 ohm)"),
     "114993558": ("ok", "Seeed in stock $5.99 (replaces the discontinued 105990172)", ""),
     "GDEY042T81-FL02": ("ok", "buyepaper 58", "100 units: order from Good Display direct"),
     "GDEY042T81": ("ok", "buyepaper 60", "100 units: order from Good Display direct"),
@@ -655,7 +708,7 @@ def write_availability(summary):
     for k, (r, where, mit) in order:
         if k not in used:
             continue
-        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBC")), x)))
+        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBCD")), x)))
         out.append(f"| {k} | **{r}** | {where} | {mit or '—'} | {vs} |")
     out += ["", "Changes made after this check: Seeed 105990172 (discontinued) became 114993558; "
             "MFRC522 (EOL) became CLRC663 plus; ESP32-C5-WROOM-1-N8R4 (not an orderable code) "
@@ -686,7 +739,7 @@ def main():
         total, t100 = write(key, v)
         summary.append((key, v, total, total / BUILDS, t100))
     out = ["# SubverseReader REV1 BOMs", "",
-           "Bills of materials for the fourteen SubverseReader variants (sixteen BOMs: SR-14 has two builds, and SR-1C is the C5 alternative to SR-1). `make_bom.py` generates every "
+           "Bills of materials for the fourteen SubverseReader variants (seventeen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every "
            "file here; edit it, not the CSVs.", "",
            "**Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are "
            "seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the "

@@ -1,6 +1,6 @@
 # SubverseReader REV1 BOMs
 
-Bills of materials for the fourteen SubverseReader variants (sixteen BOMs: SR-14 has two builds, and SR-1C is the C5 alternative to SR-1). `make_bom.py` generates every file here; edit it, not the CSVs.
+Bills of materials for the fourteen SubverseReader variants (seventeen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every file here; edit it, not the CSVs.
 
 **Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the `*.digikey-import.csv` or `*.mouser-import.csv` file into the distributor's BOM tool for today's price; AliExpress, LCSC and vendor-direct lines are not in the import files.
 
@@ -13,7 +13,8 @@ Target: **$50 or less per unit.**
 | Variant | Order total (5) | Per unit @5 | Per unit @100 | Under $50? | Files |
 |---|---|---|---|---|---|
 | SR-1 Laminate: XIAO ESP32-S3 Plus on the Seeed EE05 board + 4.2in, no custom PCB | $200 | $40.04 | $31.94 | yes | [`SR-1.csv`](SR-1.csv) |
-| SR-1C Laminate C5: DFRobot FireBeetle 2 ESP32-C5 + 4.2in, no custom PCB | $209 | $41.72 | $30.71 | yes | [`SR-1C.csv`](SR-1C.csv) |
+| SR-1C Laminate C5: DFRobot FireBeetle 2 ESP32-C5 + 4.2in, no custom PCB | $217 | $43.45 | $34.39 | yes | [`SR-1C.csv`](SR-1C.csv) |
+| SR-1D Laminate Direct: all from China, shipped to Japan; XIAO ESP32-C5 + 4.2in | $209 | $41.79 | $25.45 | yes | [`SR-1D.csv`](SR-1D.csv) |
 | SR-2 All Access: ESP32-S3 custom PCB + 5.83in, card pocket | $275 | $54.99 | $34.46 | at volume | [`SR-2.csv`](SR-2.csv) |
 | SR-3 Gray Pass: M5Stack PaperDIY S3 kit + printed shell | $183 | $36.55 | $26.81 | yes | [`SR-3.csv`](SR-3.csv) |
 | SR-4 Headliner: 6in 300 ppi, epdiy-style ESP32-S3 board, card pocket | $339 | $67.85 | $41.30 | at volume | [`SR-4.csv`](SR-4.csv) |
@@ -37,6 +38,7 @@ Dimensions are the enclosure as rendered (width x height x depth, mm). Weights a
 |---|---|---|---|---|---|
 | SR-1 | 86 x 138 x 12.5 | 95 | Wi-Fi 4 2.4 GHz, BLE 5 | no | charge, USB drive, console |
 | SR-1C | 86 x 138 x 13 | 100 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
+| SR-1D | 86 x 138 x 12.5 | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
 | SR-2 | 109 x 177 x 19.5 (15.5 without pocket) | 150 | Wi-Fi 4 2.4 GHz, BLE 5 | yes | charge, USB drive, console |
 | SR-3 | 78 x 149 x 14.5 | 110 | Wi-Fi 4 2.4 GHz, BLE 5 | yes (on the kit) | charge, USB drive, console |
 | SR-4 | 109 x 172 x 17.5 (13.5 without pocket) | 150 | Wi-Fi 4 2.4 GHz, BLE 5 | yes | charge, USB drive, console |
@@ -60,6 +62,7 @@ Stock cell (M) as in the BOM, with the thin (S) and extended (L) options. *Reade
 |---|---|---|---|---|---|---|
 | SR-1 | 500 mAh, 10.5 mm | 1000 mAh, 12.5 mm | 1500 mAh, 13.5 mm | 8 mo | 9 mo | 115,254 |
 | SR-1C | 500 mAh, 11 mm | 1000 mAh, 13 mm | 1500 mAh, 14 mm | 9 mo | 10 mo | 125,926 |
+| SR-1D | 500 mAh, 10.5 mm | 1000 mAh, 12.5 mm | 1500 mAh, 13.5 mm | 9 mo | 9 mo | 125,926 |
 | SR-2 | 1000 mAh, 18.5 mm | 1500 mAh, 19.5 mm | 2500 mAh, 23.5 mm | 11 mo | 1 yr+ | 154,545 |
 | SR-3 | 500 mAh, 11.5 mm | 1200 mAh, 14.5 mm | 2000 mAh, 18.5 mm | 4 mo | 5 mo | 42,207 |
 | SR-4 | 1200 mAh, 13.5 mm | 2000 mAh, 17.5 mm | 2500 mAh, 17.5 mm | 5 mo | 7 mo | 49,157 |
@@ -95,12 +98,26 @@ The SR-1 alternative that keeps dual-band Wi-Fi: a FireBeetle 2 C5 (charger, PH2
 
 **86 x 138 x 13 mm · ~100 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
 
-- Panel wiring (the GDI pins, so DFRobot's own SPI map holds): SCK 23, MOSI 24, CS 27 (D6), DC 8 (D2), RST 26 (D3), BUSY 6 (D12). Adapter 3.3 V from 3V3_C, which GPIO0 switches (off by default), so the panel is unpowered in sleep.
+- Panel wiring, FireBeetle -> CFA-10084 (the GDI pins, so DFRobot's own SPI map holds): SCK 23 -> SCK, MOSI 24 -> MOSI, CS 27 (D6) -> CS, DC 8 (D2) -> D/C, RST 26 (D3) -> RST, BUSY 6 (D12) -> BUSY (high while busy), 3V3_C -> 3.3V, GND -> GND. 3V3_C is switched by GPIO0 (off by default), so the panel is unpowered in sleep. GxEPD2 driver: GxEPD2_420_GDEY042T81.
+- The panel datasheet's reference circuit (p. 31) uses a 2.2 ohm RESE resistor, as does the EE05. The CFA-10084 offers 3 ohm (jumper open, default) or 0.47 ohm: use 3 ohm, the nearest; if refresh is faint or fails, short the jumper. Panel faces the same way as the board's parts (datasheet).
 - Battery voltage on GPIO1 (on-board divider). Keep GPIO2 free: strapping/JTAG.
 - The board is 25.4 x 60 mm, longer than a XIAO stack; it lies beside the cell in SR-1's 86 mm-wide shell. Check the shell layout before printing.
 - 4 MB flash, no PSRAM: fine for 1-bit 400x300 pages (15 KB a frame); no microSD.
 
 Files: [`SR-1C.csv`](SR-1C.csv) · [`SR-1C.digikey-import.csv`](SR-1C.digikey-import.csv) · [`SR-1C.mouser-import.csv`](SR-1C.mouser-import.csv)
+
+## SR-1D Laminate Direct: all from China, shipped to Japan; XIAO ESP32-C5 + 4.2in
+
+The cheapest SR-1: one Seeed parcel (XIAO C5, driver board and the same 4.2in glass) plus one AliExpress order for keys, switch, cell and hardware. Hand-wired keys. Priced for delivery to Japan.
+
+**86 x 138 x 12.5 mm · ~95 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
+
+- Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. That uses both LP GPIOs on the edge (D0, D1), so the any-key wake line goes to an LP GPIO on the back JTAG pads (GPIO3, MTDI), through one Schottky per key; the keys also go to D4, D5 and D9 so the firmware can tell them apart.
+- The driver board's boost resistor is 0.47 ohm, not the panel datasheet's 2.2; Seeed sells this pair together, so it should work. If refresh is faint, replace R2 with 2.2 ohm.
+- Per-unit prices for AliExpress packs are per piece; you buy one pack for 5 builds.
+- Japan: Seeed's OCS service is 4-7 working days (orders under $300); import consumption tax applies above the small-parcel threshold. Fees here are estimates; Seeed and AliExpress price shipping at checkout.
+
+Files: [`SR-1D.csv`](SR-1D.csv) · [`SR-1D.digikey-import.csv`](SR-1D.digikey-import.csv) · [`SR-1D.mouser-import.csv`](SR-1D.mouser-import.csv)
 
 ## SR-2 All Access: ESP32-S3 custom PCB + 5.83in, card pocket
 

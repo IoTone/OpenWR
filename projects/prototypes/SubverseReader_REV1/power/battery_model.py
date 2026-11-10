@@ -75,6 +75,7 @@ CELLS = {  # code: (mAh, thickness mm, footprint, unit @5, unit @100)
 # stock depth mm, extras key, note
 V = [
     ("SR-1", "Laminate", "s3", "spi42", 12, ("303450", "503450", "604050"), 12.5, "", "XIAO S3 Plus on EE05; EE05 switches panel + divider off: measure"),
+    ("SR-1D", "Laminate Direct", "c5", "spi42", 12, ("303450", "503450", "604050"), 12.5, "", "XIAO C5 + Seeed driver board: measure"),
     ("SR-1C", "Laminate C5", "c5", "spi42", 9, ("303450", "503450", "604050"), 13, "", "FireBeetle 2 C5: 21 uA board total per DFRobot"),
     ("SR-2", "All Access", "s3", "spi583", BOARD_CUSTOM, ("503450", "604050", "104050"), 19.5, "", ""),
     ("SR-3", "Gray Pass", "s3", "par47", 40, ("303450", "603450", "103450"), 14.5, "", "M5 kit sleep path unknown"),

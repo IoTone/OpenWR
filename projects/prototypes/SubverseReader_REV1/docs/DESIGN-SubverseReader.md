@@ -236,7 +236,8 @@ enclosure as rendered; weights are estimates without the lanyard.
 | Variant | Wear | Panel | Chip | Navigation | Back | W × H × D (mm) | ~g | microSD | USB-C | @5 | @100 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | **SR-1 Laminate** | lanyard | 4.2in 400×300 1-bit | XIAO ESP32-S3 Plus on Seeed **EE05** (2.4 GHz) | 3 keys (on the EE05) | plain | 86 × 138 × 12.5 | 95 | no | USB drive | $40 | $32 |
-| **SR-1C Laminate C5** | lanyard | 4.2in 400×300 1-bit | DFRobot FireBeetle 2 ESP32-C5 (2.4 + 5 GHz) + 24-pin adapter | 3 keys | plain | 86 × 138 × 13 | 100 | no | charge, Web Serial | $42 | $31 |
+| **SR-1C Laminate C5** | lanyard | 4.2in 400×300 1-bit | DFRobot FireBeetle 2 ESP32-C5 (2.4 + 5 GHz) + Crystalfontz CFA-10084 adapter | 3 keys | plain | 86 × 138 × 13 | 100 | no | charge, Web Serial | $43 | $34 |
+| **SR-1D Laminate Direct** | lanyard | 4.2in 400×300 1-bit | XIAO ESP32-C5 + Seeed driver board, **all from China, shipped to Japan** | 3 keys | plain | 86 × 138 × 12.5 | 95 | no | charge, Web Serial | $42 | $25 |
 | **SR-2 All Access** | lanyard | 5.83in 648×480 1-bit | ESP32-S3 PCB | 5-way + 2 keys | card pocket | 109 × 177 × 19.5 | 150 | yes | USB drive | $55 | $34 |
 | **SR-3 Gray Pass** ([build guide](Gray-Pass-SR3-build-guide.md)) | lanyard | 4.7in 960×540 16-grey | M5Stack PaperDIY (S3) | 3 side keys | plain | 78 × 149 × 14.5 | 110 | yes | USB drive | $37 | $27 |
 | **SR-4 Headliner** | lanyard | 6in 1448×1072 300 ppi 16-grey | ESP32-S3 + epdiy PMIC | rockers both edges + 3 keys | card pocket | 109 × 172 × 17.5 | 150 | yes | USB drive | $68 | $41 |
@@ -273,9 +274,16 @@ slide switch, and load switches that cut the panel rail and the battery divider 
 catches: the XIAO is soldered flat using its back pads (panel reset is on D11), so it takes
 hot air or reflow, and only the **S3 Plus** and **nRF52840 Plus** fit; the C5 and C3 XIAOs have
 no back pads. So SR-1 trades the C5's 5 GHz for the S3's USB drive. **SR-1C** keeps the C5:
-a DFRobot FireBeetle 2 ESP32-C5 ($7.90, DigiKey stock) with a 24-pin e-paper adapter and
-three keys on LP GPIO3/4/5, each of which wakes it directly. At 5 units, SR-1 lands at
-$49.24 a pass and SR-1C at $51.12, both with all parts in hand around Nov 18–19.
+a DFRobot FireBeetle 2 ESP32-C5 ($7.90, DigiKey stock) with Crystalfontz's CFA-10084 adapter
+(US stock; RESE jumper left open for 3 Ω, the nearest to the panel datasheet's 2.2 Ω; Good
+Display's DESPI-C02 has 2.2 Ω but ships from China and was out of stock on 2026-11-09) and three keys on LP GPIO3/4/5, each of which wakes it directly. At 5 units, SR-1 lands at
+$49.24 a pass and SR-1C at $52.85, both with all parts in hand around Nov 18–19.
+**SR-1D** is the cheapest SR-1, bought only from China and priced for delivery to Japan:
+one Seeed parcel (XIAO ESP32-C5, ePaper Driver Board 114993558 and Seeed's 4.2in panel,
+which is the same GDEY042T81 glass) and one AliExpress order (keys, Schottky diodes, slide
+switch, cell, screws, lanyard). $44.19 a pass landed for 5, $25 at 100. The keys share an
+any-key wake line on the C5's back JTAG pad (GPIO3), because the driver board takes D0 and D1.
+LiPo cells often can't travel by post to Japan, so buy the cell with a courier option or locally.
 
 ### SR-14 Tap Pass: zines on NFC tags
 

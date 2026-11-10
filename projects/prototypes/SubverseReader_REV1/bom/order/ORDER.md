@@ -19,11 +19,12 @@ Offline numbers use the BOM snapshot prices (2026-11-06/07) and the vendor table
 | SR-11 | $209.40 | $102.99 | $312.39 | $62.48 | 8 | 2026-12-07 (28 d) | U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=DMG2305UX-7DICT-ND&qty6=5&cref6=Q5&part7=2N7002LT1GOSCT-ND&qty7=5&cref7=Q6&part8=1727-BAT54C215CT-ND&qty8=20&cref8=D1&part9=HFJ124CT-ND&qty9=5&cref9=J3&part10=HR1941CT-ND&qty10=5&cref10=J4) |
 | SR-12 | $217.70 | $102.99 | $320.69 | $64.14 | 8 | 2026-12-07 (28 d) | U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=DMG2305UX-7DICT-ND&qty6=5&cref6=Q5&part7=2N7002LT1GOSCT-ND&qty7=5&cref7=Q6&part8=1727-BAT54C215CT-ND&qty8=35&cref8=D1&part9=HFJ124CT-ND&qty9=5&cref9=J3&part10=CKN10504CT-ND&qty10=10&cref10=KEY&part11=HR1941CT-ND&qty11=5&cref11=J4) |
 | SR-13 | $195.25 | $39.99 | $235.24 | $47.05 | 6 | **blocked** | BRD K159: sold out at M5Stack; LilyGo T5 4.7in is the fallback | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=SW400-ND&qty1=15&cref1=KEY&part2=401-2000-ND&qty2=5&cref2=PWR) |
-| SR-1C | $208.60 | $46.99 | $255.59 | $51.12 | 6 | 2026-11-18 (9 d) | EPD GDEY042T81 (buyepaper: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=1738-DFR1222-ND&qty1=5&cref1=MCU&part2=SW400-ND&qty2=15&cref2=KEY&part3=401-2000-ND&qty3=5&cref3=PWR) |
+| SR-1C | $217.25 | $46.99 | $264.24 | $52.85 | 6 | 2026-11-18 (9 d) | EPD GDEY042T81 (buyepaper: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=1738-DFR1222-ND&qty1=5&cref1=MCU&part2=SW400-ND&qty2=15&cref2=KEY&part3=401-2000-ND&qty3=5&cref3=PWR) |
+| SR-1D | $208.95 | $12.00 | $220.95 | $44.19 | 4 | 2026-11-20 (11 d) | KEY Tact switch 6x6 mm THT (PREV, MENU, NEXT (AliExpress: in stock) | — |
 | SR-14B | $268.90 | $102.99 | $371.89 | $74.38 | 8 | 2026-11-23 (14 d) | U3 RT9080-33GJ5 (broker: genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=HFJ124CT-ND&qty6=5&cref6=J3&part7=DMG2305UX-7DICT-ND&qty7=5&cref7=Q3&part8=CKN10504CT-ND&qty8=5&cref8=KEY&part9=HR1941CT-ND&qty9=5&cref9=J4) |
 | SR-14W | $261.40 | $102.99 | $364.39 | $72.88 | 8 | 2026-12-07 (28 d) | U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=DMG2305UX-7DICT-ND&qty6=5&cref6=Q5&part7=2N7002LT1GOSCT-ND&qty7=5&cref7=Q6&part8=1727-BAT54C215CT-ND&qty8=20&cref8=D1&part9=HFJ124CT-ND&qty9=5&cref9=J3&part10=DMG2305UX-7DICT-ND&qty10=5&cref10=Q3&part11=CKN10504CT-ND&qty11=5&cref11=KEY&part12=HR1941CT-ND&qty12=5&cref12=J4) |
 
-**Shipping is the hidden cost at 5 units:** 29% of the landed total across all variants. Ordering every buildable variant together pays each vendor's fee once: parts $2,957.60 + shipping $126.99 (instead of $1,193.88 ordered one variant at a time) for 13 variants, materials in hand 2026-12-07.
+**Shipping is the hidden cost at 5 units:** 28% of the landed total across all variants. Ordering every buildable variant together pays each vendor's fee once: parts $3,175.20 + shipping $132.99 (instead of $1,205.88 ordered one variant at a time) for 14 variants, materials in hand 2026-12-07.
 
 ## How to order a variant
 
@@ -40,6 +41,7 @@ Offline numbers use the BOM snapshot prices (2026-11-06/07) and the vendor table
 | Mouser | $7.99 | 1 + 4 d | Mansfield, TX |
 | Newark | $8.95 | 1 + 4 d | Gaffney, SC |
 | Adafruit | $9.00 | 2 + 4 d | New York, NY |
+| Crystalfontz | $9.00 | 1 + 4 d | Spokane, WA (fee estimated) |
 | Seeed | $15.00 | 3 + 7 d | Shenzhen (some US warehouse stock) |
 | buyepaper | $25.00 | 3 + 6 d | Dalian (Good Display), DHL |
 | LCSC | $20.00 | 2 + 6 d | Shenzhen, DHL |
@@ -259,14 +261,25 @@ Direct: BRD ×5 K159 (M5Stack, $25.00); BAT ×5 LiPo 1500 mAh 604050, PCM, JST-P
 
 | Vendor | Lines | Parts | Fee | Days |
 |---|---|---|---|---|
+| Crystalfontz | 1 | $58.40 | $9.00 | 5 |
 | buyepaper | 1 | $58.00 | $25.00 | 9 |
 | Distributor | 3 | $50.60 | $6.99 | 5 |
-| Adafruit | 1 | $49.75 | $9.00 | 6 |
 | Amazon | 4 | $44.50 | $0.00 | 3 |
 | own printer | 2 | $5.00 | $0.00 | 2 |
 | sticker shop | 1 | $0.75 | $6.00 | 8 |
 
-Direct: DRV ×5 24-pin SPI e-paper adapter with boost  (Adafruit, $9.95); EPD ×5 GDEY042T81 (buyepaper, $11.60); PRF ×5 Perfboard scrap + 30 AWG wire (Amazon, $0.50); BAT ×5 LiPo 1000 mAh 503450, PCM, JST-PH 2.0  (Amazon, $6.50); LAM ×5 Laminate band: printed vinyl sticker (sticker shop, $0.15); HW ×5 M2x6 screws + M2 heat-set inserts, 4 e (Amazon, $0.40); LNY ×5 Lanyard 20 mm with swivel hook + 25 mm (Amazon, $1.50)
+Direct: DRV ×5 CFA-10084 (Crystalfontz, $11.68); EPD ×5 GDEY042T81 (buyepaper, $11.60); PRF ×5 Perfboard scrap + 30 AWG wire (Amazon, $0.50); BAT ×5 LiPo 1000 mAh 503450, PCM, JST-PH 2.0  (Amazon, $6.50); LAM ×5 Laminate band: printed vinyl sticker (sticker shop, $0.15); HW ×5 M2x6 screws + M2 heat-set inserts, 4 e (Amazon, $0.40); LNY ×5 Lanyard 20 mm with swivel hook + 25 mm (Amazon, $1.50)
+
+## SR-1D
+
+| Vendor | Lines | Parts | Fee | Days |
+|---|---|---|---|---|
+| Seeed | 3 | $164.20 | $12.00 | 8 |
+| AliExpress | 7 | $39.00 | $0.00 | 11 |
+| own printer | 2 | $5.00 | $0.00 | 2 |
+| sticker shop | 1 | $0.75 | $0.00 | 7 |
+
+Direct: MCU ×5 XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE  (Seeed, $6.90); DRV ×5 ePaper Driver Board for XIAO V2 (24-pi (Seeed, $5.99); EPD ×5 4.2in e-paper 400x300 B/W, SSD1683 (Se (Seeed, $19.95); KEY ×15 Tact switch 6x6 mm THT (PREV, MENU, NE (AliExpress, $0.05); DIO ×15 Schottky diode 1N5819 / BAT43, any-key (AliExpress, $0.03); PWR ×5 Slide switch SS12D00, battery disconne (AliExpress, $0.06); PRF ×5 Perfboard scrap + 30 AWG wire (AliExpress, $0.20); BAT ×5 LiPo 1000 mAh 503450, PCM, JST-PH 2.0  (AliExpress, $6.50); LAM ×5 Laminate band: printed vinyl sticker (sticker shop, $0.15); HW ×5 M2x6 screws + M2 heat-set inserts, 4 e (AliExpress, $0.20); LNY ×5 Lanyard 20 mm with swivel hook + 25 mm (AliExpress, $0.60)
 
 ## SR-14B
 
