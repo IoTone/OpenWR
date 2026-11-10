@@ -1,0 +1,4 @@
+# Newark Quick Paste / BOM upload: manufacturer part number, quantity, reference
+B3F-1000,15,KEY
+1N5817-T,15,DIO
+JS102011SAQN,5,PWR

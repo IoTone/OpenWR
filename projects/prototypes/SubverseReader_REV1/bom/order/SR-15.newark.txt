@@ -1,0 +1,2 @@
+# Newark Quick Paste / BOM upload: manufacturer part number, quantity, reference
+JS102011SAQN,5,PWR

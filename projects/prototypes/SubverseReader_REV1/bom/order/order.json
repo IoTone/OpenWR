@@ -1,5 +1,5 @@
 {
- "date": "2026-11-09",
+ "date": "2026-11-10",
  "mode": "offline",
  "units": 5,
  "vendors": {
@@ -32,6 +32,12 @@
    1,
    4,
    "Spokane, WA (fee estimated)"
+  ],
+  "Elecrow": [
+   15.0,
+   3,
+   7,
+   "Shenzhen (fee estimated)"
   ],
   "Seeed": [
    15.0,
@@ -108,7 +114,7 @@
    "landed": 246.2,
    "per_unit": 49.24,
    "vendors": 5,
-   "eta": "2026-11-19",
+   "eta": "2026-11-20",
    "eta_days": 10,
    "gate": "MCU XIAO ESP32-S3 Plus (16 MB flash, 8 MB PS (Seeed: in stock)",
    "blocked": [],
@@ -164,7 +170,8 @@
      "why": "in stock",
      "src": "Seeed 102010671",
      "note": "Seeed $7.90, in stock 2026-11-09",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ESP32-S3%20Plus%20%2816%20MB%20flash"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ESP32-S3%20Plus",
+     "alt": null
     },
     {
      "ref": "DRV",
@@ -183,7 +190,8 @@
      "why": "in stock",
      "src": "Seeed 100057220",
      "note": "XIAO is SMD-soldered incl. back pads D11-D19 (panel RES on D11): hot air or reflow, or buy it assembled; takes the S3 Plus or nRF52840 Plus only, not C3/C5",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ePaper%20Display%20Board%20EE05%3A%2024-pin%20SPI%20FPC%20%2B%20boost"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ePaper%20Display%20Board%20EE05%3A%2024-pin%20SPI%20FPC%20%2B%20boost",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -202,7 +210,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",
-     "link": "https://buyepaper.com/search?q=GDEY042T81"
+     "link": "https://buyepaper.com/search?q=GDEY042T81",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -221,7 +230,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201000%20mAh%20503450"
+     "link": "https://www.amazon.com/s?k=503450%201000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -240,7 +250,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -259,7 +270,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -278,7 +290,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -297,7 +310,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -316,7 +330,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
@@ -330,7 +345,7 @@
    "landed": 377.94,
    "per_unit": 75.59,
    "vendors": 8,
-   "eta": "2026-11-23",
+   "eta": "2026-11-24",
    "eta_days": 14,
    "gate": "U3 RT9080-33GJ5 (broker: genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix)",
    "blocked": [],
@@ -342,14 +357,14 @@
      "days": 9
     },
     "Distributor": {
-     "lines": 14,
-     "parts": 72.45,
+     "lines": 15,
+     "parts": 78.45,
      "fee": 6.99,
      "days": 5
     },
     "Amazon": {
-     "lines": 4,
-     "parts": 55.5,
+     "lines": 3,
+     "parts": 49.5,
      "fee": 0.0,
      "days": 3
     },
@@ -406,7 +421,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $24.20, 93 in stock 2026-11-07; Seeed 104990858 is the same glass",
-     "link": "https://buyepaper.com/search?q=GDEY0583T81"
+     "link": "https://buyepaper.com/search?q=GDEY0583T81",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -425,7 +441,8 @@
      "why": "in stock",
      "src": "",
      "note": "N8R2 saves ~$0.80 if no PSRAM needed",
-     "link": "https://octopart.com/search?q=ESP32-S3-WROOM-1-N16R8"
+     "link": "https://www.digikey.com/en/products/result?keywords=ESP32-S3-WROOM-1-N16R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -444,7 +461,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -463,7 +481,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -482,7 +501,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -501,7 +521,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -520,7 +541,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -539,7 +561,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -558,7 +581,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -577,7 +601,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -596,7 +621,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -615,7 +641,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -634,7 +661,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -653,7 +681,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -663,16 +692,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "NAV",
@@ -691,7 +724,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRHABE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRHABE010",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -710,7 +744,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -729,7 +764,8 @@
      "why": "in stock",
      "src": "",
      "note": "optional; 16 MB flash holds ~1500 pages",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -748,7 +784,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "5 boards + shipping",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -767,7 +804,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201500%20mAh%20604050"
+     "link": "https://www.amazon.com/s?k=604050%201500mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -786,7 +824,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "pocket fits ID-1 card + ticket",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -805,7 +844,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -824,7 +864,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -843,7 +884,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -862,10 +904,13 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
-   "digikey_missing": [],
+   "digikey_missing": [
+    "EPB "
+   ],
    "mouser_lines": 2,
    "newark_lines": 0
   },
@@ -936,7 +981,8 @@
      "why": "sold out at M5Stack; LilyGo T5 4.7in is the fallback",
      "src": "M5Stack store / AliExpress",
      "note": "SOLD OUT 2026-11-07 (in stock 16-22 Oct only); fallback LilyGo T5 4.7in S3 $39.99",
-     "link": "https://shop.m5stack.com/search?q=K159"
+     "link": "https://shop.m5stack.com/search?q=K159",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -955,7 +1001,8 @@
      "why": "in stock",
      "src": "",
      "note": "check free GPIOs on the kit",
-     "link": "https://octopart.com/search?q=B3F-1000"
+     "link": "https://www.digikey.com/en/products/result?keywords=B3F-1000",
+     "alt": null
     },
     {
      "ref": "PWR",
@@ -974,7 +1021,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=JS102011SAQN"
+     "link": "https://www.digikey.com/en/products/result?keywords=JS102011SAQN",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -993,7 +1041,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "ENC",
@@ -1012,7 +1064,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -1031,7 +1084,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -1050,7 +1104,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -1069,7 +1124,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -1088,7 +1144,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
@@ -1181,7 +1238,8 @@
      "why": "quote-only at distributors",
      "src": "AliExpress",
      "note": "price unconfirmed: distributors quote only, one listing at $131; grade varies",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=ED060KC1"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=ED060KC1",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -1200,7 +1258,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=ESP32-S3-WROOM-1-N16R8"
+     "link": "https://www.digikey.com/en/products/result?keywords=ESP32-S3-WROOM-1-N16R8",
+     "alt": null
     },
     {
      "ref": "U5",
@@ -1219,7 +1278,8 @@
      "why": "out at TI, no authorised listings",
      "src": "",
      "note": "OUT OF STOCK at TI 2026-11-07, no authorised listings",
-     "link": "https://octopart.com/search?q=TPS65185RGZR"
+     "link": "https://www.digikey.com/en/products/result?keywords=TPS65185RGZR",
+     "alt": null
     },
     {
      "ref": "U6",
@@ -1238,7 +1298,8 @@
      "why": "in stock",
      "src": "",
      "note": "epdiy v7 reference",
-     "link": "https://octopart.com/search?q=PCA9555PW%2C118"
+     "link": "https://www.digikey.com/en/products/result?keywords=PCA9555PW%2C118",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -1257,7 +1318,8 @@
      "why": "in stock",
      "src": "",
      "note": "check pin 1 side against the panel",
-     "link": "https://octopart.com/search?q=FH12-34S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-34S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "PMX",
@@ -1276,7 +1338,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "",
-     "link": "https://www.lcsc.com/search?q=PMIC%20passives%3A%204.7%20uH%20inductors"
+     "link": "https://www.lcsc.com/search?q=PMIC%20passives%3A%204.7%20uH%20inductors",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -1295,7 +1358,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -1314,7 +1378,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -1333,7 +1398,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -1352,7 +1418,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -1371,7 +1438,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -1390,7 +1458,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -1409,7 +1478,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -1428,7 +1498,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -1447,7 +1518,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -1466,7 +1538,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -1485,7 +1558,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "SIDE",
@@ -1504,7 +1578,8 @@
      "why": "in stock",
      "src": "",
      "note": "two per rocker: up/down",
-     "link": "https://octopart.com/search?q=PTS815%20SJM%20250%20SMTR%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS815%20SJM%20250%20SMTR%20LFS",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -1523,7 +1598,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -1542,7 +1618,8 @@
      "why": "in stock",
      "src": "",
      "note": "1448x1072 4-bit pages are ~150 KB",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -1561,7 +1638,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "4 layers for the parallel bus and HV rails",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -1580,7 +1658,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%202000%20mAh%20103450"
+     "link": "https://www.amazon.com/s?k=103450%202000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 2011, 2000 mAh 60x36x7",
+      "https://www.adafruit.com/product/2011"
+     ]
     },
     {
      "ref": "ENC",
@@ -1599,7 +1681,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "pocket fits ID-1 card + ticket",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -1618,7 +1701,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -1637,7 +1721,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -1656,7 +1741,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -1675,7 +1761,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
@@ -1694,7 +1781,7 @@
    "landed": 301.79,
    "per_unit": 60.36,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
@@ -1705,17 +1792,17 @@
      "fee": 25.0,
      "days": 9
     },
-    "Amazon": {
-     "lines": 4,
-     "parts": 50.5,
-     "fee": 0.0,
-     "days": 3
-    },
     "Distributor": {
-     "lines": 13,
-     "parts": 44.3,
+     "lines": 14,
+     "parts": 50.3,
      "fee": 6.99,
      "days": 5
+    },
+    "Amazon": {
+     "lines": 3,
+     "parts": 44.5,
+     "fee": 0.0,
+     "days": 3
     },
     "broker": {
      "lines": 2,
@@ -1770,7 +1857,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",
-     "link": "https://buyepaper.com/search?q=GDEY042T81"
+     "link": "https://buyepaper.com/search?q=GDEY042T81",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -1789,7 +1877,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "C5 modules are new; confirm stock first",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -1808,7 +1897,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -1827,7 +1917,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -1846,7 +1937,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -1865,7 +1957,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -1884,7 +1977,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -1903,7 +1997,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -1922,7 +2017,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -1941,7 +2037,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -1960,7 +2057,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -1979,7 +2077,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -1998,7 +2097,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -2017,7 +2117,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -2027,16 +2128,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "ENC2",
@@ -2055,7 +2160,8 @@
      "why": "in stock",
      "src": "",
      "note": "any 10 mm side roller with detents fits the cut-out",
-     "link": "https://octopart.com/search?q=EC10E1220501"
+     "link": "https://www.digikey.com/en/products/result?keywords=EC10E1220501",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -2074,7 +2180,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -2093,7 +2200,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -2112,7 +2220,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -2131,7 +2240,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "CLP",
@@ -2150,7 +2263,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Spring-steel%20belt%20clip%2060%20mm"
+     "link": "https://www.amazon.com/s?k=spring%20steel%20belt%20clip%20screw%20mount",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -2169,7 +2283,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -2188,7 +2303,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -2207,7 +2323,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -2226,10 +2343,12 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "ENC2 EC10E1220501"
    ],
    "mouser_lines": 1,
@@ -2242,7 +2361,7 @@
    "landed": 346.04,
    "per_unit": 69.21,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
@@ -2253,17 +2372,17 @@
      "fee": 25.0,
      "days": 9
     },
-    "Amazon": {
-     "lines": 4,
-     "parts": 55.5,
-     "fee": 0.0,
-     "days": 3
-    },
     "Distributor": {
-     "lines": 13,
-     "parts": 45.4,
+     "lines": 14,
+     "parts": 51.4,
      "fee": 6.99,
      "days": 5
+    },
+    "Amazon": {
+     "lines": 3,
+     "parts": 49.5,
+     "fee": 0.0,
+     "days": 3
     },
     "broker": {
      "lines": 2,
@@ -2318,7 +2437,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $19.23, 58 in stock 2026-11-07",
-     "link": "https://buyepaper.com/search?q=GDEY042T81-FL02"
+     "link": "https://buyepaper.com/search?q=GDEY042T81-FL02",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -2337,7 +2457,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "confirm stock",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -2356,7 +2477,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -2375,7 +2497,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -2394,7 +2517,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -2413,7 +2537,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -2432,7 +2557,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -2451,7 +2577,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -2470,7 +2597,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -2489,7 +2617,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -2508,7 +2637,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -2527,7 +2657,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -2546,7 +2677,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -2565,7 +2697,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -2575,16 +2708,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "LED",
@@ -2603,7 +2740,8 @@
      "why": "in stock",
      "src": "",
      "note": "check FL02 LED count/Vf; a PWM'd MOSFET + resistor is the cheap fallback",
-     "link": "https://octopart.com/search?q=TPS61169DCKR"
+     "link": "https://www.digikey.com/en/products/result?keywords=TPS61169DCKR",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -2622,7 +2760,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -2641,7 +2780,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -2660,7 +2800,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -2679,7 +2820,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201500%20mAh%20604050"
+     "link": "https://www.amazon.com/s?k=604050%201500mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -2698,7 +2840,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -2717,7 +2860,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -2736,7 +2880,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -2755,7 +2900,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -2774,10 +2920,12 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "LED TPS61169DCKR"
    ],
    "mouser_lines": 1,
@@ -2790,7 +2938,7 @@
    "landed": 378.44,
    "per_unit": 75.69,
    "vendors": 8,
-   "eta": "2026-11-23",
+   "eta": "2026-11-24",
    "eta_days": 14,
    "gate": "U3 RT9080-33GJ5 (broker: genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix)",
    "blocked": [],
@@ -2802,14 +2950,14 @@
      "days": 9
     },
     "Distributor": {
-     "lines": 14,
-     "parts": 72.45,
+     "lines": 15,
+     "parts": 78.45,
      "fee": 6.99,
      "days": 5
     },
     "Amazon": {
-     "lines": 4,
-     "parts": 55.5,
+     "lines": 3,
+     "parts": 49.5,
      "fee": 0.0,
      "days": 3
     },
@@ -2866,7 +3014,8 @@
      "why": "in stock",
      "src": "buyepaper / LaskaKit",
      "note": "buyepaper $24.20, 59 in stock 2026-11-07; ~12 s refresh, no partial",
-     "link": "https://buyepaper.com/search?q=GDEY0583F41"
+     "link": "https://buyepaper.com/search?q=GDEY0583F41",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -2885,7 +3034,8 @@
      "why": "in stock",
      "src": "",
      "note": "same PCB as SR-2",
-     "link": "https://octopart.com/search?q=ESP32-S3-WROOM-1-N16R8"
+     "link": "https://www.digikey.com/en/products/result?keywords=ESP32-S3-WROOM-1-N16R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -2904,7 +3054,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -2923,7 +3074,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -2942,7 +3094,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -2961,7 +3114,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -2980,7 +3134,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -2999,7 +3154,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -3018,7 +3174,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -3037,7 +3194,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -3056,7 +3214,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -3075,7 +3234,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -3094,7 +3254,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -3113,7 +3274,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -3123,16 +3285,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "NAV",
@@ -3151,7 +3317,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRHABE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRHABE010",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -3170,7 +3337,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -3189,7 +3357,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -3208,7 +3377,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "order with SR-2",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -3227,7 +3397,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201500%20mAh%20604050"
+     "link": "https://www.amazon.com/s?k=604050%201500mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -3246,7 +3417,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "sleeve fits 74 x 105 mm folded paper",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -3265,7 +3437,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -3284,7 +3457,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -3303,7 +3477,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -3322,10 +3497,13 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
-   "digikey_missing": [],
+   "digikey_missing": [
+    "EPB "
+   ],
    "mouser_lines": 2,
    "newark_lines": 0
   },
@@ -3336,7 +3514,7 @@
    "landed": 296.19,
    "per_unit": 59.24,
    "vendors": 7,
-   "eta": "2026-11-19",
+   "eta": "2026-11-20",
    "eta_days": 10,
    "gate": "MCU XIAO nRF52840 Plus (BLE 5, native USB, c (Seeed: in stock)",
    "blocked": [],
@@ -3406,7 +3584,8 @@
      "why": "in stock",
      "src": "Seeed 102010672",
      "note": "custom-board path: Raytac MDBT50Q-1MV2 module",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20nRF52840%20Plus%20%28BLE%205"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20nRF52840%20Plus",
+     "alt": null
     },
     {
      "ref": "DRV",
@@ -3425,7 +3604,8 @@
      "why": "in stock",
      "src": "Seeed 100057220",
      "note": "XIAO is SMD-soldered incl. back pads D11-D19 (panel RES on D11): hot air or reflow, or buy it assembled; takes the S3 Plus or nRF52840 Plus only, not C3/C5",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ePaper%20Display%20Board%20EE05%3A%2024-pin%20SPI%20FPC%20%2B%20boost"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ePaper%20Display%20Board%20EE05%3A%2024-pin%20SPI%20FPC%20%2B%20boost",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -3444,7 +3624,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",
-     "link": "https://buyepaper.com/search?q=GDEY042T81"
+     "link": "https://buyepaper.com/search?q=GDEY042T81",
+     "alt": null
     },
     {
      "ref": "SDB",
@@ -3463,7 +3644,8 @@
      "why": "in stock",
      "src": "Adafruit",
      "note": "wired to the EE05's SPI1 pads (D17 SCK, D18 MISO, D19 MOSI; headers not fitted); appears as a USB drive",
-     "link": "https://www.adafruit.com/search?q=4682"
+     "link": "https://www.adafruit.com/search?q=4682",
+     "alt": null
     },
     {
      "ref": "Q2",
@@ -3482,7 +3664,8 @@
      "why": "in stock",
      "src": "",
      "note": "the breakout has no switch of its own",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "PRF",
@@ -3501,7 +3684,11 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Perfboard%20scrap%20%2B%2030%20AWG%20wire"
+     "link": "https://www.amazon.com/s?k=30%20AWG%20silicone%20stranded%20wire",
+     "alt": [
+      "Adafruit 3164, 30 AWG silicone wire 50 ft",
+      "https://www.adafruit.com/product/3164"
+     ]
     },
     {
      "ref": "BAT",
@@ -3520,7 +3707,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201000%20mAh%20503450"
+     "link": "https://www.amazon.com/s?k=503450%201000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -3539,7 +3727,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -3558,7 +3747,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -3577,7 +3767,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -3596,7 +3787,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -3615,7 +3807,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
@@ -3629,7 +3822,7 @@
    "landed": 322.19,
    "per_unit": 64.44,
    "vendors": 9,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
@@ -3641,14 +3834,14 @@
      "days": 9
     },
     "Amazon": {
-     "lines": 4,
-     "parts": 50.5,
+     "lines": 3,
+     "parts": 44.5,
      "fee": 0.0,
      "days": 3
     },
     "Distributor": {
-     "lines": 13,
-     "parts": 38.2,
+     "lines": 14,
+     "parts": 44.2,
      "fee": 6.99,
      "days": 5
     },
@@ -3711,7 +3904,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",
-     "link": "https://buyepaper.com/search?q=GDEY042T81"
+     "link": "https://buyepaper.com/search?q=GDEY042T81",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -3730,7 +3924,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "confirm stock; PSRAM holds the 2x page",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -3749,7 +3944,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -3768,7 +3964,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -3787,7 +3984,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -3806,7 +4004,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -3825,7 +4024,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -3844,7 +4044,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -3863,7 +4064,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -3882,7 +4084,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -3901,7 +4104,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -3920,7 +4124,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -3939,7 +4144,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -3958,7 +4164,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -3968,16 +4175,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "JOY",
@@ -3996,7 +4207,8 @@
      "why": "in stock",
      "src": "Adafruit",
      "note": "$3.50 (1-9), $2.80 (100+); Adafruit 512 adds a select click + breakout",
-     "link": "https://www.adafruit.com/search?q=444"
+     "link": "https://www.adafruit.com/search?q=444",
+     "alt": null
     },
     {
      "ref": "Q2",
@@ -4015,7 +4227,8 @@
      "why": "in stock",
      "src": "",
      "note": "pots draw ~0.66 mA at 3.3 V: ~16 mAh/day if left on",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -4034,7 +4247,8 @@
      "why": "in stock",
      "src": "",
      "note": "keys wake the pass; the stick cannot",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -4053,7 +4267,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -4072,7 +4287,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -4091,7 +4307,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "ENC",
@@ -4110,7 +4330,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -4129,7 +4350,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -4148,7 +4370,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -4167,7 +4390,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -4186,10 +4410,13 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
-   "digikey_missing": [],
+   "digikey_missing": [
+    "EPB "
+   ],
    "mouser_lines": 1,
    "newark_lines": 0
   },
@@ -4200,22 +4427,22 @@
    "landed": 257.74,
    "per_unit": 51.55,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
    "by_vendor": {
-    "Amazon": {
-     "lines": 4,
-     "parts": 40.5,
-     "fee": 0.0,
-     "days": 3
-    },
     "Distributor": {
-     "lines": 12,
-     "parts": 38.8,
+     "lines": 13,
+     "parts": 44.8,
      "fee": 6.99,
      "days": 5
+    },
+    "Amazon": {
+     "lines": 3,
+     "parts": 34.5,
+     "fee": 0.0,
+     "days": 3
     },
     "buyepaper": {
      "lines": 1,
@@ -4276,7 +4503,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "same glass class as maplet's ssd1680-290",
-     "link": "https://buyepaper.com/search?q=GDEY029T94"
+     "link": "https://buyepaper.com/search?q=GDEY029T94",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -4295,7 +4523,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "beside the cell, not stacked, to stay 8.5 mm",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -4314,7 +4543,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -4333,7 +4563,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -4352,7 +4583,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -4371,7 +4603,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -4390,7 +4623,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -4409,7 +4643,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -4428,7 +4663,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -4447,7 +4683,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -4466,7 +4703,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -4485,7 +4723,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -4504,7 +4743,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -4523,7 +4763,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -4533,16 +4774,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "KEY",
@@ -4561,7 +4806,8 @@
      "why": "in stock",
      "src": "",
      "note": "edge keys",
-     "link": "https://octopart.com/search?q=PTS815%20SJM%20250%20SMTR%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS815%20SJM%20250%20SMTR%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -4580,7 +4826,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -4599,7 +4846,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -4618,7 +4866,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "thinnest cell that fits beside the module",
-     "link": "https://www.amazon.com/s?k=LiPo%20350%20mAh%20402540-class"
+     "link": "https://www.amazon.com/s?k=402540%20350mAh%203.7V%20lipo%20battery",
+     "alt": [
+      "Adafruit 2750, 350 mAh 36x20x5",
+      "https://www.adafruit.com/product/2750"
+     ]
     },
     {
      "ref": "ENC",
@@ -4637,7 +4889,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "print flat; walls this thin want a 0.25 mm nozzle",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -4656,7 +4909,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -4675,7 +4929,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -4694,7 +4949,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -4713,10 +4969,12 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "KEY PTS815 SJM 250 SMTR LFS"
    ],
    "mouser_lines": 1,
@@ -4729,7 +4987,7 @@
    "landed": 312.39,
    "per_unit": 62.48,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
@@ -4740,17 +4998,17 @@
      "fee": 25.0,
      "days": 9
     },
-    "Amazon": {
-     "lines": 5,
-     "parts": 49.0,
-     "fee": 0.0,
-     "days": 3
-    },
     "Distributor": {
-     "lines": 12,
-     "parts": 40.9,
+     "lines": 13,
+     "parts": 46.9,
      "fee": 6.99,
      "days": 5
+    },
+    "Amazon": {
+     "lines": 4,
+     "parts": 43.0,
+     "fee": 0.0,
+     "days": 3
     },
     "broker": {
      "lines": 2,
@@ -4805,7 +5063,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $14.70, 94 in stock 2026-11-07; 4-colour twin GDEM0397F81",
-     "link": "https://buyepaper.com/search?q=GDEM0397T81P"
+     "link": "https://buyepaper.com/search?q=GDEM0397T81P",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -4824,7 +5083,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -4843,7 +5103,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -4862,7 +5123,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -4881,7 +5143,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -4900,7 +5163,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -4919,7 +5183,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -4938,7 +5203,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -4957,7 +5223,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -4976,7 +5243,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -4995,7 +5263,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -5014,7 +5283,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -5033,7 +5303,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -5052,7 +5323,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -5062,16 +5334,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "KEY",
@@ -5090,7 +5366,8 @@
      "why": "in stock",
      "src": "",
      "note": "edge keys",
-     "link": "https://octopart.com/search?q=PTS815%20SJM%20250%20SMTR%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS815%20SJM%20250%20SMTR%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -5109,7 +5386,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -5128,7 +5406,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "DR",
@@ -5147,7 +5426,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "keeps the outline exactly 3 x 4 in",
-     "link": "https://www.amazon.com/s?k=Stainless%20D-ring%2010%20mm"
+     "link": "https://www.amazon.com/s?k=stainless%20steel%20D%20ring%2010mm",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -5166,7 +5446,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201000%20mAh%20503450"
+     "link": "https://www.amazon.com/s?k=503450%201000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -5185,7 +5466,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -5204,7 +5486,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -5223,7 +5506,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -5242,7 +5526,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -5261,10 +5546,12 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "KEY PTS815 SJM 250 SMTR LFS"
    ],
    "mouser_lines": 1,
@@ -5277,7 +5564,7 @@
    "landed": 320.69,
    "per_unit": 64.14,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
@@ -5288,17 +5575,17 @@
      "fee": 25.0,
      "days": 9
     },
-    "Amazon": {
-     "lines": 4,
-     "parts": 50.5,
-     "fee": 0.0,
-     "days": 3
-    },
     "Distributor": {
-     "lines": 13,
-     "parts": 47.7,
+     "lines": 14,
+     "parts": 53.7,
      "fee": 6.99,
      "days": 5
+    },
+    "Amazon": {
+     "lines": 3,
+     "parts": 44.5,
+     "fee": 0.0,
+     "days": 3
     },
     "broker": {
      "lines": 2,
@@ -5353,7 +5640,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $14.70, 94 in stock 2026-11-07; 4-colour twin GDEM0397F81",
-     "link": "https://buyepaper.com/search?q=GDEM0397T81P"
+     "link": "https://buyepaper.com/search?q=GDEM0397T81P",
+     "alt": null
     },
     {
      "ref": "U1",
@@ -5372,7 +5660,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -5391,7 +5680,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -5410,7 +5700,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -5429,7 +5720,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -5448,7 +5740,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -5467,7 +5760,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -5486,7 +5780,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -5505,7 +5800,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -5524,7 +5820,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -5543,7 +5840,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -5562,7 +5860,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -5581,7 +5880,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -5600,7 +5900,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -5610,16 +5911,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "NAV",
@@ -5638,7 +5943,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRHABE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRHABE010",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -5657,7 +5963,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -5676,7 +5983,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -5695,7 +6003,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -5714,7 +6023,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "ENC",
@@ -5733,7 +6046,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -5752,7 +6066,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -5771,7 +6086,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -5790,7 +6106,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -5809,10 +6126,13 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
-   "digikey_missing": [],
+   "digikey_missing": [
+    "EPB "
+   ],
    "mouser_lines": 2,
    "newark_lines": 0
   },
@@ -5889,7 +6209,8 @@
      "why": "sold out at M5Stack; LilyGo T5 4.7in is the fallback",
      "src": "M5Stack store / AliExpress",
      "note": "SOLD OUT 2026-11-07; fallback LilyGo T5 4.7in S3 $39.99",
-     "link": "https://shop.m5stack.com/search?q=K159"
+     "link": "https://shop.m5stack.com/search?q=K159",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -5908,7 +6229,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=B3F-1000"
+     "link": "https://www.digikey.com/en/products/result?keywords=B3F-1000",
+     "alt": null
     },
     {
      "ref": "PWR",
@@ -5927,7 +6249,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=JS102011SAQN"
+     "link": "https://www.digikey.com/en/products/result?keywords=JS102011SAQN",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -5946,7 +6269,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201500%20mAh%20604050"
+     "link": "https://www.amazon.com/s?k=604050%201500mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "WIN",
@@ -5965,7 +6289,8 @@
      "why": "in stock",
      "src": "Ponoko/local",
      "note": "credential sleeve front",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -5984,7 +6309,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -6003,7 +6329,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -6022,7 +6349,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -6041,7 +6369,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -6060,10 +6389,596 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
+   "mouser_lines": 0,
+   "newark_lines": 0
+  },
+  {
+   "variant": "SR-15",
+   "parts": 192.5,
+   "shipping": 27.99,
+   "landed": 220.49,
+   "per_unit": 44.1,
+   "vendors": 5,
+   "eta": "2026-11-20",
+   "eta_days": 10,
+   "gate": "BRD Elecrow CrowPanel ESP32 4.2in E-Paper HM (Elecrow: in stock)",
+   "blocked": [],
+   "by_vendor": {
+    "Elecrow": {
+     "lines": 1,
+     "parts": 134.5,
+     "fee": 15.0,
+     "days": 10
+    },
+    "Amazon": {
+     "lines": 4,
+     "parts": 48.5,
+     "fee": 0.0,
+     "days": 3
+    },
+    "own printer": {
+     "lines": 2,
+     "parts": 6.25,
+     "fee": 0.0,
+     "days": 2
+    },
+    "Distributor": {
+     "lines": 2,
+     "parts": 2.5,
+     "fee": 6.99,
+     "days": 5
+    },
+    "sticker shop": {
+     "lines": 1,
+     "parts": 0.75,
+     "fee": 6.0,
+     "days": 8
+    }
+   },
+   "digikey_links": [
+    "https://www.digikey.com/classic/ordering/fastadd.aspx?part1=401-2000-ND&qty1=5&cref1=PWR"
+   ],
+   "pcb": false,
+   "lines": [
+    {
+     "ref": "BRD",
+     "part": "Elecrow CrowPanel ESP32 4.2in E-Paper HMI (DIE07300S): ESP32-S3-WROOM-1-N8R8, 400x300 SSD1683, dial (UP/DOWN/push) + MENU + EXIT, microSD, LiPo charger, SH1.0 battery socket, 107 x 87 mm board",
+     "desc": "Elecrow CrowPanel ESP32 4.2in E-Paper HMI (DIE07300S): ESP32-S3-WROOM-1-N8R8, 400x300 SSD1683, dial (UP/DOWN/push) + MENU + EXIT, microSD, LiPo charger, SH1.0 battery socket, 107 x 87 mm board",
+     "mfr": "Elecrow",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Elecrow",
+     "group": "Elecrow",
+     "per": 1,
+     "min": 0,
+     "unit": 26.9,
+     "days": 10,
+     "why": "in stock",
+     "src": "Elecrow DIE07300S",
+     "note": "Elecrow $26.90 in stock 2026-11-09; ships in an acrylic case we don't use",
+     "link": "https://www.elecrow.com/catalogsearch/result/?q=Elecrow%20CrowPanel%20ESP32%204.2in%20E-Paper%20HMI",
+     "alt": null
+    },
+    {
+     "ref": "BAT",
+     "part": "LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",
+     "desc": "LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 7.0,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
+     "note": "protection board fitted; check JST polarity against the board before plugging in",
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
+    },
+    {
+     "ref": "ADP",
+     "part": "Battery pigtail: JST-PH 2.0 socket to SH1.0 2-pin plug",
+     "desc": "Battery pigtail: JST-PH 2.0 socket to SH1.0 2-pin plug",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 0.8,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon (adapter cable pack); AliExpress for 100",
+     "note": "the board takes SH1.0; check polarity, these come both ways",
+     "link": "https://www.amazon.com/s?k=JST%20SH%201.0%202%20pin%20to%20JST%20PH%202.0%20adapter%20cable",
+     "alt": null
+    },
+    {
+     "ref": "PWR",
+     "part": "JS102011SAQN",
+     "desc": "Slide switch, battery disconnect (the board has none)",
+     "mfr": "C&K",
+     "mpn": "JS102011SAQN",
+     "dk": "401-2000-ND",
+     "mo": "611-JS102011SAQN",
+     "vendor": "DigiKey",
+     "group": "Distributor",
+     "per": 1,
+     "min": 0,
+     "unit": 0.45,
+     "days": 5,
+     "why": "in stock",
+     "src": "",
+     "note": "",
+     "link": "https://www.digikey.com/en/products/result?keywords=JS102011SAQN",
+     "alt": null
+    },
+    {
+     "ref": "DIV",
+     "part": "Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header",
+     "desc": "Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header",
+     "mfr": "Yageo",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "DigiKey",
+     "group": "Distributor",
+     "per": 1,
+     "min": 0,
+     "unit": 0.05,
+     "days": 5,
+     "why": "in stock",
+     "src": "",
+     "note": "the board has no battery sense; 100k/100k draws ~20 uA, or switch the low side from a spare GPIO",
+     "link": "https://www.digikey.com/en/products/result?keywords=RC0603FR-07100KL",
+     "alt": null
+    },
+    {
+     "ref": "ENC",
+     "part": "Enclosure, 3D-printed PETG, front + back shell sized for the 107 x 87 board (~55 g)",
+     "desc": "Enclosure, 3D-printed PETG, front + back shell sized for the 107 x 87 board (~55 g)",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "own printer",
+     "group": "own printer",
+     "per": 1,
+     "min": 0,
+     "unit": 1.1,
+     "days": 2,
+     "why": "in stock",
+     "src": "own printer",
+     "note": "STEP model of the board in Elecrow's repo",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "CAP",
+     "part": "Dial extension cap + key caps, printed TPU",
+     "desc": "Dial extension cap + key caps, printed TPU",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "own printer",
+     "group": "own printer",
+     "per": 1,
+     "min": 0,
+     "unit": 0.15,
+     "days": 2,
+     "why": "in stock",
+     "src": "own printer",
+     "note": "",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "LAM",
+     "part": "Laminate band: printed vinyl sticker",
+     "desc": "Laminate band: printed vinyl sticker",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "sticker shop",
+     "group": "sticker shop",
+     "per": 1,
+     "min": 0,
+     "unit": 0.15,
+     "days": 8,
+     "why": "in stock",
+     "src": "sticker shop",
+     "note": "swappable 'pass' graphic",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "HW",
+     "part": "M2x6 screws + M2 heat-set inserts, 4 each",
+     "desc": "M2x6 screws + M2 heat-set inserts, 4 each",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 0.4,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon/Ali",
+     "note": "the board has no mounting holes: printed clamps hold it by the edges",
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
+    },
+    {
+     "ref": "LNY",
+     "part": "Lanyard 20 mm with swivel hook + 25 mm split ring",
+     "desc": "Lanyard 20 mm with swivel hook + 25 mm split ring",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 1.5,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon (multi-pack); AliExpress for 100",
+     "note": "",
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
+    }
+   ],
+   "digikey_missing": [
+    "DIV "
+   ],
+   "mouser_lines": 0,
+   "newark_lines": 0
+  },
+  {
+   "variant": "SR-16",
+   "parts": 185.45,
+   "shipping": 42.99,
+   "landed": 228.44,
+   "per_unit": 45.69,
+   "vendors": 6,
+   "eta": "2026-11-20",
+   "eta_days": 10,
+   "gate": "MCU XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, (Seeed: in stock)",
+   "blocked": [],
+   "by_vendor": {
+    "Seeed": {
+     "lines": 2,
+     "parts": 64.45,
+     "fee": 15.0,
+     "days": 10
+    },
+    "Elecrow": {
+     "lines": 1,
+     "parts": 59.5,
+     "fee": 15.0,
+     "days": 10
+    },
+    "Amazon": {
+     "lines": 4,
+     "parts": 47.0,
+     "fee": 0.0,
+     "days": 3
+    },
+    "Distributor": {
+     "lines": 3,
+     "parts": 9.75,
+     "fee": 6.99,
+     "days": 5
+    },
+    "own printer": {
+     "lines": 2,
+     "parts": 4.0,
+     "fee": 0.0,
+     "days": 2
+    },
+    "sticker shop": {
+     "lines": 1,
+     "parts": 0.75,
+     "fee": 6.0,
+     "days": 8
+    }
+   },
+   "digikey_links": [
+    "https://www.digikey.com/classic/ordering/fastadd.aspx?part1=SW400-ND&qty1=15&cref1=KEY&part2=401-2000-ND&qty2=5&cref2=PWR"
+   ],
+   "pcb": false,
+   "lines": [
+    {
+     "ref": "MCU",
+     "part": "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)",
+     "desc": "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)",
+     "mfr": "Seeed",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Seeed",
+     "group": "Seeed",
+     "per": 1,
+     "min": 0,
+     "unit": 6.9,
+     "days": 10,
+     "why": "in stock",
+     "src": "Seeed 100010048",
+     "note": "Seeed $6.90 (2026-11-09); RobotShop pre-soldered $8.31",
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ESP32-C5",
+     "alt": null
+    },
+    {
+     "ref": "DRV",
+     "part": "ePaper Driver Board for XIAO V2 (24-pin SPI, boost)",
+     "desc": "ePaper Driver Board for XIAO V2 (24-pin SPI, boost)",
+     "mfr": "Seeed",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Seeed",
+     "group": "Seeed",
+     "per": 1,
+     "min": 0,
+     "unit": 5.99,
+     "days": 10,
+     "why": "in stock",
+     "src": "Seeed 114993558",
+     "note": "RESE fixed at 0.47 ohm, the value Elecrow's own 3.7in CrowPanel uses with this panel",
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=ePaper%20Driver%20Board%20for%20XIAO%20V2",
+     "alt": null
+    },
+    {
+     "ref": "EPD",
+     "part": "3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; Good Display GDEY037T03 class), panel 53 x 93 x 1 mm",
+     "desc": "3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; Good Display GDEY037T03 class), panel 53 x 93 x 1 mm",
+     "mfr": "Elecrow",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Elecrow",
+     "group": "Elecrow",
+     "per": 1,
+     "min": 0,
+     "unit": 11.9,
+     "days": 10,
+     "why": "in stock",
+     "src": "Elecrow DIE04037S",
+     "note": "Elecrow $11.90 in stock 2026-11-10; same order as SR-15's board",
+     "link": "https://www.elecrow.com/catalogsearch/result/?q=3.7in%20e-paper%20240x416%20B/W",
+     "alt": null
+    },
+    {
+     "ref": "KEY",
+     "part": "B3F-1000",
+     "desc": "Tact switch 6x6 mm THT (PREV, MENU, NEXT)",
+     "mfr": "Omron",
+     "mpn": "B3F-1000",
+     "dk": "SW400-ND",
+     "mo": "653-B3F-1000",
+     "vendor": "DigiKey",
+     "group": "Distributor",
+     "per": 3,
+     "min": 0,
+     "unit": 0.35,
+     "days": 5,
+     "why": "in stock",
+     "src": "",
+     "note": "on the long right edge",
+     "link": "https://www.digikey.com/en/products/result?keywords=B3F-1000",
+     "alt": null
+    },
+    {
+     "ref": "DIO",
+     "part": "1N5817-T",
+     "desc": "Schottky diode 1N5817, any-key wake line",
+     "mfr": "Diodes Inc",
+     "mpn": "1N5817-T",
+     "dk": "",
+     "mo": "",
+     "vendor": "DigiKey",
+     "group": "Distributor",
+     "per": 3,
+     "min": 0,
+     "unit": 0.15,
+     "days": 5,
+     "why": "in stock",
+     "src": "",
+     "note": "Schottky, not 1N4148: the drop must stay under the C5's low threshold",
+     "link": "https://www.digikey.com/en/products/result?keywords=1N5817-T",
+     "alt": null
+    },
+    {
+     "ref": "PWR",
+     "part": "JS102011SAQN",
+     "desc": "Slide switch, battery disconnect",
+     "mfr": "C&K",
+     "mpn": "JS102011SAQN",
+     "dk": "401-2000-ND",
+     "mo": "611-JS102011SAQN",
+     "vendor": "DigiKey",
+     "group": "Distributor",
+     "per": 1,
+     "min": 0,
+     "unit": 0.45,
+     "days": 5,
+     "why": "in stock",
+     "src": "",
+     "note": "",
+     "link": "https://www.digikey.com/en/products/result?keywords=JS102011SAQN",
+     "alt": null
+    },
+    {
+     "ref": "PRF",
+     "part": "Perfboard scrap + 30 AWG wire",
+     "desc": "Perfboard scrap + 30 AWG wire",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 0.5,
+     "days": 3,
+     "why": "in stock",
+     "src": "",
+     "note": "",
+     "link": "https://www.amazon.com/s?k=30%20AWG%20silicone%20stranded%20wire",
+     "alt": [
+      "Adafruit 3164, 30 AWG silicone wire 50 ft",
+      "https://www.adafruit.com/product/3164"
+     ]
+    },
+    {
+     "ref": "BAT",
+     "part": "LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",
+     "desc": "LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 7.0,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
+     "note": "protection board fitted; check JST polarity against the board before plugging in",
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
+    },
+    {
+     "ref": "ENC",
+     "part": "Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)",
+     "desc": "Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "own printer",
+     "group": "own printer",
+     "per": 1,
+     "min": 0,
+     "unit": 0.7,
+     "days": 2,
+     "why": "in stock",
+     "src": "own printer",
+     "note": "measure the panel first: see notes",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "CAP",
+     "part": "Key caps, printed TPU",
+     "desc": "Key caps, printed TPU",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "own printer",
+     "group": "own printer",
+     "per": 1,
+     "min": 0,
+     "unit": 0.1,
+     "days": 2,
+     "why": "in stock",
+     "src": "own printer",
+     "note": "",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "LAM",
+     "part": "Laminate band: printed vinyl sticker",
+     "desc": "Laminate band: printed vinyl sticker",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "sticker shop",
+     "group": "sticker shop",
+     "per": 1,
+     "min": 0,
+     "unit": 0.15,
+     "days": 8,
+     "why": "in stock",
+     "src": "sticker shop",
+     "note": "swappable 'pass' graphic",
+     "link": "",
+     "alt": null
+    },
+    {
+     "ref": "HW",
+     "part": "M2x6 screws + M2 heat-set inserts, 4 each",
+     "desc": "M2x6 screws + M2 heat-set inserts, 4 each",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 0.4,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon/Ali",
+     "note": "",
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
+    },
+    {
+     "ref": "LNY",
+     "part": "Lanyard 20 mm with swivel hook + 25 mm split ring",
+     "desc": "Lanyard 20 mm with swivel hook + 25 mm split ring",
+     "mfr": "",
+     "mpn": "",
+     "dk": "",
+     "mo": "",
+     "vendor": "Amazon",
+     "group": "Amazon",
+     "per": 1,
+     "min": 0,
+     "unit": 1.5,
+     "days": 3,
+     "why": "in stock",
+     "src": "Amazon (multi-pack); AliExpress for 100",
+     "note": "",
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
+    }
+   ],
+   "digikey_missing": [
+    "DIO 1N5817-T"
+   ],
    "mouser_lines": 0,
    "newark_lines": 0
   },
@@ -6074,7 +6989,7 @@
    "landed": 264.24,
    "per_unit": 52.85,
    "vendors": 6,
-   "eta": "2026-11-18",
+   "eta": "2026-11-19",
    "eta_days": 9,
    "gate": "EPD GDEY042T81 (buyepaper: in stock)",
    "blocked": [],
@@ -6138,7 +7053,8 @@
      "why": "in stock",
      "src": "",
      "note": "DigiKey 148 in stock 2026-11-09; DFRobot direct $7.90",
-     "link": "https://octopart.com/search?q=DFR1222"
+     "link": "https://www.digikey.com/en/products/result?keywords=DFR1222",
+     "alt": null
     },
     {
      "ref": "DRV",
@@ -6157,7 +7073,8 @@
      "why": "in stock",
      "src": "Crystalfontz",
      "note": "leave RESE open (3 ohm, the default); US stock. Good Display DESPI-C02 (2.2 ohm) is the China-only exact match",
-     "link": "https://www.crystalfontz.com/search.php?q=CFA-10084"
+     "link": "https://www.crystalfontz.com/search.php?q=CFA-10084",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -6176,7 +7093,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",
-     "link": "https://buyepaper.com/search?q=GDEY042T81"
+     "link": "https://buyepaper.com/search?q=GDEY042T81",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -6195,7 +7113,8 @@
      "why": "in stock",
      "src": "",
      "note": "on GPIO3/4/5 (A2/A3/A4), all LP GPIOs: each wakes the chip, no diodes",
-     "link": "https://octopart.com/search?q=B3F-1000"
+     "link": "https://www.digikey.com/en/products/result?keywords=B3F-1000",
+     "alt": null
     },
     {
      "ref": "PWR",
@@ -6214,7 +7133,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=JS102011SAQN"
+     "link": "https://www.digikey.com/en/products/result?keywords=JS102011SAQN",
+     "alt": null
     },
     {
      "ref": "PRF",
@@ -6233,7 +7153,11 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Perfboard%20scrap%20%2B%2030%20AWG%20wire"
+     "link": "https://www.amazon.com/s?k=30%20AWG%20silicone%20stranded%20wire",
+     "alt": [
+      "Adafruit 3164, 30 AWG silicone wire 50 ft",
+      "https://www.adafruit.com/product/3164"
+     ]
     },
     {
      "ref": "BAT",
@@ -6252,7 +7176,8 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201000%20mAh%20503450"
+     "link": "https://www.amazon.com/s?k=503450%201000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -6271,7 +7196,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -6290,7 +7216,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -6309,7 +7236,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -6328,7 +7256,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -6347,7 +7276,8 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
@@ -6361,7 +7291,7 @@
    "landed": 220.95,
    "per_unit": 44.19,
    "vendors": 4,
-   "eta": "2026-11-20",
+   "eta": "2026-11-21",
    "eta_days": 11,
    "gate": "KEY Tact switch 6x6 mm THT (PREV, MENU, NEXT (AliExpress: in stock)",
    "blocked": [],
@@ -6411,7 +7341,8 @@
      "why": "in stock",
      "src": "Seeed 100010048",
      "note": "Seeed $6.90 (2026-11-09); Switch Science JP sold out",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ESP32-C5%20%28Wi-Fi%206%202.4/5%20GHz"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=XIAO%20ESP32-C5",
+     "alt": null
     },
     {
      "ref": "DRV",
@@ -6430,7 +7361,8 @@
      "why": "in stock",
      "src": "Seeed 114993558",
      "note": "RESE fixed at 0.47 ohm; Seeed lists this board for its own 4.2in GDEY042T81 panel",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=ePaper%20Driver%20Board%20for%20XIAO%20V2%20%2824-pin%20SPI"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=ePaper%20Driver%20Board%20for%20XIAO%20V2",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -6449,7 +7381,8 @@
      "why": "in stock",
      "src": "Seeed 104990857",
      "note": "same parcel as the XIAO; buy-lcd sells the same glass at $13.80 but 0 in stock and ships separately",
-     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=4.2in%20e-paper%20400x300%20B/W"
+     "link": "https://www.seeedstudio.com/catalogsearch/result/?q=4.2in%20e-paper%20400x300%20B/W",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -6468,7 +7401,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "pack ~$1.09; check the listing's normal price, not the new-buyer deal",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=Tact%20switch%206x6%20mm%20THT%20%28PREV"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=Tact%20switch%206x6%20mm%20THT",
+     "alt": null
     },
     {
      "ref": "DIO",
@@ -6487,7 +7421,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "Schottky, not 1N4148: the drop must stay under the C5's low threshold",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=Schottky%20diode%201N5819%20/%20BAT43"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=Schottky%20diode%201N5819%20/%20BAT43",
+     "alt": null
     },
     {
      "ref": "PWR",
@@ -6506,7 +7441,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=Slide%20switch%20SS12D00"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=Slide%20switch%20SS12D00",
+     "alt": null
     },
     {
      "ref": "PRF",
@@ -6525,7 +7461,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=Perfboard%20scrap%20%2B%2030%20AWG%20wire"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=30%20AWG%20silicone%20stranded%20wire",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -6544,7 +7481,8 @@
      "why": "in stock",
      "src": "AliExpress (check Japan delivery for cells); Akizuki Denshi fallback",
      "note": "lithium cells often can't go by post to Japan: pick a courier option or buy locally",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=LiPo%201000%20mAh%20503450"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=503450%201000mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": null
     },
     {
      "ref": "ENC",
@@ -6563,7 +7501,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -6582,7 +7521,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -6601,7 +7541,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "print locally",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -6620,7 +7561,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "packs of 50-100",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -6639,7 +7581,8 @@
      "why": "in stock",
      "src": "AliExpress",
      "note": "no plain stock listing checked; printed lots ~$0.43 each at 100",
-     "link": "https://www.aliexpress.com/wholesale?SearchText=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.aliexpress.com/wholesale?SearchText=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [],
@@ -6653,26 +7596,26 @@
    "landed": 371.89,
    "per_unit": 74.38,
    "vendors": 8,
-   "eta": "2026-11-23",
+   "eta": "2026-11-24",
    "eta_days": 14,
    "gate": "U3 RT9080-33GJ5 (broker: genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix)",
    "blocked": [],
    "by_vendor": {
+    "Distributor": {
+     "lines": 13,
+     "parts": 77.9,
+     "fee": 6.99,
+     "days": 5
+    },
     "buyepaper": {
      "lines": 1,
      "parts": 73.5,
      "fee": 25.0,
      "days": 9
     },
-    "Distributor": {
-     "lines": 12,
-     "parts": 71.9,
-     "fee": 6.99,
-     "days": 5
-    },
     "Amazon": {
-     "lines": 5,
-     "parts": 53.5,
+     "lines": 4,
+     "parts": 47.5,
      "fee": 0.0,
      "days": 3
     },
@@ -6729,7 +7672,8 @@
      "why": "TME / Win Source",
      "src": "",
      "note": "its NFCT peripheral makes the pass a tag with just a coil: no ST25DV",
-     "link": "https://octopart.com/search?q=MDBT50Q-1MV2"
+     "link": "https://octopart.com/search?q=MDBT50Q-1MV2",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -6748,7 +7692,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -6767,7 +7712,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -6786,7 +7732,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -6805,7 +7752,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -6824,7 +7772,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -6843,7 +7792,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -6862,7 +7812,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -6881,7 +7832,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -6900,7 +7852,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $14.70, 94 in stock 2026-11-07; 4-colour twin GDEM0397F81",
-     "link": "https://buyepaper.com/search?q=GDEM0397T81P"
+     "link": "https://buyepaper.com/search?q=GDEM0397T81P",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -6919,7 +7872,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -6929,16 +7883,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "U7",
@@ -6957,7 +7915,8 @@
      "why": "in stock",
      "src": "Newark / Avnet",
      "note": "MFRC522 is EOL (NXP: use CLRC663 plus); Newark 3,628 at CA$9.41, 2026-11-07",
-     "link": "https://octopart.com/search?q=CLRC66303HN"
+     "link": "https://www.digikey.com/en/products/result?keywords=CLRC66303HN",
+     "alt": null
     },
     {
      "ref": "Y2",
@@ -6976,7 +7935,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "",
-     "link": "https://www.lcsc.com/search?q=Crystal%2027.12%20MHz%20for%20the%20reader"
+     "link": "https://www.lcsc.com/search?q=Crystal%2027.12%20MHz%20for%20the%20reader",
+     "alt": null
     },
     {
      "ref": "ANT",
@@ -6995,7 +7955,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "tune on the bench with a VNA or NanoVNA",
-     "link": "https://www.lcsc.com/search?q=Reader%20antenna%20matching%3A%20EMC%20filter%20inductors%20%2B%20C0G%20caps%20%28PC"
+     "link": "https://www.lcsc.com/search?q=Reader%20antenna%20matching%3A%20EMC%20filter%20inductors%20%2B%20C0G%20caps",
+     "alt": null
     },
     {
      "ref": "FER",
@@ -7014,7 +7975,8 @@
      "why": "in stock",
      "src": "Amazon (NFC anti-metal sticker)",
      "note": "without it the cell detunes the antenna",
-     "link": "https://www.amazon.com/s?k=Ferrite%20sheet%2040%20x%2030%20mm"
+     "link": "https://www.amazon.com/s?k=NFC%20anti-metal%20ferrite%20sheet%20sticker",
+     "alt": null
     },
     {
      "ref": "Q3",
@@ -7033,7 +7995,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -7052,7 +8015,8 @@
      "why": "in stock",
      "src": "",
      "note": "edge keys",
-     "link": "https://octopart.com/search?q=PTS815%20SJM%20250%20SMTR%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS815%20SJM%20250%20SMTR%20LFS",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -7071,7 +8035,8 @@
      "why": "in stock",
      "src": "",
      "note": "turns the reader field on for 10 s",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -7090,7 +8055,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -7109,7 +8075,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -7128,7 +8095,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "ENC",
@@ -7147,7 +8118,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -7166,7 +8138,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -7185,7 +8158,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -7204,7 +8178,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -7223,10 +8198,12 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "KEY PTS815 SJM 250 SMTR LFS"
    ],
    "mouser_lines": 1,
@@ -7239,14 +8216,14 @@
    "landed": 364.39,
    "per_unit": 72.88,
    "vendors": 8,
-   "eta": "2026-12-07",
+   "eta": "2026-12-08",
    "eta_days": 28,
    "gate": "U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples)",
    "blocked": [],
    "by_vendor": {
     "Distributor": {
-     "lines": 16,
-     "parts": 80.9,
+     "lines": 17,
+     "parts": 86.9,
      "fee": 6.99,
      "days": 28
     },
@@ -7257,8 +8234,8 @@
      "days": 9
     },
     "Amazon": {
-     "lines": 5,
-     "parts": 53.5,
+     "lines": 4,
+     "parts": 47.5,
      "fee": 0.0,
      "days": 3
     },
@@ -7315,7 +8292,8 @@
      "why": "no distributor stock of N8R8; Unikey broker or Espressif samples",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8"
+     "link": "https://octopart.com/search?q=ESP32-C5-WROOM-1-N8R8",
+     "alt": null
     },
     {
      "ref": "J1",
@@ -7334,7 +8312,8 @@
      "why": "in stock",
      "src": "",
      "note": "charge + USB serial",
-     "link": "https://octopart.com/search?q=USB4105-GF-A"
+     "link": "https://www.digikey.com/en/products/result?keywords=USB4105-GF-A",
+     "alt": null
     },
     {
      "ref": "U2",
@@ -7353,7 +8332,8 @@
      "why": "in stock",
      "src": "",
      "note": "TP4056 at LCSC is the $0.15 alternative",
-     "link": "https://octopart.com/search?q=MCP73831T-2ACI/OT"
+     "link": "https://www.digikey.com/en/products/result?keywords=MCP73831T-2ACI/OT",
+     "alt": null
     },
     {
      "ref": "U3",
@@ -7372,7 +8352,8 @@
      "why": "genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix",
      "src": "LCSC",
      "note": "Iq is what sets sleep life; avoid AP2112 (55 uA)",
-     "link": "https://octopart.com/search?q=RT9080-33GJ5"
+     "link": "https://octopart.com/search?q=RT9080-33GJ5",
+     "alt": null
     },
     {
      "ref": "U4",
@@ -7391,7 +8372,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=USBLC6-2SC6"
+     "link": "https://www.digikey.com/en/products/result?keywords=USBLC6-2SC6",
+     "alt": null
     },
     {
      "ref": "Q1",
@@ -7410,7 +8392,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "J2",
@@ -7429,7 +8412,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=S2B-PH-SM4-TB"
+     "link": "https://www.digikey.com/en/products/result?keywords=S2B-PH-SM4-TB",
+     "alt": null
     },
     {
      "ref": "RC",
@@ -7448,7 +8432,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "cut-tape minimums dominate at 5 builds",
-     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C"
+     "link": "https://www.lcsc.com/search?q=Passives%3A%200402/0603%20R%20and%20C",
+     "alt": null
     },
     {
      "ref": "SW",
@@ -7467,7 +8452,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=SKRPACE010"
+     "link": "https://www.digikey.com/en/products/result?keywords=SKRPACE010",
+     "alt": null
     },
     {
      "ref": "Q5",
@@ -7486,7 +8472,8 @@
      "why": "in stock",
      "src": "",
      "note": "off draw = cell protection IC only (~3 uA)",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "Q6",
@@ -7505,7 +8492,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=2N7002LT1G"
+     "link": "https://www.digikey.com/en/products/result?keywords=2N7002LT1G",
+     "alt": null
     },
     {
      "ref": "D1",
@@ -7524,7 +8512,8 @@
      "why": "in stock",
      "src": "",
      "note": "latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on",
-     "link": "https://octopart.com/search?q=BAT54C%2C215"
+     "link": "https://www.digikey.com/en/products/result?keywords=BAT54C%2C215",
+     "alt": null
     },
     {
      "ref": "U8",
@@ -7543,7 +8532,8 @@
      "why": "JFR6D3 stock unconfirmed; IER6S3 (no LPD) is in stock at Newark",
      "src": "",
      "note": "12-pin part with LPD (1.3 uA); the SO8 IER6S3 idles at 76 uA",
-     "link": "https://octopart.com/search?q=ST25DV04K-JFR6D3"
+     "link": "https://www.digikey.com/en/products/result?keywords=ST25DV04K-JFR6D3",
+     "alt": null
     },
     {
      "ref": "EPD",
@@ -7562,7 +8552,8 @@
      "why": "in stock",
      "src": "buyepaper.com",
      "note": "buyepaper $14.70, 94 in stock 2026-11-07; 4-colour twin GDEM0397F81",
-     "link": "https://buyepaper.com/search?q=GDEM0397T81P"
+     "link": "https://buyepaper.com/search?q=GDEM0397T81P",
+     "alt": null
     },
     {
      "ref": "J3",
@@ -7581,7 +8572,8 @@
      "why": "in stock",
      "src": "",
      "note": "generic at LCSC for volume",
-     "link": "https://octopart.com/search?q=FH12-24S-0.5SH%2855%29"
+     "link": "https://www.digikey.com/en/products/result?keywords=FH12-24S-0.5SH%2855%29",
+     "alt": null
     },
     {
      "ref": "EPB",
@@ -7591,16 +8583,20 @@
      "mpn": "",
      "dk": "",
      "mo": "",
-     "vendor": "Amazon",
-     "group": "Amazon",
+     "vendor": "DigiKey",
+     "group": "Distributor",
      "per": 1,
      "min": 0,
      "unit": 1.2,
-     "days": 3,
+     "days": 5,
      "why": "in stock",
      "src": "",
      "note": "copy the DESPI-C02 schematic",
-     "link": "https://www.amazon.com/s?k=EPD%20boost%3A%20Si1308EDL%20MOSFET"
+     "link": "https://www.digikey.com/en/products/result?keywords=Si1308EDL-T1-GE3",
+     "alt": [
+      "MBR0530T1G diodes",
+      "https://www.digikey.com/en/products/result?keywords=MBR0530T1G"
+     ]
     },
     {
      "ref": "U7",
@@ -7619,7 +8615,8 @@
      "why": "in stock",
      "src": "Newark / Avnet",
      "note": "MFRC522 is EOL (NXP: use CLRC663 plus); Newark 3,628 at CA$9.41, 2026-11-07",
-     "link": "https://octopart.com/search?q=CLRC66303HN"
+     "link": "https://www.digikey.com/en/products/result?keywords=CLRC66303HN",
+     "alt": null
     },
     {
      "ref": "Y2",
@@ -7638,7 +8635,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "",
-     "link": "https://www.lcsc.com/search?q=Crystal%2027.12%20MHz%20for%20the%20reader"
+     "link": "https://www.lcsc.com/search?q=Crystal%2027.12%20MHz%20for%20the%20reader",
+     "alt": null
     },
     {
      "ref": "ANT",
@@ -7657,7 +8655,8 @@
      "why": "in stock",
      "src": "LCSC",
      "note": "tune on the bench with a VNA or NanoVNA",
-     "link": "https://www.lcsc.com/search?q=Reader%20antenna%20matching%3A%20EMC%20filter%20inductors%20%2B%20C0G%20caps%20%28PC"
+     "link": "https://www.lcsc.com/search?q=Reader%20antenna%20matching%3A%20EMC%20filter%20inductors%20%2B%20C0G%20caps",
+     "alt": null
     },
     {
      "ref": "FER",
@@ -7676,7 +8675,8 @@
      "why": "in stock",
      "src": "Amazon (NFC anti-metal sticker)",
      "note": "without it the cell detunes the antenna",
-     "link": "https://www.amazon.com/s?k=Ferrite%20sheet%2040%20x%2030%20mm"
+     "link": "https://www.amazon.com/s?k=NFC%20anti-metal%20ferrite%20sheet%20sticker",
+     "alt": null
     },
     {
      "ref": "Q3",
@@ -7695,7 +8695,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DMG2305UX-7"
+     "link": "https://www.digikey.com/en/products/result?keywords=DMG2305UX-7",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -7714,7 +8715,8 @@
      "why": "in stock",
      "src": "",
      "note": "edge keys",
-     "link": "https://octopart.com/search?q=PTS815%20SJM%20250%20SMTR%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS815%20SJM%20250%20SMTR%20LFS",
+     "alt": null
     },
     {
      "ref": "KEY",
@@ -7733,7 +8735,8 @@
      "why": "in stock",
      "src": "",
      "note": "turns the reader field on for 10 s",
-     "link": "https://octopart.com/search?q=PTS526%20SM15%20SMTR2%20LFS"
+     "link": "https://www.digikey.com/en/products/result?keywords=PTS526%20SM15%20SMTR2%20LFS",
+     "alt": null
     },
     {
      "ref": "J4",
@@ -7752,7 +8755,8 @@
      "why": "in stock",
      "src": "",
      "note": "",
-     "link": "https://octopart.com/search?q=DM3AT-SF-PEJM5"
+     "link": "https://www.digikey.com/en/products/result?keywords=DM3AT-SF-PEJM5",
+     "alt": null
     },
     {
      "ref": "PCB",
@@ -7771,7 +8775,8 @@
      "why": "bare boards; add ~5 days for assembly",
      "src": "JLCPCB",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "BAT",
@@ -7790,7 +8795,11 @@
      "why": "in stock",
      "src": "Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",
      "note": "protection board fitted; check JST polarity against the board before plugging in",
-     "link": "https://www.amazon.com/s?k=LiPo%201200%20mAh%20603450"
+     "link": "https://www.amazon.com/s?k=603450%201200mAh%203.7V%20lipo%20battery%20JST%20PH%202.0",
+     "alt": [
+      "Adafruit 258, 1200 mAh 34x62x5",
+      "https://www.adafruit.com/product/258"
+     ]
     },
     {
      "ref": "ENC",
@@ -7809,7 +8818,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "STEP/STL from enclosure/",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "CAP",
@@ -7828,7 +8838,8 @@
      "why": "in stock",
      "src": "own printer",
      "note": "",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "LAM",
@@ -7847,7 +8858,8 @@
      "why": "in stock",
      "src": "sticker shop",
      "note": "swappable 'pass' graphic",
-     "link": ""
+     "link": "",
+     "alt": null
     },
     {
      "ref": "HW",
@@ -7866,7 +8878,8 @@
      "why": "in stock",
      "src": "Amazon/Ali",
      "note": "",
-     "link": "https://www.amazon.com/s?k=M2x6%20screws%20%2B%20M2%20heat-set%20inserts"
+     "link": "https://www.amazon.com/s?k=M2%20heat%20set%20inserts%20brass%20with%20M2%20screws%20kit",
+     "alt": null
     },
     {
      "ref": "LNY",
@@ -7885,10 +8898,12 @@
      "why": "in stock",
      "src": "Amazon (multi-pack); AliExpress for 100",
      "note": "",
-     "link": "https://www.amazon.com/s?k=Lanyard%2020%20mm%20with%20swivel%20hook%20%2B%2025%20mm%20split%20ring"
+     "link": "https://www.amazon.com/s?k=lanyard%20swivel%20hook%20split%20ring%2020mm",
+     "alt": null
     }
    ],
    "digikey_missing": [
+    "EPB ",
     "KEY PTS815 SJM 250 SMTR LFS"
    ],
    "mouser_lines": 1,
@@ -7896,12 +8911,12 @@
   }
  ],
  "batch": {
-  "variants": 14,
-  "parts": 3175.2,
-  "shipping": 132.99,
-  "shipping_separate": 1205.88,
-  "eta": "2026-12-07",
-  "ship_share": 28
+  "variants": 16,
+  "parts": 3553.15,
+  "shipping": 147.99,
+  "shipping_separate": 1276.86,
+  "eta": "2026-12-08",
+  "ship_share": 26
  },
  "mouser_carts": {}
 }

@@ -1,6 +1,7 @@
 # SubverseReader — design (REV1 ideation)
 
-**Status:** ideation, 2026-11-06. Nothing built. Fourteen hardware variants (SR-14 in two builds) are
+**Status:** ideation, 2026-11-06. Nothing built. Sixteen hardware variants (SR-14 in two builds; SR-1C and SR-1D are
+alternative SR-1 builds) are
 priced (`../bom/README.md`) and rendered (`../render/out/`); this document is
 the software plan they share.
 **Lineage:** maplet (the phone renders, the e-paper only shows a finished
@@ -246,6 +247,8 @@ enclosure as rendered; weights are estimates without the lanyard.
 | **SR-7 Poster** | lanyard | 5.83in 648×480 **4-colour** B/W/R/Y | ESP32-S3 (SR-2 board) | 5-way + 2 keys | A7 zine sleeve | 109 × 177 × 19.5 | 150 | yes | USB drive | $55 | $35 |
 | **SR-8 Quiet Pass** | lanyard | 4.2in 400×300 1-bit | XIAO nRF52840 Plus on Seeed **EE05**, **no Wi-Fi** | 3 keys (on the EE05) | plain | 86 × 138 × 13 | 95 | yes | USB drive + UF2 | $47 | $35 |
 | **SR-9 Roadie** | lanyard | 4.2in 400×300 1-bit | ESP32-C5 PCB | **PSP thumbstick** (Adafruit 444) + OK / BACK | plain | 88 × 149 × 14.5 | 105 | yes | charge, Web Serial | $42 | $25 |
+| **SR-15 Dial Pass** | lanyard | 4.2in 400×300 1-bit | Elecrow CrowPanel 4.2in (ESP32-S3), finished board | **thumb dial** (up / down / push) + MENU + EXIT | plain | 95 × 140 × 16 | 150 | yes | charge, Web Serial (CH340) | $39 | $27 |
+| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys (hand-wired) | plain | 64 × 112 × 12 | 70 | no | charge, Web Serial | $37 | $24 |
 
 Depth with pocket/clip included; SR-2/SR-7 are 15.5 mm without the pocket,
 SR-4 13.5 mm, SR-5's body 16 mm.
@@ -354,6 +357,55 @@ exact outline of the ones under 4 in wide. They exist only in the 3D review
 - Near misses: SR-3 (78 × 149) is 4 mm off 80 × 145; SR-1 and SR-8 (86 × 138) fall between
   stock sizes.
 
+### SR-15 Dial Pass: the CrowPanel
+
+Elecrow's CrowPanel ESP32 4.2in E-Paper HMI (DIE07300S, $26.90) is a finished board: ESP32-S3
+(8 MB flash, 8 MB PSRAM), the same 400×300 SSD1683 glass as SR-1, microSD, a LiPo charger and
+its own controls. Because the controls differ, it is its own pass rather than an SR-1 build.
+
+- **Navigation.** A 3-way thumb dial (Elecrow TM_2024A: up, down, push; a toggle, not an encoder)
+  with MENU and EXIT beside it. Dial up/down turns pages, push selects, MENU opens the menu,
+  EXIT is back; hold MENU + EXIT 2 s to sync; hold EXIT for the badge. Every control is on an RTC
+  GPIO (dial IO6/IO4/IO5, MENU IO2, EXIT IO1), so any of them wakes the pass.
+- **Power.** IO7 switches the panel's ground and IO42 the microSD's, so both go dark in sleep.
+  The charger is a TP4054-class part (~500 mA) feeding an RY3420 buck; its quiescent current is
+  unknown, so the battery model assumes 60 µA of board overhead until it is measured (7 months
+  at 300 pages/day on 1200 mAh). The board has no power switch and no battery sense: SR-15 adds a
+  slide switch in the cell lead and a 100k/100k divider to IO3.
+- **Battery socket** is SH1.0 2-pin; the cell plugs in through a JST-PH-to-SH1.0 adapter lead.
+- **USB-C goes through a CH340C**, not the S3's native USB, so there is no USB drive: packs load
+  by microSD or the Web Serial loader.
+- **Mechanics.** The board is 107 × 87 mm with no mounting holes; the shell clamps it by the
+  edges, landscape board turned portrait, with the dial on the right edge. Elecrow's repo has a
+  STEP model to draw against. Elecrow has shipped PCBA V1.0, V1.2 and V1.2A with different
+  panel drivers; check which arrives.
+- **Cost:** $38.50 a pass at 5 ($44.10 landed), $26.80 at 100: the cheapest pass
+  you can build today (no board to draw), with parts in hand in about 10 days.
+
+### SR-16 Setlist: the slim 3.7in pass
+
+A pass the size of a real backstage laminate, from off-the-shelf parts: Elecrow's bare 3.7in
+panel (DIE04037S, $11.90, 240×416, UC8253, ~130 dpi, 47 × 82 mm active area) on Seeed's
+ePaper Driver Board for XIAO V2 with a XIAO ESP32-C5, three hand-wired keys and a 1200 mAh
+cell. Portrait, half the width of SR-1, sharper than any other 1-bit pass.
+
+- **Panel.** UC8253, not a Solomon controller. GxEPD2 has a driver for Good Display's
+  GDEY037T03 (240×416 UC8253): partial refresh ~350 ms, full ~1.5 s. It has the standard 24-pin
+  pinout, so it plugs into the same adapters as the 4.2in.
+- **Boost resistor.** Elecrow's own CrowPanel 3.7in board (schematic on Elecrow-RD's GitHub)
+  drives this panel with RESE = 0.47 Ω and an Si1308EDL. Seeed's driver board has 0.47 Ω fixed,
+  so the pair should work as-is (on a CFA-10084, short the RESE jumper).
+- **Wiring** is SR-1D's: driver board on D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI; the
+  keys share a Schottky wake line on GPIO3 (back pad) and also go to D4, D5, D9.
+- **Text.** About 110–130 words a page at reading size against ~250 on 4.2in: books take about
+  twice the page turns. The battery model counts 300 turns a day like the others (10 months on
+  1200 mAh), so a heavy reader should expect closer to half that.
+- **Size check.** The listing gives the panel as 53 × 93 × 1 mm but also a 67 × 93.4 × 2.6 mm
+  "PCB size" and 50 g, so it may arrive on a carrier board. Measure one before printing; the
+  64 × 112 × 12 mm pass assumes the bare panel.
+- **Cost:** $37.09 a pass at 5 ($45.69 landed: Seeed, Elecrow, DigiKey and Amazon orders),
+  $24.46 at 100. The panel rides the same Elecrow order as SR-15's board.
+
 ### SR-9 and the thumbstick
 
 The Adafruit 444 is a PSP-style analog stick: two 10K potentiometers,
@@ -459,6 +511,8 @@ real-world margin on every active figure; details in `../power/README.md`):
 | SR-11 Full Bleed | 1000 | ~117,000 | 9 months | 10 months | 3 months |
 | SR-12 Tour Laminate | 1200 | ~140,000 | 10 months | 11 months | 4 months |
 | SR-13 Hybrid Credential | 1500 | ~53,000 | 4 months | 6 months | 3 months |
+| SR-15 Dial Pass | 1200 | ~138,000 | 7 months | 8 months | 3 months |
+| SR-16 Setlist | 1200 | ~161,000 | 10 months | 11 months | 4 months |
 | SR-14W Tap Pass Wi-Fi | 1200 | ~140,000 | 10 months | 8 months (10 taps, 2 fetches) | 4 months |
 | SR-14B Tap Pass tethered | 1200 | ~369,000 | 1 yr+ | 1 yr+ | 4 months |
 

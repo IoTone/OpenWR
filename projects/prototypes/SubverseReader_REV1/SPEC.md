@@ -47,4 +47,4 @@ software ours and open.
 | `render/make_renders.py` | parametric Blender models (SR-1 to SR-9); `render/out/SR-*.png` |
 | `power/` | `battery_model.py`: battery life per variant and cell option (README.md, life.json) |
 | `bom/AVAILABILITY.md` | parts availability, checked 2026-11-07 |
-| `render/viewer/` | three.js 3D review of all fourteen, published as the design page |
+| `render/viewer/` | three.js 3D review of all sixteen, published as the design page |

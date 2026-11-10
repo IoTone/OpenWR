@@ -36,6 +36,7 @@ VENDORS = {
     "Newark":       (8.95, 1, 4, "Gaffney, SC"),
     "Adafruit":     (9.00, 2, 4, "New York, NY"),
     "Crystalfontz": (9.00, 1, 4, "Spokane, WA (fee estimated)"),
+    "Elecrow":      (15.00, 3, 7, "Shenzhen (fee estimated)"),
     "Seeed":        (15.00, 3, 7, "Shenzhen (some US warehouse stock)"),
     "buyepaper":    (25.00, 3, 6, "Dalian (Good Display), DHL"),
     "LCSC":         (20.00, 2, 6, "Shenzhen, DHL"),
@@ -74,6 +75,7 @@ SEARCH = {
     "Amazon": "https://www.amazon.com/s?k=",
     "Adafruit": "https://www.adafruit.com/search?q=",
     "Crystalfontz": "https://www.crystalfontz.com/search.php?q=",
+    "Elecrow": "https://www.elecrow.com/catalogsearch/result/?q=",
     "Seeed": "https://www.seeedstudio.com/catalogsearch/result/?q=",
     "buyepaper": "https://buyepaper.com/search?q=",
     "LCSC": "https://www.lcsc.com/search?q=",
@@ -82,6 +84,55 @@ SEARCH = {
     "broker": "https://octopart.com/search?q=",
     "Distributor": "https://octopart.com/search?q=",
 }
+# Hand-checked shopping links. A search built from a BOM description ("Lanyard 20 mm with swivel
+# hook + 25 mm split ring") finds junk, so each generic line gets a short query a seller would
+# use, a product page when one is known to exist (checked 2026-11-10), and a vendor override for
+# catalog parts that have no MPN in the BOM. Keyed by description prefix.
+#   q: search words for the line's vendor   url: exact product page   alt: (label, url) second source
+DK_Q = "https://www.digikey.com/en/products/result?keywords="
+LINKS = {
+    "LiPo 1200 mAh 603450": dict(q="603450 1200mAh 3.7V lipo battery JST PH 2.0",
+                                 alt=("Adafruit 258, 1200 mAh 34x62x5", "https://www.adafruit.com/product/258")),
+    "LiPo 2000 mAh 103450": dict(q="103450 2000mAh 3.7V lipo battery JST PH 2.0",
+                                 alt=("Adafruit 2011, 2000 mAh 60x36x7", "https://www.adafruit.com/product/2011")),
+    "LiPo 350 mAh 402540": dict(q="402540 350mAh 3.7V lipo battery",
+                                alt=("Adafruit 2750, 350 mAh 36x20x5", "https://www.adafruit.com/product/2750")),
+    "LiPo 1000 mAh 503450": dict(q="503450 1000mAh 3.7V lipo battery JST PH 2.0"),
+    "LiPo 1500 mAh 604050": dict(q="604050 1500mAh 3.7V lipo battery JST PH 2.0"),
+    "M2x6 screws + M2 heat-set": dict(q="M2 heat set inserts brass with M2 screws kit"),
+    "Lanyard 20 mm": dict(q="lanyard swivel hook split ring 20mm"),
+    "Spring-steel belt clip": dict(q="spring steel belt clip screw mount"),
+    "Stainless D-ring 10 mm": dict(q="stainless steel D ring 10mm"),
+    "Ferrite sheet": dict(q="NFC anti-metal ferrite sheet sticker"),
+    "Perfboard scrap + 30 AWG": dict(q="30 AWG silicone stranded wire",
+                                     alt=("Adafruit 3164, 30 AWG silicone wire 50 ft", "https://www.adafruit.com/product/3164")),
+    "Battery pigtail: JST-PH 2.0 socket to SH1.0": dict(q="JST SH 1.0 2 pin to JST PH 2.0 adapter cable"),
+    "EPD boost: Si1308EDL": dict(vendor="DigiKey", url=DK_Q + "Si1308EDL-T1-GE3",
+                                 alt=("MBR0530T1G diodes", DK_Q + "MBR0530T1G")),
+    "Battery divider: 2x 100k": dict(vendor="DigiKey", url=DK_Q + "RC0603FR-07100KL"),
+}
+
+
+def links_of(r):
+    for k, v in LINKS.items():
+        if r["description"].startswith(k):
+            return v
+    return {}
+
+
+def link_of(r):
+    """The line's shopping link: product page, else a short search at its vendor."""
+    lk = links_of(r)
+    if lk.get("url"):
+        return lk["url"]
+    base = SEARCH.get(r["group"]) or SEARCH.get(r["vendor"])
+    if not base:
+        return ""
+    if r["vendor"] in DISTRIBUTORS and r["mpn"]:
+        return DK_Q + urllib.parse.quote(r["mpn"])
+    return base + urllib.parse.quote(lk.get("q") or r["mpn"] or r["description"].split(",")[0].split(" (")[0][:60])
+
+
 # lines that cannot be bought in units of one (PCB fabs make 5)
 MIN_QTY = {"PCB": 5}
 
@@ -101,13 +152,15 @@ LEAD = {
 
 def vendor_of(r):
     """Where a line is bought in the offline plan."""
+    if links_of(r).get("vendor"):
+        return links_of(r)["vendor"]
     for key, (v, _, _) in LEAD.items():
         if key == r["mpn"] or (not r["mpn"] and key in r["description"]):
             return v
     o = r["other_vendor"].lower()
     if "amazon" in o:
         return "Amazon"  # cells, ferrite, screws: US stock, two days
-    for name in ("adafruit", "crystalfontz", "seeed", "buyepaper", "lcsc", "jlcpcb", "aliexpress", "m5stack",
+    for name in ("adafruit", "crystalfontz", "elecrow", "seeed", "buyepaper", "lcsc", "jlcpcb", "aliexpress", "m5stack",
                  "ponoko", "sticker shop", "own printer", "newark"):
         if name in o:
             return {"buyepaper": "buyepaper", "m5stack": "M5Stack", "own printer": "own printer",
@@ -266,7 +319,7 @@ def live(boms, date):
     cache = json.load(open(cache_f)) if os.path.exists(cache_f) else {}
     for rows in boms.values():
         for r in rows:
-            if not (r["mpn"] or r["digikey_pn"] or r["mouser_pn"]) or r["vendor"] in ("Seeed", "buyepaper", "Adafruit", "Crystalfontz", "M5Stack"):
+            if not (r["mpn"] or r["digikey_pn"] or r["mouser_pn"]) or r["vendor"] in ("Seeed", "buyepaper", "Adafruit", "Crystalfontz", "Elecrow", "M5Stack"):
                 continue
             quotes = []
             for d in dists:
@@ -373,9 +426,7 @@ def plan(key, rows, date):
                     mpn=r["mpn"], dk=r["digikey_pn"], mo=r["mouser_pn"], vendor=r["vendor"], group=r["group"],
                     per=int(r["qty_per_unit"]), min=MIN_QTY.get(r["ref"], 0), unit=r["unit_usd"],
                     days=r["days"], why=r["why"], src=r["other_vendor"], note=r["note"],
-                    link=(SEARCH.get(r["group"]) or SEARCH.get(r["vendor"]) or "") and
-                    (SEARCH.get(r["group"]) or SEARCH.get(r["vendor"])) + urllib.parse.quote(
-                        r["mpn"] or r["description"].split(",")[0][:60]))
+                    link=link_of(r), alt=None if key in SHIP_TO else list(links_of(r).get("alt") or []) or None)
                for r in rows],
         digikey_missing=[f"{r['ref']} {r['mpn']}" for r in dk if not r["digikey_pn"]],
         mouser_lines=sum(1 for r in rows if r["vendor"] == "Mouser"),

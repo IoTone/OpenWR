@@ -749,6 +749,106 @@
    }
   ]
  },
+ "SR-15": {
+  "name": "Dial Pass",
+  "sleep_ua": 69,
+  "e_page": 0.007375,
+  "note": "CrowPanel: RY3420 buck Iq unknown, measure",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 15.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 115254,
+    "reader": 187,
+    "festival": 203,
+    "standby": 366,
+    "off": 1132,
+    "bad": 96
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 16.0,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 138305,
+    "reader": 218,
+    "festival": 237,
+    "standby": 415,
+    "off": 1154,
+    "bad": 113
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 16.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 172881,
+    "reader": 262,
+    "festival": 283,
+    "standby": 480,
+    "off": 1176,
+    "bad": 138
+   }
+  ]
+ },
+ "SR-16": {
+  "name": "Setlist",
+  "sleep_ua": 24,
+  "e_page": 0.006333333333333332,
+  "note": "XIAO C5 + Seeed driver board: measure",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 11.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 134211,
+    "reader": 270,
+    "festival": 289,
+    "standby": 684,
+    "off": 1132,
+    "bad": 99
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.0,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 161053,
+    "reader": 311,
+    "festival": 332,
+    "standby": 741,
+    "off": 1154,
+    "bad": 117
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 12.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 201316,
+    "reader": 367,
+    "festival": 389,
+    "standby": 809,
+    "off": 1176,
+    "bad": 143
+   }
+  ]
+ },
  "SR-14W": {
   "name": "Tap Pass Wi-Fi",
   "sleep_ua": 18,

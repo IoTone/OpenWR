@@ -1,0 +1,14 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,unit_usd_100,qty_per_unit,order_qty,ext_usd,status,note,availability,availability_note
+MCU,"XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)",Seeed,,,,Seeed 100010048,6.90,6.50,1,5,34.50,vendor,Seeed $6.90 (2026-11-09); RobotShop pre-soldered $8.31,ok,Seeed in stock $6.99; DigiKey 13-week lead
+DRV,"ePaper Driver Board for XIAO V2 (24-pin SPI, boost)",Seeed,,,,Seeed 114993558,5.99,4.90,1,5,29.95,vendor,"RESE fixed at 0.47 ohm, the value Elecrow's own 3.7in CrowPanel uses with this panel",ok,"printed, generic or cut-tape"
+EPD,"3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; Good Display GDEY037T03 class), panel 53 x 93 x 1 mm",Elecrow,,,,Elecrow DIE04037S,11.90,8.00,1,5,59.50,vendor,Elecrow $11.90 in stock 2026-11-10; same order as SR-15's board,ok,Elecrow $11.90 in stock (2026-11-10)
+KEY,"Tact switch 6x6 mm THT (PREV, MENU, NEXT)",Omron,B3F-1000,SW400-ND,653-B3F-1000,,0.35,0.12,3,15,5.25,estimate,on the long right edge,ok,commodity part (not re-checked)
+DIO,"Schottky diode 1N5817, any-key wake line",Diodes Inc,1N5817-T,,,,0.15,0.05,3,15,2.25,estimate,"Schottky, not 1N4148: the drop must stay under the C5's low threshold",ok,commodity part (not re-checked)
+PWR,"Slide switch, battery disconnect",C&K,JS102011SAQN,401-2000-ND,611-JS102011SAQN,,0.45,0.20,1,5,2.25,estimate,,ok,commodity part (not re-checked)
+PRF,Perfboard scrap + 30 AWG wire,,,,,,0.50,0.20,1,5,2.50,estimate,,ok,"printed, generic or cut-tape"
+BAT,"LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",7.00,2.80,1,5,35.00,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
+ENC,"Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)",,,,,own printer,0.70,0.50,1,5,3.50,estimate,measure the panel first: see notes,ok,"printed, generic or cut-tape"
+CAP,"Key caps, printed TPU",,,,,own printer,0.10,0.05,1,5,0.50,estimate,,ok,"printed, generic or cut-tape"
+LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
+HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,,ok,"printed, generic or cut-tape"
+LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

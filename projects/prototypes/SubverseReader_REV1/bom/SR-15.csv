@@ -1,0 +1,11 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,unit_usd_100,qty_per_unit,order_qty,ext_usd,status,note,availability,availability_note
+BRD,"Elecrow CrowPanel ESP32 4.2in E-Paper HMI (DIE07300S): ESP32-S3-WROOM-1-N8R8, 400x300 SSD1683, dial (UP/DOWN/push) + MENU + EXIT, microSD, LiPo charger, SH1.0 battery socket, 107 x 87 mm board",Elecrow,,,,Elecrow DIE07300S,26.90,22.00,1,5,134.50,vendor,Elecrow $26.90 in stock 2026-11-09; ships in an acrylic case we don't use,ok,"Elecrow $26.90 in stock (2026-11-09); also Tindie, OpenELab"
+BAT,"LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",7.00,2.80,1,5,35.00,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
+ADP,Battery pigtail: JST-PH 2.0 socket to SH1.0 2-pin plug,,,,,Amazon (adapter cable pack); AliExpress for 100,0.80,0.15,1,5,4.00,estimate,"the board takes SH1.0; check polarity, these come both ways",ok,"printed, generic or cut-tape"
+PWR,"Slide switch, battery disconnect (the board has none)",C&K,JS102011SAQN,401-2000-ND,611-JS102011SAQN,,0.45,0.20,1,5,2.25,estimate,,ok,commodity part (not re-checked)
+DIV,Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header,Yageo,,,,,0.05,0.02,1,5,0.25,estimate,"the board has no battery sense; 100k/100k draws ~20 uA, or switch the low side from a spare GPIO",ok,"printed, generic or cut-tape"
+ENC,"Enclosure, 3D-printed PETG, front + back shell sized for the 107 x 87 board (~55 g)",,,,,own printer,1.10,0.75,1,5,5.50,estimate,STEP model of the board in Elecrow's repo,ok,"printed, generic or cut-tape"
+CAP,"Dial extension cap + key caps, printed TPU",,,,,own printer,0.15,0.08,1,5,0.75,estimate,,ok,"printed, generic or cut-tape"
+LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
+HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,the board has no mounting holes: printed clamps hold it by the edges,ok,"printed, generic or cut-tape"
+LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

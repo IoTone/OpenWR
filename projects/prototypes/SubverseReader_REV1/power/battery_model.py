@@ -36,6 +36,7 @@ OFF_UA = 3.5                # latch off: DW01-class protection IC + charger leak
 PANEL = {
     # key: (label, refresh mA*s per page incl. amortised full refresh, needs MCU awake?)
     "spi29":  ("2.9in SPI 1-bit", 2.4 + 0.8, False),     # partial ~0.3 s at ~8 mA + full/20
+    "spi37":  ("3.7in SPI 1-bit", 2.8 + 0.9, False),     # UC8253: partial ~0.35 s, full ~1.5 s (GxEPD2)
     "spi42":  ("4.2in SPI 1-bit", 3.5 + 1.2, False),     # partial ~0.4 s, full ~3 s at ~8 mA
     "spi397": ("3.97in SPI 800x480", 4.5 + 1.5, False),
     "spi583": ("5.83in SPI 1-bit", 5.0 + 1.8, False),
@@ -89,6 +90,8 @@ V = [
     ("SR-11", "Full Bleed", "c5", "spi397", BOARD_CUSTOM, ("303450", "503450", "603450"), 11, "", ""),
     ("SR-12", "Tour Laminate", "c5", "spi397", BOARD_CUSTOM, ("303450", "603450", "604050"), 12, "", ""),
     ("SR-13", "Hybrid Credential", "s3", "par47", 40, ("503450", "604050", "104050"), 14.5, "", "M5 kit sleep path unknown"),
+    ("SR-15", "Dial Pass", "s3", "spi42", 60, ("503450", "603450", "604050"), 16, "", "CrowPanel: RY3420 buck Iq unknown, measure"),
+    ("SR-16", "Setlist", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "", "XIAO C5 + Seeed driver board: measure"),
     ("SR-14W", "Tap Pass Wi-Fi", "c5", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapw", "10 taps + 2 Wi-Fi fetches a day"),
     ("SR-14B", "Tap Pass tethered", "nrf", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapb", "10 taps + 2 phone fetches a day"),
 ]

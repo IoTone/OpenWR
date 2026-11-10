@@ -582,6 +582,87 @@ variant("SR-14B", "SR-14 Tap Pass, tethered build: nRF52840 + NFC reader, 80 x 1
         usb="charge, USB drive, UF2 updates")
 
 
+variant("SR-15", "SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its thumb dial",
+        "A finished e-paper board in our shell: the CrowPanel's 3-way thumb dial turns pages, "
+        "MENU and EXIT sit beside it. Panel, microSD, charger and keys are already on the board; "
+        "add a cell, a power switch and a two-resistor battery divider.",
+        [L("BRD", "Elecrow CrowPanel ESP32 4.2in E-Paper HMI (DIE07300S): ESP32-S3-WROOM-1-N8R8, "
+           "400x300 SSD1683, dial (UP/DOWN/push) + MENU + EXIT, microSD, LiPo charger, SH1.0 battery "
+           "socket, 107 x 87 mm board", "Elecrow", "", "", "", "Elecrow DIE07300S", 26.90, 22.00, 1,
+           "vendor", "Elecrow $26.90 in stock 2026-11-09; ships in an acrylic case we don't use"),
+         bat(1200, "603450", 4.80, 2.80),
+         L("ADP", "Battery pigtail: JST-PH 2.0 socket to SH1.0 2-pin plug", "", "", "", "",
+           "Amazon (adapter cable pack); AliExpress for 100", 0.80, 0.15, 1, "estimate", "the board takes SH1.0; check polarity, these come both ways"),
+         L("PWR", "Slide switch, battery disconnect (the board has none)", "C&K", "JS102011SAQN",
+           "401-2000-ND", "611-JS102011SAQN", "", 0.45, 0.20, 1, "estimate", ""),
+         L("DIV", "Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header", "Yageo", "", "", "",
+           "", 0.05, 0.02, 1, "estimate", "the board has no battery sense; 100k/100k draws ~20 uA, "
+           "or switch the low side from a spare GPIO"),
+         L("ENC", "Enclosure, 3D-printed PETG, front + back shell sized for the 107 x 87 board (~55 g)",
+           "", "", "", "", "own printer", 1.10, 0.75, 1, "estimate", "STEP model of the board in Elecrow's repo"),
+         L("CAP", "Dial extension cap + key caps, printed TPU", "", "", "", "", "own printer", 0.15, 0.08, 1,
+           "estimate", ""),
+         L("LAM", "Laminate band: printed vinyl sticker", "", "", "", "", "sticker shop", 0.15, 0.05, 1,
+           "estimate", "swappable 'pass' graphic"),
+         L("HW", "M2x6 screws + M2 heat-set inserts, 4 each", "", "", "", "", "Amazon/Ali", 0.40, 0.20, 1,
+           "estimate", "the board has no mounting holes: printed clamps hold it by the edges"),
+         LANYARD],
+        ["Controls (schematic): dial UP IO6, DOWN IO4, push IO5; MENU IO2; EXIT IO1; all with "
+         "pull-ups, all RTC GPIOs, so any of them wakes the S3 from deep sleep. The dial is a "
+         "3-way toggle with push (Elecrow part TM_2024A), not an encoder.",
+         "Power switches on the board: IO7 cuts the panel's ground, IO42 the microSD's; drive both "
+         "low before deep sleep. The red LED (IO41) is GPIO-driven.",
+         "USB-C goes through a CH340C, not the S3's native USB, so no USB drive: load packs by "
+         "microSD or the Web Serial loader. The CH340C runs from VBUS only, so it costs nothing on battery.",
+         "Charger is a TP4054-class part at ~500 mA; regulation is an RY3420 buck. Measure sleep "
+         "current on the bench: the buck's quiescent current isn't published.",
+         "Elecrow ships PCBA V1.0, V1.2 and V1.2A (green sticker); the panel driver differs, so "
+         "check which one arrives."],
+        dims="95 x 140 x 16", grams=150, radio="Wi-Fi 4 2.4 GHz, BLE 5", sd="yes",
+        usb="charge, console (CH340), Web Serial loader")
+
+
+variant("SR-16", "SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass",
+        "The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's "
+        "XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, "
+        "half the width of SR-1. No custom PCB; hand-wired keys as on SR-1D.",
+        [L("MCU", "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)", "Seeed", "", "", "",
+           "Seeed 100010048", 6.90, 6.50, 1, "vendor", "Seeed $6.90 (2026-11-09); RobotShop pre-soldered $8.31"),
+         L("DRV", "ePaper Driver Board for XIAO V2 (24-pin SPI, boost)", "Seeed", "", "", "",
+           "Seeed 114993558", 5.99, 4.90, 1, "vendor",
+           "RESE fixed at 0.47 ohm, the value Elecrow's own 3.7in CrowPanel uses with this panel"),
+         L("EPD", "3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; "
+           "Good Display GDEY037T03 class), panel 53 x 93 x 1 mm", "Elecrow", "", "", "",
+           "Elecrow DIE04037S", 11.90, 8.00, 1, "vendor",
+           "Elecrow $11.90 in stock 2026-11-10; same order as SR-15's board"),
+         L("KEY", "Tact switch 6x6 mm THT (PREV, MENU, NEXT)", "Omron", "B3F-1000",
+           "SW400-ND", "653-B3F-1000", "", 0.35, 0.12, 3, "estimate", "on the long right edge"),
+         L("DIO", "Schottky diode 1N5817, any-key wake line", "Diodes Inc", "1N5817-T", "", "", "",
+           0.15, 0.05, 3, "estimate", "Schottky, not 1N4148: the drop must stay under the C5's low threshold"),
+         L("PWR", "Slide switch, battery disconnect", "C&K", "JS102011SAQN",
+           "401-2000-ND", "611-JS102011SAQN", "", 0.45, 0.20, 1, "estimate", ""),
+         L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "", 0.50, 0.20, 1, "estimate", ""),
+         bat(1200, "603450", 4.80, 2.80),
+         L("ENC", "Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)", "", "", "",
+           "", "own printer", 0.70, 0.50, 1, "estimate", "measure the panel first: see notes"),
+         *ENCLOSURE[1:], LANYARD],
+        ["Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. "
+         "The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys "
+         "also go to D4, D5 and D9 so the firmware can tell them apart.",
+         "Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 "
+         "(240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.",
+         "RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm "
+         "and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its "
+         "RESE jumper (0.47 ohm).",
+         "Size: the listing gives a 53 x 93 x 1 mm panel but also a 67 x 93.4 x 2.6 mm 'PCB size' and "
+         "50 g, so it may come on a carrier board. Measure one before printing; the 64 mm width below "
+         "assumes the bare panel.",
+         "Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes "
+         "about twice the page turns; the battery figures assume the same 300 turns a day as the others."],
+        dims="64 x 112 x 12", grams=70, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        sd="no", usb="charge, console, Web Serial loader")
+
+
 # ---------------------------------------------------------------- availability
 # Checked 2026-11-07 (seller pages where reachable; DigiKey/Mouser/LCSC blocked automated
 # checks, so their stock is unconfirmed). ok = in stock now; watch = in stock but single
@@ -604,6 +685,8 @@ AVAIL = {  # match key (MPN, or a description fragment): (rating, where/stock, m
     "XIAO ESP32-C5": ("ok", "Seeed in stock $6.99; DigiKey 13-week lead",
                       "buy direct from Seeed"),
     "XIAO nRF52840": ("ok", "Seeed in stock $10.40", ""),
+    "DIE04037S": ("ok", "Elecrow $11.90 in stock (2026-11-10)", "Good Display GDEY037T03 is the same class of panel"),
+    "DIE07300S": ("ok", "Elecrow $26.90 in stock (2026-11-09); also Tindie, OpenELab", "ship-from not stated"),
     "104990857": ("ok", "Seeed $19.95; reseller Pakronics 30 in stock (2026-11-09)",
                   "buy-lcd GDEY042T81 $13.80 (0 in stock 2026-11-09)"),
     "XIAO ESP32-S3 Plus": ("ok", "Seeed in stock $7.90 (2026-11-09)", ""),
@@ -739,7 +822,7 @@ def main():
         total, t100 = write(key, v)
         summary.append((key, v, total, total / BUILDS, t100))
     out = ["# SubverseReader REV1 BOMs", "",
-           "Bills of materials for the fourteen SubverseReader variants (seventeen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every "
+           "Bills of materials for the sixteen SubverseReader variants (nineteen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every "
            "file here; edit it, not the CSVs.", "",
            "**Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are "
            "seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the "

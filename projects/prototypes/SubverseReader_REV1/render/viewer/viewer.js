@@ -22,6 +22,10 @@ const C5 = "Wi-Fi 6, 2.4 + 5 GHz · BLE 5", S3 = "Wi-Fi 4, 2.4 GHz only · BLE 5
 const V = [
   {key:"SR-1",name:"Laminate",band:"GUEST",W:86,T:12.5,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#e2642a",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:15,zine:"basement",lanyard:true,sd:false,
    p5:40.04,p100:31.94,dims:"86 × 138 × 12.5",g:95,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"XIAO ESP32-S3 Plus on the Seeed EE05 board",radio:"Wi-Fi 4, 2.4 GHz only; BLE 5",keys:"PREV · MENU · NEXT",sdT:"No (books live in 16 MB flash)",usb:"Charge, USB drive, console",back:"Plain, spec label",wear:"Lanyard",tag:"No custom PCB: the EE05 board carries the panel driver, keys and battery switch."},
+  {key:"SR-15",name:"Dial Pass",band:"SOUNDCHECK",W:95,T:16,Hfix:140,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#b23a8f",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"dial",ctrl:14,zine:"basement",lanyard:true,sd:true,
+   p5:38.50,p100:26.80,dims:"95 × 140 × 16",g:150,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"Elecrow CrowPanel 4.2in (ESP32-S3, finished board)",radio:"Wi-Fi 4, 2.4 GHz only; BLE 5",keys:"Thumb dial (up · down · push) · MENU · EXIT",sdT:"Yes (on the board)",usb:"Charge, console (CH340), Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"A finished CrowPanel board in our shell; the thumb dial turns pages."},
+  {key:"SR-16",name:"Setlist",band:"SETLIST",W:64,T:12,Hfix:112,aa:[47.04,81.54],res:[240,416],depth:"1",em:3.3,body:"#1f8f84",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:12,zine:"basement",lanyard:true,sd:false,
+   p5:37.09,p100:24.46,dims:"64 × 112 × 12",g:70,panel:"3.7in 240×416, 1-bit (Elecrow DIE04037S, UC8253)",pshort:"3.7in e-paper · 240×416 · 1-bit",chip:"XIAO ESP32-C5 + Seeed ePaper Driver Board",radio:C5,keys:"PREV · MENU · NEXT",sdT:"No (books live in flash)",usb:"Charge, console, Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"The slim pass: a sharp 3.7in portrait panel, laminate-sized, off-the-shelf parts."},
   {key:"SR-1C",name:"Laminate C5",band:"GUEST",W:86,T:13,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#2a6fe2",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:15,zine:"basement",lanyard:true,sd:false,
    p5:43.45,p100:34.39,dims:"86 × 138 × 13",g:100,panel:"4.2in 400×300, 1-bit (GDEY042T81)",pshort:"4.2in e-paper · 400×300 · 1-bit",chip:"DFRobot FireBeetle 2 ESP32-C5 + Crystalfontz CFA-10084 adapter",radio:C5,keys:"PREV · MENU · NEXT",sdT:"No (books live in flash)",usb:"Charge, console, Web Serial loader",back:"Plain, spec label",wear:"Lanyard",tag:"SR-1 with dual-band Wi-Fi: FireBeetle 2 C5, hand-wired keys."},
   {key:"SR-1D",name:"Laminate Direct",band:"GUEST",W:86,T:12.5,aa:[63.6,84.8],res:[300,400],depth:"1",em:3.3,body:"#d8b21f",bandBg:"#171717",bandFg:"#ffffff",strap:"#1b1b1b",controls:"three",ctrl:15,zine:"basement",lanyard:true,sd:false,
@@ -453,6 +457,12 @@ function build(v) {
     const ws = decal(7.5, 22, 2, portM); ws.rotation.y = Math.PI / 2; ws.position.set(W / 2 + 0.08, L.scr + 5, zMid); grp.add(ws);
     key(-14, L.ctrl + 1.5, 4, "BACK"); key(14, L.ctrl + 1.5, 4, "OK");
     lab("Thumbwheel · roller encoder with push", [W / 2 + 4, L.scr + 5, zMid], [1, 0, 0.2]);
+  } else if (c === "dial") {
+    const teeth = 30, sh2 = new THREE.Shape();
+    for (let i = 0; i < teeth * 2; i++) { const a = Math.PI * 2 * i / (teeth * 2), r = i % 2 ? 6.5 * 0.92 : 6.5; i ? sh2.lineTo(r * Math.cos(a), r * Math.sin(a)) : sh2.moveTo(r, 0); }
+    const wheel = ext(sh2, zMid - 2.2, zMid + 2.2, 0.3, rubber); wheel.position.x = W / 2 - 3.2; wheel.position.y = L.scr + 10; grp.add(wheel);
+    key(-14, L.ctrl + 1.5, 4, "MENU"); key(14, L.ctrl + 1.5, 4, "EXIT");
+    lab("Thumb dial · up / down / push (CrowPanel)", [W / 2 + 4, L.scr + 10, zMid], [1, 0, 0.2]);
   } else if (c === "stick") {
     const sx = -20, sy = L.ctrl + 1.5;
     const well = cap(10.5, 0.9, std("#0b0b0c", 0.6)); well.position.set(sx, sy, zf); grp.add(well);
@@ -576,9 +586,11 @@ function applyToggles() {
     if (k === "lanyard") b.hidden = !cur.v.lanyard;
   });
 }
-const SUP = {"SR-1":"ok: all in stock (Seeed EE05 + XIAO S3 Plus)","SR-1C":"ok: FireBeetle C5 at DigiKey, CFA-10084 adapter at Crystalfontz (US)","SR-1D":"ok: Seeed + AliExpress, ships to Japan; check the cell can travel","SR-2":"watch: LDO via brokers (HT7833 alternative)","SR-3":"out: M5 PaperDIY sold out; LilyGo T5 4.7in S3 fallback ($51.54 at 5)","SR-4":"out: TPS65185 PMIC out at TI; 6in panel quote-only","SR-5":"watch: order C5 modules first","SR-6":"watch: order C5 modules first","SR-7":"watch: LDO via brokers (HT7833 alternative)","SR-8":"ok: all in stock","SR-9":"watch: C5 modules; Adafruit 444 has 35 in stock","SR-10":"watch: order C5 modules first","SR-11":"watch: order C5 modules first","SR-12":"watch: order C5 modules first","SR-13":"out: M5 PaperDIY sold out; LilyGo T5 fallback ($54.04 at 5)","SR-14":"watch: C5 modules; ST25DV 12-pin stock unconfirmed. Reader is now the CLRC663 plus (MFRC522 is EOL)"};
+const SUP = {"SR-1":"ok: all in stock (Seeed EE05 + XIAO S3 Plus)","SR-1C":"ok: FireBeetle C5 at DigiKey, CFA-10084 adapter at Crystalfontz (US)","SR-1D":"ok: Seeed + AliExpress, ships to Japan; check the cell can travel","SR-2":"watch: LDO via brokers (HT7833 alternative)","SR-3":"out: M5 PaperDIY sold out; LilyGo T5 4.7in S3 fallback ($51.54 at 5)","SR-4":"out: TPS65185 PMIC out at TI; 6in panel quote-only","SR-5":"watch: order C5 modules first","SR-6":"watch: order C5 modules first","SR-7":"watch: LDO via brokers (HT7833 alternative)","SR-8":"ok: all in stock","SR-9":"watch: C5 modules; Adafruit 444 has 35 in stock","SR-10":"watch: order C5 modules first","SR-11":"watch: order C5 modules first","SR-12":"watch: order C5 modules first","SR-13":"out: M5 PaperDIY sold out; LilyGo T5 fallback ($54.04 at 5)","SR-15":"ok: Elecrow in stock; ship-from not stated","SR-16":"ok: Seeed + Elecrow in stock; panel size to measure","SR-14":"watch: C5 modules; ST25DV 12-pin stock unconfirmed. Reader is now the CLRC663 plus (MFRC522 is EOL)"};
 const BAT = {
 "SR-1": "1000 mAh · 8 months at 300 pages/day · festival 9 months. Options: 500 mAh (10.5 mm deep) or 1500 mAh (13.5 mm)",
+"SR-15": "1200 mAh · 7 months at 300 pages/day · festival 8 months (board sleep current unmeasured). Options: 1000 mAh (15 mm deep) or 1500 mAh (16 mm)",
+"SR-16": "1200 mAh · 10 months at 300 pages/day · festival 11 months; a page holds about half a 4.2in page, so books take twice the turns. Options: 1000 mAh (11 mm deep) or 1500 mAh (12 mm)",
 "SR-1D": "1000 mAh · 9 months at 300 pages/day · festival 9 months. Options: 500 mAh (10.5 mm deep) or 1500 mAh (13.5 mm)",
 "SR-1C": "1000 mAh · 9 months at 300 pages/day · festival 10 months. Options: 500 mAh (11 mm deep) or 1500 mAh (14 mm)",
 "SR-2": "1500 mAh · 11 months at 300 pages/day · festival 1 yr+. Options: 1000 mAh (18.5 mm deep) or 2500 mAh (23.5 mm)",

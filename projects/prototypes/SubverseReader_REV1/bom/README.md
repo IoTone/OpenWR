@@ -1,6 +1,6 @@
 # SubverseReader REV1 BOMs
 
-Bills of materials for the fourteen SubverseReader variants (seventeen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every file here; edit it, not the CSVs.
+Bills of materials for the sixteen SubverseReader variants (nineteen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every file here; edit it, not the CSVs.
 
 **Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the `*.digikey-import.csv` or `*.mouser-import.csv` file into the distributor's BOM tool for today's price; AliExpress, LCSC and vendor-direct lines are not in the import files.
 
@@ -29,6 +29,8 @@ Target: **$50 or less per unit.**
 | SR-13 Hybrid Credential: 3.69 x 8.49 in (94 x 216 mm), 4.7in + ID card window | $195 | $39.05 | $27.96 | yes | [`SR-13.csv`](SR-13.csv) |
 | SR-14 Tap Pass, Wi-Fi build: ESP32-C5 + NFC reader, 80 x 155 mm | $261 | $52.28 | $31.92 | at volume | [`SR-14W.csv`](SR-14W.csv) |
 | SR-14 Tap Pass, tethered build: nRF52840 + NFC reader, 80 x 155 mm | $269 | $53.78 | $33.28 | at volume | [`SR-14B.csv`](SR-14B.csv) |
+| SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its thumb dial | $192 | $38.50 | $26.80 | yes | [`SR-15.csv`](SR-15.csv) |
+| SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass | $185 | $37.09 | $24.46 | yes | [`SR-16.csv`](SR-16.csv) |
 
 ## Size, radios and storage
 
@@ -53,6 +55,8 @@ Dimensions are the enclosure as rendered (width x height x depth, mm). Weights a
 | SR-13 | 94 x 216 x 14.5 | 165 | Wi-Fi 4 2.4 GHz, BLE 5 | yes (on the kit) | charge, USB drive, console |
 | SR-14W | 80 x 155 x 12.5 | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5, NFC reader + tag | yes | charge, console, Web Serial loader |
 | SR-14B | 80 x 155 x 12.5 | 95 | BLE 5 only, NFC reader + tag | yes | charge, USB drive, UF2 updates |
+| SR-15 | 95 x 140 x 16 | 150 | Wi-Fi 4 2.4 GHz, BLE 5 | yes | charge, console (CH340), Web Serial loader |
+| SR-16 | 64 x 112 x 12 | 70 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
 
 ## Battery
 
@@ -77,6 +81,7 @@ Stock cell (M) as in the BOM, with the thin (S) and extended (L) options. *Reade
 | SR-13 | 1000 mAh, 13.5 mm | 1500 mAh, 14.5 mm | 2500 mAh, 18.5 mm | 4 mo | 6 mo | 52,759 |
 | SR-14W | 500 mAh, 9.5 mm | 1200 mAh, 12.5 mm | 2000 mAh, 16.5 mm | 10 mo | 8 mo | 139,886 |
 | SR-14B | 500 mAh, 9.5 mm | 1200 mAh, 12.5 mm | 2000 mAh, 16.5 mm | 1 yr+ | 1 yr+ | 368,675 |
+| SR-15 | 1000 mAh, 15 mm | 1200 mAh, 16 mm | 1500 mAh, 16 mm | 7 mo | 8 mo | 138,305 |
 
 ## SR-1 Laminate: XIAO ESP32-S3 Plus on the Seeed EE05 board + 4.2in, no custom PCB
 
@@ -274,3 +279,31 @@ Same pass, no Wi-Fi. A tapped link goes over BLE to the phone app, which downloa
 - USB-C is a USB drive here (nRF native USB), so it also loads packs with no phone.
 
 Files: [`SR-14B.csv`](SR-14B.csv) · [`SR-14B.digikey-import.csv`](SR-14B.digikey-import.csv) · [`SR-14B.mouser-import.csv`](SR-14B.mouser-import.csv)
+
+## SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its thumb dial
+
+A finished e-paper board in our shell: the CrowPanel's 3-way thumb dial turns pages, MENU and EXIT sit beside it. Panel, microSD, charger and keys are already on the board; add a cell, a power switch and a two-resistor battery divider.
+
+**95 x 140 x 16 mm · ~150 g · Wi-Fi 4 2.4 GHz, BLE 5 · microSD: yes · USB-C: charge, console (CH340), Web Serial loader**
+
+- Controls (schematic): dial UP IO6, DOWN IO4, push IO5; MENU IO2; EXIT IO1; all with pull-ups, all RTC GPIOs, so any of them wakes the S3 from deep sleep. The dial is a 3-way toggle with push (Elecrow part TM_2024A), not an encoder.
+- Power switches on the board: IO7 cuts the panel's ground, IO42 the microSD's; drive both low before deep sleep. The red LED (IO41) is GPIO-driven.
+- USB-C goes through a CH340C, not the S3's native USB, so no USB drive: load packs by microSD or the Web Serial loader. The CH340C runs from VBUS only, so it costs nothing on battery.
+- Charger is a TP4054-class part at ~500 mA; regulation is an RY3420 buck. Measure sleep current on the bench: the buck's quiescent current isn't published.
+- Elecrow ships PCBA V1.0, V1.2 and V1.2A (green sticker); the panel driver differs, so check which one arrives.
+
+Files: [`SR-15.csv`](SR-15.csv) · [`SR-15.digikey-import.csv`](SR-15.digikey-import.csv) · [`SR-15.mouser-import.csv`](SR-15.mouser-import.csv)
+
+## SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass
+
+The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, half the width of SR-1. No custom PCB; hand-wired keys as on SR-1D.
+
+**64 x 112 x 12 mm · ~70 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
+
+- Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys also go to D4, D5 and D9 so the firmware can tell them apart.
+- Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 (240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.
+- RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its RESE jumper (0.47 ohm).
+- Size: the listing gives a 53 x 93 x 1 mm panel but also a 67 x 93.4 x 2.6 mm 'PCB size' and 50 g, so it may come on a carrier board. Measure one before printing; the 64 mm width below assumes the bare panel.
+- Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes about twice the page turns; the battery figures assume the same 300 turns a day as the others.
+
+Files: [`SR-16.csv`](SR-16.csv) · [`SR-16.digikey-import.csv`](SR-16.digikey-import.csv) · [`SR-16.mouser-import.csv`](SR-16.mouser-import.csv)
