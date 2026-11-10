@@ -1,0 +1,2 @@
+# Newark Quick Paste / BOM upload: manufacturer part number, quantity, reference
+DMG2305UX-7,5,Q2

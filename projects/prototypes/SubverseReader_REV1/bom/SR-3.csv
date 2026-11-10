@@ -1,0 +1,10 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,unit_usd_100,qty_per_unit,order_qty,ext_usd,status,note,availability,availability_note
+BRD,"M5Stack PaperDIY Assembly Kit (ESP32-S3 N16R8, 4.7in 960x540 16-grey, microSD)",M5Stack,K159,,,M5Stack store / AliExpress,25.00,22.00,1,5,125.00,vendor,SOLD OUT 2026-11-07 (in stock 16-22 Oct only); fallback LilyGo T5 4.7in S3 $39.99,out,"M5Stack: sold out (in stock 16-22 Oct only); K159-B kit also out; M5PaperS3 EOL, PaperColor out since May"
+KEY,"Tact switch 6x6 mm THT on flying leads (UP, OK, DOWN)",Omron,B3F-1000,SW400-ND,653-B3F-1000,,0.35,0.12,3,15,5.25,estimate,check free GPIOs on the kit,ok,commodity part (not re-checked)
+PWR,"Slide switch, battery disconnect",C&K,JS102011SAQN,401-2000-ND,611-JS102011SAQN,,0.45,0.20,1,5,2.25,estimate,,ok,commodity part (not re-checked)
+BAT,"LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",7.00,2.80,1,5,35.00,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
+ENC,"Enclosure, 3D-printed PETG, front + back shell (~45 g)",,,,,own printer,0.90,0.60,1,5,4.50,estimate,STEP/STL from enclosure/,ok,"printed, generic or cut-tape"
+CAP,"Key caps, printed TPU",,,,,own printer,0.10,0.05,1,5,0.50,estimate,,ok,"printed, generic or cut-tape"
+LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
+HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,,ok,"printed, generic or cut-tape"
+LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

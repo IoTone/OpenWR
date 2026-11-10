@@ -1,0 +1,28 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,unit_usd_100,qty_per_unit,order_qty,ext_usd,status,note,availability,availability_note
+EPD,"6in e-paper 1448x1072 16-grey, parallel 34-pin (Kindle PW3 class)",E Ink,ED060KC1,,,AliExpress,28.00,22.00,1,5,140.00,estimate,"price unconfirmed: distributors quote only, one listing at $131; grade varies",out,distributors quote only (AERI); one marketplace listing at $131
+U1,ESP32-S3-WROOM-1-N16R8,Espressif,ESP32-S3-WROOM-1-N16R8,1965-ESP32-S3-WROOM-1-N16R8CT-ND,356-ESP32S3WRM1N16R8,,4.95,3.60,1,5,24.75,estimate,,ok,widely stocked (not re-checked)
+U5,"E-paper PMIC (+15/-15/+22/-20 V rails, VCOM)",TI,TPS65185RGZR,,,,4.80,3.20,1,5,24.00,estimate,"OUT OF STOCK at TI 2026-11-07, no authorised listings",out,TI.com out of stock; no authorised listings
+U6,"I/O expander, I2C",NXP,"PCA9555PW,118",,,,1.10,0.60,1,5,5.50,estimate,epdiy v7 reference,ok,commodity (not re-checked)
+J3,FPC 34-pin 0.5 mm (ED060KC1),Hirose,FH12-34S-0.5SH(55),,,,1.20,0.40,1,5,6.00,estimate,check pin 1 side against the panel,ok,commodity part (not re-checked)
+PMX,"PMIC passives: 4.7 uH inductors, Schottky diodes, 4.7 uF/50 V caps",,,,,LCSC,1.00,0.50,1,5,5.00,estimate,,ok,"printed, generic or cut-tape"
+J1,"USB-C receptacle, 16-pin, USB 2.0",GCT,USB4105-GF-A,2073-USB4105-GF-ACT-ND,640-USB4105-GF-A,,0.84,0.50,1,5,4.20,estimate,charge + USB serial,ok,commodity part (not re-checked)
+U2,"LiPo charger 500 mA, SOT-23-5",Microchip,MCP73831T-2ACI/OT,MCP73831T-2ACI/OTCT-ND,579-MCP73831T2ACIOT,,0.75,0.45,1,5,3.75,estimate,TP4056 at LCSC is the $0.15 alternative,ok,"Avnet 21,000"
+U3,"LDO 3.3 V 600 mA, 2 uA Iq",Richtek,RT9080-33GJ5,,,LCSC,0.35,0.15,1,5,1.75,estimate,Iq is what sets sleep life; avoid AP2112 (55 uA),watch,genuine Richtek only at brokers (Win Source); LCSC lists copies
+U4,USB ESD protection,ST,USBLC6-2SC6,497-5235-1-ND,511-USBLC6-2SC6,,0.40,0.15,1,5,2.00,estimate,,ok,commodity part (not re-checked)
+Q1,"P-MOSFET load switch, panel/SD rail off in sleep",Diodes,DMG2305UX-7,DMG2305UX-7DICT-ND,621-DMG2305UX-7,,0.30,0.10,1,5,1.50,estimate,,ok,commodity part (not re-checked)
+J2,JST-PH 2-pin SMD battery header,JST,S2B-PH-SM4-TB,455-1749-1-ND,306-S2BPHSM4TBLFSN,,0.30,0.12,1,5,1.50,estimate,,ok,commodity part (not re-checked)
+RC,"Passives: 0402/0603 R and C, ~30 parts incl. battery divider",Yageo/Samsung,,,,LCSC,0.80,0.25,1,5,4.00,estimate,cut-tape minimums dominate at 5 builds,ok,"printed, generic or cut-tape"
+SW,"Tact switch 3x4 mm (BOOT, RESET)",Alps,SKRPACE010,,688-SKRPAC,,0.22,0.08,2,10,2.20,estimate,,ok,commodity part (not re-checked)
+Q5,"P-MOSFET soft latch: any key pulls the gate low, drives LDO EN",Diodes,DMG2305UX-7,DMG2305UX-7DICT-ND,621-DMG2305UX-7,,0.30,0.10,1,5,1.50,estimate,off draw = cell protection IC only (~3 uA),ok,commodity part (not re-checked)
+Q6,"N-MOSFET HOLD: firmware keeps itself on, releases to switch off",onsemi,2N7002LT1G,2N7002LT1GOSCT-ND,863-2N7002LT1G,,0.12,0.02,1,5,0.60,estimate,,ok,commodity part (not re-checked)
+D1,"Dual Schottky, common cathode, one per key (7 keys)",Nexperia,"BAT54C,215",1727-BAT54C215CT-ND,771-BAT54C-T/R,,0.12,0.03,7,35,4.20,estimate,latch gate + ANY-key wake line; VBUS gets one too so plugging in powers on,ok,commodity part (not re-checked)
+SIDE,"Side-actuated tact switch (page rockers, both edges)",C&K,PTS815 SJM 250 SMTR LFS,,,,0.30,0.10,4,20,6.00,estimate,two per rocker: up/down,ok,commodity part (not re-checked)
+KEY,"Tact switch 3x4 mm (BACK, MENU, SYNC)",Alps,SKRPACE010,,688-SKRPAC,,0.22,0.08,3,15,3.30,estimate,,ok,commodity part (not re-checked)
+J4,"microSD socket, push-push",Hirose,DM3AT-SF-PEJM5,HR1941CT-ND,798-DM3AT-SF-PEJM5,,1.95,1.20,1,5,9.75,estimate,1448x1072 4-bit pages are ~150 KB,ok,commodity part (not re-checked)
+PCB,"PCB 4-layer 1.0 mm, ~100x50 mm",JLCPCB,,,,JLCPCB,4.50,1.40,1,5,22.50,estimate,4 layers for the parallel bus and HV rails,ok,"printed, generic or cut-tape"
+BAT,"LiPo 2000 mAh 103450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",9.50,3.80,1,5,47.50,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
+ENC,"Enclosure, PETG, front + back shell + card pocket (~70 g)",,,,,own printer,1.40,0.90,1,5,7.00,estimate,pocket fits ID-1 card + ticket,ok,"printed, generic or cut-tape"
+CAP,"Key caps, printed TPU",,,,,own printer,0.10,0.05,1,5,0.50,estimate,,ok,"printed, generic or cut-tape"
+LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
+HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,,ok,"printed, generic or cut-tape"
+LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

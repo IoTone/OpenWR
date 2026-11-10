@@ -1,0 +1,10 @@
+ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,unit_usd_100,qty_per_unit,order_qty,ext_usd,status,note,availability,availability_note
+MCU,"XIAO ESP32-S3 Plus (16 MB flash, 8 MB PSRAM, Wi-Fi 4 2.4 GHz, BLE 5, USB OTG, charger on board)",Seeed,,,,Seeed 102010671,7.90,7.90,1,5,39.50,vendor,"Seeed $7.90, in stock 2026-11-09",ok,Seeed in stock $7.90 (2026-11-09)
+DRV,"XIAO ePaper Display Board EE05: 24-pin SPI FPC + boost, 3 keys, JST 2.0 battery socket with slide switch, reset, panel and battery-sense load switches",Seeed,,,,Seeed 100057220,10.99,9.99,1,5,54.95,vendor,"XIAO is SMD-soldered incl. back pads D11-D19 (panel RES on D11): hot air or reflow, or buy it assembled; takes the S3 Plus or nRF52840 Plus only, not C3/C5",ok,"Seeed in stock $10.99, $9.99 at 10+ (2026-11-09)"
+EPD,"4.2in e-paper 400x300 B/W, SSD1683, 4-grey, fast/partial refresh",Good Display,GDEY042T81,,,buyepaper.com,11.60,10.00,1,5,58.00,vendor,"buyepaper $11.60, 60 in stock 2026-11-07; Orient AES400300B00 $16.58 alt",ok,buyepaper 60
+BAT,"LiPo 1000 mAh 503450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",6.50,2.60,1,5,32.50,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
+ENC,"Enclosure, 3D-printed PETG, front + back shell (~45 g)",,,,,own printer,0.90,0.60,1,5,4.50,estimate,STEP/STL from enclosure/,ok,"printed, generic or cut-tape"
+CAP,"Key caps, printed TPU",,,,,own printer,0.10,0.05,1,5,0.50,estimate,,ok,"printed, generic or cut-tape"
+LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
+HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,,ok,"printed, generic or cut-tape"
+LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

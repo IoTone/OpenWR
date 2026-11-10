@@ -1,0 +1,829 @@
+{
+ "SR-1": {
+  "name": "Laminate",
+  "sleep_ua": 21,
+  "e_page": 0.007375,
+  "note": "XIAO S3 Plus on EE05; EE05 switches panel + divider off: measure",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 10.5,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 57627,
+    "reader": 139,
+    "festival": 158,
+    "standby": 508,
+    "off": 1018,
+    "bad": 50
+   },
+   {
+    "opt": "M",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 12.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 115254,
+    "reader": 251,
+    "festival": 281,
+    "standby": 726,
+    "off": 1132,
+    "bad": 96
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 13.5,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 172881,
+    "reader": 343,
+    "festival": 379,
+    "standby": 848,
+    "off": 1176,
+    "bad": 138
+   }
+  ]
+ },
+ "SR-1C": {
+  "name": "Laminate C5",
+  "sleep_ua": 21,
+  "e_page": 0.006749999999999999,
+  "note": "FireBeetle 2 C5: 21 uA board total per DFRobot",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 11.0,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 62963,
+    "reader": 148,
+    "festival": 163,
+    "standby": 508,
+    "off": 1018,
+    "bad": 51
+   },
+   {
+    "opt": "M",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 13.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 125926,
+    "reader": 266,
+    "festival": 290,
+    "standby": 726,
+    "off": 1132,
+    "bad": 98
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 14.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 188889,
+    "reader": 361,
+    "festival": 390,
+    "standby": 848,
+    "off": 1176,
+    "bad": 141
+   }
+  ]
+ },
+ "SR-2": {
+  "name": "All Access",
+  "sleep_ua": 15,
+  "e_page": 0.00825,
+  "note": "",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 18.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 103030,
+    "reader": 243,
+    "festival": 282,
+    "standby": 828,
+    "off": 1132,
+    "bad": 93
+   },
+   {
+    "opt": "M",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 19.5,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 154545,
+    "reader": 332,
+    "festival": 381,
+    "standby": 938,
+    "off": 1176,
+    "bad": 135
+   },
+   {
+    "opt": "L",
+    "cell": "104050",
+    "mah": 2500,
+    "depth": 23.5,
+    "u5": 7.2,
+    "u100": 4.2,
+    "pages": 257576,
+    "reader": 472,
+    "festival": 529,
+    "standby": 1049,
+    "off": 1214,
+    "bad": 210
+   }
+  ]
+ },
+ "SR-3": {
+  "name": "Gray Pass",
+  "sleep_ua": 49,
+  "e_page": 0.024166666666666666,
+  "note": "M5 kit sleep path unknown",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 11.5,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 17586,
+    "reader": 49,
+    "festival": 72,
+    "standby": 282,
+    "off": 1018,
+    "bad": 31
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 14.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 42207,
+    "reader": 111,
+    "festival": 161,
+    "standby": 516,
+    "off": 1154,
+    "bad": 73
+   },
+   {
+    "opt": "L",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 18.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 70345,
+    "reader": 174,
+    "festival": 247,
+    "standby": 677,
+    "off": 1199,
+    "bad": 117
+   }
+  ]
+ },
+ "SR-4": {
+  "name": "Headliner",
+  "sleep_ua": 17,
+  "e_page": 0.034583333333333334,
+  "note": "TPS65185 + PCA9555 in sleep",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 13.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 29494,
+    "reader": 88,
+    "festival": 143,
+    "standby": 844,
+    "off": 1154,
+    "bad": 59
+   },
+   {
+    "opt": "M",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 17.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 49157,
+    "reader": 140,
+    "festival": 221,
+    "standby": 976,
+    "off": 1199,
+    "bad": 96
+   },
+   {
+    "opt": "L",
+    "cell": "104050",
+    "mah": 2500,
+    "depth": 17.5,
+    "u5": 7.2,
+    "u100": 4.2,
+    "pages": 61446,
+    "reader": 171,
+    "festival": 265,
+    "standby": 1024,
+    "off": 1214,
+    "bad": 118
+   }
+  ]
+ },
+ "SR-5": {
+  "name": "Crew Clip",
+  "sleep_ua": 18,
+  "e_page": 0.006749999999999999,
+  "note": "",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 20.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 125926,
+    "reader": 272,
+    "festival": 297,
+    "standby": 774,
+    "off": 1132,
+    "bad": 98
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 21.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 151111,
+    "reader": 313,
+    "festival": 341,
+    "standby": 828,
+    "off": 1154,
+    "bad": 116
+   },
+   {
+    "opt": "L",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 25.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 251852,
+    "reader": 449,
+    "festival": 482,
+    "standby": 963,
+    "off": 1199,
+    "bad": 182
+   }
+  ]
+ },
+ "SR-6": {
+  "name": "Night Shift",
+  "sleep_ua": 18,
+  "e_page": 0.006749999999999999,
+  "note": "1 h of light a day",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 13.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 125926,
+    "reader": 272,
+    "festival": 21,
+    "standby": 774,
+    "off": 1132,
+    "bad": 98
+   },
+   {
+    "opt": "M",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 14.5,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 188889,
+    "reader": 369,
+    "festival": 31,
+    "standby": 890,
+    "off": 1176,
+    "bad": 141
+   },
+   {
+    "opt": "L",
+    "cell": "104050",
+    "mah": 2500,
+    "depth": 18.5,
+    "u5": 7.2,
+    "u100": 4.2,
+    "pages": 314815,
+    "reader": 515,
+    "festival": 51,
+    "standby": 1013,
+    "off": 1214,
+    "bad": 219
+   }
+  ]
+ },
+ "SR-7": {
+  "name": "Poster",
+  "sleep_ua": 15,
+  "e_page": 0.05125,
+  "note": "slow colour refresh",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 18.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 16585,
+    "reader": 52,
+    "festival": 90,
+    "standby": 828,
+    "off": 1132,
+    "bad": 39
+   },
+   {
+    "opt": "M",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 19.5,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 24878,
+    "reader": 76,
+    "festival": 130,
+    "standby": 938,
+    "off": 1176,
+    "bad": 57
+   },
+   {
+    "opt": "L",
+    "cell": "104050",
+    "mah": 2500,
+    "depth": 23.5,
+    "u5": 7.2,
+    "u100": 4.2,
+    "pages": 41463,
+    "reader": 122,
+    "festival": 203,
+    "standby": 1049,
+    "off": 1214,
+    "bad": 92
+   }
+  ]
+ },
+ "SR-8": {
+  "name": "Quiet Pass",
+  "sleep_ua": 7,
+  "e_page": 0.002225,
+  "note": "SD rail must be switched",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 11.0,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 191011,
+    "reader": 364,
+    "festival": 401,
+    "standby": 848,
+    "off": 1018,
+    "bad": 61
+   },
+   {
+    "opt": "M",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 13.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 382022,
+    "reader": 566,
+    "festival": 610,
+    "standby": 1018,
+    "off": 1132,
+    "bad": 116
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 14.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 573034,
+    "reader": 695,
+    "festival": 738,
+    "standby": 1092,
+    "off": 1176,
+    "bad": 166
+   }
+  ]
+ },
+ "SR-9": {
+  "name": "Roadie",
+  "sleep_ua": 18,
+  "e_page": 0.006749999999999999,
+  "note": "stick powered only while awake",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 13.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 125926,
+    "reader": 272,
+    "festival": 297,
+    "standby": 774,
+    "off": 1132,
+    "bad": 98
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 14.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 151111,
+    "reader": 313,
+    "festival": 341,
+    "standby": 828,
+    "off": 1154,
+    "bad": 116
+   },
+   {
+    "opt": "L",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 18.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 251852,
+    "reader": 449,
+    "festival": 482,
+    "standby": 963,
+    "off": 1199,
+    "bad": 182
+   }
+  ]
+ },
+ "SR-10": {
+  "name": "Credential",
+  "sleep_ua": 18,
+  "e_page": 0.006124999999999999,
+  "note": "",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "302540",
+    "mah": 250,
+    "depth": 7.5,
+    "u5": 2.8,
+    "u100": 1.6,
+    "pages": 34694,
+    "reader": 87,
+    "festival": 94,
+    "standby": 355,
+    "off": 848,
+    "bad": 27
+   },
+   {
+    "opt": "M",
+    "cell": "402540",
+    "mah": 350,
+    "depth": 8.5,
+    "u5": 3.0,
+    "u100": 1.8,
+    "pages": 48571,
+    "reader": 119,
+    "festival": 127,
+    "standby": 447,
+    "off": 937,
+    "bad": 37
+   },
+   {
+    "opt": "L",
+    "cell": "503040",
+    "mah": 550,
+    "depth": 9.5,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 76327,
+    "reader": 177,
+    "festival": 189,
+    "standby": 585,
+    "off": 1037,
+    "bad": 57
+   }
+  ]
+ },
+ "SR-11": {
+  "name": "Full Bleed",
+  "sleep_ua": 18,
+  "e_page": 0.007291666666666667,
+  "note": "",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 9.0,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 58286,
+    "reader": 144,
+    "festival": 163,
+    "standby": 555,
+    "off": 1018,
+    "bad": 50
+   },
+   {
+    "opt": "M",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 11.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 116571,
+    "reader": 259,
+    "festival": 289,
+    "standby": 774,
+    "off": 1132,
+    "bad": 96
+   },
+   {
+    "opt": "L",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.0,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 139886,
+    "reader": 298,
+    "festival": 332,
+    "standby": 828,
+    "off": 1154,
+    "bad": 113
+   }
+  ]
+ },
+ "SR-12": {
+  "name": "Tour Laminate",
+  "sleep_ua": 18,
+  "e_page": 0.007291666666666667,
+  "note": "",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 9.0,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 58286,
+    "reader": 144,
+    "festival": 163,
+    "standby": 555,
+    "off": 1018,
+    "bad": 50
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.0,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 139886,
+    "reader": 298,
+    "festival": 332,
+    "standby": 828,
+    "off": 1154,
+    "bad": 113
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 12.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 174857,
+    "reader": 352,
+    "festival": 389,
+    "standby": 890,
+    "off": 1176,
+    "bad": 139
+   }
+  ]
+ },
+ "SR-13": {
+  "name": "Hybrid Credential",
+  "sleep_ua": 49,
+  "e_page": 0.024166666666666666,
+  "note": "M5 kit sleep path unknown",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 13.5,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 35172,
+    "reader": 93,
+    "festival": 137,
+    "standby": 461,
+    "off": 1132,
+    "bad": 61
+   },
+   {
+    "opt": "M",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 14.5,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 52759,
+    "reader": 135,
+    "festival": 195,
+    "standby": 586,
+    "off": 1176,
+    "bad": 89
+   },
+   {
+    "opt": "L",
+    "cell": "104050",
+    "mah": 2500,
+    "depth": 18.5,
+    "u5": 7.2,
+    "u100": 4.2,
+    "pages": 87931,
+    "reader": 211,
+    "festival": 294,
+    "standby": 748,
+    "off": 1214,
+    "bad": 142
+   }
+  ]
+ },
+ "SR-14W": {
+  "name": "Tap Pass Wi-Fi",
+  "sleep_ua": 18,
+  "e_page": 0.007291666666666667,
+  "note": "10 taps + 2 Wi-Fi fetches a day",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 9.5,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 58286,
+    "reader": 144,
+    "festival": 109,
+    "standby": 555,
+    "off": 1018,
+    "bad": 50
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 139886,
+    "reader": 298,
+    "festival": 234,
+    "standby": 828,
+    "off": 1154,
+    "bad": 113
+   },
+   {
+    "opt": "L",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 16.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 233143,
+    "reader": 430,
+    "festival": 347,
+    "standby": 963,
+    "off": 1199,
+    "bad": 179
+   }
+  ]
+ },
+ "SR-14B": {
+  "name": "Tap Pass tethered",
+  "sleep_ua": 8,
+  "e_page": 0.0027666666666666664,
+  "note": "10 taps + 2 phone fetches a day",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "303450",
+    "mah": 500,
+    "depth": 9.5,
+    "u5": 3.4,
+    "u100": 2.0,
+    "pages": 153614,
+    "reader": 314,
+    "festival": 206,
+    "standby": 809,
+    "off": 1018,
+    "bad": 59
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.5,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 368675,
+    "reader": 560,
+    "festival": 403,
+    "standby": 1028,
+    "off": 1154,
+    "bad": 134
+   },
+   {
+    "opt": "L",
+    "cell": "103450",
+    "mah": 2000,
+    "depth": 16.5,
+    "u5": 6.5,
+    "u100": 3.8,
+    "pages": 614458,
+    "reader": 722,
+    "festival": 555,
+    "standby": 1115,
+    "off": 1199,
+    "bad": 208
+   }
+  ]
+ },
+ "_left_on": [
+  [
+   "Menu left open, CPU in light sleep",
+   "4 mo",
+   "1 yr+"
+  ],
+  [
+   "Menu left open, CPU awake (no sleep at all)",
+   "36 h",
+   "11 d"
+  ],
+  [
+   "Sync left running (Wi-Fi / BLE connected)",
+   "11 h",
+   "7 d"
+  ],
+  [
+   "SR-6 front light left on (mid)",
+   "40 h",
+   "\u2014"
+  ],
+  [
+   "SR-14 NFC field left on",
+   "20 h",
+   "20 h"
+  ]
+ ]
+}

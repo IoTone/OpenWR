@@ -1,0 +1,4 @@
+# Newark Quick Paste / BOM upload: manufacturer part number, quantity, reference
+DFR1222,5,MCU
+B3F-1000,15,KEY
+JS102011SAQN,5,PWR
