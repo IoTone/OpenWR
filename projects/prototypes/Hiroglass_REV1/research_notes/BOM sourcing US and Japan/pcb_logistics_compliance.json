@@ -1,0 +1,743 @@
+{
+ "fx": {
+  "usd_jpy": 158.286093,
+  "usd_cny": 6.675871,
+  "date": "2026-11-09 17:00 UTC",
+  "source": "https://www.x-rates.com/historical/?from=USD&amount=1&date=2026-11-09"
+ },
+ "vendors": [
+  {
+   "vendor": "OSH Park",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": 0,
+   "currency": "USD",
+   "free_ship_threshold": 0,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "Domestic, no import duty. Free shipping stated on services page; build 9-14 calendar days (4-layer) is in the pcb array.",
+   "confidence": "read on primary page",
+   "url": "https://docs.oshpark.com/services/"
+  },
+  {
+   "vendor": "JLCPCB",
+   "region": "US",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": "USD",
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "De minimis suspended. Individuals must ship DDP; JLCPCB pre-collects 35% on PCB and SMT, 90% on stencils (rates from search snippet of JLCPCB notice); no true-up in the 35-90% band (read). Shipping fee and days unconfirmed.",
+   "confidence": "medium (FAQ read 2026-10-29 version; rate table from snippet)",
+   "url": "https://jlcpcb.com/help/article/us-tariff-policy-faq"
+  },
+  {
+   "vendor": "JLCPCB",
+   "region": "JP",
+   "ships_from": "China",
+   "ship_fee": 2.01,
+   "currency": "USD",
+   "free_ship_threshold": null,
+   "handling_days": 2,
+   "transit_days": 7,
+   "tax_duty_note": "Fee and days are 2024-2025 blog figures for OCS Express (6-8 days; DHL about $14.80, 1-3 days). Duty/tax exempt if customs value is 10,000 yen or less; otherwise 10% consumption tax plus carrier fee. Handling_days = build 1-3 days.",
+   "confidence": "low (search snippets of old blogs)",
+   "url": "https://lang-ship.com/blog/work/pcb-color/"
+  },
+  {
+   "vendor": "DigiKey",
+   "region": "JP",
+   "ships_from": "US",
+   "ship_fee": 2000,
+   "currency": "JPY",
+   "free_ship_threshold": 6000,
+   "handling_days": null,
+   "transit_days": 4,
+   "tax_duty_note": "DDP option: DigiKey pays duties (qualified invoice); CPT option: buyer pays. Delivery usually 3-4 days.",
+   "confidence": "medium (search snippet of digikey.jp)",
+   "url": "https://www.digikey.jp/ja/maker/profiles/3caaacd00406450db1fcb40633312a8e"
+  },
+  {
+   "vendor": "Mouser",
+   "region": "JP",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": "JPY",
+   "free_ship_threshold": 6000,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "Yen prices are DDP, consumption tax added at order; free shipping on most orders over 6,000 yen. Transit days unconfirmed.",
+   "confidence": "medium (search snippet of mouser.jp)",
+   "url": "https://www.mouser.jp/en/manufacturer/fujitsu/"
+  },
+  {
+   "vendor": "LCSC",
+   "region": "JP",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": "https://www.lcsc.com/"
+  },
+  {
+   "vendor": "LCSC",
+   "region": "US",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed; China-origin parcels are dutiable since de minimis suspension",
+   "confidence": "unconfirmed",
+   "url": "https://www.lcsc.com/"
+  },
+  {
+   "vendor": "AliExpress",
+   "region": "US",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed; de minimis suspended for China since 2025-05-02 (secondary source)",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "AliExpress",
+   "region": "JP",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "DigiKey",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Mouser",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Adafruit",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "SparkFun",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Edmund Optics",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Edmund Optics",
+   "region": "JP",
+   "ships_from": null,
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Thorlabs",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Thorlabs",
+   "region": "JP",
+   "ships_from": null,
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Amazon",
+   "region": "US",
+   "ships_from": "US",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Amazon",
+   "region": "JP",
+   "ships_from": "Japan",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Seeed",
+   "region": "US",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Seeed",
+   "region": "JP",
+   "ships_from": "China",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Switch Science",
+   "region": "JP",
+   "ships_from": "Japan",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Akizuki",
+   "region": "JP",
+   "ships_from": "Japan",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  },
+  {
+   "vendor": "Marutsu",
+   "region": "JP",
+   "ships_from": "Japan",
+   "ship_fee": null,
+   "currency": null,
+   "free_ship_threshold": null,
+   "handling_days": null,
+   "transit_days": null,
+   "tax_duty_note": "unconfirmed",
+   "confidence": "unconfirmed",
+   "url": null
+  }
+ ],
+ "pcb": [
+  {
+   "vendor": "OSH Park",
+   "region": "US",
+   "board": "pod 4-layer",
+   "service": "bare",
+   "min_qty": 3,
+   "price_for_min": 13.95,
+   "currency": "USD",
+   "build_days": "9-14 calendar",
+   "ship_days": null,
+   "ship_fee": 0,
+   "confidence": "high (rate read; price calculated for 1.395 sq in)",
+   "url": "https://docs.oshpark.com/services/",
+   "note": "$10/sq in per set of 3. 6 boards = $27.90. Mail transit days unconfirmed."
+  },
+  {
+   "vendor": "OSH Park Super Swift",
+   "region": "US",
+   "board": "pod 4-layer",
+   "service": "bare",
+   "min_qty": 3,
+   "price_for_min": 27.9,
+   "currency": "USD",
+   "build_days": "5-6 business",
+   "ship_days": null,
+   "ship_fee": 0,
+   "confidence": "high (rate read; price calculated)",
+   "url": "https://docs.oshpark.com/services/",
+   "note": "$20/sq in per set of 3. 6 boards = $55.80."
+  },
+  {
+   "vendor": "OSH Park",
+   "region": "US",
+   "board": "puck 2-layer",
+   "service": "bare",
+   "min_qty": 3,
+   "price_for_min": 9.3,
+   "currency": "USD",
+   "build_days": "9-12 calendar",
+   "ship_days": null,
+   "ship_fee": 0,
+   "confidence": "high (rate read; price calculated for 1.860 sq in)",
+   "url": "https://docs.oshpark.com/services/",
+   "note": "$5/sq in per set of 3. 6 boards = $18.60."
+  },
+  {
+   "vendor": "OSH Park Super Swift",
+   "region": "US",
+   "board": "puck 2-layer",
+   "service": "bare",
+   "min_qty": 3,
+   "price_for_min": 18.6,
+   "currency": "USD",
+   "build_days": "4-5 business",
+   "ship_days": null,
+   "ship_fee": 0,
+   "confidence": "high (rate read; price calculated)",
+   "url": "https://docs.oshpark.com/services/",
+   "note": "$10/sq in per set of 3. 6 boards = $37.20."
+  },
+  {
+   "vendor": "OSH Park",
+   "region": "US",
+   "board": "both",
+   "service": "bare",
+   "min_qty": 3,
+   "price_for_min": 23.25,
+   "currency": "USD",
+   "build_days": "9-14 calendar",
+   "ship_days": null,
+   "ship_fee": 0,
+   "confidence": "high (calculated)",
+   "url": "https://docs.oshpark.com/services/",
+   "note": "Yields 1-3 sets with no spares. For 4-5 sets order 6+6 = $46.50 standard or $93.00 Super Swift."
+  },
+  {
+   "vendor": "JLCPCB Economic PCBA (fees only)",
+   "region": "JP",
+   "board": "pod 4-layer",
+   "service": "assembled",
+   "min_qty": 2,
+   "price_for_min": 31.2,
+   "currency": "USD",
+   "build_days": null,
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "medium (fee table read; 7 extended part types assumed; excludes boards, parts, shipping, tax)",
+   "url": "https://jlcpcb.com/help/article/pcb-assembly-price",
+   "note": "setup 8.18 + stencil 1.53 + 7 x 3.07. Single-sided only. Economic support for this 4-layer board unconfirmed. Minimum 2 from JLCPCB page snippet."
+  },
+  {
+   "vendor": "JLCPCB Economic PCBA (fees only)",
+   "region": "JP",
+   "board": "puck 2-layer",
+   "service": "assembled",
+   "min_qty": 2,
+   "price_for_min": 25.06,
+   "currency": "USD",
+   "build_days": null,
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "medium (fee table read; 5 extended part types assumed; excludes boards, parts, shipping, tax)",
+   "url": "https://jlcpcb.com/help/article/pcb-assembly-price",
+   "note": "setup 8.18 + stencil 1.53 + 5 x 3.07."
+  },
+  {
+   "vendor": "JLCPCB Standard PCBA double-side (fees only)",
+   "region": "JP",
+   "board": "pod 4-layer",
+   "service": "assembled",
+   "min_qty": 2,
+   "price_for_min": 78.25,
+   "currency": "USD",
+   "build_days": null,
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "medium (fee table read; excludes fixtures from 16.42, possible 14.93 handling, boards, parts)",
+   "url": "https://jlcpcb.com/help/article/pcb-assembly-price",
+   "note": "setup 51.12 + stencil 16.42 + 7 x 1.53. Applies if the pod has parts on both sides."
+  },
+  {
+   "vendor": "JLCPCB",
+   "region": "JP",
+   "board": "both",
+   "service": "bare",
+   "min_qty": 5,
+   "price_for_min": null,
+   "currency": "USD",
+   "build_days": "1-3 (blog reports)",
+   "ship_days": "5-8 (blog reports)",
+   "ship_fee": 2.01,
+   "confidence": "unconfirmed price; low on days",
+   "url": "https://burariweb.info/electronic-work/jlcpcb-ordering-guide.html",
+   "note": "Exact price for these sizes not confirmed. Third-party 2026 figure for 5 pcs 100x100 mm 4-layer: about $32.90."
+  },
+  {
+   "vendor": "PCBWay",
+   "region": "JP",
+   "board": "pod 4-layer",
+   "service": "bare",
+   "min_qty": 5,
+   "price_for_min": null,
+   "currency": "USD",
+   "build_days": null,
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed",
+   "url": "https://www.pcbway.com/pcb_prototype/4_Layer_pcb/100x100mm.html",
+   "note": "PCBWay 4-layer 100x100 mm page lists US$48.00 from 5 pcs (search snippet); not our size."
+  },
+  {
+   "vendor": "P-ban.com",
+   "region": "JP",
+   "board": "pod 4-layer",
+   "service": "bare",
+   "min_qty": null,
+   "price_for_min": null,
+   "currency": "JPY",
+   "build_days": "6 business (Normal), 4 Quick",
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed price; lead time from search snippet",
+   "url": "https://www.p-ban.com/information/shipping.html",
+   "note": "Prices up about 15% for quotes saved from 2026-09-01."
+  },
+  {
+   "vendor": "Unicraft",
+   "region": "JP",
+   "board": "pod 4-layer",
+   "service": "bare",
+   "min_qty": null,
+   "price_for_min": null,
+   "currency": "JPY",
+   "build_days": "5-9 business",
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed price; lead time from search snippet",
+   "url": "https://unicraft-jp.com/pcb/",
+   "note": ""
+  },
+  {
+   "vendor": "CircuitHub",
+   "region": "US",
+   "board": "both",
+   "service": "assembled",
+   "min_qty": 1,
+   "price_for_min": null,
+   "currency": "USD",
+   "build_days": "from 3 days",
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed price; lead time from search snippet",
+   "url": "https://www.circuithub.com/capabilities/prototyping-capabilities",
+   "note": "Grid Proto: USA only, qty 1-10, SMT only, 2 or 4 layers."
+  },
+  {
+   "vendor": "MacroFab",
+   "region": "US",
+   "board": "both",
+   "service": "assembled",
+   "min_qty": null,
+   "price_for_min": null,
+   "currency": "USD",
+   "build_days": "10 after order or 3 after parts received",
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed price; lead time from search snippet",
+   "url": "https://www.macrofab.com/pcb-assembly/lead-times/",
+   "note": ""
+  },
+  {
+   "vendor": "Screaming Circuits",
+   "region": "US",
+   "board": "both",
+   "service": "assembled",
+   "min_qty": 1,
+   "price_for_min": null,
+   "currency": "USD",
+   "build_days": "1-5",
+   "ship_days": null,
+   "ship_fee": null,
+   "confidence": "unconfirmed (third-party roundup)",
+   "url": "https://onstarry.com/best-pcb-assembly-services-for-prototypes-in-2026/",
+   "note": ""
+  }
+ ],
+ "lcsc_parts": [
+  {
+   "mpn": "ESP32-C3-MINI-1-N4",
+   "lcsc": "C2838502",
+   "class": "unconfirmed",
+   "stock": 15111,
+   "price_usd": 3.8274,
+   "confidence": "medium: stock/price from search snippet of LCSC; LCSC page read shows NRND, suggests ESP32-C3-MINI-1-H4X"
+  },
+  {
+   "mpn": "BMI270",
+   "lcsc": "C2836813",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "class read on JLCPCB page; stock conflicting across cached LCSC pages (8306 / 2608 / out of stock)"
+  },
+  {
+   "mpn": "VEML7700-TT",
+   "lcsc": "C1850416",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "search snippet of JLCPCB page"
+  },
+  {
+   "mpn": "AP2112K-3.3TRG1",
+   "lcsc": "C51118",
+   "class": "extended",
+   "stock": 7765,
+   "price_usd": 0.0925,
+   "confidence": "search snippet; price is the lowest volume tier, not qty 1"
+  },
+  {
+   "mpn": "USBLC6-2SC6",
+   "lcsc": "C7519",
+   "class": "extended",
+   "stock": 28668,
+   "price_usd": 0.1793,
+   "confidence": "search snippet (EasyEDA/JLCPCB)"
+  },
+  {
+   "mpn": "BQ24074RGTR",
+   "lcsc": "C54313",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "search snippet of JLCPCB page"
+  },
+  {
+   "mpn": "MAX17048G+T10",
+   "lcsc": "C2682616",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "search snippet of JLCPCB page"
+  },
+  {
+   "mpn": "SM10B-SRSS-TB(LF)(SN)",
+   "lcsc": "C5306083",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "search snippet of JLCPCB page"
+  },
+  {
+   "mpn": "S2B-PH-SM4-TB(LF)(SN)",
+   "lcsc": "C295747",
+   "class": "extended",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "search snippet of JLCPCB page"
+  },
+  {
+   "mpn": "TYPE-C-31-M-12",
+   "lcsc": null,
+   "class": "unconfirmed",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "unconfirmed: no result returned"
+  },
+  {
+   "mpn": "FH12-30S-0.5SH(55)",
+   "lcsc": null,
+   "class": "unconfirmed",
+   "stock": null,
+   "price_usd": null,
+   "confidence": "unconfirmed: no result returned"
+  }
+ ],
+ "rules": [
+  {
+   "region": "US",
+   "topic": "de minimis",
+   "fact": "$800 de minimis suspended for China/HK since 2025-05-02 and for all countries since 2025-08-29 (secondary sources, snippet). JLCPCB requires DDP for individuals on orders under $800 (read).",
+   "source": "https://jlcpcb.com/help/article/us-tariff-policy-faq"
+  },
+  {
+   "region": "US",
+   "topic": "Section 301 on PCBs",
+   "fact": "HTS 8534.00.00 is on the Section 301 China list under 9903.88.03 (read, USITC list updated 2026-07-28).",
+   "source": "https://hts.usitc.gov/reststop/file?release=currentRelease&filename=China+Tariffs"
+  },
+  {
+   "region": "US",
+   "topic": "12.5% China tariff",
+   "fact": "USTR notice dated 2026-07-23 imposes 12.5% on China-origin products except annexed goods, effective 2026-07-24 (snippet). JLCPCB labels this layer 'Section 122'; other sources call it a Section 301 forced-labor action.",
+   "source": "https://ustr.gov/sites/default/files/files/Press/Releases/2026/FLIP%20301%20Investigation%20Final%20Action%20FRN%207-23-26%20FINAL.pdf"
+  },
+  {
+   "region": "US",
+   "topic": "PCB total rate",
+   "fact": "Reported totals: 12.5% for 2/4-layer rigid glass-reinforced boards under exclusion 9903.88.69; 37.5% for other PCBs and for assemblies (secondary, read).",
+   "source": "https://www.atlaspcb.com/news/news-pcb-tariff-section-301-exclusion-expiry-november-2026/"
+  },
+  {
+   "region": "US",
+   "topic": "exclusion expiry",
+   "fact": "Section 301 exclusions reported extended on 2026-11-09 through 2027-01-09 (single supplier blog, read; not confirmed against USTR).",
+   "source": "https://www.mclpcb.com/blog/important-tariff-update/"
+  },
+  {
+   "region": "US",
+   "topic": "IEEPA / Section 122 status",
+   "fact": "JLCPCB FAQ: fentanyl and reciprocal tariffs 0 from 2026-02-24; 10% provisional tariff 2026-02-24 to 2026-07-24 (read). Secondary guides: IEEPA tariffs struck down by the Supreme Court, Section 122 surcharge expired 2026-07-24 (snippet).",
+   "source": "https://jlcpcb.com/help/article/us-tariff-policy-faq"
+  },
+  {
+   "region": "US",
+   "topic": "worked example $60 PCB order",
+   "fact": "JLCPCB DDP pre-collection 35% = $21.00. Statutory additional duty: $7.50 at 12.5% (excluded 2/4-layer bare boards) or $22.50 at 37.5%. Carrier fees unconfirmed. Calculated.",
+   "source": "https://jlcpcb.com/news/logistics-update-us-china-tariff"
+  },
+  {
+   "region": "US",
+   "topic": "FCC prototype",
+   "fact": "47 CFR 2.805 allows operation before authorization for performance evaluation during development/pre-production; 2.803 bars marketing before authorization (eCFR, snippet). Modular approval rule 15.212 not confirmed here.",
+   "source": "https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-2/subpart-I/section-2.803"
+  },
+  {
+   "region": "US",
+   "topic": "lithium shipping",
+   "fact": "USPS treats UN3480 lithium-ion/polymer as restricted; standalone batteries surface only (snippet). Air: UN3480 cargo aircraft only, 30% state of charge (secondary).",
+   "source": "https://pe.usps.com/cpim/ftp/pubs/pub52/pub52.pdf"
+  },
+  {
+   "region": "JP",
+   "topic": "small-parcel exemption",
+   "fact": "Customs value 10,000 yen or less is exempt from duty and consumption tax; personal-use goods valued at 60% of overseas price, other goods at price + shipping + insurance; split parcels are totalled (read).",
+   "source": "https://www.customs.go.jp/tsukan/kanizeiritsu.htm"
+  },
+  {
+   "region": "JP",
+   "topic": "exemption reform",
+   "fact": "Consumption tax on cross-border mail-order goods of 10,000 yen or less and abolition of the 60% valuation both apply from 2028-04-01; nothing changes in 2026 (MOF snippet; secondary article read).",
+   "source": "https://www.mof.go.jp/tax_policy/publication/brochure/zeisei2026_pdf/zeisei26_03.pdf"
+  },
+  {
+   "region": "JP",
+   "topic": "consumption tax and duty",
+   "fact": "Consumption tax applies above the exemption; simplified 'other goods' duty rate 5% for consignments of 200,000 yen or less (read). Specific duty rate for PCBs (HS 8534): unconfirmed.",
+   "source": "https://www.customs.go.jp/tsukan/kanizeiritsu.htm"
+  },
+  {
+   "region": "JP",
+   "topic": "carrier fee",
+   "fact": "DHL Japan advance-payment fee: 2,200 yen per waybill or 2% of duties/taxes, whichever is higher, for recipients without an account (DHL page effective 2026-01-01, snippet). FedEx: unconfirmed.",
+   "source": "https://mydhl.express.dhl/jp/ja/ship/customs-services.html"
+  },
+  {
+   "region": "JP",
+   "topic": "PSE lithium-ion",
+   "fact": "Regulated only if single-cell volumetric energy density is 400 Wh/L or more; cells soldered into equipment and not easily removable are excluded; importer self-declares and marks (METI, snippet). 3.7 V 500 mAh = 1.85 Wh: in scope if cell volume is under 4.625 cm3 (e.g. 502535 about 423 Wh/L in, 503035 about 352 Wh/L out). Calculated.",
+   "source": "https://www.meti.go.jp/policy/consumer/seian/denan/file/PSE_gaiyo.pdf"
+  },
+  {
+   "region": "JP",
+   "topic": "giteki 180-day rule",
+   "fact": "Non-marked equipment conforming to equivalent technical standards may be used for experiments for up to 180 days from notification (Radio Act art. 4-2); 2.4 GHz WLAN and Bluetooth are eligible (read, MIC PDF). Applicability to self-built devices is disputed by secondary sources and unconfirmed.",
+   "source": "https://www.soumu.go.jp/main_content/000973381.pdf"
+  },
+  {
+   "region": "JP",
+   "topic": "module certification",
+   "fact": "MIC certification number for ESP32-C3-MINI-1: unconfirmed. Siblings: ESP32-C3-WROOM-02 201-220555; ESP32-C3-MINI-1U 201-230074 per aggregator (snippets).",
+   "source": "https://documentation.espressif.com/ESP32-C3-WROOM-02%20MIC%20Certification.pdf"
+  },
+  {
+   "region": "JP",
+   "topic": "holidays",
+   "fact": "China Spring Festival public holiday 2027-02-05 to 2027-02-13 (official notice, snippet). JLCPCB 2027 schedule not yet published.",
+   "source": "https://english.beijing.gov.cn/latest/news/202611/t20261109_4937887.html"
+  }
+ ]
+}

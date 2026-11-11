@@ -88,13 +88,13 @@
 <line x1="163.5" y1="502.0" x2="176.5" y2="502.0" stroke="#1b232c" stroke-width="1.6"/>
 <line x1="167.0" y1="506.0" x2="173.0" y2="506.0" stroke="#1b232c" stroke-width="1.6"/>
 <g transform="rotate(-90 535.0 150)"><line x1="535.0" y1="115" x2="535.0" y2="141" stroke="#1b232c" stroke-width="1.4"/><line x1="535.0" y1="159" x2="535.0" y2="185" stroke="#1b232c" stroke-width="1.4"/><polygon points="525.0,141 545.0,141 535.0,159" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="525.0" y1="159" x2="545.0" y2="159" stroke="#1b232c" stroke-width="1.8"/></g>
-<text x="535.0" y="136.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D10  PMEG2010AEH</text>
+<text x="535.0" y="136.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D10  MBR120VLSF</text>
 <polygon points="500,150 493,142.0 416.2,142.0 416.2,158.0 493,158.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
 <text x="488.0" y="154.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VBUS_PUCK</text>
 <polygon points="570,150 577,142.0 632.2,142.0 632.2,158.0 577,158.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>
 <text x="582.0" y="154.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">CHG_IN</text>
 <g transform="rotate(-90 535.0 240)"><line x1="535.0" y1="205" x2="535.0" y2="231" stroke="#1b232c" stroke-width="1.4"/><line x1="535.0" y1="249" x2="535.0" y2="275" stroke="#1b232c" stroke-width="1.4"/><polygon points="525.0,231 545.0,231 535.0,249" fill="#ffffff" stroke="#1b232c" stroke-width="1.4"/><line x1="525.0" y1="249" x2="545.0" y2="249" stroke="#1b232c" stroke-width="1.8"/></g>
-<text x="535.0" y="226.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D11  PMEG2010AEH</text>
+<text x="535.0" y="226.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="middle">D11  MBR120VLSF</text>
 <polygon points="500,240 493,232.0 423.4,232.0 423.4,248.0 493,248.0" fill="#ffffff" stroke="#b5371f" stroke-width="1.2"/>
 <text x="488.0" y="244.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#b5371f" text-anchor="end">VBUS_POD</text>
 <polygon points="570,240 577,232.0 632.2,232.0 632.2,248.0 577,248.0" fill="#ffffff" stroke="#1f6f8b" stroke-width="1.2"/>

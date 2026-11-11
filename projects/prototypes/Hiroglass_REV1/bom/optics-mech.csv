@@ -1,10 +1,10 @@
 ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_per_kit,order_qty,ext_usd,status,note
-LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics,63-480,,,edmundoptics.com,34.00,1,3,102.00,vendor,budget: Edmund 15 x f22.5 clearance $18.20
-BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics,43-736,,,edmundoptics.com,61.00,1,3,183.00,vendor,30R/70T VIS is #34-412 at $222
-LENS-B,Eyepiece lens 15 mm x f22.5 mm VIS AR (cartridge B),Edmund Optics,(page 8041),,,edmundoptics.com,41.00,1,3,123.00,vendor,or Thorlabs LA1951-A
-ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,(page 8291),,,edmundoptics.com,51.50,0.667,2,103.00,vendor,one per site
-MAG,N52 disc magnet 6.35 x 2.54 mm,Radial Magnets,9150,,,,0.35,10,30,10.50,snapshot,rated 80 °C: keep away from the LiPo
-SCR,M2 x 6 pan-head screws (100),Essentra / Würth,(pick at order),,,,10.00,0.667,2,20.00,estimate,DigiKey hardware category; one per site
+LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics,63-480,,,edmundoptics.com,34.00,1,3,102.00,checked,"20+ in stock; Japan 4,800 yen"
+BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics,43-736,,,edmundoptics.com,61.00,1,3,183.00,checked,"20+ in stock. 30R/70T version is #43-734 at the same price (not #34-412, a $222 precision plate)"
+LENS-B,"Eyepiece lens 12.7 mm x f20 mm, AR coated (cartridge B)",Thorlabs,LA1074-A,,,thorlabs.com,39.10,1,3,117.30,checked,"Edmund #47-873 (15 x 22.5 mm) shows 'Contact us' in the US and Japan. Japan: Edmund #23-083, 2,800 yen"
+ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,48-090,,,edmundoptics.com,51.50,0.667,2,103.00,checked,one per site
+MAG,N52 disc magnet 6.35 x 1.6 mm,K&J Magnetics,D41-N52,,,kjmagnetics.com,0.32,10,30,9.60,checked,"1/4 x 1/16 in, in stock; rated 80 °C: keep away from the LiPo"
+SCR,M2 x 6 pan-head screws (100),Zoro,(M2-0.40 x 6 pan),,,zoro.com,8.99,0.667,2,17.98,snapshot,one per site
 STO,M2 standoffs,Würth,(pick at order),,,,0.45,6,18,8.10,estimate,
-INS,M2 heat-set inserts (100),Ruthex / McMaster 94180A307,,,,McMaster,15.00,0.667,2,30.00,estimate,not at DigiKey; one per site
-LUX,Lux meter,Extech,LT45,,,,110.00,0.667,2,220.00,estimate,"one per site. DigiKey carries Extech; a luminance meter (Konica Minolta LS-150) is quote-only, borrow one"
+INS,M2 heat-set inserts (100),Prusa Research,"(M2 short, 100 pcs)",,,prusa3d.com,11.99,0.667,2,23.98,checked,one per site; McMaster 94180A307 is about $36
+LUX,Lux meter,Extech,LT40,,,extech.com,155.00,0.667,2,310.00,checked,"one per site. The LT45 is about $315. Budget: Dr.meter LX1330B about $60, UNI-T UT383 about $24"

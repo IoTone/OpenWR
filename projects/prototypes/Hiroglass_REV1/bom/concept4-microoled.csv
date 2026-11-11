@@ -3,6 +3,6 @@ MCU2,Raspberry Pi Pico 2 (RP2350),Raspberry Pi,SC1631,2648-SC1631CT-ND,358-SC163
 LVL,"8-bit dual-supply translator, TSSOP-24",TI,SN74AXC8T245PWR,,,,1.20,2,2,2.40,estimate,needs a TSSOP-24 breakout
 BRK,TSSOP-24 to DIP breakout,,(pick at order),,,,3.00,2,2,6.00,estimate,
 LDO18,"1.8 V LDO, SOT-23-5",TI,TLV75718PDBVR,,,,0.40,1,1,0.40,estimate,
-PANEL,Sony ECX336-class micro-OLED + HDMI driver board,Display Components (HK),,,,Tindie,99.50,1,1,99.50,vendor,"HDMI viewer board, for seeing the panel"
+PANEL,Sony ECX336-class micro-OLED + HDMI driver board,Display Components (HK),,,,Tindie,275.00,1,1,275.00,vendor,read $275 on 2026-11-10 (was $99.50). DisplayModule: panel $139 + HDMI board $119. No US stock
 REF,"Hicenda 0.23"" 640x400 module, 4,000 nit (reference)",Hicenda,,,,hicendadisplay.com,389.00,1,1,389.00,vendor,$184 for the standard version
-FPGA,iCEBreaker FPGA board (optional),1BitSquared,iCEBreaker,,,Mouser storefront,80.00,1,1,80.00,estimate,Yosys/nextpnr route
+FPGA,iCEBreaker FPGA board (optional),1BitSquared,iCEBreaker,,,1bitsquared.com,79.95,1,1,79.95,checked,sold out at 1BitSquared. US: Lattice ICE40UP5K-B-EVN $65.62 (Newark). Japan: Tang Nano 9K

@@ -1,0 +1,10 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+optics-mech,LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics,#63-480,USD,34.0,20,5,ok,page,,,1,2,3,4,5,34.00,68.00,102.00,136.00,170.00,
+optics-mech,BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics,#43-736,USD,61.0,20,5,ok,page,,,1,2,3,4,5,61.00,122.00,183.00,244.00,305.00,"30R/70T version: #43-734, same price, 20+ in stock. Thorlabs EBP1 30:70 is $41"
+optics-mech,LENS-B,"Eyepiece lens 12.7 mm x f20 mm, AR coated (cartridge B)",Thorlabs,"LA1074-A (12.7 mm, f 20 mm, AR coated)",USD,39.1,in stock,3,ok,page,yes,,1,2,3,4,5,39.10,78.20,117.30,156.40,195.50,"Edmund #47-873 shows 'Contact us' in the US and Japan: not in stock. This lens is 12.7 mm, not 15 mm, so cartridge B's bore changes"
+optics-mech,ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,#48-090,USD,51.5,20,5,ok,page,,yes,1,1,1,1,1,51.50,51.50,51.50,51.50,51.50,
+optics-mech,MAG,N52 disc magnet 6.35 x 1.6 mm,K&J Magnetics,D41-N52 (1/4 x 1/16 in),USD,0.32,in stock,6,ok,page,,,10,20,30,40,50,3.20,6.40,9.60,12.80,16.00,"1/16 in thick, the stocked size nearest the 1/10 in in the design"
+optics-mech,SCR,M2 x 6 pan-head screws (100),Zoro,"M2 x 6 pan, 100",USD,8.99,not shown,6,ok,snippet,,,1,1,1,1,1,8.99,8.99,8.99,8.99,8.99,
+optics-mech,STO,M2 standoffs,Amazon,"M2 brass standoff kit, about 300 pieces",USD,14.99,in stock,3,ok,page,,,1,1,1,1,1,14.99,14.99,14.99,14.99,14.99,one kit covers every run
+optics-mech,INS,M2 heat-set inserts (100),Prusa,"M2 short inserts, 100",USD,11.99,in stock,12,watch,page,,,1,1,1,1,1,11.99,11.99,11.99,11.99,11.99,ship-from not confirmed; McMaster 94180A307 is about $36
+optics-mech,LUX,Lux meter,Extech,LT40,USD,155.0,in stock,7,ok,page,,yes,1,1,1,1,1,155.00,155.00,155.00,155.00,155.00,budget: Dr.meter LX1330B about $60 (snippet)

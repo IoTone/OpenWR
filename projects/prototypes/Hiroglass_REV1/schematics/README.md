@@ -41,6 +41,18 @@ Concepts 1, 2 and 3 share the same electronics and differ only in optics and mou
 - Bench-kit pin labels come from vendor docs and memory; check each silkscreen.
 - The concept 4 panel side is a signal list, not a pinout: Sony publishes no datasheet.
 
+### Added 2026-11-10: substitute parts
+
+Five Pod-0 parts changed because the originals have no stock or are no longer recommended (see `../bom/BUILDABILITY.md`). The sheets now show the new part numbers; the pins and nets are unchanged. Check each against its datasheet before layout:
+
+- **Q1 DMG2305UX-7** (was FDN338P): SOT-23 pin order gate-source-drain, and that it switches fully from a 3.3 V gate drive with VCELL at 3.5–4.2 V on the source.
+- **Q2 FDN337N** (was FDN335N): SOT-23 pin order and gate threshold from GPIO10 at 3.3 V.
+- **D10, D11 MBR120VLSFT1G** (was PMEG2010AEH): SOD-123FL pads against the SOD-123F footprint, and forward voltage at 500 mA into the charger input.
+- **U1 ESP32-C3-MINI-1-N4X** (was N4): same footprint; needs ESP-IDF support for chip revision v1.1.
+- **RT1 NCU15XH103F60RC** (was NCP15XH103F03RC): same 10 kΩ NTC; check the B constant against the charger's TS divider.
+- **DS1:** only the Orient AOM12864A0-0.96WW has the 0.5 mm FPC that fits J1. Generic 0.96" panels have a 0.7 mm solder-down tail.
+- **CBL:** DigiKey's A10SR10SR30K152A is the reversed pinning and the 152B the straight one. Decide which the J3/J12 pin 1 placement needs.
+
 ## Checks
 
 `make_schematics.py` writes a netlist CSV per sheet into `netlists/`, plus `pod0-all.csv` across the three Pod-0 sheets. It reports any net with only one connection; the Pod-0 set currently passes. The netlist is the starting point for KiCad capture: every pin, net and part number is in it.

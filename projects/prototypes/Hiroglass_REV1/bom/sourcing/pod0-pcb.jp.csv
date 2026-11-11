@@ -1,0 +1,45 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+pod0-pcb,U1,"ESP32-C3-MINI-1 module, 4 MB",DigiKey Japan,ESP32-C3-MINI-1-N4X,JPY,537,"1,518",4,ok,page,,,3,4,5,6,7,11.20,14.93,18.66,22.39,26.12,技適 201-210888 covers ESP32-C3-MINI-1; not confirmed for the N4X revision
+pod0-pcb,U2,"BMI270 IMU, LGA-14",DigiKey Japan,BMI270,JPY,697,"32,243",4,ok,page,,,3,4,5,6,7,14.53,19.37,24.22,29.06,33.91,
+pod0-pcb,U3,VEML7700 ambient light sensor,DigiKey Japan,VEML7700-TT,JPY,237,"14,393",4,ok,page,,,3,4,5,6,7,4.94,6.59,7.28,8.74,10.20,
+pod0-pcb,U4,"3.3 V LDO 600 mA, SOT-23-5",DigiKey Japan,AP2112K-3.3TRG1,JPY,46,"406,515",4,ok,page,,,3,4,5,6,7,0.96,1.28,1.60,1.92,2.24,
+pod0-pcb,U5,"USB ESD protection, SOT-23-6",DigiKey Japan,USBLC6-2SC6,JPY,89,"27,230",4,ok,page,,,3,4,5,6,7,1.86,2.47,3.09,3.71,4.33,
+pod0-pcb,DS1,"0.96"" 128x64 OLED panel, 30-pin 0.5 mm FPC",Orient Display (US),AOM12864A0-0.96WW,USD,4.53,169,14,watch,est,,,3,4,5,6,7,13.59,18.12,22.65,27.18,31.71,"DigiKey Japan: 0 stock, 8-week lead, 1,907 yen. Delivery from Orient's US store to Japan is not confirmed. Japanese and generic panels are 0.7 mm solder-down: wrong for J1"
+pod0-pcb,J1,FPC connector 30-pin 0.5 mm ZIF,DigiKey Japan,FH12-30S-0.5SH(55),JPY,435,"4,414",4,ok,page,,,3,4,5,6,7,9.07,12.09,15.11,18.14,21.16,
+pod0-pcb,J2,"USB-C receptacle 24-pin, full featured",DigiKey Japan,12401610E4#2A,JPY,236,"79,753",4,ok,page,,,3,4,5,6,7,4.92,6.56,8.20,9.84,11.48,
+pod0-pcb,"J3,J12",JST SH 10-pin side-entry header,DigiKey Japan,SM10B-SRSS-TB,JPY,153,"27,096",4,ok,page,,,4,6,8,10,12,4.25,6.38,8.51,9.03,10.83,
+pod0-pcb,CBL,"JST SH 10-pin cable, both ends, 152 mm",DigiKey Japan,A10SR10SR30K152A,JPY,405,"5,019",4,watch,page,,,1,2,3,4,5,2.81,5.63,8.44,11.26,14.07,reversed pinning: check pin 1; the 152B has 106 left
+pod0-pcb,"SW1,SW2","Tactile switch SMT (RESET, BOOT)",DigiKey Japan,PTS810 SJM 250 SMTR LFS,JPY,96,"69,043",4,ok,page,,,4,6,8,10,12,2.67,4.00,5.34,5.74,6.89,in stock on the main listing; the first check hit a listing with no count
+pod0-pcb,"D1,D12",LED green 0603,DigiKey Japan,LTST-C191KGKT,JPY,25,"2,228,010",4,ok,page,,,10,10,10,12,15,1.19,1.19,1.19,1.43,1.78,
+pod0-pcb,D13,LED red 0603,DigiKey Japan,LTST-C191KRKT,JPY,25,"1,334,425",4,ok,page,,,10,10,10,10,10,1.19,1.19,1.19,1.19,1.19,
+pod0-pcb,Q1,P-MOSFET SOT-23 (OLED supply),DigiKey Japan,DMG2305UX-7,JPY,63,"74,154",4,ok,page,yes,,3,4,5,6,7,1.31,1.75,2.19,2.63,3.06,"replaces FDN338P (0 stock, 57-week lead); check Vgs(th) and pinout. Or genuine FDN338P at LCSC (6,980), or IRLML6402 at Akizuki"
+pod0-pcb,Q2,N-MOSFET SOT-23,DigiKey Japan,FDN337N,JPY,122,"222,614",4,ok,converted,yes,,3,4,5,6,7,2.54,3.39,4.24,5.09,5.93,"replaces FDN335N (0 stock, 70-week lead); check against the schematic. Or SSM3K345R at Akizuki"
+pod0-pcb,U10,"LiPo charger with power path, VQFN-16",DigiKey Japan,BQ24074RGTR,JPY,401,"1,901",4,ok,page,,,3,4,5,6,7,8.36,11.15,13.93,16.72,19.51,
+pod0-pcb,U11,"Fuel gauge, TDFN-8 (optional)",DigiKey Japan,MAX17048G+T10,JPY,760,"21,841",4,ok,page,,,3,4,5,6,7,15.84,21.13,26.41,31.69,36.97,
+pod0-pcb,BT1,"LiPo 500 mAh, JST-PH",Sengoku,DTP652533(PHR) 500 mAh,JPY,1580,not shown,3,watch,page,,,1,2,3,4,5,9.98,19.96,29.95,39.93,49.91,"no stock count shown; 35 x 25.5 x 6.7 mm, check the puck case"
+pod0-pcb,RT1,NTC 10k 0402,DigiKey Japan,NCP15XH103F03RC,JPY,20,"122,042",4,ok,page,,,10,10,10,10,10,1.06,1.06,1.06,1.06,1.06,"also at Akizuki, 20 for 130 yen"
+pod0-pcb,J10,USB-C receptacle 16-pin,DigiKey Japan,USB4105-GF-A,JPY,132,"263,569",4,ok,page,,,3,4,5,6,7,2.75,3.67,4.59,5.50,6.42,
+pod0-pcb,J11,JST PH 2-pin SMT header,DigiKey Japan,S2B-PH-SM4-TB,JPY,81,"133,904",4,ok,page,,,3,4,5,6,7,1.69,2.25,2.81,3.38,3.94,
+pod0-pcb,SW10,Slide switch SMT,DigiKey Japan,PCM12SMTR,JPY,211,"2,726",4,watch,page,,,3,4,5,6,7,4.40,5.87,7.33,8.80,10.26,obsolete; enough left for this run
+pod0-pcb,"D10,D11",Schottky 1 A SOD-123FL,DigiKey Japan,MBR120VLSFT1G,JPY,97,"105,142",4,ok,converted,yes,,4,6,8,10,12,2.70,4.04,5.39,4.10,4.92,replaces PMEG2010AEH (0 stock until Oct 2027); check pad fit and forward voltage. Or RB160M-30TR at Akizuki
+pod0-pcb,C1,10 µF 0603 X5R,DigiKey Japan,CL10A106KP8NNNC,JPY,16,in stock,4,ok,snippet,,,10,10,10,10,10,1.11,1.11,1.11,1.11,1.11,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C2,C4,C5,C6",100 nF 0402 X7R,DigiKey Japan,CL05B104KO5NNNC,JPY,3,in stock,4,ok,snippet,,,10,12,18,24,30,0.21,0.25,0.38,0.50,0.63,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C3,C8,C9,C12,C13,C23",1 µF 0402 X5R,DigiKey Japan,CL05A105KO5NNNC,JPY,5,in stock,4,ok,snippet,,,10,18,27,36,45,0.35,0.63,0.94,1.25,1.56,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C7,C21,C22",4.7 µF 0603 X5R 10 V,DigiKey Japan,CL10A475KP8NNNC,JPY,8,in stock,4,ok,snippet,,,10,10,14,18,23,0.56,0.56,0.78,1.00,1.28,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C10,C11",1 µF 0603 X5R 16 V (OLED pump),DigiKey Japan,GRM188R61C105KA93D,JPY,8,in stock,4,ok,snippet,,,10,10,10,12,15,0.56,0.56,0.56,0.67,0.83,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C14,4.7 µF 0805 X7R 16 V (VCOMH),DigiKey Japan,GRM21BR71C475KE51L,JPY,24,in stock,4,ok,snippet,,,10,10,10,10,10,1.67,1.67,1.67,1.67,1.67,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C15,2.2 µF 0603 X7R 16 V (VCC),DigiKey Japan,GRM188R71C225KE11D,JPY,16,in stock,4,ok,snippet,,,10,10,10,10,10,1.11,1.11,1.11,1.11,1.11,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C20,1 µF 0603 X5R 25 V,DigiKey Japan,CL10A105KA8NNNC,JPY,8,in stock,4,ok,snippet,,,10,10,10,10,10,0.56,0.56,0.56,0.56,0.56,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R1,R2,R3,R17,R22",10k 0402 1%,DigiKey Japan,RC0402FR-0710KL,JPY,2,in stock,4,ok,snippet,,,10,15,23,30,38,0.14,0.21,0.32,0.42,0.53,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R5,R6,R13,R14",4.7k 0402 1%,DigiKey Japan,RC0402FR-074K7L,JPY,2,in stock,4,ok,snippet,,,10,12,18,24,30,0.14,0.17,0.25,0.33,0.42,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R8,R9,R20,R21",5.1k 0402 1%,DigiKey Japan,RC0402FR-075K1L,JPY,2,in stock,4,ok,snippet,,,10,12,18,24,30,0.14,0.17,0.25,0.33,0.42,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R10,R11",0 Ω 0402,DigiKey Japan,RC0402JR-070RL,JPY,2,in stock,4,ok,snippet,,,10,10,10,12,15,0.14,0.14,0.14,0.17,0.21,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R4,1k 0402 1%,DigiKey Japan,RC0402FR-071KL,JPY,2,in stock,4,ok,snippet,,,10,10,10,10,10,0.14,0.14,0.14,0.14,0.14,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R12,"620k 0402 1% (OLED IREF, tune)",DigiKey Japan,RC0402FR-07620KL,JPY,2,in stock,4,ok,snippet,,,10,10,10,10,10,0.14,0.14,0.14,0.14,0.14,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R15,R16",47k 0402 1%,DigiKey Japan,RC0402FR-0747KL,JPY,2,in stock,4,ok,snippet,,,10,10,10,12,15,0.14,0.14,0.14,0.17,0.21,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R7,100k 0402 1%,DigiKey Japan,RC0402FR-07100KL,JPY,2,in stock,4,ok,snippet,,,10,10,10,10,10,0.14,0.14,0.14,0.14,0.14,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R23,1.78k 0402 1% (ISET 500 mA),DigiKey Japan,RC0402FR-071K78L,JPY,2,in stock,4,ok,snippet,,,10,10,10,10,10,0.14,0.14,0.14,0.14,0.14,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R24,3.09k 0402 1% (ILIM 500 mA),DigiKey Japan,RC0402FR-073K09L,JPY,2,in stock,4,ok,snippet,,,10,10,10,10,10,0.14,0.14,0.14,0.14,0.14,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R25,R26",1.5k 0402 1%,DigiKey Japan,RC0402FR-071K5L,JPY,2,in stock,4,ok,snippet,,,10,10,10,12,15,0.14,0.14,0.14,0.17,0.21,"commodity; five values spot-checked, all in stock"
+pod0-pcb,PCB,"Pod (4-layer) + puck (2-layer) PCBs, 3 of each",JLCPCB,5 pods (4-layer) + 5 pucks (2-layer),USD,30.0,not shown,10,ok,est,,,1,1,1,1,1,30.00,30.00,30.00,30.00,30.00,"price for these sizes not confirmed; DHL about $15, economy post about $2"
+pod0-pcb,STN,"Solder paste stencils, pod + puck",JLCPCB,"stencil, with the board order",USD,8.0,not shown,10,ok,est,,,1,1,1,1,1,8.00,8.00,8.00,8.00,8.00,

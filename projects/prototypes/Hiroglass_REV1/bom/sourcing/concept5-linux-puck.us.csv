@@ -1,0 +1,12 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+concept5-linux-puck,SBC,"Raspberry Pi 5, 8 GB",PiShop.us,Raspberry Pi 5 8 GB,USD,175.0,in stock,6,ok,page,,,1,2,3,4,5,175.00,350.00,525.00,700.00,875.00,also CanaKit $175; Adafruit limits 2
+concept5-linux-puck,PSU,27 W USB-C power supply,PiShop.us,SC1157,USD,12.95,in stock,6,ok,page,,,1,2,3,4,5,12.95,25.90,38.85,51.80,64.75,
+concept5-linux-puck,FAN,Active Cooler,PiShop.us,SC1148,USD,12.95,in stock,6,ok,page,,,1,2,3,4,5,12.95,25.90,38.85,51.80,64.75,$12.95 confirmed on the page; list price is $5
+concept5-linux-puck,SD,microSD 64 GB,Amazon,microSD 64 GB,USD,12.0,not shown,3,ok,est,,,1,2,3,4,5,12.00,24.00,36.00,48.00,60.00,
+concept5-linux-puck,HDMI,micro-HDMI to HDMI cable,Amazon,micro-HDMI cable,USD,5.0,not shown,3,ok,est,,,1,2,3,4,5,5.00,10.00,15.00,20.00,25.00,
+concept5-linux-puck,ADP,HDMI to USB-C (DisplayPort) adapter for the glasses,Amazon,HDMI to USB-C DisplayPort adapter,USD,69.0,not shown,3,watch,est,,,1,2,3,4,5,69.00,138.00,207.00,276.00,345.00,the team has adapters known to work with the Air 2; no part confirmed for sale
+concept5-linux-puck,IMUB,QT Py RP2040 (USB IMU bridge),Adafruit,4900,USD,9.95,94,7,ok,page,,,1,2,3,4,5,9.95,19.90,29.85,39.80,49.75,
+concept5-linux-puck,IMU,BNO085 9-DoF IMU breakout,Adafruit,4754 BNO085,USD,29.5,in stock,7,ok,page,,,1,2,3,4,5,29.50,59.00,88.50,118.00,147.50,
+concept5-linux-puck,QT,STEMMA QT cable 50 mm,Adafruit,4399,USD,0.95,in stock,7,ok,page,,,1,2,3,4,5,0.95,1.90,2.85,3.80,4.75,
+concept5-linux-puck,CAM,Camera Module 3 (stereo pair),PiShop.us,Camera Module 3,USD,29.25,in stock,6,ok,page,,,2,4,6,8,10,58.50,117.00,175.50,234.00,292.50,
+concept5-linux-puck,GLS,XREAL Air 2 display glasses,XREAL,XREAL Air 2,USD,199.0,in stock,7,ok,page,,,1,2,3,4,5,199.00,398.00,597.00,796.00,995.00,"the team has one already; Monado supports Air, Air 2 and Air 2 Pro"

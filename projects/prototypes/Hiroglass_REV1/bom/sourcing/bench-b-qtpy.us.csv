@@ -1,0 +1,15 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+bench-b-qtpy,MCU,Seeed XIAO ESP32C3,Seeed,XIAO ESP32C3 113991054,USD,4.99,in stock,8,ok,page,,,1,2,3,4,5,4.99,9.98,14.97,19.96,24.95,"in stock; replaces QT Py ESP32-C3 (out at Adafruit, 18-week lead at DigiKey)"
+bench-b-qtpy,OLED,"1.3"" 128x64 SSD1306 OLED, STEMMA QT",Adafruit,938,USD,19.95,in stock,7,ok,page,,,1,2,3,4,5,19.95,39.90,59.85,79.80,99.75,
+bench-b-qtpy,IMU,"BMI270 IMU breakout, Qwiic",SparkFun,SEN-22397,USD,14.95,in stock,8,ok,page,,,1,2,3,4,5,14.95,29.90,44.85,59.80,74.75,
+bench-b-qtpy,ALS,"VEML7700 light sensor, STEMMA QT",Adafruit,4162,USD,4.95,in stock,7,ok,page,,,1,2,3,4,5,4.95,9.90,14.85,19.80,24.75,
+bench-b-qtpy,QTH,Qwiic to male header cable,SparkFun,PRT-17912,USD,1.95,in stock,8,ok,page,,,1,2,3,4,5,1.95,3.90,5.85,7.80,9.75,Adafruit 4209 is out of stock
+bench-b-qtpy,QT,STEMMA QT cable 50 mm,Adafruit,4399,USD,0.95,in stock,7,ok,page,,,2,4,6,8,10,1.90,3.80,5.70,7.60,9.50,
+bench-b-qtpy,PUCK,"bq24074 LiPo charger, USB-C (set jumper to 500 mA)",Adafruit,4755,USD,14.95,in stock,7,ok,page,,,1,2,3,4,5,14.95,29.90,44.85,59.80,74.75,
+bench-b-qtpy,BAT,"LiPo 500 mAh, JST-PH",Adafruit,1578,USD,7.95,in stock,7,ok,page,,,1,2,3,4,5,7.95,15.90,23.85,31.80,39.75,ground shipping only
+bench-b-qtpy,SW,JST-PH extension with on/off switch,Adafruit,3064,USD,2.95,0,,out,page,,,1,2,3,4,5,0.00,0.00,0.00,0.00,0.00,"out of stock, no restock date; optional: unplug the cell instead"
+bench-b-qtpy,LEAD,"JST-PH 2-pin to male header, 200 mm",Adafruit,3814,USD,0.75,in stock,7,ok,page,,,1,2,3,4,5,0.75,1.50,2.25,3.00,3.75,
+bench-b-qtpy,USB,USB-A to USB-C cable,Adafruit,4474,USD,4.95,in stock,7,ok,page,,,2,4,6,8,10,9.90,19.80,29.70,39.60,49.50,
+bench-b-qtpy,BB,Half-size breadboard,Adafruit,64,USD,4.95,in stock,7,ok,page,,,1,2,3,4,5,4.95,9.90,14.85,19.80,24.75,
+bench-b-qtpy,JMP,"Jumper wires, male/male",SparkFun,PRT-11026,USD,3.5,in stock,8,ok,page,,,1,2,3,4,5,3.50,7.00,10.50,14.00,17.50,Adafruit 758 is out of stock
+bench-b-qtpy,HDR,"Header strip, 40-pin (one per site)",SparkFun,PRT-00116,USD,1.95,in stock,8,ok,page,,,1,1,1,1,1,1.95,1.95,1.95,1.95,1.95,Adafruit 392 is out of stock

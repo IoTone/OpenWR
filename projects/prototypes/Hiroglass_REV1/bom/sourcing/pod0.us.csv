@@ -1,0 +1,54 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+pod0-pcb,U1,"ESP32-C3-MINI-1 module, 4 MB",DigiKey,ESP32-C3-MINI-1-N4X,USD,3.26,"1,518",5,ok,page,,,3,4,5,6,7,9.78,13.04,16.30,19.56,22.82,"N4 is not for new designs (1,231 left)"
+pod0-pcb,U2,"BMI270 IMU, LGA-14",DigiKey,BMI270,USD,4.23,"32,243",5,ok,page,,,3,4,5,6,7,12.69,16.92,18.94,22.73,26.52,
+pod0-pcb,U3,VEML7700 ambient light sensor,DigiKey,VEML7700-TT,USD,1.44,"14,393",5,ok,page,,,3,4,5,6,7,4.32,5.76,6.36,7.63,8.90,
+pod0-pcb,U4,"3.3 V LDO 600 mA, SOT-23-5",DigiKey,AP2112K-3.3TRG1,USD,0.28,"406,515",5,ok,page,,,3,4,5,6,7,0.84,1.12,1.40,1.68,1.96,
+pod0-pcb,U5,"USB ESD protection, SOT-23-6",DigiKey,USBLC6-2SC6,USD,0.54,"27,230",5,ok,page,,,3,4,5,6,7,1.62,2.16,2.70,3.24,3.78,
+pod0-pcb,DS1,"0.96"" 128x64 OLED panel, 30-pin 0.5 mm FPC",Orient Display,AOM12864A0-0.96WW,USD,4.53,169,7,watch,page,,,3,4,5,6,7,13.59,18.12,22.65,27.18,31.71,"single source, no minimum order; DigiKey has 0 with an 8-week lead. Page says SSD1315, DigiKey says SSD1306"
+pod0-pcb,J1,FPC connector 30-pin 0.5 mm ZIF,DigiKey,FH12-30S-0.5SH(55),USD,2.64,"4,414",5,ok,page,,,3,4,5,6,7,7.92,10.56,13.20,15.84,18.48,
+pod0-pcb,J2,"USB-C receptacle 24-pin, full featured",DigiKey,12401610E4#2A,USD,1.43,"79,753",5,ok,page,,,3,4,5,6,7,4.29,5.72,7.15,8.58,10.01,
+pod0-pcb,"J3,J12",JST SH 10-pin side-entry header,DigiKey,SM10B-SRSS-TB,USD,0.93,"27,096",5,ok,page,,,4,6,8,10,12,3.72,5.58,7.44,7.88,9.46,
+pod0-pcb,CBL,"JST SH 10-pin cable, both ends, 152 mm",DigiKey,A10SR10SR30K152B,USD,2.46,106,5,watch,page,,,1,2,3,4,5,2.46,4.92,7.38,9.84,12.30,"only 106 left; the 152A (5,019) is the reversed pinning"
+pod0-pcb,"SW1,SW2","Tactile switch SMT (RESET, BOOT)",DigiKey,PTS810 SJM 250 SMTR LFS,USD,0.58,"69,043",5,ok,page,,,4,6,8,10,12,2.32,3.48,4.64,5.01,6.01,
+pod0-pcb,"D1,D12",LED green 0603,DigiKey,LTST-C191KGKT,USD,0.15,"2,228,010",5,ok,page,,,10,10,10,12,15,1.04,1.04,1.04,1.25,1.56,
+pod0-pcb,D13,LED red 0603,DigiKey,LTST-C191KRKT,USD,0.15,"1,334,425",5,ok,page,,,10,10,10,10,10,1.04,1.04,1.04,1.04,1.04,
+pod0-pcb,Q1,P-MOSFET SOT-23 (OLED supply),DigiKey,DMG2305UX-7,USD,0.38,"74,154",5,ok,page,yes,,3,4,5,6,7,1.14,1.52,1.90,2.28,2.66,"replaces FDN338P (0 stock, 57-week lead); check Vgs(th) and pinout"
+pod0-pcb,Q2,N-MOSFET SOT-23,DigiKey,FDN337N,USD,0.77,"222,614",5,ok,page,yes,,3,4,5,6,7,2.31,3.08,3.85,4.62,5.39,"replaces FDN335N (0 stock, 70-week lead); check against the schematic"
+pod0-pcb,U10,"LiPo charger with power path, VQFN-16",DigiKey,BQ24074RGTR,USD,2.43,"1,901",5,ok,page,,,3,4,5,6,7,7.29,9.72,12.15,14.58,17.01,
+pod0-pcb,U11,"Fuel gauge, TDFN-8 (optional)",DigiKey,MAX17048G+T10,USD,4.61,"21,841",5,ok,page,,,3,4,5,6,7,13.83,18.44,23.05,27.66,32.27,
+pod0-pcb,BT1,"LiPo 500 mAh, JST-PH",Adafruit,1578,USD,7.95,in stock,7,ok,page,,,1,2,3,4,5,7.95,15.90,23.85,31.80,39.75,no thermistor lead; ground shipping only
+pod0-pcb,RT1,NTC 10k 0402,DigiKey,NCU15XH103F60RC,USD,0.1,"39,686",5,ok,page,,,10,10,10,10,10,0.65,0.65,0.65,0.65,0.65,NCP15XH103F03RC is not for new designs
+pod0-pcb,J10,USB-C receptacle 16-pin,DigiKey,USB4105-GF-A,USD,0.8,"263,569",5,ok,page,,,3,4,5,6,7,2.40,3.20,4.00,4.80,5.60,
+pod0-pcb,J11,JST PH 2-pin SMT header,DigiKey,S2B-PH-SM4-TB,USD,0.49,"133,904",5,ok,page,,,3,4,5,6,7,1.47,1.96,2.45,2.94,3.43,
+pod0-pcb,SW10,Slide switch SMT,DigiKey,PCM12SMTR,USD,1.28,"2,726",5,watch,page,,,3,4,5,6,7,3.84,5.12,6.40,7.68,8.96,obsolete; enough left for this run
+pod0-pcb,"D10,D11",Schottky 1 A SOD-123FL,DigiKey,MBR120VLSFT1G,USD,0.61,"105,142",5,ok,page,yes,,4,6,8,10,12,2.44,3.66,4.88,3.73,4.48,replaces PMEG2010AEH (0 stock until Oct 2027); check pad fit and forward voltage
+pod0-pcb,C1,10 µF 0603 X5R,DigiKey,CL10A106KP8NNNC,USD,0.1,in stock,5,ok,snippet,,,10,10,10,10,10,1.00,1.00,1.00,1.00,1.00,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C2,C4,C5,C6",100 nF 0402 X7R,DigiKey,CL05B104KO5NNNC,USD,0.02,in stock,5,ok,snippet,,,10,12,18,24,30,0.20,0.24,0.36,0.48,0.60,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C3,C8,C9,C12,C13,C23",1 µF 0402 X5R,DigiKey,CL05A105KO5NNNC,USD,0.03,in stock,5,ok,snippet,,,10,18,27,36,45,0.30,0.54,0.81,1.08,1.35,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C7,C21,C22",4.7 µF 0603 X5R 10 V,DigiKey,CL10A475KP8NNNC,USD,0.05,in stock,5,ok,snippet,,,10,10,14,18,23,0.50,0.50,0.70,0.90,1.15,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"C10,C11",1 µF 0603 X5R 16 V (OLED pump),DigiKey,GRM188R61C105KA93D,USD,0.05,in stock,5,ok,snippet,,,10,10,10,12,15,0.50,0.50,0.50,0.60,0.75,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C14,4.7 µF 0805 X7R 16 V (VCOMH),DigiKey,GRM21BR71C475KE51L,USD,0.15,in stock,5,ok,snippet,,,10,10,10,10,10,1.50,1.50,1.50,1.50,1.50,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C15,2.2 µF 0603 X7R 16 V (VCC),DigiKey,GRM188R71C225KE11D,USD,0.1,in stock,5,ok,snippet,,,10,10,10,10,10,1.00,1.00,1.00,1.00,1.00,"commodity; five values spot-checked, all in stock"
+pod0-pcb,C20,1 µF 0603 X5R 25 V,DigiKey,CL10A105KA8NNNC,USD,0.05,in stock,5,ok,snippet,,,10,10,10,10,10,0.50,0.50,0.50,0.50,0.50,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R1,R2,R3,R17,R22",10k 0402 1%,DigiKey,RC0402FR-0710KL,USD,0.01,in stock,5,ok,snippet,,,10,15,23,30,38,0.10,0.15,0.23,0.30,0.38,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R5,R6,R13,R14",4.7k 0402 1%,DigiKey,RC0402FR-074K7L,USD,0.01,in stock,5,ok,snippet,,,10,12,18,24,30,0.10,0.12,0.18,0.24,0.30,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R8,R9,R20,R21",5.1k 0402 1%,DigiKey,RC0402FR-075K1L,USD,0.01,in stock,5,ok,snippet,,,10,12,18,24,30,0.10,0.12,0.18,0.24,0.30,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R10,R11",0 Ω 0402,DigiKey,RC0402JR-070RL,USD,0.01,in stock,5,ok,snippet,,,10,10,10,12,15,0.10,0.10,0.10,0.12,0.15,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R4,1k 0402 1%,DigiKey,RC0402FR-071KL,USD,0.01,in stock,5,ok,snippet,,,10,10,10,10,10,0.10,0.10,0.10,0.10,0.10,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R12,"620k 0402 1% (OLED IREF, tune)",DigiKey,RC0402FR-07620KL,USD,0.01,in stock,5,ok,snippet,,,10,10,10,10,10,0.10,0.10,0.10,0.10,0.10,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R15,R16",47k 0402 1%,DigiKey,RC0402FR-0747KL,USD,0.01,in stock,5,ok,snippet,,,10,10,10,12,15,0.10,0.10,0.10,0.12,0.15,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R7,100k 0402 1%,DigiKey,RC0402FR-07100KL,USD,0.01,in stock,5,ok,snippet,,,10,10,10,10,10,0.10,0.10,0.10,0.10,0.10,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R23,1.78k 0402 1% (ISET 500 mA),DigiKey,RC0402FR-071K78L,USD,0.01,in stock,5,ok,snippet,,,10,10,10,10,10,0.10,0.10,0.10,0.10,0.10,"commodity; five values spot-checked, all in stock"
+pod0-pcb,R24,3.09k 0402 1% (ILIM 500 mA),DigiKey,RC0402FR-073K09L,USD,0.01,in stock,5,ok,snippet,,,10,10,10,10,10,0.10,0.10,0.10,0.10,0.10,"commodity; five values spot-checked, all in stock"
+pod0-pcb,"R25,R26",1.5k 0402 1%,DigiKey,RC0402FR-071K5L,USD,0.01,in stock,5,ok,snippet,,,10,10,10,12,15,0.10,0.10,0.10,0.12,0.15,"commodity; five values spot-checked, all in stock"
+pod0-pcb,PCB,"Pod (4-layer) + puck (2-layer) PCBs, 3 of each",OSH Park,3 pods (4-layer) + 3 pucks (2-layer),USD,23.25,in stock,14,ok,page,,,1,1,1,1,1,23.25,23.25,23.25,46.50,46.50,made in the US; $5 and $10 per sq in per 3 boards; Super Swift doubles it
+pod0-pcb,STN,"Solder paste stencils, pod + puck",OSH Stencils,pod + puck stencils,USD,20.0,not shown,7,ok,est,,,1,1,1,1,1,20.00,20.00,20.00,20.00,20.00,price not confirmed
+optics-mech,LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics,#63-480,USD,34.0,20,5,ok,page,,,1,2,3,4,5,34.00,68.00,102.00,136.00,170.00,
+optics-mech,BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics,#43-736,USD,61.0,20,5,ok,page,,,1,2,3,4,5,61.00,122.00,183.00,244.00,305.00,"30R/70T version: #43-734, same price, 20+ in stock. Thorlabs EBP1 30:70 is $41"
+optics-mech,LENS-B,"Eyepiece lens 12.7 mm x f20 mm, AR coated (cartridge B)",Thorlabs,"LA1074-A (12.7 mm, f 20 mm, AR coated)",USD,39.1,in stock,3,ok,page,yes,,1,2,3,4,5,39.10,78.20,117.30,156.40,195.50,"Edmund #47-873 shows 'Contact us' in the US and Japan: not in stock. This lens is 12.7 mm, not 15 mm, so cartridge B's bore changes"
+optics-mech,ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics,#48-090,USD,51.5,20,5,ok,page,,yes,1,1,1,1,1,51.50,51.50,51.50,51.50,51.50,
+optics-mech,MAG,N52 disc magnet 6.35 x 1.6 mm,K&J Magnetics,D41-N52 (1/4 x 1/16 in),USD,0.32,in stock,6,ok,page,,,10,20,30,40,50,3.20,6.40,9.60,12.80,16.00,"1/16 in thick, the stocked size nearest the 1/10 in in the design"
+optics-mech,SCR,M2 x 6 pan-head screws (100),Zoro,"M2 x 6 pan, 100",USD,8.99,not shown,6,ok,snippet,,,1,1,1,1,1,8.99,8.99,8.99,8.99,8.99,
+optics-mech,STO,M2 standoffs,Amazon,"M2 brass standoff kit, about 300 pieces",USD,14.99,in stock,3,ok,page,,,1,1,1,1,1,14.99,14.99,14.99,14.99,14.99,one kit covers every run
+optics-mech,INS,M2 heat-set inserts (100),Prusa,"M2 short inserts, 100",USD,11.99,in stock,12,watch,page,,,1,1,1,1,1,11.99,11.99,11.99,11.99,11.99,ship-from not confirmed; McMaster 94180A307 is about $36
+optics-mech,LUX,Lux meter,Extech,LT40,USD,155.0,in stock,7,ok,page,,yes,1,1,1,1,1,155.00,155.00,155.00,155.00,155.00,budget: Dr.meter LX1330B about $60 (snippet)

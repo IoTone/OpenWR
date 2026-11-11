@@ -1,27 +1,27 @@
 ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_per_kit,order_qty,ext_usd,status,note
-U1,"ESP32-C3-MINI-1 module, 4 MB",Espressif,ESP32-C3-MINI-1-N4,1965-ESP32-C3-MINI-1-N4CT-ND,356-ESP32C3MINI1N4,,3.26,1,5,16.30,snapshot,"2,779 at DigiKey"
-U2,"BMI270 IMU, LGA-14",Bosch,BMI270,828-1082-1-ND,262-BMI270,,4.23,1,5,21.15,snapshot,~50k at DigiKey
-U3,VEML7700 ambient light sensor,Vishay,VEML7700-TT,VEML7700-TTCT-ND,78-VEML7700-TT,,1.53,1,5,7.65,snapshot,
-U4,"3.3 V LDO 600 mA, SOT-23-5",Diodes,AP2112K-3.3TRG1,AP2112K-3.3TRG1DICT-ND,621-AP2112K-3.3TRG1,,0.45,1,5,2.25,estimate,"alt TI TLV75733PDBVR, same footprint"
-U5,"USB ESD protection, SOT-23-6",ST,USBLC6-2SC6,497-5235-1-ND,511-USBLC6-2SC6,,0.50,1,5,2.50,estimate,check pinout vs datasheet
-DS1,"0.96"" 128x64 OLED panel, 30-pin FPC",Orient Display,AOM12864A0-0.96WW,,,,11.57,1,5,57.85,snapshot,"DigiKey product 22531883; 0 stock, 8-week lead. Alt Winstar WEO012864DWPP3N00006 $5.24 (4 in stock)"
-J1,FPC connector 30-pin 0.5 mm ZIF,Hirose,FH12-30S-0.5SH(55),HFJ130CT-ND,798-FH12-30S-0.5SH55,,1.40,1,5,7.00,estimate,
-J2,"USB-C receptacle 24-pin, full featured",Amphenol,12401610E4#2A,,,,2.50,1,5,12.50,estimate,20-week lead seen; fallback GCT USB4105-GF-A (USB 2.0 only)
-"J3,J12",JST SH 10-pin side-entry header,JST,SM10B-SRSS-TB(LF)(SN),,306-SM10B-SRSSTBLFSN,,0.90,2,8,7.20,estimate,"tether, one per board"
-CBL,"JST SH 10-pin cable, both ends",JST,A10SR10SR30K152B,,,,2.00,1,3,6.00,estimate,check length/part at order; or crimp your own
-"SW1,SW2","Tactile switch SMT (RESET, BOOT)",C&K,PTS810 SJM 250 SMTR LFS,,611-PTS810SJM250SMTR,,0.25,2,8,2.00,estimate,
-"D1,D12",LED green 0603,Lite-On,LTST-C191KGKT,160-1446-1-ND,859-LTST-C191KGKT,,0.30,2,8,2.40,estimate,
-D13,LED red 0603,Lite-On,LTST-C191KRKT,,,,0.30,1,5,1.50,estimate,
-Q1,P-MOSFET SOT-23 (OLED supply),onsemi,FDN338P,FDN338PCT-ND,512-FDN338P,,0.40,1,5,2.00,estimate,
-Q2,N-MOSFET SOT-23,onsemi,FDN335N,FDN335NCT-ND,512-FDN335N,,0.40,1,5,2.00,estimate,
-U10,"LiPo charger with power path, VQFN-16",TI,BQ24074RGTR,,595-BQ24074RGTR,,3.19,1,5,15.95,snapshot,"9,247 at DigiKey"
-U11,"Fuel gauge, TDFN-8 (optional)",Analog Devices,MAX17048G+T10,MAX17048G+T10CT-ND,700-MAX17048G+T10,,2.50,1,5,12.50,estimate,check pinout vs datasheet
-BT1,"LiPo 500 mAh, JST-PH",Adafruit,1578,,485-1578,,7.95,1,3,23.85,snapshot,no NTC: bond RT1 to the cell
-RT1,NTC 10k 0402,Murata,NCP15XH103F03RC,490-4801-1-ND,81-NCP15XH103F03RC,,0.10,1,10,1.00,estimate,
-J10,USB-C receptacle 16-pin,GCT,USB4105-GF-A,2073-USB4105-GF-ACT-ND,640-USB4105-GF-A,,0.80,1,5,4.00,estimate,
-J11,JST PH 2-pin SMT header,JST,S2B-PH-SM4-TB(LF)(SN),455-1749-1-ND,306-S2BPHSM4TBLFSN,,0.40,1,5,2.00,estimate,verify cell polarity
-SW10,Slide switch SMT,C&K,PCM12SMTR,,611-PCM12SMTR,,0.70,1,5,3.50,estimate,
-"D10,D11",Schottky 1 A SOD-123F,Nexperia,PMEG2010AEH,,,,0.35,2,8,2.80,estimate,
+U1,"ESP32-C3-MINI-1 module, 4 MB",Espressif,ESP32-C3-MINI-1-N4X,1965-ESP32-C3-MINI-1-N4XCT-ND,,,3.26,1,5,16.30,checked,"1,518 at DigiKey. The N4 is not for new designs; N4X needs chip rev v1.1+ firmware support"
+U2,"BMI270 IMU, LGA-14",Bosch,BMI270,828-1091-1-ND,262-BMI270,,4.23,1,5,21.15,checked,"32,243 at DigiKey"
+U3,VEML7700 ambient light sensor,Vishay,VEML7700-TT,751-VEML7700-TTCT-ND,78-VEML7700-TT,,1.44,1,5,7.20,checked,"14,393 at DigiKey"
+U4,"3.3 V LDO 600 mA, SOT-23-5",Diodes,AP2112K-3.3TRG1,AP2112K-3.3TRG1DICT-ND,621-AP2112K-3.3TRG1,,0.28,1,5,1.40,checked,"406,515 at DigiKey; the TI alternate is out"
+U5,"USB ESD protection, SOT-23-6",ST,USBLC6-2SC6,497-5235-1-ND,511-USBLC6-2SC6,,0.54,1,5,2.70,checked,"27,230 at DigiKey; check pinout vs datasheet"
+DS1,"0.96"" 128x64 OLED panel, 30-pin 0.5 mm FPC",Orient Display,AOM12864A0-0.96WW,,,orientdisplay.com,4.53,1,5,22.65,checked,"169 at Orient's own store (Seattle). DigiKey: 0 stock, 8-week lead. Generic panels are 0.7 mm solder-down"
+J1,FPC connector 30-pin 0.5 mm ZIF,Hirose,FH12-30S-0.5SH(55),HFJ130CT-ND,798-FH12-30S-0.5SH55,,2.64,1,5,13.20,checked,"4,414 at DigiKey"
+J2,"USB-C receptacle 24-pin, full featured",Amphenol,12401610E4#2A,12401610E4#2ACT-ND,,,1.43,1,5,7.15,checked,"79,753 at DigiKey; the 20-week lead seen in October is gone"
+"J3,J12",JST SH 10-pin side-entry header,JST,SM10B-SRSS-TB(LF)(SN),455-SM10B-SRSS-TBCT-ND,306-SM10B-SRSSTBLFSN,,0.93,2,8,7.44,checked,"tether, one per board"
+CBL,"JST SH 10-pin cable, both ends, 152 mm",JST,A10SR10SR30K152B,455-3728-ND,,,2.46,1,3,7.38,checked,"106 at DigiKey; the 152A (5,019 in stock) is the reversed pinning: check pin 1 before ordering"
+"SW1,SW2","Tactile switch SMT (RESET, BOOT)",C&K,PTS810 SJM 250 SMTR LFS,CKN10502CT-ND,611-PTS810SJM250SMTR,,0.58,2,8,4.64,checked,Japan: Alps SKRPACE010 at Akizuki (check pads)
+"D1,D12",LED green 0603,Lite-On,LTST-C191KGKT,160-1446-1-ND,859-LTST-C191KGKT,,0.15,2,10,1.50,checked,
+D13,LED red 0603,Lite-On,LTST-C191KRKT,160-1447-1-ND,,,0.15,1,10,1.50,checked,
+Q1,P-MOSFET SOT-23 (OLED supply),Diodes,DMG2305UX-7,DMG2305UX-7DICT-ND,,,0.38,1,5,1.90,checked,"74,154 at DigiKey. Replaces FDN338P (0 stock, 57-week lead); same G-S-D SOT-23, verify Vgs(th)"
+Q2,N-MOSFET SOT-23,onsemi,FDN337N,,,,0.77,1,5,3.85,checked,"222,614 at DigiKey. Replaces FDN335N (0 stock, 70-week lead); verify against the schematic"
+U10,"LiPo charger with power path, VQFN-16",TI,BQ24074RGTR,296-38873-1-ND,595-BQ24074RGTR,,2.43,1,5,12.15,checked,"1,901 at DigiKey; RGTT has 8,549 at $3.19"
+U11,"Fuel gauge, TDFN-8 (optional)",Analog Devices,MAX17048G+T10,MAX17048G+T10CT-ND,700-MAX17048G+T10,,4.61,1,5,23.05,checked,"21,841 at DigiKey; check pinout vs datasheet"
+BT1,"LiPo 500 mAh, JST-PH",Adafruit,1578,,485-1578,,7.95,1,3,23.85,checked,no NTC: bond RT1 to the cell. Japan: Sengoku DTP652533(PHR)
+RT1,NTC 10k 0402,Murata,NCU15XH103F60RC,,,,0.10,1,10,1.00,checked,"39,686 at DigiKey. NCP15XH103F03RC is not for new designs (still 122,042 in stock)"
+J10,USB-C receptacle 16-pin,GCT,USB4105-GF-A,2073-USB4105-GF-ACT-ND,640-USB4105-GF-A,,0.80,1,5,4.00,checked,"263,569 at DigiKey"
+J11,JST PH 2-pin SMT header,JST,S2B-PH-SM4-TB(LF)(SN),455-S2B-PH-SM4-TBCT-ND,306-S2BPHSM4TBLFSN,,0.49,1,5,2.45,checked,verify cell polarity
+SW10,Slide switch SMT,C&K,PCM12SMTR,401-2016-1-ND,611-PCM12SMTR,,1.28,1,5,6.40,checked,"obsolete, 2,726 left at DigiKey: enough for this run, replace before any larger one"
+"D10,D11",Schottky 1 A SOD-123FL,onsemi,MBR120VLSFT1G,MBR120VLSFT1GOSCT-ND,,,0.61,2,8,4.88,checked,"105,142 at DigiKey. Replaces PMEG2010AEH (0 stock until Oct 2027); verify pad fit and Vf"
 C1,10 µF 0603 X5R,Samsung,CL10A106KP8NNNC,,,,0.10,1,10,1.00,estimate,
 "C2,C4,C5,C6",100 nF 0402 X7R,Samsung,CL05B104KO5NNNC,1276-1001-1-ND,,,0.02,4,18,0.36,estimate,
 "C3,C8,C9,C12,C13,C23",1 µF 0402 X5R,Samsung,CL05A105KO5NNNC,,,,0.03,6,27,0.81,estimate,
@@ -41,4 +41,5 @@ R7,100k 0402 1%,Yageo,RC0402FR-07100KL,311-100KLRCT-ND,,,0.01,1,10,0.10,estimate
 R23,1.78k 0402 1% (ISET 500 mA),Yageo,RC0402FR-071K78L,,,,0.01,1,10,0.10,estimate,
 R24,3.09k 0402 1% (ILIM 500 mA),Yageo,RC0402FR-073K09L,,,,0.01,1,10,0.10,estimate,
 "R25,R26",1.5k 0402 1%,Yageo,RC0402FR-071K5L,,,,0.01,2,10,0.10,estimate,
-PCB,"Pod + puck PCBs, 5 each, 4-layer pod / 2-layer puck",JLCPCB/PCBWay/OSHPark,,,,fab,60.00,0.333,1,60.00,estimate,one order for the team; not a DigiKey line
+PCB,"Pod (4-layer) + puck (2-layer) PCBs, 3 of each",OSH Park,,,,oshpark.com,23.25,0.333,1,23.25,checked,"US-made, free shipping, 9-14 days ($46.50 Super Swift, about a week). 6 of each for 4-5 units"
+STN,"Solder paste stencils, pod + puck",OSH Stencils,,,,oshstencils.com,20.00,0.333,1,20.00,estimate,price not confirmed; needed for the LGA-14 and QFN parts

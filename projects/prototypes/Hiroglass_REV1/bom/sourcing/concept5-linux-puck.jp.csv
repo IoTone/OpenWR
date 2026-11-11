@@ -1,0 +1,12 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+concept5-linux-puck,SBC,"Raspberry Pi 5, 8 GB",Akizuki,Raspberry Pi 5 8 GB,JPY,35200,25,3,ok,page,,,1,2,3,4,5,222.38,444.75,667.13,889.51,1111.88,"also Switch Science 36,300 yen (20)"
+concept5-linux-puck,PSU,27 W USB-C power supply,Akizuki,27 W USB PD supply,JPY,2750,545,3,ok,page,,,1,2,3,4,5,17.37,34.75,52.12,69.49,86.87,
+concept5-linux-puck,FAN,Active Cooler,Switch Science,SC1148,JPY,1100,in stock,2,ok,page,,,1,2,3,4,5,6.95,13.90,20.85,27.80,34.75,
+concept5-linux-puck,SD,microSD 64 GB,Japan hardware shop,microSD 64 GB,JPY,1500,not shown,3,ok,est,,,1,2,3,4,5,9.48,18.95,28.43,37.91,47.38,
+concept5-linux-puck,HDMI,micro-HDMI to HDMI cable,Akizuki,"HDMI A to micro D, 2 m",JPY,350,814,3,ok,page,,,1,2,3,4,5,2.21,4.42,6.63,8.84,11.06,
+concept5-linux-puck,ADP,HDMI to USB-C (DisplayPort) adapter for the glasses,Japan hardware shop,HDMI to USB-C DisplayPort adapter,JPY,10000,not shown,3,watch,est,,,1,2,3,4,5,63.18,126.35,189.53,252.70,315.88,no confirmed part or source
+concept5-linux-puck,IMUB,QT Py RP2040 (USB IMU bridge),Switch Science,Adafruit 4900,JPY,2090,in stock,2,ok,page,,,1,2,3,4,5,13.20,26.41,39.61,52.81,66.02,
+concept5-linux-puck,IMU,BNO085 9-DoF IMU breakout,Switch Science,Conta BNO085 module,JPY,4950,in stock,2,ok,page,,,1,2,3,4,5,31.27,62.54,93.82,125.09,156.36,Switch Science's own BNO085 board
+concept5-linux-puck,QT,STEMMA QT cable 50 mm,Switch Science,Qwiic 50 mm,JPY,308,in stock,2,ok,page,,,1,2,3,4,5,1.95,3.89,5.84,7.78,9.73,
+concept5-linux-puck,CAM,Camera Module 3 (stereo pair),Akizuki,Camera Module 3,JPY,5940,112,3,ok,page,,,2,4,6,8,10,75.05,150.10,225.16,300.21,375.26,
+concept5-linux-puck,GLS,XREAL Air 2 display glasses,XREAL Japan,XREAL 1S,JPY,67980,in stock,5,ok,page,yes,,1,2,3,4,5,429.46,858.93,1288.39,1717.86,2147.32,"Air 2 is not sold standalone in Japan; the 1S needs the community driver, not Monado's"

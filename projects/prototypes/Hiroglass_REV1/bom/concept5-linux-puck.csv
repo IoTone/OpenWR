@@ -1,12 +1,12 @@
 ref,description,manufacturer,mpn,digikey_pn,mouser_pn,other_vendor,unit_usd,qty_per_kit,order_qty,ext_usd,status,note
-SBC,"Raspberry Pi 5, 8 GB",Raspberry Pi,SC1112,,358-SC1112,,175.00,1,1,175.00,snapshot,price has risen sharply in 2026; check
-PSU,27 W USB-C power supply,Raspberry Pi,SC1157,,,,12.00,1,1,12.00,estimate,
-FAN,Active Cooler,Raspberry Pi,SC1148,,,,5.00,1,1,5.00,estimate,
+SBC,"Raspberry Pi 5, 8 GB",Raspberry Pi,SC1112,,358-SC1112,,175.00,1,1,175.00,checked,"PiShop.us and CanaKit; Japan 35,200 yen at Akizuki"
+PSU,27 W USB-C power supply,Raspberry Pi,SC1157,,,,12.95,1,1,12.95,checked,
+FAN,Active Cooler,Raspberry Pi,SC1148,,,,12.95,1,1,12.95,checked,PiShop.us; the list price is $5
 SD,microSD 64 GB,,(pick at order),,,,12.00,1,1,12.00,estimate,
 HDMI,micro-HDMI to HDMI cable,Raspberry Pi,(pick at order),,,,5.00,1,1,5.00,estimate,
-ADP,HDMI to glasses adapter (XREAL Adapter),XREAL,,,,xreal.com,69.00,1,1,69.00,estimate,not needed with a ROCK 5B
+ADP,HDMI to USB-C (DisplayPort) adapter for the glasses,,(pick at order),,,,69.00,1,1,69.00,estimate,the team has adapters known to work with the Air 2; none confirmed for sale (VITURE's fits VITURE only)
 IMUB,QT Py RP2040 (USB IMU bridge),Adafruit,4900,,,,9.95,1,1,9.95,estimate,
-IMU,BNO085 9-DoF IMU breakout,Adafruit,4754,1528-4754-ND,,,24.95,1,1,24.95,snapshot,
+IMU,BNO085 9-DoF IMU breakout,Adafruit,4754,1528-4754-ND,,,29.50,1,1,29.50,checked,
 QT,STEMMA QT cable 50 mm,Adafruit,4399,1528-4399-ND,,,0.95,1,1,0.95,snapshot,
-CAM,Camera Module 3 (stereo pair),Raspberry Pi,SC0872,,,,25.00,2,2,50.00,estimate,plus Pi 5 camera cables
-GLS,Birdbath glasses (XREAL One / Viture),XREAL / Viture,,,,retail,0.00,1,1,0.00,estimate,borrowed: $400–500 if bought
+CAM,Camera Module 3 (stereo pair),Raspberry Pi,SC0872,,,,29.25,2,2,58.50,checked,plus Pi 5 camera cables
+GLS,XREAL Air 2 display glasses,XREAL,Air 2,,,xreal.com,199.00,1,1,199.00,checked,the team has one. The only family Monado supports directly; not sold standalone in Japan

@@ -257,7 +257,7 @@
 <line x1="847.0" y1="626.0" x2="853.0" y2="626.0" stroke="#1b232c" stroke-width="1.6"/>
 <rect x="820.0" y="130.0" width="120.0" height="66.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
 <text x="820.0" y="106.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">Q1</text>
-<text x="820.0" y="121.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">FDN338P  P-FET</text>
+<text x="820.0" y="121.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">DMG2305UX  P-FET</text>
 <line x1="786.0" y1="152.0" x2="820.0" y2="152.0" stroke="#1b232c" stroke-width="1.4"/>
 <text x="826.0" y="156.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">S</text>
 <text x="816.0" y="148.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">2</text>
@@ -275,7 +275,7 @@
 <text x="986.0" y="156.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="500" fill="#1f6f8b" text-anchor="start">OLED_VBAT</text>
 <rect x="820.0" y="300.0" width="120.0" height="66.0" rx="2" fill="#fffdf5" stroke="#1b232c" stroke-width="1.6"/>
 <text x="820.0" y="276.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#1b232c" text-anchor="start">Q2</text>
-<text x="820.0" y="291.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">FDN335N  N-FET</text>
+<text x="820.0" y="291.0" font-family="IBM Plex Sans, Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12" font-weight="400" fill="#5a6672" text-anchor="start">FDN337N  N-FET</text>
 <line x1="786.0" y1="322.0" x2="820.0" y2="322.0" stroke="#1b232c" stroke-width="1.4"/>
 <text x="826.0" y="326.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="11.5" font-weight="400" fill="#1b232c" text-anchor="start">G</text>
 <text x="816.0" y="318.0" font-family="IBM Plex Mono, Menlo, Consolas, monospace" font-size="10" font-weight="400" fill="#5a6672" text-anchor="end">1</text>

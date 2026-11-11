@@ -1,0 +1,10 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+optics-mech,LENS-A,"Plano-convex 15 mm x f20 mm, uncoated (cartridge A)",Edmund Optics Japan,#63-480,JPY,4800,20,7,ok,page,,,1,2,3,4,5,33.36,66.71,100.07,133.43,166.78,
+optics-mech,BS-A,Plate beamsplitter 50R/50T float glass 25 mm,Edmund Optics Japan,#43-736,JPY,8550,20,7,ok,page,,,1,2,3,4,5,59.42,118.83,178.25,237.67,297.08,"30R/70T version: #43-734, same price"
+optics-mech,LENS-B,"Eyepiece lens 12.7 mm x f20 mm, AR coated (cartridge B)",Edmund Optics Japan,"#23-083 (15 x 22.5 mm, MgF2, clearance)",JPY,2800,20,7,watch,page,,,1,2,3,4,5,19.46,38.92,58.37,77.83,97.29,"#47-873 shows 'contact us': not in stock. Same size lens with a simpler coating; clearance item, no returns"
+optics-mech,ND,ND 1.0 filter 25 mm (≈ category-3 tint) for the brightness test,Edmund Optics Japan,#48-090,JPY,7250,20,7,ok,page,,yes,1,1,1,1,1,50.38,50.38,50.38,50.38,50.38,
+optics-mech,MAG,N52 disc magnet 6.35 x 1.6 mm,Japan hardware shop,6 x 3 mm neodymium disc,JPY,60,not shown,3,watch,est,,,10,20,30,40,50,3.79,7.58,11.37,15.16,18.95,"only price found: 679 yen a bag, quantity unknown"
+optics-mech,SCR,M2 x 6 pan-head screws (100),MonotaRO,"M2 x 6 pan-head screws, stainless",JPY,582,in stock,3,ok,page,,,1,1,1,1,1,3.68,3.68,3.68,3.68,3.68,from 582 yen a pack; pack size varies by listing
+optics-mech,STO,M2 standoffs,MonotaRO,"Hirosugi ASB-E brass hex spacer, 4 pcs",JPY,593,in stock,3,ok,page,,,2,3,5,6,8,7.49,11.24,18.73,22.48,29.97,
+optics-mech,INS,M2 heat-set inserts (100),MonotaRO,"Hirosugi HSB brass heat-set insert, 50 pcs",JPY,1428,in stock,3,ok,page,,,1,1,1,1,1,9.02,9.02,9.02,9.02,9.02,ships same day to 7 days
+optics-mech,LUX,Lux meter,Misumi,Sanwa LX20,JPY,24404,not shown,3,ok,snippet,,yes,1,1,1,1,1,154.17,154.17,154.17,154.17,154.17,"budget: Shinwa 78747 about 8,600 yen (snippet)"

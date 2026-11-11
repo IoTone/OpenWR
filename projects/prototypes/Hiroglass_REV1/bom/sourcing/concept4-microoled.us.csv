@@ -1,0 +1,8 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+concept4-microoled,MCU2,Raspberry Pi Pico 2 (RP2350),PiShop.us,Pico 2 SC1631,USD,5.0,in stock,6,ok,page,,,3,6,9,12,15,15.00,30.00,45.00,60.00,75.00,
+concept4-microoled,LVL,"8-bit dual-supply translator, TSSOP-24",DigiKey,SN74AXC8T245PWR,USD,1.2,not shown,5,watch,est,,,2,4,6,8,10,2.40,4.80,7.20,9.60,12.00,out at TI's own store; distributor stock not read
+concept4-microoled,BRK,TSSOP-24 to DIP breakout,Amazon,TSSOP-24 breakout,USD,3.0,not shown,3,watch,est,,,2,4,6,8,10,6.00,12.00,18.00,24.00,30.00,no true 24-pin board confirmed
+concept4-microoled,LDO18,"1.8 V LDO, SOT-23-5",DigiKey,TLV75718PDBVR,USD,0.4,not shown,5,watch,est,,,1,2,3,4,5,0.40,0.80,1.20,1.60,2.00,distributor stock not read
+concept4-microoled,PANEL,Sony ECX336-class micro-OLED + HDMI driver board,,,USD,,0,,out,page,,,1,2,3,4,5,0.00,0.00,0.00,0.00,0.00,"no seller ships an ECX336-class panel from US stock. Imports: Tindie $275 (Hong Kong), DisplayModule $239 (origin not confirmed)"
+concept4-microoled,REF,"Hicenda 0.23"" 640x400 module, 4,000 nit (reference)",,,USD,,0,,out,page,,,1,2,3,4,5,0.00,0.00,0.00,0.00,0.00,optional reference module; Hicenda ships from Shenzhen only
+concept4-microoled,FPGA,iCEBreaker FPGA board (optional),Newark,Lattice ICE40UP5K-B-EVN,USD,65.62,18,5,ok,snippet,yes,,1,2,3,4,5,65.62,131.24,196.86,262.48,328.10,replaces iCEBreaker (sold out at 1BitSquared)

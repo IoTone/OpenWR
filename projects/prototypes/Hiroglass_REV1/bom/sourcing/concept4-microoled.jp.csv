@@ -1,0 +1,8 @@
+option,ref,description,vendor,part_bought,currency,unit_price_1,stock,days_to_door,rating,confidence,substitute,one_time_tool,qty_1,qty_2,qty_3,qty_4,qty_5,usd_1,usd_2,usd_3,usd_4,usd_5,note
+concept4-microoled,MCU2,Raspberry Pi Pico 2 (RP2350),Akizuki,Pico 2 SC1631,JPY,990,"1,462",3,ok,page,,,3,6,9,12,15,18.76,37.53,56.29,75.05,93.82,
+concept4-microoled,LVL,"8-bit dual-supply translator, TSSOP-24",DigiKey Japan,SN74AXC8T245PWR,JPY,190,not shown,4,watch,converted,,,2,4,6,8,10,2.64,5.28,7.92,10.56,13.20,stock not read
+concept4-microoled,BRK,TSSOP-24 to DIP breakout,Akizuki,AE-HTSSOP28-DIP,JPY,80,"2,728",3,watch,page,,,2,4,6,8,10,1.01,2.02,3.03,4.04,5.05,28-pin board with a bottom pad; no 24-pin board at Akizuki
+concept4-microoled,LDO18,"1.8 V LDO, SOT-23-5",DigiKey Japan,TLV75718PDBVR,JPY,63,not shown,4,watch,converted,,,1,2,3,4,5,0.44,0.88,1.31,1.75,2.19,stock not read
+concept4-microoled,PANEL,Sony ECX336-class micro-OLED + HDMI driver board,Tindie (Hong Kong),0.23 in 640x400 micro-OLED + HDMI board,USD,275.0,not shown,14,watch,page,,,1,2,3,4,5,275.00,550.00,825.00,1100.00,1375.00,no stock count or ship time shown
+concept4-microoled,REF,"Hicenda 0.23"" 640x400 module, 4,000 nit (reference)",Hicenda,"HTECX336CN 4,000 nit module",USD,389.0,not shown,,watch,page,,,1,2,3,4,5,0.00,0.00,0.00,0.00,0.00,optional reference module
+concept4-microoled,FPGA,iCEBreaker FPGA board (optional),Akizuki,Tang Nano 9K,JPY,3780,101,3,ok,page,yes,,1,2,3,4,5,23.88,47.76,71.64,95.52,119.40,"replaces iCEBreaker (sold out); Gowin FPGA, open toolchain via Apicula"

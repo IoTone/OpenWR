@@ -239,7 +239,7 @@ def pod0_1_mcu():
     s.two_pin("C", "C8", "1µF", 630, 650, "+3V3", "GND", mpn="Samsung CL05A105KO5NNNC")
 
     # MCU
-    s.ic("U1", "ESP32-C3-MINI-1-N4", 1010, 110, width=210, mpn="Espressif ESP32-C3-MINI-1-N4",
+    s.ic("U1", "ESP32-C3-MINI-1-N4X", 1010, 110, width=210, mpn="Espressif ESP32-C3-MINI-1-N4X",
          left=[("3", "3V3", "+3V3"), ("1 2 11 14 36–53", "GND", "GND"), ("8", "EN", "EN"),
                ("23", "IO9", "BOOT"), ("22", "IO8", "LED_N"),
                ("26", "IO18 D−", "USB_DN"), ("27", "IO19 D+", "USB_DP"),
@@ -313,9 +313,9 @@ def pod0_2_display_sensors():
             ("R", "R14", "4.7k", "OLED_ERD", "GND", "Yageo RC0402FR-074K7L")):
         s.two_pin(kind, ref, val, next(xs) + 20, y, a, b, mpn=mpn)
     # OLED supply switch
-    s.ic("Q1", "FDN338P  P-FET", 820, 130, width=120, mpn="onsemi FDN338P",
+    s.ic("Q1", "DMG2305UX  P-FET", 820, 130, width=120, mpn="Diodes DMG2305UX-7 (was FDN338P)",
          left=[("2", "S", "VCELL"), ("1", "G", "Q1_G")], right=[("3", "D", "OLED_VBAT")])
-    s.ic("Q2", "FDN335N  N-FET", 820, 300, width=120, mpn="onsemi FDN335N",
+    s.ic("Q2", "FDN337N  N-FET", 820, 300, width=120, mpn="onsemi FDN337N (was FDN335N)",
          left=[("1", "G", "OLED_VBAT_EN"), ("2", "S", "GND")], right=[("3", "D", "Q1_G")])
     s.two_pin("R", "R15", "47k", 1120, 130, "VCELL", "Q1_G", mpn="Yageo RC0402FR-0747KL")
     s.two_pin("R", "R16", "47k", 1120, 300, "OLED_VBAT_EN", "GND", mpn="Yageo RC0402FR-0747KL")
@@ -367,10 +367,10 @@ def pod0_3_puck():
                 ("A8 B8", "SBU", None), ("S", "SHIELD", "GND")], top="charge only, no data")
     s.two_pin("R", "R20", "5.1k", 90, 420, "PCC1", "GND", mpn="Yageo RC0402FR-075K1L")
     s.two_pin("R", "R21", "5.1k", 170, 420, "PCC2", "GND", mpn="Yageo RC0402FR-075K1L")
-    s.two_pin("D", "D10", "PMEG2010AEH", 500, 150, "VBUS_PUCK", "CHG_IN", vertical=False,
-              mpn="Nexperia PMEG2010AEH")
-    s.two_pin("D", "D11", "PMEG2010AEH", 500, 240, "VBUS_POD", "CHG_IN", vertical=False,
-              mpn="Nexperia PMEG2010AEH")
+    s.two_pin("D", "D10", "MBR120VLSF", 500, 150, "VBUS_PUCK", "CHG_IN", vertical=False,
+              mpn="onsemi MBR120VLSFT1G")
+    s.two_pin("D", "D11", "MBR120VLSF", 500, 240, "VBUS_POD", "CHG_IN", vertical=False,
+              mpn="onsemi MBR120VLSFT1G")
     s.two_pin("C", "C20", "1µF 25V", 540, 320, "CHG_IN", "GND", mpn="Samsung CL10A105KA8NNNC")
     s.ic("U10", "BQ24074RGT", 820, 110, width=150, mpn="TI BQ24074RGTR",
          left=[("13", "IN", "CHG_IN"), ("4", "CE#", "GND"), ("5", "EN2", "GND"),
@@ -385,7 +385,7 @@ def pod0_3_puck():
             ("R", "R24", "3.09k 1%", "ILIM", "GND", "Yageo RC0402FR-073K09L"),
             ("C", "C21", "4.7µF", "VSYS", "GND", "Samsung CL10A475KP8NNNC"),
             ("C", "C22", "4.7µF", "VCELL", "GND", "Samsung CL10A475KP8NNNC"),
-            ("NTC", "RT1", "10k NTC", "NTC_TS", "GND", "Murata NCP15XH103F03RC"))):
+            ("NTC", "RT1", "10k NTC", "NTC_TS", "GND", "Murata NCU15XH103F60RC"))):
         s.two_pin(kind, ref, val, 620 + i * 100, 470, a, b, mpn=mpn)
     s.two_pin("R", "R25", "1.5k", 1200, 130, "VSYS", "PG_A", mpn="Yageo RC0402FR-071K5L")
     s.two_pin("LED", "D12", "green", 1200, 230, "PG_A", "PGOOD_N", mpn="Lite-On LTST-C191KGKT")
@@ -507,9 +507,9 @@ def concept5_linux_puck():
             width=230, sub="SC1112 8 GB · Monado + OpenXR apps")
     s.board("HDMI → USB-C adapter", 820, 110,
             pins_left=("HDMI in", "USB-C 5 V in"), pins_right=("USB-C DP alt out",), width=200,
-            sub="XREAL Adapter or Viture dock (not at DigiKey)")
+            sub="adapter on hand · check USB pass-through")
     s.board("Birdbath glasses", 1240, 110, pins_left=("USB-C  DP alt + 5 V",), width=220,
-            sub="XREAL One / Viture · borrowed", color="#5b2b22")
+            sub="XREAL Air 2 · on hand", color="#5b2b22")
     s.board("IMU bridge · QT Py RP2040", 820, 380,
             pins_left=("USB-C",), pins_right=("QT 3V3", "QT GND", "QT SDA", "QT SCL", "A0  INT",
                                              "A1  RST"),
