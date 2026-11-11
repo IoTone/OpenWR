@@ -584,7 +584,221 @@ def concept_0():
     s.save("concept-0-pod0-system.svg")
 
 
+# 6 -----------------------------------------------------------------------
+def tile(s, x, y, title, sub, w=160, h=66, accent=False):
+    s.add(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="#ffffff" '
+          f'stroke="{ACCENT if accent else RULE}" stroke-width="{1.6 if accent else 1}"/>')
+    s.text(x + 12, y + 26, title, size=13, weight=600)
+    s.lines(x + 12, y + 45, sub if isinstance(sub, (list, tuple)) else [sub], size=11.5,
+            color=MUTED, gap=14)
+
+
+GLOW = "#f2a31b"
+
+
+def concept_6():
+    s = Sheet(6, "Rail: a tool platform for someone else's goggles",
+              "one pack, one hub, swappable heads and sensor bits")
+    s.panel(*LEFT, "Flat lay: goggle and strap, seen from the front")
+    strap = "#dfe5ea"
+    # strap, both sides
+    s.add(f'<rect x="44" y="290" width="40" height="40" fill="{strap}" stroke="{INK}" stroke-width="1.2"/>')
+    s.add(f'<rect x="250" y="290" width="346" height="40" fill="{strap}" stroke="{INK}" stroke-width="1.2"/>')
+    # goggle
+    s.add(f'<rect x="70" y="250" width="190" height="120" rx="52" fill="{HOUSING}"/>')
+    s.add(f'<rect x="86" y="266" width="158" height="88" rx="40" fill="{GLASS}" fill-opacity="0.75" stroke="{INK}"/>')
+    # heads: Glow line along the lower rim, Glance pod at the outer corner, one USB-C lead
+    for i in range(11):
+        s.add(f'<circle cx="{104 + i * 8.4:.1f}" cy="346" r="2.6" fill="{GLOW}" '
+              f'fill-opacity="{1 - i * 0.07:.2f}"/>')
+    s.add(f'<rect x="200" y="330" width="42" height="24" rx="6" fill="{LIGHT}"/>')
+    s.add(f'<path d="M242,344 C262,352 270,350 286,334" fill="none" stroke="{HOUSING}" stroke-width="3"/>')
+    # hub
+    s.add(f'<rect x="286" y="278" width="112" height="64" rx="9" fill="{HOUSING}"/>')
+    s.text(342, 306, "HUB", size=12, anchor="middle", color="#ffffff", font=MONO, weight=500)
+    s.text(342, 324, "IMU · RTC · BLE", size=10.5, anchor="middle", color="#c9d1d8", font=MONO)
+    # bays
+    for i, x in enumerate((414, 452, 490)):
+        s.add(f'<rect x="{x}" y="294" width="30" height="32" rx="4" fill="#ffffff" stroke="{ACCENT}" stroke-width="1.8"/>')
+        s.text(x + 15, 315, str(i + 1), size=11, anchor="middle", color=ACCENT, font=MONO)
+    # power bus woven into the strap
+    s.add(f'<line x1="398" y1="334" x2="536" y2="334" stroke="{ACCENT}" stroke-width="2.4"/>')
+    # pack
+    s.add(f'<rect x="536" y="272" width="62" height="76" rx="10" fill="{ACCENT}"/>')
+    s.text(567, 314, "PACK", size=11.5, anchor="middle", color="#ffffff", font=MONO, weight=500)
+    s.add(f'<path d="M530,280 v60" stroke="{INK}" stroke-width="3"/>')
+    s.callout(120, 252, 80, 142, ["Host: any strap goggle", "Smith, Oakley, 100%, Fox",
+                                  "lens and foam untouched"])
+    s.callout(342, 278, 300, 176, ["Hub: the tool body", "MCU · 6- or 9-axis IMU · RTC",
+                                   "BLE · USB-C out to the head"])
+    s.callout(567, 272, 560, 226, ["Pack: slides on, latches", "USB-C charge · sizes S, M"],
+              anchor="end")
+    s.callout(130, 349, 60, 430, ["Glow: a light line in the rim", "read it without looking"])
+    s.callout(224, 354, 240, 470, ["Glance: digit pod, optional"])
+    s.callout(467, 326, 400, 430, ["Bays: 3 snap-on sockets", "magnets + pogo pins, Qwiic inside"])
+    s.text(50, 500, "Wireless parts join the hub over Bluetooth LE: phone, HR strap, bike sensors, glove remote.",
+           size=12, color=MUTED)
+    s.text(50, 522, "Nothing is glued or drilled. Unclip the strap rail and the goggle is stock again.",
+           size=12, color=MUTED)
+    s.text(50, 544, "Pack at the back of the head balances the hub and head at the front.",
+           size=12, color=MUTED)
+
+    s.panel(*RIGHT, "The catalogue")
+    cols = (650, 822, 994)
+    rows = [
+        (140, "PACKS", [("Pack S · 500 mAh", "the pouch cell we use now", True),
+                        ("Pack M · 2,200 mAh", "one protected 18650, 46 g", False),
+                        ("Pocket lead", ["any USB-C power bank,", "kept warm in a jacket"], False)]),
+        (240, "HEADS", [("Glow line", "light cues in the lower rim", True),
+                        ("Glance pod", "digits, Pod-0 optics", False),
+                        ("Later: binocular", "USB-C DisplayPort", False)]),
+        (340, "BITS, WIRED", [("Baro + temp", "altitude, vertical, weather", True),
+                              ("GNSS", "speed, track, lap times", False),
+                              ("Compass", "makes the core 9-axis", False)]),
+        (416, "", [("Light + UV", "auto brightness", False),
+                   ("Mesh radio", "group location, no cell", False),
+                   ("Camera", ["optional: lens cap, wired", "LED, never on the base"], False)]),
+    ]
+    for y, label, tiles in rows:
+        if label:
+            s.text(650, y - 8, label, size=10.5, color=MUTED, font=MONO, weight=500)
+        for x, (title, sub, accent) in zip(cols, tiles):
+            tile(s, x, y, title, sub, accent=accent)
+    s.text(650, 514, "Outlined in blue: Rail-0, the first build, about $190 in parts.", size=12,
+           color=MUTED)
+    s.text(650, 536, "Wireless bits need no bay: HR strap, speed and cadence, glove remote.", size=12,
+           color=MUTED)
+
+    s.specs([("Added mass", ["≤ 120 g", "split front and back"]),
+             ("Target", ["< $300", "hub, pack, head, two bits"]),
+             ("Sealing", ["IP67", "-20 to +50 °C, gloves"]),
+             ("Privacy", ["No camera, no mic", "on the base; no cloud"]),
+             ("First build", ["Rail-0", "XIAO hub, Glow line, 3 bays"])])
+    s.save("concept-6-rail-platform.svg")
+
+
+def hud(s, x, y, fields):
+    s.add(f'<rect x="{x}" y="{y}" width="236" height="72" rx="8" fill="#10161b"/>')
+    for i, (big, small) in enumerate(fields):
+        cx = x + 42 + i * 76
+        s.text(cx, y + 34, big, size=17, anchor="middle", color="#f2f5f7", font=MONO, weight=500)
+        s.text(cx, y + 54, small, size=10, anchor="middle", color="#8fa1ae", font=MONO)
+
+
+def concept_6_sports():
+    s = Sheet(6, "Rail: one core, four sports", "same hub and pack; the host, bits and screen change")
+    cols = [
+        ("Dirt bike", "MX goggle, full-face helmet",
+         [("47", "MPH"), ("1:42.3", "LAP"), ("38°", "LEAN")],
+         ["GNSS at 10 Hz or faster", "core IMU: lean angle, g-force", "wireless: engine temp, phone"],
+         ["roost, mud, pressure washing", "tear-offs and roll-offs cover the lens",
+          "engine vibration on every joint", "too loud for audio cues"]),
+        ("Ski and snowboard", "snow goggle, helmet strap clip",
+         [("38", "KM/H"), ("4,120", "VERT M"), ("7", "RUN")],
+         ["baro + temp, GNSS", "mesh radio: where friends are", "wireless: phone, maplet trail map"],
+         ["-20 °C halves a pack: pocket lead", "no heat source inside the lens (fog)",
+          "keep radios clear of an avalanche", "beacon: 20 cm, 50 cm in search"]),
+        ("Mountain bike", "MTB goggle or glasses",
+         [("152", "HR Z4"), ("24", "KM/H"), ("120 m", "TURN L")],
+         ["light sensor for forest to sun", "wireless: HR strap, speed, cadence", "Switchback routes and turns"],
+         ["sweat and dust in every socket", "crashes: breakaway lead, soft mounts",
+          "brightness swings in seconds", "open-face helmets: strap sits lower"]),
+        ("Mountaineering", "glacier goggle, climbing helmet",
+         [("4,312", "ALT M"), ("+310", "M / HOUR"), ("274°", "BEARING")],
+         ["baro + temp, compass, GNSS", "mesh radio: rope team, no cell", "RTC: turnaround-time alarm"],
+         ["days between charges: sleep hard,", "low-power head (memory LCD)",
+          "expedition mitts on the remote", "white-out: bearing must not drift"]),
+    ]
+    for i, (name, host, fields, bits, watch) in enumerate(cols):
+        x = 30 + i * 287.5
+        s.add(f'<rect x="{x}" y="90" width="272.5" height="470" rx="4" fill="{PANEL}" stroke="{RULE}"/>')
+        s.text(x + 18, 124, name, size=19, weight=600)
+        s.text(x + 18, 146, host, size=12.5, color=MUTED)
+        hud(s, x + 18, 164, fields)
+        s.text(x + 18, 268, "BITS FITTED", size=10.5, color=MUTED, font=MONO, weight=500)
+        s.lines(x + 18, 290, bits, size=12.5, gap=18)
+        s.text(x + 18, 372, "DESIGN FOR", size=10.5, color=MUTED, font=MONO, weight=500)
+        s.lines(x + 18, 394, watch, size=12.5, gap=18)
+        s.add(f'<line x1="{x + 18}" y1="484" x2="{x + 254.5}" y2="484" stroke="{RULE}"/>')
+    glow = [["Glow: lap delta, green ahead, red", "behind. Whole rim red: flag."],
+            ["Glow: a dot points to your group.", "Amber pulse: a rider is down."],
+            ["Glow: colour is the heart-rate zone.", "A sweep left or right: next turn."],
+            ["Glow: keep the dot centred to hold a", "bearing. Rim red: turnaround time."]]
+    for i, rows in enumerate(glow):
+        s.lines(48 + i * 287.5, 508, rows, size=12, color=MUTED, gap=17)
+    s.specs([("On every build", ["Hub + pack", "IMU, RTC, Bluetooth LE"]),
+             ("On screen", ["≤ 4 fields", "time, heading, one metric, alert"]),
+             ("Controls", ["Glove remote", "wireless button, no touch"]),
+             ("Pairing", ["Button press", "signed firmware, radio-off switch"]),
+             ("Data", ["Stays local", "on the hub or your phone"])])
+    s.save("concept-6-rail-sports.svg")
+
+
+def mini(s, x, y, title, sub, pixels):
+    """A small goggle lens with a 14-pixel Glow line. pixels: {index: (colour, opacity)}."""
+    s.add(f'<rect x="{x}" y="{y}" width="240" height="118" rx="6" fill="#ffffff" stroke="{RULE}"/>')
+    s.add(f'<rect x="{x + 20}" y="{y + 10}" width="200" height="58" rx="27" fill="#10161b"/>')
+    for i in range(14):
+        colour, op = pixels.get(i, ("#3a444d", 1))
+        s.add(f'<circle cx="{x + 38 + i * 12.6:.1f}" cy="{y + 56}" r="3.6" fill="{colour}" fill-opacity="{op}"/>')
+    s.text(x + 20, y + 90, title, size=13, weight=600)
+    s.text(x + 20, y + 107, sub, size=11.5, color=MUTED)
+
+
+def concept_6_glow():
+    s = Sheet(6, "Rail: Glow, a display you read without looking",
+              "a line of light in the lower rim; digits are an optional second head")
+    s.panel(*LEFT, "Inside the goggle, seen by the wearer")
+    s.add(f'<rect x="80" y="170" width="480" height="230" rx="104" fill="{HOUSING}"/>')
+    s.add(f'<rect x="100" y="190" width="440" height="190" rx="86" fill="#10161b"/>')
+    s.add(f'<ellipse cx="320" cy="270" rx="118" ry="56" fill="none" stroke="#8fa1ae" stroke-width="1.2" stroke-dasharray="6 5"/>')
+    s.text(320, 274, "where you are looking", size=12, anchor="middle", color="#8fa1ae")
+    for i in range(14):
+        lit = i < 5
+        s.add(f'<circle cx="{171 + i * 23}" cy="360" r="6" fill="{GLOW if lit else "#3a444d"}" '
+              f'fill-opacity="{1 - i * 0.17 if lit else 1:.2f}"/>')
+    s.add(f'<rect x="476" y="318" width="50" height="30" rx="7" fill="{LIGHT}"/>')
+    s.callout(217, 366, 120, 436, ["Glow: 14 pixels on a 4 mm strip", "between foam and lens, lower rim",
+                                   "here: turn left soon"])
+    s.callout(500, 318, 548, 142, ["Glance pod: digits, optional", "same USB-C lead from the hub"],
+              anchor="end")
+    s.text(50, 504, "Glow says when to look. Glance, or the phone, gives the number.", size=12.5, weight=600)
+    s.text(50, 526, "No lens, no combiner, nothing to focus or align: it reads in sun, fog and mud.",
+           size=12, color=MUTED)
+    s.text(50, 546, "The light sensor sets brightness and firmware caps it. Check eye-safety limits before long use.",
+           size=12, color=MUTED)
+
+    s.panel(*RIGHT, "The vocabulary")
+    white, cyan, green, red = "#f2f5f7", "#49c5e8", "#4cc472", "#e5484d"
+    cells = [
+        ("Next turn", "a sweep toward the turn",
+         {i: (white, 1 - i * 0.18) for i in range(5)}),
+        ("Hold a bearing", "keep the dot on the centre mark",
+         {8: (cyan, 1), 6: ("#6b7781", 1), 7: ("#6b7781", 1)}),
+        ("Pace against target", "green right: ahead · red left: behind",
+         {i: (green, 1) for i in range(7, 11)}),
+        ("Effort", "heart-rate zone sets the colour",
+         {i: (GLOW, 0.55) for i in range(14)}),
+        ("Alert", "flag, rider down, turnaround time",
+         {i: (red, 1) for i in range(14)}),
+        ("Budget", "drains: battery, daylight, time left",
+         {i: (white, 0.8) for i in range(4)}),
+    ]
+    for n, (title, sub, pixels) in enumerate(cells):
+        mini(s, 650 + (n % 2) * 262, 126 + (n // 2) * 136, title, sub, pixels)
+    s.text(650, 544, "One cue at a time. Sport profiles pick which three or four they use.", size=12,
+           color=MUTED)
+
+    s.specs([("Pixels", ["12 to 16", "addressable RGB, 4 mm strip"]),
+             ("Optics", ["None", "nothing to focus or align"]),
+             ("Power", ["Tens of mA", "an estimate, not measured"]),
+             ("Control", ["3 wires", "power, ground, data from the hub"]),
+             ("Second head", ["Glance pod", "digits in the corner, optional"])])
+    s.save("concept-6-rail-glow.svg")
+
+
 if __name__ == "__main__":
-    for f in (concept_0, concept_1, concept_2, concept_3, concept_4, concept_5):
+    for f in (concept_0, concept_1, concept_2, concept_3, concept_4, concept_5, concept_6,
+              concept_6_sports, concept_6_glow):
         f()
     print("wrote", sorted(n for n in os.listdir(OUT) if n.endswith(".svg")))

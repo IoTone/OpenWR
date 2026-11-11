@@ -12,6 +12,9 @@ These are concept sketches, not to scale and not CAD. They are meant for decidin
 | [concept-3-visor-reflector.svg](concept-3-visor-reflector.svg) | Behind-the-visor reflector for goggles and helmets |
 | [concept-4-microoled-fpga.svg](concept-4-microoled-fpga.svg) | Micro-OLED pod driven by an open FPGA |
 | [concept-5-usbc-monado.svg](concept-5-usbc-monado.svg) | USB-C display on a Linux puck, binocular through Monado/OpenXR |
+| [concept-6-rail-platform.svg](concept-6-rail-platform.svg) | Rail: a tool platform for someone else's goggles. Pack, hub, head and sensor bits. Ideation only; see [CONCEPT-6-rail.md](CONCEPT-6-rail.md) |
+| [concept-6-rail-glow.svg](concept-6-rail-glow.svg) | Rail's first head: Glow, a line of light in the goggle's lower rim, and its six cues |
+| [concept-6-rail-sports.svg](concept-6-rail-sports.svg) | Rail across dirt bike, ski and snowboard, mountain bike and mountaineering |
 
 ![Pod-0](concept-0-pod0-system.svg)
 ![Concept 1](concept-1-plate-combiner.svg)
@@ -19,6 +22,9 @@ These are concept sketches, not to scale and not CAD. They are meant for decidin
 ![Concept 3](concept-3-visor-reflector.svg)
 ![Concept 4](concept-4-microoled-fpga.svg)
 ![Concept 5](concept-5-usbc-monado.svg)
+![Concept 6](concept-6-rail-platform.svg)
+![Concept 6, Glow](concept-6-rail-glow.svg)
+![Concept 6, sports](concept-6-rail-sports.svg)
 
 ## Editing
 
