@@ -7,12 +7,15 @@
  *   hold 3 s             shoot (a bar in the strip fills while you hold)
  *
  * Shooting flashes the screen white (this board has no speaker or LED),
- * prints `fire <n>` on every console (the glasses take theirs), then fetches
- * each camera's picture into the reel. Cameras so far: Scout over HTTP.
+ * prints `fire <n>` on every console (the glasses take theirs), then fires
+ * the LAN cameras together: one broadcast `snap <id>` (UDP 5555), each one
+ * keeps the frame it grabbed, the hub fetches each <url>/snap.jpg.
+ * Cameras are found by broadcasting `who` every 20 s (Scout firmware 0.8.0+:
+ * Scout, CameraX); no addresses to type.
  *
  *   shoot        ( -- )          fire all
- *   cams?        ( -- )          cam <name> <how> <state>
- *   scout-url!   ( addr u -- )   Scout's base URL, e.g. http://10.0.0.216 (saved)
+ *   cams?        ( -- )          cam <name> <url> seen <s> ago, then cams <n>
+ *   cams-find    ( -- )          ask now
  *
  * Licensed under the Apache License, Version 2.0
  */

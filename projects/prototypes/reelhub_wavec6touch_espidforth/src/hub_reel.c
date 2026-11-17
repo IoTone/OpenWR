@@ -29,6 +29,7 @@
 static const char *TAG = "reel";
 #define ROOT      "/reel"
 #define MAX_SHOTS 1500
+#define LABEL_MAX 16
 #define KEEP_FREE (256 * 1024)       /* drop the oldest below this */
 #define POOL_SZ   4096
 #define MAX_DW    480                /* widest decoded row we accept */
@@ -101,7 +102,7 @@ static bool read_meta(int num, char *label, int *w, int *h, char *at, int *bytes
     path(p, sizeof p, num, "TXT");
     FILE *f = fopen(p, "r");
     if (!f) return false;
-    bool ok = fgets(line, sizeof line, f) && sscanf(line, "%11s %d %d %9s %d", label, w, h, at, bytes) == 5;
+    bool ok = fgets(line, sizeof line, f) && sscanf(line, "%16s %d %d %9s %d", label, w, h, at, bytes) == 5;
     fclose(f);
     return ok;
 }
@@ -211,12 +212,12 @@ static void draw_strip(void)
         lcd_text(x + 4, 8, "REEL", C_AMBER, C_BG, 2);
         lcd_text(x + 4, 34, "EMPTY", C_GREY, C_BG, 1);
     } else {
-        char label[12] = "?", at[10] = "", sz[16] = "";
+        char label[17] = "?", at[10] = "", sz[16] = "";
         int w0 = 0, h0 = 0, bytes = 0;
         read_meta(s_num[s_show], label, &w0, &h0, at, &bytes);
         snprintf(b, sizeof b, "%d/%d", s_show + 1, s_n);
         lcd_text(x + 4, 6, b, C_AMBER, C_BG, s_n < 100 ? 2 : 1);
-        lcd_text(x + 4, 30, label, C_WHITE, C_BG, 2);
+        lcd_text(x + 4, strlen(label) > 5 ? 34 : 30, label, C_WHITE, C_BG, strlen(label) > 5 ? 1 : 2);
         lcd_text(x + 4, 54, at, C_GREY, C_BG, 1);
         snprintf(sz, sizeof sz, "%dx%d", w0, h0);
         lcd_text(x + 4, 66, sz, C_GREY, C_BG, 1);
@@ -316,7 +317,7 @@ static void w_reel_q(void) { con_printf("reel %d free %llu showing %d\n", s_n, f
 static void w_reel_ls(void)
 {
     for (int i = 0; i < s_n; i++) {
-        char label[12] = "?", at[10] = "?"; int w = 0, h = 0, b = 0;
+        char label[17] = "?", at[10] = "?"; int w = 0, h = 0, b = 0;
         read_meta(s_num[i], label, &w, &h, at, &b);
         con_printf("%d %s %dx%d %s %d\n", i + 1, label, w, h, at, b);
     }

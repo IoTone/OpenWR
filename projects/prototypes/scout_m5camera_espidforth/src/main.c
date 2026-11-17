@@ -29,7 +29,7 @@
 #include "scout_wdog.h"
 #include "esp_task_wdt.h"
 
-#define SCOUT_VERSION   "0.7.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
+#define SCOUT_VERSION   "0.8.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
@@ -96,7 +96,7 @@ void con_printf(const char *fmt, ...)
     }
 }
 
-static void w_version(void) { con_printf("scout v%s\n", SCOUT_VERSION); }
+static void w_version(void) { con_printf("scout v%s %s\n", SCOUT_VERSION, scout_name()); }
 
 /* ----- housekeeping: BLE flush, keep advertising for the glasses ----- */
 
@@ -122,7 +122,7 @@ void app_main(void)
     console_install();
     vTaskDelay(pdMS_TO_TICKS(300));
     console_print("\r\n\r\n============================================\r\n");
-    console_printf("  Scout (OpenWR) v%s\r\n", SCOUT_VERSION);
+    console_printf("  %s (OpenWR Scout firmware) v%s\r\n", scout_name(), SCOUT_VERSION);
     console_printf("  ESPIDFORTH v%s  build %s %s\r\n", ESPIDFORTH_VERSION_STRING, ESPIDFORTH_BUILD_DATE, ESPIDFORTH_BUILD_TIME);
     console_print("  M5Camera Model B: OV2640, roll on flash\r\n");
     console_print("============================================\r\n");
@@ -138,7 +138,7 @@ void app_main(void)
     scout_net_init();
     scout_net_register_words();
     forth_register_word("version", w_version);
-    if (ble_console_init("Scout") == ESP_OK) ble_console_register_words();
+    if (ble_console_init(scout_name()) == ESP_OK) ble_console_register_words();
 
     xTaskCreate(scout_task, "scout", 4096, NULL, tskIDLE_PRIORITY + 1, NULL);
     ble_pair_window(600);

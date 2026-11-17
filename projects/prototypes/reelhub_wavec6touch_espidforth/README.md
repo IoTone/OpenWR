@@ -32,21 +32,28 @@ is nearly full. Pictures are kept as sent (Scout's 320×240 is already
 small); they're scaled to fit as they're drawn (ROM TJpgDec, decoded into
 16-row strips and resampled, so any size costs two small buffers).
 
-## Cameras (0.1.0)
+## Cameras (0.2.0)
+
+LAN cameras (Scout firmware 0.8.0+: Scout, CameraX) are found by
+broadcasting `who` every 20 s; there are no addresses to type. A shot sends
+one `snap <id>` to all of them at once (broadcast, and straight to each
+known camera, resent every 300 ms until each answers, up to 2 s), so the
+frames are taken together; then the hub fetches each one's `/snap.jpg`. See
+Scout's README for the messages.
 
 | camera | how | state |
 |---|---|---|
-| Scout | HTTP `GET <scout-url>/frame.jpg` over Wi-Fi | working |
+| Scout | UDP `snap` + HTTP `/snap.jpg` | working |
+| CameraX | the same (Scout firmware, `-e camerax`) | to flash |
 | glasses | `fire <n>` line on the BLE console | lens side to do |
-| AlphaFriend (α7) | BLE central link, `shoot` + a medium `pvj` | next |
-| M5CameraX | BLE / HTTP | after |
+| AlphaFriend (α7) | BLE central link, `shoot` + a medium `pvj` | when the α7 is back |
 
 ## Words (USB console or BLE "ReelHub")
 
 ```
 shoot                 \ fire all
-cams?                 \ cam <name> <how> <state>
-s" http://10.0.0.216" scout-url!   \ Scout's base URL (saved; BLE url? later)
+cams?                 \ cam <name> <url> seen <s> ago ... cams <n>
+cams-find             \ ask now
 reel?                 \ reel <count> free <KB> showing <n>
 reel-ls               \ <n> <camera> <w>x<h> <time> <bytes>
 3 reel-show           \ show shot 3
@@ -74,7 +81,9 @@ PlatformIO's ESP-IDF 5.3.1 (the C6FH8 needs ≥ 5.1.4).
 ## Measured (2026-11-17)
 
 - Free internal heap with Wi-Fi + BLE up: 155 KB (largest block 126 KB).
-- Scout shot into the reel: 6–13 KB in 280–810 ms.
+- Scout shot into the reel: 6–13 KB in 280–810 ms (0.1.0, /frame.jpg);
+  0.2.0: snap answered in 160–380 ms, frame fetched in 0.65–2.8 s.
+- A shot in the first seconds after the hub boots can find no camera yet.
 - Touch map 1 (swap x/y) from `touch-cal`; screen rot 0.
 
 ## Sources

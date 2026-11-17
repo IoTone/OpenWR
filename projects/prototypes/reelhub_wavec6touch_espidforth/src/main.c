@@ -28,7 +28,7 @@
 #include "hub_net.h"
 #include "hub_shoot.h"
 
-#define HUB_VERSION     "0.1.0"
+#define HUB_VERSION     "0.2.0"
 #define FORTH_HEAP_SIZE (16 * 1024)
 
 /* ----- console: USB-serial-JTAG, never blocking without a host (goggl1) ----- */
@@ -133,7 +133,7 @@ void app_main(void)
 
     console_printf("reel %d shots, heap %u free, largest %u\r\n", reel_count(),
                    (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL), (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
-    console_print("Words: shoot cams? scout-url! reel? reel-ls reel-show reel-wipe\r\n"
+    console_print("Words: shoot cams? cams-find reel? reel-ls reel-show reel-wipe\r\n"
                   "       rot! card redraw touch-cal touch-map! touch-log  wifi! wifi? wifi-seen net? tz! mem?\r\n");
     forth_repl(console_getchar, console_putchar);
     forth_deinit();

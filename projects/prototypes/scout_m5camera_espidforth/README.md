@@ -67,7 +67,7 @@ roll-ls        \ 0000.BIN ... roll: <count> frames   (as the maplet)
 0 roll-b64     \ frame 0 as base64 lines             (as the maplet)
 5 4 roll-th    \ rth 5 80 53 1 + base64, then 4, 3, 2
 roll-format    \ wipe the roll
-version        \ scout v0.7.0 (the lens's RollView reads roll-b64 from 0.3.2)
+version        \ scout v0.8.0 Scout (the lens's RollView reads roll-b64 from 0.3.2)
 
 s" ssid" s" pass" wifi!   \ save a 2.4 GHz network (up to 5) and join it now
 wifi?          \ wifi 1 HomeNet -52 on / wifi 2 iPhone - / wifi saved 2
@@ -79,7 +79,29 @@ net?           \ net up 10.0.0.216 rssi -60 HomeNet | net down
 url?           \ url http://10.0.0.216/ ws://10.0.0.216/ws | url none
 web?           \ web jpg <n> ws <n> mjpeg <n> last <client ip> <ms ago>
 mem?           \ internal / largest block / PSRAM free
+s" CameraX" name!  \ this board's name (BLE, hostname, ReelHub); next boot
+name?
 ```
+
+## Two boards, one firmware
+
+The M5Camera-X (U038) is the same board to this firmware: ESP32, 4 MB
+PSRAM, OV2640, CP2104, LED on G14, the Model B camera pins. Only the name
+differs: `pio run -e camerax -t upload` builds it as `CameraX`, and
+`name!` renames either one.
+
+## ReelHub on the LAN (0.8.0)
+
+[ReelHub](../reelhub_wavec6touch_espidforth/) finds the cameras and fires
+them together over UDP port 5555:
+
+| hub sends | camera answers |
+|---|---|
+| `who` (broadcast, and to each known camera) | `cam <name> http://<ip>/ <w> <h>` |
+| `snap <id>` (broadcast + to each, resent every 300 ms) | grabs a frame and keeps it; `snapped <id> <bytes> <name> <url>` |
+
+then the hub fetches `/snap.jpg` (header `X-Snap: <id>`) from each. A repeat
+of the same id answers again without a second grab.
 
 HTTP on port 80 (CORS open, no caching):
 

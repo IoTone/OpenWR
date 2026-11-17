@@ -7,7 +7,7 @@
  * Frames are packed 1-bit, MSB first, rows of ceil(w/8) bytes, 1 = ink, so
  * the lens's Bitmap.ts and RollView.ts read them as they read the maplet's.
  *
- *   caps?      ( -- )        caps scout shoot lv last roll sty fr web
+ *   caps?      ( -- )        caps scout shoot lv last roll sty fr web snap
  *   cam?       ( -- )        cam <ready|err> OV2640 0
  *   shoot      ( -- )        ok <n>: frame + thumbnail into the roll
  *   last       ( -- )        last <w> <h>, then base64 lines of the last shot
@@ -259,7 +259,7 @@ static int get(const char *path, uint8_t *b, size_t cap)
 
 /* ---- words ------------------------------------------------------------- */
 
-static void w_caps(void)  { con_printf("caps scout shoot lv last roll sty fr web\n"); }
+static void w_caps(void)  { con_printf("caps scout shoot lv last roll sty fr web snap\n"); }
 static void w_cam_q(void) { con_printf("cam %s OV2640 0\n", s_cam_up ? "ready" : "err"); }
 
 static void w_shoot(void)

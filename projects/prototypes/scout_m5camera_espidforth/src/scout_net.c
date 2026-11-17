@@ -10,6 +10,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 #include "esp_log.h"
 #include "esp_wifi.h"
 #include "esp_event.h"
@@ -28,6 +29,8 @@
 #include "scout_wdog.h"
 
 static const char *TAG = "net";
+static SemaphoreHandle_t s_snap_lock;
+static void udp_task(void *arg);
 #define NS "scout"
 
 /* ---- NVS ---------------------------------------------------------------- */
@@ -282,7 +285,14 @@ void scout_net_init(void)
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     s_netif = esp_netif_create_default_wifi_sta();
-    esp_netif_set_hostname(s_netif, "scout");
+    char host[17]; int k = 0;
+    for (const char *c = scout_name(); *c && k < 16; c++)
+        if ((*c >= 'a' && *c <= 'z') || (*c >= '0' && *c <= '9') || *c == '-') host[k++] = *c;
+        else if (*c >= 'A' && *c <= 'Z') host[k++] = *c + 32;
+    host[k] = 0;
+    esp_netif_set_hostname(s_netif, k ? host : "scout");
+    s_snap_lock = xSemaphoreCreateMutex();
+    xTaskCreate(udp_task, "hubudp", 4096, NULL, 4, NULL);
     wifi_init_config_t w = WIFI_INIT_CONFIG_DEFAULT();
     ESP_ERROR_CHECK(esp_wifi_init(&w));
     esp_event_handler_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &on_wifi, NULL);
@@ -304,6 +314,89 @@ bool scout_net_up(void) { return s_up; }
 /* should be up: a saved network was in the last scan (so no saved network
  * nearby, as at a venue without the hotspot on, is not a fault to reboot for) */
 bool scout_net_configured(void) { return s_started && s_seen; }
+
+/* ---- this camera's name ------------------------------------------------- */
+
+#ifndef SCOUT_NAME
+#define SCOUT_NAME "Scout"
+#endif
+static char s_name[17];
+
+const char *scout_name(void)
+{
+    static bool loaded;
+    if (!loaded) {
+        nvs_handle_t h;
+        snprintf(s_name, sizeof s_name, "%s", SCOUT_NAME);
+        if (nvs_open(NS, NVS_READONLY, &h) == ESP_OK || nvs_open(NS, NVS_READWRITE, &h) == ESP_OK) {
+            size_t n = sizeof s_name;
+            if (nvs_get_str(h, "name", s_name, &n) != ESP_OK || !s_name[0]) snprintf(s_name, sizeof s_name, "%s", SCOUT_NAME);
+            nvs_close(h);
+            loaded = true;                       /* NVS was up: this is the answer */
+        }
+    }
+    return s_name;
+}
+
+/* ---- the hub on the LAN: UDP 5555 -----------------------------------------
+ * who        -> cam <name> http://<ip>/ <w> <h>   (to the asker)
+ * snap <id>  -> grab a frame now and keep it; snapped <id> <bytes> <name> <url>
+ * The hub broadcasts snap to every camera at once, then fetches each one's
+ * /snap.jpg, so the shots are taken together. */
+
+#define HUB_PORT 5555
+static uint8_t *s_snap;
+static size_t   s_snap_len;
+static int      s_snap_id = -1;
+
+static camera_fb_t *fresh(void);
+
+static void udp_task(void *arg)
+{
+    int fd = -1;
+    char in[48], out[96];
+    for (;;) {
+        if (fd < 0) {
+            if (!s_up) { vTaskDelay(pdMS_TO_TICKS(1000)); continue; }
+            fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+            struct sockaddr_in a = { .sin_family = AF_INET, .sin_port = htons(HUB_PORT), .sin_addr.s_addr = htonl(INADDR_ANY) };
+            if (fd < 0 || bind(fd, (struct sockaddr *)&a, sizeof a) != 0) {
+                if (fd >= 0) close(fd);
+                fd = -1; vTaskDelay(pdMS_TO_TICKS(2000)); continue;
+            }
+            struct timeval tv = { .tv_sec = 2 };
+            setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof tv);
+        }
+        struct sockaddr_in from; socklen_t fl = sizeof from;
+        int n = recvfrom(fd, in, sizeof in - 1, 0, (struct sockaddr *)&from, &fl);
+        if (n <= 0) { if (!s_up) { close(fd); fd = -1; } continue; }
+        in[n] = 0;
+        int id;
+        if (!strncmp(in, "who", 3)) {
+            sensor_t *sn = esp_camera_sensor_get();
+            int w = 320, h = 240;
+            (void)sn;
+            n = snprintf(out, sizeof out, "cam %s http://" IPSTR "/ %d %d", scout_name(), IP2STR(&s_ip), w, h);
+        } else if (sscanf(in, "snap %d", &id) == 1) {
+            if (id == s_snap_id) {                       /* a repeat of the same snap */
+                n = snprintf(out, sizeof out, "snapped %d %u %s http://" IPSTR "/", id, (unsigned)s_snap_len, scout_name(), IP2STR(&s_ip));
+            } else {
+                camera_fb_t *fb = fresh();
+                xSemaphoreTake(s_snap_lock, portMAX_DELAY);
+                if (fb) {
+                    uint8_t *b = heap_caps_realloc(s_snap, fb->len, MALLOC_CAP_SPIRAM);
+                    if (b) { memcpy(b, fb->buf, fb->len); s_snap = b; s_snap_len = fb->len; s_snap_id = id; }
+                }
+                xSemaphoreGive(s_snap_lock);
+                if (fb) esp_camera_fb_return(fb);
+                n = s_snap_id == id ? snprintf(out, sizeof out, "snapped %d %u %s http://" IPSTR "/", id, (unsigned)s_snap_len, scout_name(), IP2STR(&s_ip))
+                                    : snprintf(out, sizeof out, "snap %d err", id);
+                if (s_snap_id == id) con_printf("snap %d %u B\n", id, (unsigned)s_snap_len);
+            }
+        } else continue;
+        sendto(fd, out, n, 0, (struct sockaddr *)&from, fl);
+    }
+}
 
 /* ---- web server --------------------------------------------------------- */
 
@@ -347,6 +440,26 @@ static esp_err_t h_frame(httpd_req_t *r)
     httpd_resp_set_type(r, "image/jpeg");
     esp_err_t e = httpd_resp_send(r, (const char *)fb->buf, fb->len);
     esp_camera_fb_return(fb);
+    s_n_jpg++;
+    return e;
+}
+
+static esp_err_t h_snap(httpd_req_t *r)
+{
+    note_peer(r);
+    xSemaphoreTake(s_snap_lock, portMAX_DELAY);
+    esp_err_t e;
+    if (!s_snap_len) {
+        xSemaphoreGive(s_snap_lock);
+        httpd_resp_send_err(r, HTTPD_404_NOT_FOUND, "no snap");
+        return ESP_FAIL;
+    }
+    cors(r);
+    httpd_resp_set_type(r, "image/jpeg");
+    char id[12]; snprintf(id, sizeof id, "%d", s_snap_id);
+    httpd_resp_set_hdr(r, "X-Snap", id);
+    e = httpd_resp_send(r, (const char *)s_snap, s_snap_len);
+    xSemaphoreGive(s_snap_lock);
     s_n_jpg++;
     return e;
 }
@@ -440,6 +553,7 @@ static void web_start(void)
     const httpd_uri_t u[] = {
         { .uri = "/",          .method = HTTP_GET, .handler = h_root },
         { .uri = "/frame.jpg", .method = HTTP_GET, .handler = h_frame },
+        { .uri = "/snap.jpg",  .method = HTTP_GET, .handler = h_snap },
         { .uri = "/stream",    .method = HTTP_GET, .handler = h_stream },
         { .uri = "/info",      .method = HTTP_GET, .handler = h_info },
         { .uri = "/ws",        .method = HTTP_GET, .handler = h_ws, .is_websocket = true },
@@ -541,6 +655,17 @@ static void w_wifi_first(void)
     con_printf("wifi: %s first\n", t.ssid);
 }
 
+/* ( addr u -- ) this camera's name (BLE, hostname, the hub); saved, from the next boot */
+static void w_name_store(void)
+{
+    int l = (int)forth_pop(); const char *p = (const char *)forth_pop();
+    if (!p || l <= 0 || l > 16) { con_printf("? name! 1..16 characters\n"); return; }
+    char n[17] = ""; memcpy(n, p, l);
+    kv_str_set("name", n);
+    con_printf("name %s (from the next boot)\n", n);
+}
+static void w_name_q(void) { con_printf("name %s\n", scout_name()); }
+
 static void w_wifi_ps(void)
 {
     int on = forth_pop() ? 1 : 0;
@@ -592,4 +717,6 @@ void scout_net_register_words(void)
     forth_register_word("net?", w_net_q);
     forth_register_word("url?", w_url_q);
     forth_register_word("web?", w_web_q);
+    forth_register_word("name!", w_name_store);
+    forth_register_word("name?", w_name_q);
 }
