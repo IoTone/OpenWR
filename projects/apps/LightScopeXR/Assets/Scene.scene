@@ -485,7 +485,7 @@
       demoMode: false
       frame: !<reference.SceneObject> fd44709c-98d0-4d4c-9b97-975201eada53
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 6.000000
   ScriptTypes:
     "":
@@ -641,7 +641,6 @@
   Enabled: true
   ScriptAsset: !<reference> 28b0f42a-86ef-4cf0-81d3-af5abec9c543
   ScriptInputsDefault:
-    distance: true
     drop: true
     yaw: true
     pinDistance: true
@@ -657,7 +656,7 @@
       captionText: !<reference.Text> 317f0066-e74e-4b72-90ee-f6b79de04eb7
       frame: !<reference.SceneObject> 6c9dc926-f6f3-4962-afa7-9fd943a4e14a
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 22.000000
       yaw: !<float> 0.000000
       pinDistance: !<float> 400.000000
@@ -987,7 +986,7 @@
   Enabled: true
   ScriptAsset: !<reference> 5eed1ce8-1e6f-40ca-b147-a99d2691416c
   ScriptInputsDefault:
-    {}
+    distance: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
@@ -998,7 +997,7 @@
       monoText: !<reference.Text> a9efd50f-1e6f-4f7d-ad74-f5224069ba8b
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       shutter: !<reference.AudioTrackAsset> d4499db7-402f-4c3a-9174-7b1d3c455a73
-      distance: !<float> 60.000000
+      distance: !<float> 100.000000
       width: !<float> 26.000000
   ScriptTypes:
     "":
@@ -3461,7 +3460,6 @@
   Enabled: true
   ScriptAsset: !<reference> a1c9c5df-a6d7-497e-9e18-1d5c1df3aa29
   ScriptInputsDefault:
-    distance: true
     drop: true
     yaw: true
     cardWidth: true
@@ -3479,7 +3477,7 @@
       captionText: !<reference.Text> 2a2b89b1-e955-4113-952c-194fdf1aef8e
       frame: !<reference.SceneObject> 1c9ccd7e-de3c-48e7-8cc9-d2dd19596f25
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 6.000000
       yaw: !<float> -32.000000
       cardWidth: 7.600000
@@ -5103,7 +5101,6 @@
   Enabled: true
   ScriptAsset: !<reference> fd8688cc-5e8a-4f78-93e3-bfe2113d309b
   ScriptInputsDefault:
-    distance: true
     yaw: true
     width: true
   ScriptTypesDefault:
@@ -5123,7 +5120,7 @@
       uiFailSound: !<reference.AudioTrackAsset> 18b4453d-5355-4be6-aa98-d49c58317ef7
       frame: !<reference.SceneObject> dee0d256-cecd-47a5-aee0-0c93ea950d7b
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 6.000000
       yaw: !<float> 0.000000
       width: !<float> 16.000000
@@ -6427,7 +6424,6 @@
   Enabled: true
   ScriptAsset: !<reference> 9cc44e13-9f8b-4f18-898d-9167c287b331
   ScriptInputsDefault:
-    distance: true
     drop: true
     yaw: true
     bigWidth: true
@@ -6441,7 +6437,7 @@
       captionText: !<reference.Text> 58096ee4-055e-4a55-92f5-b9fd2dd15d5e
       frame: !<reference.SceneObject> 85732997-02e6-4e21-8f28-da4b3b57095f
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 6.000000
       yaw: !<float> -32.000000
       bigWidth: !<float> 16.000000
@@ -7093,7 +7089,6 @@
   ScriptAsset: !<reference> 89c29d68-ec2f-4acb-b5e6-1cf7a6c7b189
   ScriptInputsDefault:
     demoMode: true
-    distance: true
     drop: true
     yaw: true
     bigWidth: true
@@ -7108,7 +7103,7 @@
       demoMode: false
       frame: !<reference.SceneObject> c6104d28-bbce-42e6-a3a5-53704002240e
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
-      distance: !<float> 85.000000
+      distance: !<float> 125.000000
       drop: !<float> 6.000000
       yaw: !<float> 32.000000
       bigWidth: !<float> 16.000000

@@ -61,5 +61,5 @@
     - '// @input Component.Text monoText {"hint":"A Text to copy for chips and labels (mono)"}'
     - '// @input SceneObject camera {"hint":"The scene camera (it follows the head)"}'
     - '// @input Asset.AudioTrackAsset shutter {"hint":"Shutter sound for a shot with the glasses"}'
-    - '// @input float distance = 60 {"hint":"How far ahead the target floats, cm (nearer than the panels)"}'
+    - '// @input float distance = 100 {"hint":"How far ahead the target floats, cm (nearer than the panels)"}'
     - '// @input float width = 26 {"hint":"Target width, cm, at that distance"}'

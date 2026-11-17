@@ -77,7 +77,7 @@
     - // @input Component.Text captionText
     - // @input SceneObject frame
     - // @input SceneObject camera
-    - // @input float distance = 85
+    - // @input float distance = 125
     - // @input float drop = 6
     - '// @input float yaw = -32 {"hint":"Degrees to the side; negative is left"}'
     - '// @input float cardWidth = 7.6 {"hint":"Card width, cm (at 45 cm)"}'

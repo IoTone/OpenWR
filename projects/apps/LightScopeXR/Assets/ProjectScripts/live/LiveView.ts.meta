@@ -86,7 +86,7 @@
     - '// @input Asset.AudioTrackAsset uiFailSound {"hint":"When a shot or send fails (all panels)"}'
     - // @input SceneObject frame
     - // @input SceneObject camera
-    - // @input float distance = 85
+    - // @input float distance = 125
     - '// @input float drop = -14 {"hint":"cm below eye level at 45 cm; negative is above"}'
     - '// @input float yaw {"hint":"Degrees to the side; negative is left"}'
     - '// @input float width = 16 {"hint":"Picture width, cm (at 45 cm)"}'

@@ -70,7 +70,7 @@
     - // @input Component.Text captionText
     - // @input SceneObject frame
     - // @input SceneObject camera
-    - // @input float distance = 85
+    - // @input float distance = 125
     - '// @input float drop = 22 {"hint":"cm below eye level at 45 cm; below Pulse"}'
     - // @input float yaw
     - '// @input float pinDistance = 400 {"hint":"How far away the flags in the room stand, cm"}'

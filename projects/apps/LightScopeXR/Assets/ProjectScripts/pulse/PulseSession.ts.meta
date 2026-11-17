@@ -73,5 +73,5 @@
     - '// @input bool demoMode {"hint":"Fake the strap (sweeps 60-180 bpm) for the editor preview; no Bluetooth"}'
     - '// @input SceneObject frame {"hint":"The ContainerFrame to place in front of the wearer at start"}'
     - '// @input SceneObject camera {"hint":"The camera (Camera Object)"}'
-    - '// @input float distance = 85 {"hint":"How far in front of the eyes the panel starts, cm. It scales with distance, so it looks the same size; nearer than ~60 cm is hard to focus on"}'
+    - '// @input float distance = 125 {"hint":"How far in front of the eyes the panel starts, cm. It scales with distance, so it looks the same size; nearer than ~60 cm is hard to focus on"}'
     - '// @input float drop = 6 {"hint":"How far below eye level the panel starts, cm (at 45 cm; scales with distance)"}'

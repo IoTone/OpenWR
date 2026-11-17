@@ -22,11 +22,14 @@
   VersionMajor: 0
   VersionMinor: 0
   VersionPatch: 0
-  ComponentUid: 00000000-0000-0000-0000-000000000000
+  ComponentUid: 7c51ec0b-167b-46a9-9424-6f590a7f4e80
   ExportUid: 00000000-0000-0000-0000-000000000000
   PackagePolicy: CanBeUnpacked
   ScriptInputsHidden:
-    {}
+    links: false
+    reel: false
+    shootGlasses: false
+    shutter: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -36,10 +39,15 @@
   Attachments:
     []
   DefaultScriptInputs:
-    -
-      {}
+    - links: !<MappingBased.AssignableType> 00000000-0000-0000-0000-000000000000
+      reel: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+      shutter: !<reference.AudioTrackAsset> 00000000-0000-0000-0000-000000000000
+      shootGlasses: true
   ScriptTypes:
     -
       {}
   InputLines:
-    []
+    - // @input AssignableType links
+    - // @input AssignableType_1 reel
+    - '// @input Asset.AudioTrackAsset shutter {"hint":"Shutter sound when the hub fires the glasses"}'
+    - "// @input bool shootGlasses = true {\"hint\":\"Take the glasses' own shot when the hub fires\"}"
