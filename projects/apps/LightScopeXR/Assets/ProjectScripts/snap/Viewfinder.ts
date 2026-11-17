@@ -30,6 +30,7 @@ import { RollView } from "../roll/RollView";
 import { DESIGN_DISTANCE } from "../ui/Place";
 import { Source, toFrame, toHex } from "./Dither";
 import { playOnce, uiFail } from "../ui/Sound";
+import { glassesCamera } from "./Camera";
 
 const AMBER: Rgb = [242, 163, 58];
 const PAPER = [160, 108, 38, 255];
@@ -79,7 +80,6 @@ export class Viewfinder extends BaseScriptComponent {
   private camChip: Text;
   private camTex: Texture = null;
   private lastShot: Uint8Array = null;
-  private cameraModule = require("LensStudio:CameraModule") as CameraModule;
   private frameW = 212;
   private frameH = 104;
 
@@ -169,10 +169,7 @@ export class Viewfinder extends BaseScriptComponent {
 
   private startCamera() {
     try {
-      const req = CameraModule.createCameraRequest();
-      req.cameraId = CameraModule.CameraId.Default_Color;
-      req.imageSmallerDimension = 480;
-      this.camTex = this.cameraModule.requestCamera(req);
+      this.camTex = glassesCamera();
       this.say("AIM, THEN SHOOT");
       print("[snap] camera requested");
     } catch (e) {

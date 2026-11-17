@@ -2,7 +2,8 @@
 //
 // Links.ts — every Bluetooth link the lens holds, in one place.
 //
-// LightScopeXR's cameras: AlphaFriend (the StickC that drives the α7R III
+// ReelHub (the Waveshare shot hub) fires every camera and keeps the colour
+// reel; the lens follows it (reel/HubFollow.ts). LightScopeXR's cameras: AlphaFriend (the StickC that drives the α7R III
 // over its Wi-Fi) and Scout (the ESP32 camera; its shutter and roll over
 // BLE, its address on the LAN for Live). Each speaks the same ok> console
 // (GoggleLink). The older devices are still here, off unless named: goggl1,
@@ -32,6 +33,10 @@ export class Links extends BaseScriptComponent {
   scoutName: string = "Scout";
 
   @input
+  @hint("ReelHub's advertised name (the shot hub); empty to leave it alone")
+  reelHubName: string = "ReelHub";
+
+  @input
   @hint("goggl1's advertised name; empty to leave it alone")
   goggleName: string = "";
 
@@ -53,6 +58,7 @@ export class Links extends BaseScriptComponent {
   maplet: GoggleLink | null = null;
   scout: GoggleLink | null = null;
   alpha: GoggleLink | null = null;
+  reelHub: GoggleLink | null = null;
 
   // What goggl1 should show: Pulse while the strap streams, or a weather
   // theme picked on the Remote. Pulse only sends sess-hr! while this is "pulse".
@@ -70,10 +76,12 @@ export class Links extends BaseScriptComponent {
     if (this.alphaName) this.alpha = new GoggleLink(this.alphaName, this.hub, changed, retry, timer);
     if (this.mapletName) this.maplet = new GoggleLink(this.mapletName, this.hub, changed, retry, timer);
     if (this.scoutName) this.scout = new GoggleLink(this.scoutName, this.hub, changed, retry, timer);
+    if (this.reelHubName) this.reelHub = new GoggleLink(this.reelHubName, this.hub, changed, retry, timer);
 
     this.onChange(() => this.sendClock());
     this.createEvent("OnStartEvent").bind(() => {
       if (this.offline) return;
+      if (this.reelHub) this.reelHub.start();
       if (this.alpha) this.alpha.start();
       if (this.scout) this.scout.start();
       if (this.useStrap) this.strap.start();
@@ -86,6 +94,7 @@ export class Links extends BaseScriptComponent {
       if (this.maplet) this.maplet.stop();
       if (this.scout) this.scout.stop();
       if (this.alpha) this.alpha.stop();
+      if (this.reelHub) this.reelHub.stop();
     });
   }
 

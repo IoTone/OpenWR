@@ -24,7 +24,7 @@ const AMBER = new vec4(0.949, 0.639, 0.227, 1);
 const MAX_SHOTS = 6;
 const BIG_Y = 2.2;              // clear of the thumb strip (a selected thumb grows 12 %)
 
-interface Shot { tex: Texture; w: number; h: number; label: string; info: string; meta: string; took: number; at: string; thumb: SceneObject; }
+interface Shot { tex: Texture; w: number; h: number; label: string; info: string; meta: string; took: number; at: string; thumb: SceneObject; key?: string; }
 
 export class ReelJob {
   private t0 = Date.now();
@@ -156,6 +156,17 @@ export class RealReel extends BaseScriptComponent {
     print("[reel] " + this.note);
     this.redraw();
   }
+
+  // A shot the hub is showing: select it if it is here already, else add it.
+  showFromHub(key: string, label: string, tex: Texture, w: number, h: number, info: string, took: number) {
+    this.note = "";
+    const i = this.shots.findIndex((s) => s.key === key);
+    if (i >= 0) { this.select(i); return; }
+    this.add({ tex, w, h, label, info, meta: "", took, at: clock(), thumb: null, key });
+    this.redraw();
+  }
+
+  has(key: string): boolean { return this.shots.some((s) => s.key === key); }
 
   // ---- layout -------------------------------------------------------------
 

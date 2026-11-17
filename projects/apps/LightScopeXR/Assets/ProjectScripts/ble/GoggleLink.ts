@@ -31,6 +31,8 @@ export class GoggleLink {
   private queued = 0;
   private seen = false;
   private stopped = false;
+  private events: RegExp | null = null;
+  private onEvent: (line: string) => void = null;
 
   constructor(
     public readonly deviceName: string,
@@ -51,6 +53,13 @@ export class GoggleLink {
 
   stop() {
     this.stopped = true;
+  }
+
+  // Lines the device prints unasked (ReelHub: "fire <n>", "show ..."): taken
+  // out of the stream wherever they land, even inside a reply, and handed to f.
+  listen(lines: RegExp, f: (line: string) => void) {
+    this.events = lines;
+    this.onEvent = f;
   }
 
   // Send one console line and resolve with what the device printed before
@@ -138,6 +147,17 @@ export class GoggleLink {
 
   private onTx(v: Uint8Array) {
     for (let i = 0; i < v.length; i++) this.buf += String.fromCharCode(v[i]);
+    if (this.events && this.buf.indexOf("\n") >= 0) {
+      const parts = this.buf.split("\n"), rest = parts.pop(), keep: string[] = [];
+      for (const l of parts) {
+        const t = l.replace(/\r/g, "").replace(/^(ok>\s*)+/, "").trim();
+        if (this.events.test(t)) {
+          try { this.onEvent(t); } catch (e) { print("[" + this.deviceName + "] event: " + e); }
+        } else keep.push(l);
+      }
+      keep.push(rest);
+      this.buf = keep.join("\n");
+    }
     const at = this.buf.lastIndexOf("ok>");
     if (at >= 0 && this.waiter) {
       const w = this.waiter;
