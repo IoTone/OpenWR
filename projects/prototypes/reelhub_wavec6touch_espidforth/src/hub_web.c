@@ -14,7 +14,7 @@
 #include "console.h"
 
 static const char *TAG = "web";
-#define ADD_CAP (128 * 1024)          /* base64 of a ~96 KB JPEG */
+#define ADD_CAP (400 * 1024)          /* streamed to flash, so only a sanity limit */
 
 static httpd_handle_t s_httpd;
 
@@ -51,16 +51,22 @@ static esp_err_t h_file(httpd_req_t *r)
     reel_file(num, p, sizeof p);
     FILE *f = fopen(p, "rb");
     if (!f) { httpd_resp_send_err(r, HTTPD_404_NOT_FOUND, "no such shot"); return ESP_FAIL; }
-    cors(r);
-    httpd_resp_set_type(r, "image/jpeg");
+    fseek(f, 0, SEEK_END); long len = ftell(f); fseek(f, 0, SEEK_SET);
+    /* our own headers, so a streamed file still has a Content-Length (the
+     * glasses' media loader wants one; the chunk API would leave it out) */
+    char hdr[192];
+    int hn = snprintf(hdr, sizeof hdr, "HTTP/1.1 200 OK\r\nContent-Type: image/jpeg\r\nContent-Length: %ld\r\n"
+                      "Access-Control-Allow-Origin: *\r\nCache-Control: no-store\r\n\r\n", len);
     char *buf = malloc(2048);
-    esp_err_t e = buf ? ESP_OK : ESP_FAIL;
+    bool ok = buf && httpd_send(r, hdr, hn) == hn;
     size_t n;
-    while (e == ESP_OK && (n = fread(buf, 1, 2048, f)) > 0) e = httpd_resp_send_chunk(r, buf, n);
+    while (ok && (n = fread(buf, 1, 2048, f)) > 0) {
+        size_t off = 0;
+        while (ok && off < n) { int k = httpd_send(r, buf + off, n - off); ok = k > 0; off += ok ? k : 0; }
+    }
     fclose(f);
     free(buf);
-    if (e == ESP_OK) httpd_resp_send_chunk(r, NULL, 0);
-    return e;
+    return ESP_OK;
 }
 
 static esp_err_t h_add(httpd_req_t *r)
@@ -75,31 +81,42 @@ static esp_err_t h_add(httpd_req_t *r)
     }
     int len = r->content_len;
     if (len <= 0 || len > ADD_CAP) { httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST, "size"); return ESP_FAIL; }
-    uint8_t *body = malloc(len + 1);
-    if (!body) { httpd_resp_send_err(r, HTTPD_500_INTERNAL_SERVER_ERROR, "memory"); return ESP_FAIL; }
-    int got = 0;
-    while (got < len) {
-        int n = httpd_req_recv(r, (char *)body + got, len - got);
+    enum { IN = 1536 };
+    uint8_t *in = malloc(IN + 4), *out = malloc(IN);
+    if (!in || !out || !reel_stream_begin(label, len)) {
+        free(in); free(out);
+        httpd_resp_send_err(r, HTTPD_500_INTERNAL_SERVER_ERROR, "memory"); return ESP_FAIL;
+    }
+    int got = 0, have = 0, raw = -1;           /* raw: 1 JPEG bytes, 0 base64 */
+    bool ok = true;
+    while (got < len && ok) {
+        int n = httpd_req_recv(r, (char *)in + have, (len - got) < (IN - have) ? (len - got) : (IN - have));
         if (n == HTTPD_SOCK_ERR_TIMEOUT) continue;
-        if (n <= 0) break;
-        got += n;
-    }
-    if (got != len) { free(body); httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST, "short"); return ESP_FAIL; }
-    size_t jl = len;
-    if (!(body[0] == 0xFF && body[1] == 0xD8)) {               /* base64 text: decode in place */
-        size_t out = 0;
-        if (mbedtls_base64_decode(body, len, &out, body, len) != 0 || out < 4 || body[0] != 0xFF || body[1] != 0xD8) {
-            free(body); httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST, "not a jpeg"); return ESP_FAIL;
+        if (n <= 0) { ok = false; break; }
+        got += n; have += n;
+        if (raw < 0 && have >= 2) raw = in[0] == 0xFF && in[1] == 0xD8;
+        if (raw == 1) { ok = reel_stream_write(in, have); have = 0; continue; }
+        /* base64: drop whitespace, decode whole groups of 4, keep the rest */
+        int k = 0;
+        for (int i = 0; i < have; i++) if (in[i] != '\r' && in[i] != '\n' && in[i] != ' ') in[k++] = in[i];
+        have = k;
+        int use = got == len ? have : have - have % 4;
+        if (use > 0) {
+            size_t o = 0;
+            if (mbedtls_base64_decode(out, IN, &o, in, use) != 0) { ok = false; break; }
+            ok = reel_stream_write(out, o);
+            memmove(in, in + use, have - use);
+            have -= use;
         }
-        jl = out;
     }
-    int num = reel_add(body, jl, label);
-    free(body);
-    if (num <= 0) { httpd_resp_send_err(r, HTTPD_500_INTERNAL_SERVER_ERROR, "save failed"); return ESP_FAIL; }
-    con_printf("shot %s %u B (upload) #%d\n", label, (unsigned)jl, num);
+    free(in); free(out);
+    if (!ok || got != len) { reel_stream_abort(); httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST, "bad upload"); return ESP_FAIL; }
+    int num = reel_stream_end();
+    if (num <= 0) { httpd_resp_send_err(r, HTTPD_400_BAD_REQUEST, "not a jpeg"); return ESP_FAIL; }
+    con_printf("shot %s %d B in (upload) #%d\n", label, len, num);
     cors(r);
-    char a[24]; int n = snprintf(a, sizeof a, "added %04d\n", num);
-    return httpd_resp_send(r, a, n);
+    char a[24]; int m = snprintf(a, sizeof a, "added %04d\n", num);
+    return httpd_resp_send(r, a, m);
 }
 
 void hub_web_start(void)

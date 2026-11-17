@@ -301,6 +301,65 @@ static void jpeg_size(const uint8_t *j, size_t n, int *w, int *h)
     }
 }
 
+/* ---- a shot written as it arrives (uploads): no big buffer ---------------- */
+
+static FILE    *s_sf;
+static int      s_snum;
+static size_t   s_sn;
+static uint8_t  s_shead[2048];      /* the start of the JPEG, for its size */
+static char     s_slabel[17];
+
+bool reel_stream_begin(const char *label, size_t expect)
+{
+    xSemaphoreTakeRecursive(s_lock, portMAX_DELAY);
+    while (s_n && (free_bytes() < KEEP_FREE + expect || s_n >= MAX_SHOTS)) drop_oldest();
+    s_snum = s_n ? s_num[s_n - 1] + 1 : 1;
+    if (s_snum > 9999) s_snum = 1;
+    char p[24];
+    path(p, sizeof p, s_snum, "JPG");
+    s_sf = fopen(p, "wb");
+    s_sn = 0;
+    snprintf(s_slabel, sizeof s_slabel, "%s", label);
+    if (!s_sf) { xSemaphoreGiveRecursive(s_lock); return false; }
+    return true;                     /* holds the lock until end/abort */
+}
+
+bool reel_stream_write(const uint8_t *b, size_t n)
+{
+    if (!s_sf) return false;
+    if (s_sn < sizeof s_shead) memcpy(s_shead + s_sn, b, n < sizeof s_shead - s_sn ? n : sizeof s_shead - s_sn);
+    s_sn += n;
+    return fwrite(b, 1, n, s_sf) == n;
+}
+
+static void jpeg_size(const uint8_t *j, size_t n, int *w, int *h);
+
+void reel_stream_abort(void)
+{
+    if (!s_sf) return;
+    fclose(s_sf); s_sf = NULL;
+    char p[24]; path(p, sizeof p, s_snum, "JPG"); remove(p);
+    xSemaphoreGiveRecursive(s_lock);
+}
+
+int reel_stream_end(void)
+{
+    if (!s_sf) return -1;
+    fclose(s_sf); s_sf = NULL;
+    if (s_sn < 4 || s_shead[0] != 0xFF || s_shead[1] != 0xD8) { char p[24]; path(p, sizeof p, s_snum, "JPG"); remove(p); xSemaphoreGiveRecursive(s_lock); return -1; }
+    int w, h; jpeg_size(s_shead, s_sn < sizeof s_shead ? s_sn : sizeof s_shead, &w, &h);
+    time_t t = time(NULL); struct tm tm; localtime_r(&t, &tm);
+    char p[24]; path(p, sizeof p, s_snum, "TXT");
+    FILE *f = fopen(p, "w");
+    if (f) { fprintf(f, "%s %d %d %02d:%02d:%02d %u\n", s_slabel, w, h, tm.tm_hour, tm.tm_min, tm.tm_sec, (unsigned)s_sn); fclose(f); }
+    s_num[s_n++] = (uint16_t)s_snum;
+    s_show = s_n - 1;
+    reel_redraw();
+    announce();
+    xSemaphoreGiveRecursive(s_lock);
+    return s_snum;
+}
+
 int reel_add(const uint8_t *jpg, size_t n, const char *label)
 {
     xSemaphoreTakeRecursive(s_lock, portMAX_DELAY);

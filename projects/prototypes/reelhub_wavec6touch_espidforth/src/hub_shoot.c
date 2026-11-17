@@ -33,7 +33,7 @@ static const char *TAG = "shoot";
 #define BAR_Y   156
 #define BAR_W   (LCD_W - STRIP_X - 8)
 #define BAR_H   8
-#define JPG_CAP (96 * 1024)
+#define JPG_CAP (40 * 1024)          /* QVGA frames are ~12 KB; leaves room for the glasses' upload */
 
 static QueueHandle_t s_q;            /* touch events, to the UI task */
 static QueueHandle_t s_fire;         /* shoot requests, to the shoot task */

@@ -40,6 +40,11 @@ void reel_strip_note(const char *line1, const char *line2, uint16_t colour);   /
 bool reel_meta(int num, char *label, int *w, int *h, char *at, int *bytes);
 int  reel_num_at(int i);             /* file number of shot i, -1 if none */
 void reel_file(int num, char *out, size_t cap);
+/* a shot written as it arrives: begin, write..., end (-> file number) or abort */
+bool reel_stream_begin(const char *label, size_t expect);
+bool reel_stream_write(const uint8_t *b, size_t n);
+int  reel_stream_end(void);
+void reel_stream_abort(void);
 void reel_register_words(void);
 
 #endif

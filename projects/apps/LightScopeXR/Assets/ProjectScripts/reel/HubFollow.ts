@@ -13,7 +13,9 @@
 //   show <file> <camera> <i>/<count>  the shot on its screen changed (a swipe,
 //                                     a new shot): the RealReel shows it too,
 //                                     fetched over Wi-Fi from
-//                                     http://<hub>/reel/<file>.jpg
+//                                     http://<hub>/reel/<file>.jpg (fetch +
+//                                     decode: RemoteMediaModule refused the
+//                                     hub's chunked replies)
 //
 // BLE carries the events, Wi-Fi the pictures (the hub's address from url?).
 // Without the hub nothing here runs, and the reel works as before.
@@ -43,7 +45,6 @@ export class HubFollow extends BaseScriptComponent {
   shootGlasses: boolean = true;
 
   private internet = require("LensStudio:InternetModule") as InternetModule;
-  private media = require("LensStudio:RemoteMediaModule") as RemoteMediaModule;
   private base = "";               // http://<hub ip>/
   private wasLive = false;
   private loading = "";
@@ -94,15 +95,19 @@ export class HubFollow extends BaseScriptComponent {
     if (this.loading) { this.want = file + " " + label; return; }
     this.loading = file;
     const t0 = Date.now(), url = this.base + "reel/" + file + ".jpg";
-    this.media.loadResourceAsImageTexture(this.internet.makeResourceFromUrl(url), (tex) => {
+    // fetch the bytes and decode them (as the α7's colour frames): a failure
+    // comes back with its HTTP status instead of "media download failed"
+    this.internet.fetch(url).then((r) => {
+      if (r.status !== 200) throw new Error("HTTP " + r.status);
+      return r.bytes();
+    }).then((bytes) => new Promise<void>((done, fail) => Base64.decodeTextureAsync(Base64.encode(bytes), (tex) => {
       const s = (Date.now() - t0) / 1000;
       this.reel.showFromHub(key, label, tex, tex.getWidth(), tex.getHeight(), "HUB " + file, s);
-      print("[hub] show " + file + " " + label + " " + tex.getWidth() + "x" + tex.getHeight() + " in " + s.toFixed(1) + " s");
-      this.next();
-    }, (err) => {
-      print("[hub] " + url + ": " + err);
-      this.next();
-    });
+      print("[hub] show " + file + " " + label + " " + tex.getWidth() + "x" + tex.getHeight() + ", " + Math.round(bytes.length / 1024) + " KB in " + s.toFixed(1) + " s");
+      done();
+    }, () => fail(new Error("decode failed (" + bytes.length + " B)"))))).catch((e) => {
+      print("[hub] " + url + ": " + e);
+    }).then(() => this.next());
   }
 
   private next() {
