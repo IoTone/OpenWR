@@ -7,8 +7,8 @@ DIO,"Schottky diode 1N5817, any-key wake line",Diodes Inc,1N5817-T,,,,0.15,0.05,
 PWR,"Slide switch, battery disconnect",C&K,JS102011SAQN,401-2000-ND,611-JS102011SAQN,,0.45,0.20,1,5,2.25,estimate,,ok,commodity part (not re-checked)
 PRF,Perfboard scrap + 30 AWG wire,,,,,,0.50,0.20,1,5,2.50,estimate,,ok,"printed, generic or cut-tape"
 BAT,"LiPo 1200 mAh 603450, PCM, JST-PH 2.0 lead",,,,,"Amazon / hobby shop (Adafruit, SparkFun); Alibaba for 100",7.00,2.80,1,5,35.00,estimate,protection board fitted; check JST polarity against the board before plugging in,ok,"generic LiPo pouch cells, many sellers"
-ENC,"Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)",,,,,own printer,0.70,0.50,1,5,3.50,estimate,measure the panel first: see notes,ok,"printed, generic or cut-tape"
-CAP,"Key caps, printed TPU",,,,,own printer,0.10,0.05,1,5,0.50,estimate,,ok,"printed, generic or cut-tape"
+ENC,"Enclosure, 3D-printed PETG, front + back shell, 64 x 114 x 17 mm (~25 g)",,,,,own printer,0.70,0.50,1,5,3.50,estimate,enclosure/SR-16/*.stl; measure the panel and driver stack first: see notes,ok,"printed, generic or cut-tape"
+CAP,"Key caps (PREV, MENU, NEXT), printed PETG with the shell",,,,,own printer,0.03,0.01,1,5,0.15,estimate,,ok,"printed, generic or cut-tape"
 LAM,Laminate band: printed vinyl sticker,,,,,sticker shop,0.15,0.05,1,5,0.75,estimate,swappable 'pass' graphic,ok,"printed, generic or cut-tape"
-HW,"M2x6 screws + M2 heat-set inserts, 4 each",,,,,Amazon/Ali,0.40,0.20,1,5,2.00,estimate,,ok,"printed, generic or cut-tape"
+HW,"M2x6 pan-head thread-forming screws for plastic, 4",,,,,Amazon/Ali,0.30,0.10,1,5,1.50,estimate,self-tap into the printed bosses; no inserts (the bosses are too small for them),ok,"printed, generic or cut-tape"
 LNY,Lanyard 20 mm with swivel hook + 25 mm split ring,,,,,Amazon (multi-pack); AliExpress for 100,1.50,0.55,1,5,7.50,estimate,,ok,"printed, generic or cut-tape"

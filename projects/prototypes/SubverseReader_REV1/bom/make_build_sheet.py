@@ -25,7 +25,7 @@ VARIANTS = ["SR-15", "SR-16"]
 CHINA = {"Elecrow", "Seeed", "LCSC", "JLCPCB", "AliExpress", "M5Stack", "buyepaper"}
 TARIFF_PLACEHOLDER = 0.30   # placeholder rate on China-shipped orders; replace from the invoice
 # Part numbers the planner keeps only in its link table.
-PN_OVERRIDE = {"DIV": "Yageo RC0603FR-07100KL", "PRF": "generic (see link)"}
+PN_OVERRIDE = {"DIV": "TE Connectivity CRGCQ0603F100K", "PRF": "generic (see link)"}
 
 F = "Arial"
 BLUE, GREEN, BLACK, GREY = "0000FF", "008000", "000000", "666666"

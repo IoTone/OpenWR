@@ -1,0 +1,41 @@
+SR-16 Setlist enclosure
+
+Outer size 64.0 x 113.5 x 16.8 mm (W x H incl. lanyard ear x T)
+Z: back -15.40, split -1.50, front 1.40
+Screws: 4x M2x6 pan head, thread-forming for plastic, through the back into the front bosses
+
+front          64.0 x  113.5 x   2.9 mm on the bed,  6.84 cm3 (~ 8.7 g PETG solid), non-manifold edges 0
+back           64.0 x  113.5 x  13.9 mm on the bed, 18.12 cm3 (~23.0 g PETG solid), non-manifold edges 0
+keycap-prev     6.4 x    6.4 x   3.4 mm on the bed,  0.05 cm3 (~ 0.1 g PETG solid), non-manifold edges 0
+keycap-menu     6.4 x    6.4 x   3.4 mm on the bed,  0.05 cm3 (~ 0.1 g PETG solid), non-manifold edges 0
+keycap-next     6.4 x    6.4 x   3.4 mm on the bed,  0.05 cm3 (~ 0.1 g PETG solid), non-manifold edges 0
+
+Interference (part vs reference electronics, mm3; 0 = clear). References: box stand-ins defined in this script.
+  front  x ref-glass              0.01
+  front  x ref-driver+xiao        0.00
+  front  x ref-cell               0.00
+  front  x ref-perf               0.00
+  front  x ref-switch             0.00
+  front  x ref-key                0.00
+  front  x ref-key.001            0.00
+  front  x ref-key.002            0.00
+  back   x ref-glass              0.00
+  back   x ref-driver+xiao        0.00
+  back   x ref-cell               0.00
+  back   x ref-perf               0.00
+  back   x ref-switch             0.00
+  back   x ref-key                0.00
+  back   x ref-key.001            0.00
+  back   x ref-key.002            0.00
+
+Assembly:
+- Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm double-sided tape (it is not clamped from behind).
+- Driver board + XIAO at the bottom behind the glass, USB-C out of the bottom edge; the panel FPC folds back onto the driver board's connector.
+- Keys: three B3F-1000 on an 8 x 40 mm perfboard strip glued to the rail, plungers against the printed caps in the right wall.
+- Driver stack assumed 12.5 mm (XIAO in its socket). Soldering the XIAO flat to the driver board instead brings it to about 6.5 mm: set drv_stack and rerun for a ~12 mm pass.
+
+Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed),
+back shell back down; key caps flange down. No supports, except the USB-C and lanyard
+slot bridges if your printer sags over 14 mm.
+
+MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py.

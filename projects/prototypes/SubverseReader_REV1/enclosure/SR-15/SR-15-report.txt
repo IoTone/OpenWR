@@ -1,0 +1,34 @@
+SR-15 Dial Pass enclosure
+
+Outer size 93.8 x 123.8 x 13.4 mm (W x H incl. lanyard ear x T)
+Z: back -10.60, split -2.10, front 2.80
+Screws: 4x M2x6 pan head, thread-forming for plastic (e.g. WN 1452 / PT style), through the back into the front bosses
+
+front          93.8 x  123.8 x   4.9 mm on the bed, 16.21 cm3 (~20.6 g PETG solid), non-manifold edges 0
+back           93.8 x  123.8 x   8.5 mm on the bed, 25.26 cm3 (~32.1 g PETG solid), non-manifold edges 0
+keycap-menu     4.6 x    4.6 x   3.1 mm on the bed,  0.03 cm3 (~ 0.0 g PETG solid), non-manifold edges 0
+keycap-exit     4.6 x    4.6 x   3.1 mm on the bed,  0.03 cm3 (~ 0.0 g PETG solid), non-manifold edges 0
+
+Interference (part vs reference electronics, mm3; 0 = clear). References: box stand-ins defined in this script.
+  front  x ref-pcb                0.00
+  front  x ref-glass              0.00
+  front  x ref-dial               0.00
+  front  x ref-cell               0.00
+  front  x ref-switch             0.00
+  back   x ref-pcb                0.00
+  back   x ref-glass              0.00
+  back   x ref-dial               0.00
+  back   x ref-cell               0.00
+  back   x ref-switch             0.00
+
+Assembly:
+- Board drops into the front shell face-down; the PCB border bears on the bezel step, the glass floats 0.1 mm under the bezel: add 0.3 mm foam tape on the glass border if it rattles.
+- Battery: 603450 cell on the back plate between the ribs, foam tape; lead to the SH1.0 socket through the slide switch in the left-wall cradle.
+- BOOT and RESET reach through the two pinholes on the back (upper right).
+- microSD on the left edge: push the card in with a fingernail or a pen tip through the notch.
+
+Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed),
+back shell back down; key caps flange down. No supports, except the USB-C and lanyard
+slot bridges if your printer sags over 14 mm.
+
+MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py.

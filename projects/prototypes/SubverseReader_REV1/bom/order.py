@@ -109,7 +109,7 @@ LINKS = {
     "Battery pigtail: JST-PH 2.0 socket to SH1.0": dict(q="JST SH 1.0 2 pin to JST PH 2.0 adapter cable"),
     "EPD boost: Si1308EDL": dict(vendor="DigiKey", url=DK_Q + "Si1308EDL-T1-GE3",
                                  alt=("MBR0530T1G diodes", DK_Q + "MBR0530T1G")),
-    "Battery divider: 2x 100k": dict(vendor="DigiKey", url=DK_Q + "RC0603FR-07100KL"),
+    "Battery divider: 2x 100k": dict(vendor="DigiKey", url=DK_Q + "CRGCQ0603F100K"),
 }
 
 

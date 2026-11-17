@@ -595,17 +595,18 @@ variant("SR-15", "SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its t
            "Amazon (adapter cable pack); AliExpress for 100", 0.80, 0.15, 1, "estimate", "the board takes SH1.0; check polarity, these come both ways"),
          L("PWR", "Slide switch, battery disconnect (the board has none)", "C&K", "JS102011SAQN",
            "401-2000-ND", "611-JS102011SAQN", "", 0.45, 0.20, 1, "estimate", ""),
-         L("DIV", "Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header", "Yageo", "", "", "",
+         L("DIV", "Battery divider: 2x 100k 0603/THT to IO3 (ADC1) on the header", "TE Connectivity", "", "", "",
            "", 0.05, 0.02, 1, "estimate", "the board has no battery sense; 100k/100k draws ~20 uA, "
            "or switch the low side from a spare GPIO"),
-         L("ENC", "Enclosure, 3D-printed PETG, front + back shell sized for the 107 x 87 board (~55 g)",
-           "", "", "", "", "own printer", 1.10, 0.75, 1, "estimate", "STEP model of the board in Elecrow's repo"),
-         L("CAP", "Dial extension cap + key caps, printed TPU", "", "", "", "", "own printer", 0.15, 0.08, 1,
-           "estimate", ""),
+         L("ENC", "Enclosure, 3D-printed PETG, front + back shell, 94 x 124 x 13.4 mm (~40 g)",
+           "", "", "", "", "own printer", 1.10, 0.75, 1, "estimate",
+           "enclosure/SR-15/*.stl, drawn against Elecrow's STEP model"),
+         L("CAP", "Key plungers for MENU and EXIT, printed PETG with the shell", "", "", "", "", "own printer",
+           0.02, 0.01, 1, "estimate", ""),
          L("LAM", "Laminate band: printed vinyl sticker", "", "", "", "", "sticker shop", 0.15, 0.05, 1,
            "estimate", "swappable 'pass' graphic"),
-         L("HW", "M2x6 screws + M2 heat-set inserts, 4 each", "", "", "", "", "Amazon/Ali", 0.40, 0.20, 1,
-           "estimate", "the board has no mounting holes: printed clamps hold it by the edges"),
+         L("HW", "M2x6 pan-head thread-forming screws for plastic, 4", "", "", "", "", "Amazon/Ali", 0.30, 0.10, 1,
+           "estimate", "self-tap into the printed bosses; no inserts (the bosses are too small for them)"),
          LANYARD],
         ["Controls (schematic): dial UP IO6, DOWN IO4, push IO5; MENU IO2; EXIT IO1; all with "
          "pull-ups, all RTC GPIOs, so any of them wakes the S3 from deep sleep. The dial is a "
@@ -618,7 +619,7 @@ variant("SR-15", "SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its t
          "current on the bench: the buck's quiescent current isn't published.",
          "Elecrow ships PCBA V1.0, V1.2 and V1.2A (green sticker); the panel driver differs, so "
          "check which one arrives."],
-        dims="95 x 140 x 16", grams=150, radio="Wi-Fi 4 2.4 GHz, BLE 5", sd="yes",
+        dims="94 x 124 x 13", grams=150, radio="Wi-Fi 4 2.4 GHz, BLE 5", sd="yes",
         usb="charge, console (CH340), Web Serial loader")
 
 
@@ -643,9 +644,15 @@ variant("SR-16", "SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait,
            "401-2000-ND", "611-JS102011SAQN", "", 0.45, 0.20, 1, "estimate", ""),
          L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "", 0.50, 0.20, 1, "estimate", ""),
          bat(1200, "603450", 4.80, 2.80),
-         L("ENC", "Enclosure, 3D-printed PETG, front + back shell for the 53 x 93 panel (~35 g)", "", "", "",
-           "", "own printer", 0.70, 0.50, 1, "estimate", "measure the panel first: see notes"),
-         *ENCLOSURE[1:], LANYARD],
+         L("ENC", "Enclosure, 3D-printed PETG, front + back shell, 64 x 114 x 17 mm (~25 g)", "", "", "",
+           "", "own printer", 0.70, 0.50, 1, "estimate",
+           "enclosure/SR-16/*.stl; measure the panel and driver stack first: see notes"),
+         L("CAP", "Key caps (PREV, MENU, NEXT), printed PETG with the shell", "", "", "", "", "own printer",
+           0.03, 0.01, 1, "estimate", ""),
+         ENCLOSURE[2],
+         L("HW", "M2x6 pan-head thread-forming screws for plastic, 4", "", "", "", "", "Amazon/Ali", 0.30, 0.10, 1,
+           "estimate", "self-tap into the printed bosses; no inserts (the bosses are too small for them)"),
+         LANYARD],
         ["Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. "
          "The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys "
          "also go to D4, D5 and D9 so the firmware can tell them apart.",
@@ -657,9 +664,12 @@ variant("SR-16", "SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait,
          "Size: the listing gives a 53 x 93 x 1 mm panel but also a 67 x 93.4 x 2.6 mm 'PCB size' and "
          "50 g, so it may come on a carrier board. Measure one before printing; the 64 mm width below "
          "assumes the bare panel.",
+         "Thickness: the driver board takes the XIAO in a socket, so the stack behind the glass is about "
+         "12.5 mm and the shell 16.8 mm. Soldering the XIAO flat to the driver board (no socket) brings the "
+         "stack to ~6.5 mm and the pass to ~12.5 mm; set drv_stack in enclosure/make_enclosure.py and rerun.",
          "Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes "
          "about twice the page turns; the battery figures assume the same 300 turns a day as the others."],
-        dims="64 x 120 x 12", grams=72, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        dims="64 x 114 x 17", grams=80, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
         sd="no", usb="charge, console, Web Serial loader")
 
 

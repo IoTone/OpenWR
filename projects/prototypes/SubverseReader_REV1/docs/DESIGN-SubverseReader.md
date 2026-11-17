@@ -150,8 +150,8 @@ on either band. The firmware and app hide the question entirely:
 
 ### 7.2 Storage and the USB-C loader
 
-**microSD is the flexible answer** and is on every variant except SR-1 and SR-1C
-(books live in flash). A card holds thousands of packs, survives a dead board,
+**microSD is the flexible answer** and is on every variant except SR-1, SR-1C, SR-1D
+and SR-16, which have **no card slot**: books live in flash. A card holds thousands of packs, survives a dead board,
 can be loaded in any computer, and lets one pass carry a whole library.
 
 What USB-C can do depends on the chip, and this is the catch with the C5:
@@ -160,7 +160,7 @@ What USB-C can do depends on the chip, and this is the catch with the C5:
 |---|---|---|
 | ESP32-S3 (SR-1, SR-2, SR-3, SR-4, SR-7) | USB OTG (full speed) + Serial/JTAG | **USB drive**: TinyUSB MSC exposes the microSD card (or a FAT partition in flash). Drag packs on, eject, read. |
 | nRF52840 (SR-8) | native USB device | **USB drive** (TinyUSB MSC) + **UF2 bootloader**: firmware updates by dragging a file. |
-| ESP32-C5 (SR-1C, SR-5, SR-6) | Serial/JTAG only, no OTG | No USB drive. Two loaders instead: **pull the microSD card** and copy packs on a computer, or the **Web Serial loader**: a Subverse web page (Chrome/Edge) streams packs to the pass over the USB serial port. Expect a few hundred KB/s; fine for zines. |
+| ESP32-C5 (SR-1C, SR-1D, SR-5, SR-6, SR-16) | Serial/JTAG only, no OTG | No USB drive. Two loaders instead: **pull the microSD card** and copy packs on a computer (not SR-1C, SR-1D or SR-16, which have no card), or the **Web Serial loader**: a Subverse web page (Chrome/Edge) streams packs to the pass over the USB serial port. Expect a few hundred KB/s; fine for zines. |
 
 The desktop side is a **pack builder** (the phone renderer in a desktop or web
 build) so people without the app can turn PDFs into `.svpk` files for a
@@ -247,8 +247,8 @@ enclosure as rendered; weights are estimates without the lanyard.
 | **SR-7 Poster** | lanyard | 5.83in 648×480 **4-colour** B/W/R/Y | ESP32-S3 (SR-2 board) | 5-way + 2 keys | A7 zine sleeve | 109 × 177 × 19.5 | 150 | yes | USB drive | $55 | $35 |
 | **SR-8 Quiet Pass** | lanyard | 4.2in 400×300 1-bit | XIAO nRF52840 Plus on Seeed **EE05**, **no Wi-Fi** | 3 keys (on the EE05) | plain | 86 × 138 × 13 | 95 | yes | USB drive + UF2 | $47 | $35 |
 | **SR-9 Roadie** | lanyard | 4.2in 400×300 1-bit | ESP32-C5 PCB | **PSP thumbstick** (Adafruit 444) + OK / BACK | plain | 88 × 149 × 14.5 | 105 | yes | charge, Web Serial | $42 | $25 |
-| **SR-15 Dial Pass** | lanyard | 4.2in 400×300 1-bit | Elecrow CrowPanel 4.2in (ESP32-S3), finished board | **thumb dial** (up / down / push) + MENU + EXIT | plain | 95 × 140 × 16 | 150 | yes | charge, Web Serial (CH340) | $39 | $27 |
-| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys on the right edge (hand-wired) | plain | 64 × 120 × 12 | 72 | no | charge, Web Serial | $37 | $24 |
+| **SR-15 Dial Pass** | lanyard | 4.2in 400×300 1-bit | Elecrow CrowPanel 4.2in (ESP32-S3), finished board | **thumb dial** (up / down / push) + MENU + EXIT | plain | 94 × 124 × 13 | 150 | yes | charge, Web Serial (CH340) | $39 | $27 |
+| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys on the right edge (hand-wired) | plain | 64 × 114 × 17 | 80 | **no** (8 MB flash) | charge, Web Serial | $37 | $24 |
 
 Depth with pocket/clip included; SR-2/SR-7 are 15.5 mm without the pocket,
 SR-4 13.5 mm, SR-5's body 16 mm.
@@ -375,11 +375,14 @@ its own controls. Because the controls differ, it is its own pass rather than an
 - **Battery socket** is SH1.0 2-pin; the cell plugs in through a JST-PH-to-SH1.0 adapter lead.
 - **USB-C goes through a CH340C**, not the S3's native USB, so there is no USB drive: packs load
   by microSD or the Web Serial loader.
-- **Mechanics.** The board is 107 × 87 mm with no mounting holes; the shell clamps it by the
-  edges, landscape board turned portrait, with the dial on the right edge. Elecrow's repo has a
-  STEP model to draw against. Elecrow has shipped PCBA V1.0, V1.2 and V1.2A with different
-  panel drivers; check which arrives.
-- **Cost:** $38.50 a pass at 5 ($44.10 landed), $26.80 at 100: the cheapest pass
+- **Mechanics.** The board is 107 × 87 mm. Turned portrait, the dial with MENU and EXIT either
+  side ends up on the **bottom edge**, under the thumbs; USB-C is on the top edge (left of the
+  lanyard ear) and microSD on the left edge. Elecrow's Eagle file has no drilled holes but its
+  STEP model shows six M3 holes; Elecrow has shipped PCBA V1.0, V1.2 and V1.2A, so the shell
+  doesn't rely on them and clamps the board by its edges instead. The shell is 94 × 124 × 13.4 mm
+  (with the ear), drawn against the STEP model with no interference: see
+  [enclosure/](../enclosure/README.md).
+- **Cost:** $38.27 a pass at 5 ($43.87 landed), $26.63 at 100: the cheapest pass
   you can build today (no board to draw), with parts in hand in about 10 days.
 
 ### SR-16 Setlist: the slim 3.7in pass
@@ -401,11 +404,22 @@ on the long right edge, so there is no key row under the screen.
 - **Text.** About 110–130 words a page at reading size against ~250 on 4.2in: books take about
   twice the page turns. The battery model counts 300 turns a day like the others (10 months on
   1200 mAh), so a heavy reader should expect closer to half that.
+- **No microSD card.** Nothing on SR-16 holds a card: the XIAO, the driver board and the shell
+  have no slot. Content lives in the XIAO ESP32-C5's 8 MB flash, about 5–6 MB after the
+  firmware. That's a dozen or more books as compressed text plus zines and setlists, but little
+  in pre-rendered images. The phone app swaps what's on the pass; it isn't a library. (SR-15
+  has a slot only because the CrowPanel board has one.) To add a card later, a microSD breakout
+  on the panel's SPI bus needs MISO and a chip-select. D9, the XIAO's usual MISO, is a key, so
+  the pins would need remapping, plus a wall slot and about 1–2 mm of thickness.
 - **Size check.** The listing gives the panel as 53 × 93 × 1 mm but also a 67 × 93.4 × 2.6 mm
   "PCB size" and 50 g, so it may arrive on a carrier board. Measure one before printing; the
-  64 × 120 × 12 mm pass assumes the bare panel.
-- **Cost:** $37.09 a pass at 5 ($45.69 landed: Seeed, Elecrow, DigiKey and Amazon orders),
-  $24.46 at 100. The panel rides the same Elecrow order as SR-15's board.
+  shell in [enclosure/](../enclosure/README.md) assumes the bare panel.
+- **Thickness.** The driver board takes the XIAO in a socket, so the stack behind the glass is
+  ~12.5 mm and the printed pass 64 × 114 × 17 mm. Soldering the XIAO flat to the driver board
+  brings it to ~12.5 mm thick. Measure the board, the stack and which way the XIAO's USB-C faces
+  before the final print: Seeed publishes no drawing.
+- **Cost:** $36.92 a pass at 5 ($45.52 landed: Seeed, Elecrow, DigiKey and Amazon orders),
+  $24.32 at 100. The panel rides the same Elecrow order as SR-15's board.
 
 ### SR-9 and the thumbstick
 
