@@ -32,8 +32,8 @@ the glasses on the same hotspot. Public Wi-Fi (hotels, cafés, conferences)
 usually needs a sign-in page Scout can't use and keeps devices on it from
 reaching each other, so it isn't worth saving.
 
-The blue LED (IO14) is lit while Scout is on Wi-Fi, so you can see at a
-glance whether it joined.
+The blue LED (IO14) is solid while the camera is on Wi-Fi and blinks
+(1 Hz) while it is powered but off Wi-Fi, so a live camera is never dark.
 
 With no saved network in range Scout doesn't reboot itself for Wi-Fi; BLE,
 shooting and the Roll carry on. 0.6.0's single network moves into the list
@@ -67,7 +67,7 @@ roll-ls        \ 0000.BIN ... roll: <count> frames   (as the maplet)
 0 roll-b64     \ frame 0 as base64 lines             (as the maplet)
 5 4 roll-th    \ rth 5 80 53 1 + base64, then 4, 3, 2
 roll-format    \ wipe the roll
-version        \ scout v0.8.0 Scout (the lens's RollView reads roll-b64 from 0.3.2)
+version        \ scout v0.8.1 Scout (the lens's RollView reads roll-b64 from 0.3.2)
 
 s" ssid" s" pass" wifi!   \ save a 2.4 GHz network (up to 5) and join it now
 wifi?          \ wifi 1 HomeNet -52 on / wifi 2 iPhone - / wifi saved 2

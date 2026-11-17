@@ -94,10 +94,19 @@ static int                s_nseen;
 
 static void web_start(void);
 
-/* the blue LED (IO14 on Model A and B): lit while Scout has an IP */
+/* the blue LED (IO14 on Model A and B, and the M5Camera-X) */
 #define LED_PIN 14
 #define LED_ON  1
 static void led(bool on) { gpio_set_level(LED_PIN, on ? LED_ON : !LED_ON); }
+
+/* solid while on Wi-Fi; off Wi-Fi it blinks (1 Hz), so a powered camera is
+ * never dark */
+static void on_blink(void *arg)
+{
+    static bool phase;
+    phase = !phase;
+    led(s_up ? true : phase);
+}
 
 static void nets_load(void)
 {
@@ -244,7 +253,6 @@ static void on_wifi(void *arg, esp_event_base_t base, int32_t id, void *data)
         wifi_event_sta_disconnected_t *d = (wifi_event_sta_disconnected_t *)data;
         bool was_up = s_up;
         s_up = false;
-        led(false);
         if (s_quiet) { s_quiet = false; return; }          /* wifi! hung up on purpose */
         if (was_up && s_cur >= 0) {
             /* it dropped: that network first, then the scan */
@@ -280,6 +288,9 @@ void scout_net_init(void)
     gpio_reset_pin(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
     led(false);
+    const esp_timer_create_args_t ba = { .callback = on_blink, .name = "led" };
+    esp_timer_handle_t blink;
+    if (esp_timer_create(&ba, &blink) == ESP_OK) esp_timer_start_periodic(blink, 500 * 1000);
     const esp_timer_create_args_t ta = { .callback = on_retry, .name = "wifi_retry" };
     esp_timer_create(&ta, &s_retry);
     ESP_ERROR_CHECK(esp_netif_init());
