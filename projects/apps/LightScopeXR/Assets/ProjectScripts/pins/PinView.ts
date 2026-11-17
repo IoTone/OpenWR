@@ -56,7 +56,7 @@ export class PinView extends BaseScriptComponent {
   @allowUndefined
   camera: SceneObject;
 
-  @input distance: number = 85;
+  @input distance: number = 125;
   @input
   @hint("cm below eye level at 45 cm; below Pulse")
   drop: number = 22;

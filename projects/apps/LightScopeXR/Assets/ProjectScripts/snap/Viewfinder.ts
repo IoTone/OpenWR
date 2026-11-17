@@ -65,7 +65,7 @@ export class Viewfinder extends BaseScriptComponent {
 
   @input
   @hint("How far ahead the target floats, cm (nearer than the panels)")
-  distance: number = 60;
+  distance: number = 100;
 
   @input
   @hint("Target width, cm, at that distance")

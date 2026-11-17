@@ -46,7 +46,7 @@ export class RemoteView extends BaseScriptComponent {
   @allowUndefined
   camera: SceneObject;
 
-  @input distance: number = 85;
+  @input distance: number = 125;
   @input drop: number = 6;
   @input
   @hint("Degrees to the side; negative is left")

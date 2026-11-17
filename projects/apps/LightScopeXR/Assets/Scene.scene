@@ -22,6 +22,7 @@
     - !<own> de6a4704-1e67-434d-9cfd-56cf1a5a188b
     - !<own> dee0d256-cecd-47a5-aee0-0c93ea950d7b
     - !<own> 85732997-02e6-4e21-8f28-da4b3b57095f
+    - !<own> db75c677-f8de-49c5-8912-b1b1bf1dcc9f
   layers: !<Layers/267ee9a7-aff2-4f9d-9a49-f71214747d03>
     userLayers:
       - |
@@ -1133,6 +1134,25 @@
     - !<own> 694d7d96-e33b-4ef0-bb21-b3cef311078c
   Components:
     []
+- !<ScriptComponent/29557165-a4cc-49a9-9b92-b9ff469602df>
+  PrefabRemaps:
+    []
+  Name: HubFollow
+  Enabled: true
+  ScriptAsset: !<reference> 8829ffca-a197-4914-9331-9ecdf55faba8
+  ScriptInputsDefault:
+    shootGlasses: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      links: !<MappingBased.AssignableType> 9c5efe5b-b2f7-435f-8aa4-bb55c476eae5
+      reel: !<MappingBased.AssignableType_1> df8d47b4-b96e-4a92-aae0-6947ee9941fe
+      shutter: !<reference.AudioTrackAsset> d4499db7-402f-4c3a-9174-7b1d3c455a73
+      shootGlasses: true
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/29d99209-75b9-4a72-83ec-35fdfbe8b1c8>
   PrefabRemaps:
     []
@@ -4457,6 +4477,7 @@
   ScriptInputsDefault:
     alphaName: true
     scoutName: true
+    reelHubName: true
     offline: true
   ScriptTypesDefault:
     {}
@@ -4465,6 +4486,7 @@
       bluetoothModule: !<reference.BluetoothCentralModule> 50436a57-88d7-4bda-8969-9ad51aed9030
       alphaName: AlphaFriend
       scoutName: Scout
+      reelHubName: ReelHub
       goggleName: ""
       mapletName: ""
       useStrap: false
@@ -5097,6 +5119,8 @@
       sonyText: !<reference.Text> e4740055-2882-4fba-a35d-be70dba3d490
       alphaShutter: !<reference.AudioTrackAsset> f83e1f10-5644-4daf-8059-95d1788027f5
       scoutShutter: !<reference.AudioTrackAsset> b8ffa364-316e-47fb-adeb-8cb8fac0b7d6
+      uiClickSound: !<reference.AudioTrackAsset> d273daaa-5089-4694-8f52-2f45d79394be
+      uiFailSound: !<reference.AudioTrackAsset> 18b4453d-5355-4be6-aa98-d49c58317ef7
       frame: !<reference.SceneObject> dee0d256-cecd-47a5-aee0-0c93ea950d7b
       camera: !<reference.SceneObject> 00000000-0000-0065-0000-000000000064
       distance: !<float> 85.000000
@@ -6299,6 +6323,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/db75c677-f8de-49c5-8912-b1b1bf1dcc9f>
+  PrefabRemaps:
+    []
+  Name: HubFollow
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 29557165-a4cc-49a9-9b92-b9ff469602df
 - !<SceneObject/dbe7b68c-8eff-4bcf-bfbb-db843e830d74>
   PrefabRemaps:
     []

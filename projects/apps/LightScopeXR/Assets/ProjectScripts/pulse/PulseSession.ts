@@ -71,7 +71,7 @@ export class PulseSession extends BaseScriptComponent {
 
   @input
   @hint("How far in front of the eyes the panel starts, cm. It scales with distance, so it looks the same size; nearer than ~60 cm is hard to focus on")
-  distance: number = 85;
+  distance: number = 125;
 
   @input
   @hint("How far below eye level the panel starts, cm (at 45 cm; scales with distance)")

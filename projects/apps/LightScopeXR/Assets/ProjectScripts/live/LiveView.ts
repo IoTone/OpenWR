@@ -129,7 +129,7 @@ export class LiveView extends BaseScriptComponent {
   @allowUndefined
   camera: SceneObject;
 
-  @input distance: number = 85;
+  @input distance: number = 125;
   @input
   @hint("cm below eye level at 45 cm; negative is above")
   drop: number = -14;
