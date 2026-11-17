@@ -44,7 +44,7 @@ Scout's README for the messages.
 | camera | how | state |
 |---|---|---|
 | Scout | UDP `snap` + HTTP `/snap.jpg` | working |
-| CameraX | the same (Scout firmware, `-e camerax`) | to flash |
+| CameraX | the same (Scout firmware, `-e camerax`) | working |
 | glasses | `fire <n>` line on the BLE console | lens side to do |
 | AlphaFriend (α7) | BLE central link, `shoot` + a medium `pvj` | when the α7 is back |
 
@@ -83,6 +83,8 @@ PlatformIO's ESP-IDF 5.3.1 (the C6FH8 needs ≥ 5.1.4).
 - Free internal heap with Wi-Fi + BLE up: 155 KB (largest block 126 KB).
 - Scout shot into the reel: 6–13 KB in 280–810 ms (0.1.0, /frame.jpg);
   0.2.0: snap answered in 160–380 ms, frame fetched in 0.65–2.8 s.
+- Scout + CameraX in one shot: snap answered in 141 ms, both frames in
+  the reel within 1.2 s (12 KB each).
 - A shot in the first seconds after the hub boots can find no camera yet.
 - Touch map 1 (swap x/y) from `touch-cal`; screen rot 0.
 
