@@ -67,5 +67,5 @@
     - // @input SceneObject camera
     - // @input float distance = 125
     - // @input float drop = 6
-    - '// @input float yaw = 32 {"hint":"Degrees to the side; negative is left"}'
+    - '// @input float yaw = 64 {"hint":"Degrees to the side; negative is left"}'
     - '// @input float width = 16 {"hint":"Width of the picture, cm (at 45 cm)"}'
