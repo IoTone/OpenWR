@@ -32,6 +32,25 @@ is nearly full. Pictures are kept as sent (Scout's 320×240 is already
 small); they're scaled to fit as they're drawn (ROM TJpgDec, decoded into
 16-row strips and resampled, so any size costs two small buffers).
 
+## For the glasses (0.3.0)
+
+BLE carries the events, Wi-Fi the pictures:
+
+- Over the BLE console the hub prints, unasked, `fire <n>` when it shoots
+  and `show <file> <camera> <i>/<count>` whenever the shot on screen
+  changes (a swipe, a new shot). `show?` repeats it; `url?` gives the
+  address.
+- HTTP on port 80 (CORS open):
+
+  | | |
+  |---|---|
+  | `GET /reel.txt` | `<file> <camera> <w> <h> <hh:mm:ss> <bytes>` per shot, oldest first, then `showing <file>` |
+  | `GET /reel/<file>.jpg` | that shot |
+  | `POST /reel/add?label=SPECS` | a JPEG, raw or base64 text, into the reel; it shows at once; answers `added <file>` |
+
+Measured: a shot downloads in 0.27 s; an upload takes 0.7 s raw, 2.1 s
+as base64.
+
 ## Cameras (0.2.0)
 
 LAN cameras (Scout firmware 0.8.0+: Scout, CameraX) are found by
@@ -58,6 +77,7 @@ reel?                 \ reel <count> free <KB> showing <n>
 reel-ls               \ <n> <camera> <w>x<h> <time> <bytes>
 3 reel-show           \ show shot 3
 reel-wipe             \ delete every shot
+show?  url?           \ what's on screen; the hub's address
 touch-cal             \ tap the three crosses; saves the touch map
 n touch-map!  touch-log
 n rot!  card  redraw  \ screen orientation (0 is right on the bench), test card

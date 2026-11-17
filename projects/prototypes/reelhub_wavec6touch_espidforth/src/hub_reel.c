@@ -107,6 +107,19 @@ static bool read_meta(int num, char *label, int *w, int *h, char *at, int *bytes
     return ok;
 }
 
+bool reel_meta(int num, char *label, int *w, int *h, char *at, int *bytes) { return read_meta(num, label, w, h, at, bytes); }
+int  reel_num_at(int i) { return i >= 0 && i < s_n ? s_num[i] : -1; }
+void reel_file(int num, char *out, size_t cap) { path(out, cap, num, "JPG"); }
+
+/* tell every console what's on screen: the glasses follow it */
+static void announce(void)
+{
+    if (s_show < 0) { con_printf("show none 0/0\n"); return; }
+    char label[17] = "?", at[10] = ""; int w, h, b;
+    read_meta(s_num[s_show], label, &w, &h, at, &b);
+    con_printf("show %04d %s %d/%d\n", s_num[s_show], label, s_show + 1, s_n);
+}
+
 /* ---- JPEG to screen ---------------------------------------------------- */
 
 typedef struct {
@@ -264,6 +277,7 @@ void reel_show(int i)
     if (i < 0 || i >= s_n) return;
     s_show = i;
     reel_redraw();
+    announce();
 }
 
 void reel_step(int dir)
@@ -307,6 +321,7 @@ int reel_add(const uint8_t *jpg, size_t n, const char *label)
     s_num[s_n++] = (uint16_t)num;
     s_show = s_n - 1;
     reel_redraw();
+    announce();
     xSemaphoreGiveRecursive(s_lock);
     return num;
 }
@@ -324,6 +339,7 @@ static void w_reel_ls(void)
     con_printf("reel %d\n", s_n);
 }
 static void w_reel_show(void) { reel_show((int)forth_pop() - 1); }
+static void w_show_q(void) { announce(); }
 static void w_reel_wipe(void)
 {
     xSemaphoreTakeRecursive(s_lock, portMAX_DELAY);
@@ -332,6 +348,7 @@ static void w_reel_wipe(void)
     reel_redraw();
     xSemaphoreGiveRecursive(s_lock);
     con_printf("reel 0\n");
+    announce();
 }
 
 void reel_register_words(void)
@@ -340,4 +357,5 @@ void reel_register_words(void)
     forth_register_word("reel-ls", w_reel_ls);
     forth_register_word("reel-show", w_reel_show);
     forth_register_word("reel-wipe", w_reel_wipe);
+    forth_register_word("show?", w_show_q);
 }

@@ -10,6 +10,7 @@
  *   wifi-ps!    ( flag -- )           1 modem sleep (default, needed with BLE), 0 awake
  *   net?        ( -- )                net up <ip> rssi <dBm> <ssid> | net down
  *   tz!         ( addr u -- )         time zone, POSIX TZ string; saved (default UTC0)
+ *   url?        ( -- )                url http://<ip>/ | url none  (the reel over HTTP: hub_web.h)
  *   mem?        ( -- )                internal heap free / largest block
  *
  * Licensed under the Apache License, Version 2.0

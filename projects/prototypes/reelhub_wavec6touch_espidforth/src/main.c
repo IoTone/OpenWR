@@ -27,8 +27,9 @@
 #include "hub_reel.h"
 #include "hub_net.h"
 #include "hub_shoot.h"
+#include "hub_web.h"
 
-#define HUB_VERSION     "0.2.0"
+#define HUB_VERSION     "0.3.0"
 #define FORTH_HEAP_SIZE (16 * 1024)
 
 /* ----- console: USB-serial-JTAG, never blocking without a host (goggl1) ----- */
@@ -117,6 +118,7 @@ void app_main(void)
     lcd_text(60, 70, "REELHUB", C_AMBER, C_BG, 4);
     reel_init();
     reel_register_words();
+    hub_net_on_up(hub_web_start);
     hub_net_init();
     hub_net_register_words();
     if (ble_console_init("ReelHub") == ESP_OK) ble_console_register_words();
@@ -133,7 +135,7 @@ void app_main(void)
 
     console_printf("reel %d shots, heap %u free, largest %u\r\n", reel_count(),
                    (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL), (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL));
-    console_print("Words: shoot cams? cams-find reel? reel-ls reel-show reel-wipe\r\n"
+    console_print("Words: shoot cams? cams-find reel? reel-ls reel-show reel-wipe show? url?\r\n"
                   "       rot! card redraw touch-cal touch-map! touch-log  wifi! wifi? wifi-seen net? tz! mem?\r\n");
     forth_repl(console_getchar, console_putchar);
     forth_deinit();

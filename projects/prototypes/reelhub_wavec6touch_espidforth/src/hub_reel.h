@@ -11,6 +11,10 @@
  *   reel-ls     ( -- )      one line per shot: <n> <label> <w>x<h> <time> <bytes>
  *   n reel-show ( n -- )    show shot n (1 = oldest)
  *   reel-wipe   ( -- )      delete every shot
+ *   show?       ( -- )      show <file> <camera> <i>/<count> | show none 0/0
+ *
+ * Whenever the shot on screen changes (a swipe, a new shot, reel-show) the
+ * hub prints that show line on every console, unasked: the glasses follow it.
  *
  * Licensed under the Apache License, Version 2.0
  */
@@ -33,6 +37,9 @@ void reel_show(int i);
 void reel_step(int dir);             /* -1 older, +1 newer */
 void reel_redraw(void);
 void reel_strip_note(const char *line1, const char *line2, uint16_t colour);   /* status lines in the strip */
+bool reel_meta(int num, char *label, int *w, int *h, char *at, int *bytes);
+int  reel_num_at(int i);             /* file number of shot i, -1 if none */
+void reel_file(int num, char *out, size_t cap);
 void reel_register_words(void);
 
 #endif

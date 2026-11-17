@@ -423,6 +423,12 @@ static void w_mem_q(void)
 
 void hub_net_on_up(void (*fn)(void)) { s_on_up = fn; }
 
+static void w_url_q(void)
+{
+    if (s_up) con_printf("url http://" IPSTR "/\n", IP2STR(&s_ip));
+    else con_printf("url none\n");
+}
+
 /* ---- HTTP GET into a buffer ------------------------------------------------ */
 
 int hub_http_get(const char *url, uint8_t *buf, int cap, int timeout_ms)
@@ -473,4 +479,5 @@ void hub_net_register_words(void)
     forth_register_word("wifi-ps!", w_wifi_ps);
     forth_register_word("net?", w_net_q);
     forth_register_word("tz!", w_tz_store);
+    forth_register_word("url?", w_url_q);
 }
