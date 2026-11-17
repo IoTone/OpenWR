@@ -17,6 +17,29 @@ runs a small web server, and tells the glasses its address over BLE
 (`url?`), since Spectacles have no mDNS. That is the test bed for pulling
 frames over Wi-Fi while BLE carries control.
 
+## Wi-Fi in more than one place
+
+Scout keeps up to five networks, in order of preference. At boot, and
+whenever it loses Wi-Fi, it scans and joins the first saved network it can
+see; if that one refuses it (two tries each) it falls back to the next, then
+scans again (every 5 s growing to 60 s). A network it dropped off is tried
+again first. Hidden networks don't show in a scan, so when no saved network
+is seen it tries every one in turn.
+
+A sensible list: home first, then a phone hotspot (2.4 GHz; on an iPhone,
+Maximise Compatibility). Away from home the hotspot is the one it finds; put
+the glasses on the same hotspot. Public Wi-Fi (hotels, cafés, conferences)
+usually needs a sign-in page Scout can't use and keeps devices on it from
+reaching each other, so it isn't worth saving.
+
+The blue LED (IO14) is lit while Scout is on Wi-Fi, so you can see at a
+glance whether it joined.
+
+With no saved network in range Scout doesn't reboot itself for Wi-Fi; BLE,
+shooting and the Roll carry on. 0.6.0's single network moves into the list
+on the first boot of 0.7.0. Passwords stay in NVS and `wifi?` never prints
+them.
+
 ## Build and flash
 
 ```
@@ -44,11 +67,15 @@ roll-ls        \ 0000.BIN ... roll: <count> frames   (as the maplet)
 0 roll-b64     \ frame 0 as base64 lines             (as the maplet)
 5 4 roll-th    \ rth 5 80 53 1 + base64, then 4, 3, 2
 roll-format    \ wipe the roll
-version        \ scout v0.5.0 (the lens's RollView reads roll-b64 from 0.3.2)
+version        \ scout v0.7.0 (the lens's RollView reads roll-b64 from 0.3.2)
 
-s" ssid" s" pass" wifi!   \ join a 2.4 GHz network; saved
+s" ssid" s" pass" wifi!   \ save a 2.4 GHz network (up to 5) and join it now
+wifi?          \ wifi 1 HomeNet -52 on / wifi 2 iPhone - / wifi saved 2
+wifi-seen      \ what Scout can see (2.4 GHz only): seen <ssid> <rssi> ch <n> [open]
+2 wifi-forget  \ forget saved network 2
+2 wifi-first   \ make saved network 2 the first choice
 0 wifi-ps!     \ Wi-Fi always awake; 1 = modem sleep (default, needed with BLE)
-net?           \ net up 10.0.0.216 rssi -60 | net down
+net?           \ net up 10.0.0.216 rssi -60 HomeNet | net down
 url?           \ url http://10.0.0.216/ ws://10.0.0.216/ws | url none
 web?           \ web jpg <n> ws <n> mjpeg <n> last <client ip> <ms ago>
 mem?           \ internal / largest block / PSRAM free

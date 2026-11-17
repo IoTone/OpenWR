@@ -3,9 +3,15 @@
  * with the camera's JPEG frames. The glasses learn the URL over BLE
  * (url?), since Spectacles have no mDNS, and fetch frames by IP.
  *
- *   wifi!     ( ssid u pass u -- )  store credentials (NVS) and connect
+ *   wifi!     ( ssid u pass u -- )  save a network (up to 5, NVS) and join it now
+ *   wifi?     ( -- )                wifi <n> <ssid> <rssi|-> [on] ..., wifi saved <n>
+ *   wifi-seen ( -- )                the last scan: seen <ssid> <rssi> ch <n> [open]
+ *   wifi-forget ( n -- )            forget saved network n
+ *   wifi-first  ( n -- )            make saved network n the first choice
+ *             At boot and whenever it loses Wi-Fi, Scout scans and joins the
+ *             first saved network it can see, falling back down the list.
  *   wifi-ps!  ( flag -- )           1 modem sleep (default, needed with BLE), 0 awake
- *   net?      ( -- )                net up <ip> rssi <dBm> | net down
+ *   net?      ( -- )                net up <ip> rssi <dBm> <ssid> | net down
  *   url?      ( -- )                url http://<ip>/ ws://<ip>/ws | url none
  *   web?      ( -- )                web jpg <n> ws <n> mjpeg <n> last <client ip> <ms ago>
  *

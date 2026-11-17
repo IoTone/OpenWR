@@ -29,7 +29,7 @@
 #include "scout_wdog.h"
 #include "esp_task_wdt.h"
 
-#define SCOUT_VERSION   "0.6.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
+#define SCOUT_VERSION   "0.7.0"   /* the lens's RollView uses roll-b64 from 0.3.2 */
 #define CONSOLE_UART    UART_NUM_0
 #define CONSOLE_BAUD    115200
 #define CONSOLE_RX_BUF  256
