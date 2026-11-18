@@ -6455,7 +6455,7 @@
   PrefabRemaps:
     []
   Name: CamFrame
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: -4.000000, z: -55.000000}
