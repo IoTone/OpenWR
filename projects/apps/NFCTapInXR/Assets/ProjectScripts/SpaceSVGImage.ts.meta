@@ -1,0 +1,71 @@
+- !<AssetImportMetadata/db58b2db-f61c-412e-b13e-c929f77a9146>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> f0a8639e-ebd1-4bc0-8fa5-c03b5c7084d7
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> f0a8639e-ebd1-4bc0-8fa5-c03b5c7084d7
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> db0b40b8-05b8-4306-8f89-be4dd55acee8
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/db0b40b8-05b8-4306-8f89-be4dd55acee8>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 1c253a69-83f0-488d-aef9-1cb60561c3af
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    autoRender: false
+    darkStrokeColor: false
+    darkStrokeThreshold: false
+    material: false
+    skipGroupIds: false
+    strokeScale: false
+    svgInline: false
+    svgTextSource: false
+    worldHeight: false
+    worldWidth: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - material: !<reference.Material> 00000000-0000-0000-0000-000000000000
+      svgTextSource: !<reference.Text> 00000000-0000-0000-0000-000000000000
+      svgInline: ""
+      worldWidth: !<float> 20.000000
+      worldHeight: !<float> 20.000000
+      strokeScale: !<float> 8.000000
+      skipGroupIds: ""
+      darkStrokeColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      darkStrokeThreshold: 0.100000
+      autoRender: true
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.Material material {"hint":"Unlit material for mesh rendering (e.g., LegitUnlit)"}'
+    - '// @input Component.Text svgTextSource {"hint":"Text component whose .text holds the raw SVG XML. Disable its SceneObject so it does not render — we read .text only."}'
+    - '// @input string svgInline {"hint":"Inline SVG XML (used when svgTextSource is empty or unassigned)."}'
+    - '// @input float worldWidth = 20 {"hint":"World-space width of the rendered SVG"}'
+    - '// @input float worldHeight = 20 {"hint":"World-space height of the rendered SVG"}'
+    - '// @input float strokeScale = 1 {"hint":"Multiplier on stroke widths. 1 = faithful to SVG (often sub-pixel for large viewBoxes). Try 2–6 for visibility; values >8 may distort sharp corners."}'
+    - '// @input string skipGroupIds {"hint":"Comma-separated list of <g> id values whose entire subtree should be skipped. Useful for 3D-exported SVGs that include interior fold lines (e.g. \"MeshIntersection,Crease,Material,Pupils,Boundary\"). Match is exact and case-sensitive."}'
+    - '// @input vec4 darkStrokeColor = {1,1,1,1} {"hint":"Remap near-black stroke colors to this RGB on AR. Spectacles is additive-only — true black emits no light and looks identical to occluded pink. White (1,1,1) gives high-contrast outlines; (0.2,0.1,0.15) reads as \"dark\" against pink fill. Set the alpha to 0 to leave black strokes alone."}'
+    - "// @input float darkStrokeThreshold = 0.1 {\"hint\":\"Threshold for \\\"near-black\\\": if a stroke color's max RGB channel is at or below this, it gets remapped via darkStrokeColor.\"}"
+    - '// @input bool autoRender = true {"hint":"Render automatically on Awake"}'

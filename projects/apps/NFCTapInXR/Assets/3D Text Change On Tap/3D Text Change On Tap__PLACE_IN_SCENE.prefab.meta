@@ -1,0 +1,122 @@
+- !<AssetImportMetadata/773d74bb-c9fc-4d94-b51f-5f12dc46eeac>
+  ImportedAssetIds:
+    ObjectPrefab: !<reference> ca9b791f-9e21-492b-ab67-06ff1c4ffd71
+  ImporterName: ObjectPrefabImporter
+  PrimaryAsset: !<reference> ca9b791f-9e21-492b-ab67-06ff1c4ffd71
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    AssetLibraryId: 3sUTBsrxVUgcYYoS6JYaeN
+  AssetDataMap:
+    ObjectPrefab: !<own> a189d95f-a3b2-486c-ba8c-77ededd16a65
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<SceneObject/05b1e87f-8db8-4d1b-4d81-524f5910bb70>
+  PrefabRemaps:
+    []
+  Name: 3D Text Change On Tap__PLACE_IN_SCENE
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> d6ebb8a7-713e-42c7-63d3-0573b62b7eb0
+    - !<own> 1cd065b9-114f-41ae-7a51-c87c8a293ca6
+  Components:
+    []
+- !<SceneObject/1cd065b9-114f-41ae-7a51-c87c8a293ca6>
+  PrefabRemaps:
+    []
+  Name: Text3D Object
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 20.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 713f64bc-aad6-4dec-4f0c-0f89a5751e96
+- !<Text3D/713f64bc-aad6-4dec-4f0c-0f89a5751e96>
+  PrefabRemaps:
+    []
+  Name: Text3D
+  Enabled: true
+  RenderOrder: 0
+  StretchMode: Stretch
+  VerticalAlignment: Center
+  HorizontalAlignment: Center
+  MeshShadowMode: None
+  ShadowColor: {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ShadowDensity: 1.000000
+  Materials:
+    - !<reference> 8de32f0e-47ee-47a5-be47-5aad23641e70
+  Text: TAP NOW!
+  Editable: false
+  ShowEditingPreview: true
+  TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000
+  SizeToFit: false
+  FontSize: 120
+  ExtrusionDepth: 1.000000
+  ExtrudeDirection: Both
+  Font: !<reference> b7f03949-885c-4d85-ba0d-21beda1c938a
+  LayoutRect:
+    left: -7.500000
+    bottom: -2.250000
+    right: 7.500000
+    top: 2.250000
+  OverflowVertical: Overflow
+  OverflowHorizontal: Overflow
+  AdvancedLayout: !<TextAdvancedLayout>
+    ExtentsTarget: !<reference> 00000000-0000-0000-0000-000000000000
+    LetterSpacing: -0.030000
+    LineSpacing: 0.580000
+    CapitalizationOverride: None
+  EnableBatching: false
+- !<ScriptComponent/9a051ef4-f82a-4035-62f7-fd5749dbe3b4>
+  PrefabRemaps:
+    []
+  Name: SetText
+  Enabled: true
+  ScriptAsset: !<reference> 52f18cb1-03fd-43a1-a4e9-f554e3148403
+  ScriptInputsDefault:
+    colorToBeSet: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      text3D: !<reference.Text3D> 713f64bc-aad6-4dec-4f0c-0f89a5751e96
+      textToBeSet: YOU DID IT!
+      colorToBeSet: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+      extrusionToBeSet: 0.080000
+  ScriptTypes:
+    "":
+      {}
+- !<ObjectPrefabAssetData/a189d95f-a3b2-486c-ba8c-77ededd16a65>
+  Prototype: !<ObjectOwner/a11ab846-b759-4741-a33c-8cc0c32ba9c8>
+    PackagePath: ""
+    objects:
+      - !<own> 05b1e87f-8db8-4d1b-4d81-524f5910bb70
+- !<SceneObject/d6ebb8a7-713e-42c7-63d3-0573b62b7eb0>
+  PrefabRemaps:
+    []
+  Name: "Set Text [EDIT_ME]"
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9a051ef4-f82a-4035-62f7-fd5749dbe3b4

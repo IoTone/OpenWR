@@ -1,0 +1,53 @@
+- !<AssetImportMetadata/4cad8287-ac6a-430b-b09d-c2c50e2a4c87>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 872a8b57-3633-471c-b160-8d2ee7fde409
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 872a8b57-3633-471c-b160-8d2ee7fde409
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 9d91b797-3b64-4c07-8514-647c1d112eee
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/9d91b797-3b64-4c07-8514-647c1d112eee>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: 6c351be9-30bf-48e8-bd07-ba53aa25a47e
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bluetoothModule: false
+    output: false
+    seconds: false
+    startDelay: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
+      startDelay: !<float> 9.000000
+      seconds: !<float> 60.000000
+      output: !<reference.Text> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
+    - '// @input float startDelay = 9 {"hint":"Seconds to wait before scanning (let NusProbe finish first)"}'
+    - '// @input float seconds = 60 {"hint":"Seconds to stream heart rate"}'
+    - '// @input Component.Text output {"hint":"Optional Text to show results in the glasses"}'

@@ -1,0 +1,56 @@
+- !<AssetImportMetadata/1e378d61-0b20-43e2-838e-98111a1a06c0>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> b27becde-10fd-467a-b95f-c63af6768980
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> b27becde-10fd-467a-b95f-c63af6768980
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 2d337e0a-5d80-4ae2-9c96-928efc5f6b8c
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/2d337e0a-5d80-4ae2-9c96-928efc5f6b8c>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  ComponentUid: f73c04cf-6a4d-4ef1-adb9-32610482f923
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    bluetoothModule: false
+    goggleName: false
+    mapletName: false
+    offline: false
+    useStrap: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - bluetoothModule: !<reference.BluetoothCentralModule> 00000000-0000-0000-0000-000000000000
+      goggleName: goggl1
+      mapletName: maplet
+      useStrap: true
+      offline: false
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @input Asset.BluetoothCentralModule bluetoothModule {"hint":"Bluetooth Central Module asset"}'
+    - "// @input string goggleName = \"goggl1\" {\"hint\":\"goggl1's advertised name\"}"
+    - "// @input string mapletName = \"maplet\" {\"hint\":\"The maplet's advertised name; empty to leave it alone\"}"
+    - '// @input bool useStrap = true {"hint":"Read the heart-rate strap"}'
+    - '// @input bool offline {"hint":"Open no links (the editor preview has no Bluetooth)"}'
