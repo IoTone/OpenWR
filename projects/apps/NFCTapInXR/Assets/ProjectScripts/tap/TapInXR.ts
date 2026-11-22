@@ -11,19 +11,25 @@
 //   2 MODEL    a 3D asset materializing in space
 //   3 FARE     a transit fare taken from a card balance that counts down
 //
-// Which tag plays which scene: set the four tag inputs to tag IDs, or leave
-// them empty and the first four different tags tapped are bound in that
-// order and remembered. The chips under the stage play a scene without a
+// Until a tag is tapped the stage shows the reader link itself, step by step:
+// searching (with progress), connecting, opening the tap channel, ready. If
+// the reader is not found, or Bluetooth refuses, it says so, says what to
+// check, and offers RETRY. The link never holds the lens up: the chips and
+// scenes work the whole time (see TapLink.ts for how the scan is kept light).
+//
+// Which tag plays which scene: list your tag IDs in TapTags.ts (or set the
+// four tag inputs). Scenes left without a tag learn: the first unknown tags
+// tapped are bound to them in order and remembered. The chips under the stage play a scene without a
 // tag; RESET forgets the learned tags and restores the fare balance.
 //
 // Everything is drawn in code (Paint.ts), so the scenes need no image
 // assets. Layout is in cm at 45 cm and scaled by Place.ts.
 
-import { BleHub } from "../ble/BleHub";
 import { makeQuad, makeTappable } from "../ui/Bitmap";
 import { placeInFront } from "../ui/Place";
 import { Paint, RGBA } from "./Paint";
 import { TapLink } from "./TapLink";
+import { TAG_SCENES, normalizeTagId } from "./TapTags";
 import { Interactable } from "SpectaclesInteractionKit.lspkg/Components/Interaction/Interactable/Interactable";
 import { InteractableManipulation } from "SpectaclesInteractionKit.lspkg/Components/Interaction/InteractableManipulation/InteractableManipulation";
 
@@ -79,16 +85,16 @@ export class TapInXR extends BaseScriptComponent {
   @input drop: number = 0;
 
   @input
-  @hint("Tag ID (hex) that plays the trading card; empty = learn from taps")
+  @hint("Extra tag ID(s) for the trading card, comma-separated; see TapTags.ts")
   cardTag: string = "";
   @input
-  @hint("Tag ID that plays the sign-in; empty = learn")
+  @hint("Extra tag ID(s) for the sign-in; see TapTags.ts")
   signInTag: string = "";
   @input
-  @hint("Tag ID that plays the 3D model; empty = learn")
+  @hint("Extra tag ID(s) for the 3D model; see TapTags.ts")
   modelTag: string = "";
   @input
-  @hint("Tag ID that plays the fare; empty = learn")
+  @hint("Extra tag ID(s) for the fare; see TapTags.ts")
   fareTag: string = "";
 
   @input
@@ -113,7 +119,7 @@ export class TapInXR extends BaseScriptComponent {
   private caption: Text;
   private captionHold = 0;          // getTime() until which a tap/bad-read caption stays
   private chips: SceneObject[] = [];
-  private fixed: string[] = [];
+  private fixed: string[][] = [];   // configured tags per scene (TapTags.ts + inputs)
   private learned: string[] = ["", "", "", ""];
   private cents = START_CENTS;
 
@@ -123,7 +129,8 @@ export class TapInXR extends BaseScriptComponent {
 
   private begin() {
     this.textTemplate.getSceneObject().enabled = false;
-    this.fixed = [this.cardTag, this.signInTag, this.modelTag, this.fareTag].map((s) => (s || "").trim().toUpperCase());
+    this.fixed = [this.cardTag, this.signInTag, this.modelTag, this.fareTag].map((input, i) =>
+      (TAG_SCENES[i] || []).concat((input || "").split(",")).map(normalizeTagId).filter((t) => t.length > 0));
     this.loadState();
 
     this.stage = global.scene.createSceneObject("TapStage");
@@ -136,39 +143,84 @@ export class TapInXR extends BaseScriptComponent {
     this.after(() => placeInFront(this.stage, this.camera, this.distance, this.drop), 0.3);
     this.createEvent("UpdateEvent").bind(() => this.tick());
 
-    const hub = new BleHub(this.bluetoothModule, (ms) => new Promise<void>((r) => this.after(r, ms / 1000)));
-    this.link = new TapLink(this.deviceName, hub, () => this.linkCaption(), (id) => this.onTap(id), () => this.onBadRead(),
-      (fn, s) => this.after(fn, s));
-    const editor = global.deviceInfoSystem.isEditor();
-    if (!editor) this.link.start();
+    this.link = new TapLink(this.deviceName, this.bluetoothModule, () => this.onLink(), (id) => this.onTap(id), () => this.onBadRead(),
+      (fn, s) => this.after(fn, s), () => getTime());
     this.createEvent("OnDestroyEvent").bind(() => this.link.stop());
-    this.linkCaption();
+    const editor = global.deviceInfoSystem.isEditor();
+    // The first scan waits until the stage has been drawn and placed.
+    if (!editor) this.link.start(1.2);
+    else if (this.previewDemo) this.previewScript();
+    this.onLink();
+    print("[tapin] ready; tags " + this.fixed.map((f, i) => SCENE_NAMES[i] + "=" + (f.join("/") || this.learned[i] || "learn")).join(" "));
+  }
 
-    if (editor && this.previewDemo) {
-      let n = 0;
-      const next = () => {
-        print("[tapin] preview: " + SCENE_NAMES[n % 4]);
-        this.play(n % 4, "PREVIEW");
-        n++;
-        this.after(next, 5);
-      };
-      this.after(next, 1.5);
+  // The editor preview has no Bluetooth. Act the link out instead, so every
+  // state can be seen: a search that fails, a retry that connects, then the
+  // four scenes in turn.
+  private previewScript() {
+    const L = this.link, at = (s: number, fn: () => void) => this.after(fn, s);
+    at(0.5, () => L.simulate("searching", "", 1));
+    at(3.0, () => L.simulate("searching", "", 2));
+    at(5.5, () => L.simulate("notfound"));
+    at(9.5, () => L.simulate("failed", "Bluetooth scan refused: PERMISSION_DENIED"));
+    at(13.0, () => L.simulate("searching", "", 1));
+    at(15.0, () => L.simulate("connecting"));
+    at(16.2, () => L.simulate("subscribing"));
+    at(17.2, () => L.simulate("live"));
+    let n = 0;
+    const next = () => {
+      print("[tapin] preview: " + SCENE_NAMES[n % 4]);
+      this.play(n % 4, "PREVIEW");
+      n++;
+      this.after(next, 5);
+    };
+    at(21, next);
+  }
+
+  // The link changed state: update the caption, and come back to the link
+  // view when it needs attention and nothing is playing.
+  private onLink() {
+    if (!this.caption) return;
+    const st = this.link.state;
+    print("[tapin] reader: " + st + (this.link.error ? " (" + this.link.error + ")" : ""));
+    if (st === "notfound" || st === "failed") this.captionHold = 0;   // an error replaces a held caption
+    this.linkCaption();
+  }
+
+  private retryLink() {
+    if (global.deviceInfoSystem.isEditor()) {
+      this.link.simulate("searching", "", 1);
+      this.after(() => this.link.simulate("connecting"), 2);
+      this.after(() => this.link.simulate("subscribing"), 3);
+      this.after(() => this.link.simulate("live"), 4);
+    } else {
+      this.link.retry();
     }
-    print("[tapin] ready; tags " + this.bindings().map((b) => b || "-").join(" "));
+    this.show(this.idle, "");
+    this.chips.forEach((c) => this.tint(c, 0.45));
   }
 
   // ---- taps -----------------------------------------------------------------
 
-  private bindings(): string[] {
-    return this.fixed.map((f, i) => f || this.learned[i]);
+  // The scene a tag plays: a configured tag (TapTags.ts) first, then one
+  // learned earlier. -1 = unknown.
+  private sceneOf(id: string): number {
+    for (let i = 0; i < 4; i++) if (this.fixed[i].indexOf(id) >= 0) return i;
+    for (let i = 0; i < 4; i++) if (!this.fixed[i].length && this.learned[i] === id) return i;
+    return -1;
   }
 
-  private onTap(id: string) {
-    let b = this.bindings(), i = b.indexOf(id);
+  private onTap(raw: string) {
+    const id = normalizeTagId(raw);
+    print("[tapin] tap " + id);
+    let i = this.sceneOf(id);
     if (i < 0) {
-      i = b.indexOf("");
+      // Learn into the first scene that has no configured and no learned tag.
+      for (let k = 0; k < 4 && i < 0; k++) if (!this.fixed[k].length && !this.learned[k]) i = k;
       if (i < 0) {
-        this.say("UNKNOWN TAG " + id + " : PINCH RESET TO RE-LEARN", ALPENGLOW, 3);
+        const all = this.fixed.every((f) => f.length > 0);
+        this.say("UNKNOWN TAG " + id + (all ? " : ADD IT TO TapTags.ts" : " : PINCH RESET TO RE-LEARN"), ALPENGLOW, 4);
+        print("[tapin] unknown tag " + id + "; add it to a scene in TapTags.ts");
         return;
       }
       this.learned[i] = id;
@@ -218,13 +270,18 @@ export class TapInXR extends BaseScriptComponent {
   // ---- caption --------------------------------------------------------------
 
   private linkCaption() {
-    if (this.captionHold || !this.caption) return;
-    const st = this.link ? this.link.state : "searching";
-    if (global.deviceInfoSystem.isEditor()) this.setCaption("PREVIEW : NO BLUETOOTH", GLACIER);
-    else if (st === "live") this.setCaption("READER CONNECTED : TAP A TAG", MOSS);
-    else if (st === "connecting") this.setCaption("CONNECTING TO " + this.deviceName.toUpperCase(), GLACIER);
-    else if (st === "lost") this.setCaption("READER LOST : RETRYING", ALPENGLOW);
-    else this.setCaption("SEARCHING FOR " + this.deviceName.toUpperCase(), GLACIER);
+    if (this.captionHold || !this.caption || !this.link) return;
+    const name = this.deviceName.toUpperCase();
+    switch (this.link.state) {
+      case "live": this.setCaption("READER CONNECTED : TAP A TAG", MOSS); break;
+      case "searching": this.setCaption("SEARCHING FOR " + name, GLACIER); break;
+      case "connecting": this.setCaption("CONNECTING TO " + name, GLACIER); break;
+      case "subscribing": this.setCaption("OPENING THE TAP CHANNEL", GLACIER); break;
+      case "lost": this.setCaption("READER LOST : SEARCHING AGAIN", HIVIS); break;
+      case "notfound": this.setCaption("READER NOT FOUND : PINCH RETRY", ALPENGLOW); break;
+      case "failed": this.setCaption("READER ERROR : PINCH RETRY", ALPENGLOW); break;
+      default: this.setCaption("STARTING BLUETOOTH", GLACIER);
+    }
   }
 
   private say(s: string, c: RGBA, seconds: number) {
@@ -341,23 +398,93 @@ export class TapInXR extends BaseScriptComponent {
     });
   }
 
-  // ---- idle: waiting for a tag --------------------------------------------------
+  // ---- idle: the reader link, and waiting for a tag -------------------------------
+
+  // Long platform messages are cut to fit one line of the stage.
+  private fit(s: string, max: number): string {
+    s = s.replace(/\s+/g, " ").trim().toUpperCase();
+    return s.length > max ? s.substring(0, max - 3) + "..." : s;
+  }
 
   private buildIdle(): Scene {
     const root = this.node(this.stage, "Idle");
-    const ring = this.quad(root, "IdleRing", 6, 6, this.ringTex(256, 10, GLACIER), 0, 1.6);
-    const wave = this.quad(root, "IdleWave", 6, 6, this.ringTex(256, 6, GLACIER), 0, 1.6, 0.3, 9);
-    this.text(root, "TAP", 30, FOG, 0, 1.6);
-    this.text(root, "HOLD A TAG ON THE READER", 14, GLACIER, 0, -3.2);
+    const cy = 2.0;
+    // ready: a steady ring that sends out a wave
+    const ring = this.quad(root, "IdleRing", 6, 6, this.ringTex(256, 10, GLACIER), 0, cy);
+    const wave = this.quad(root, "IdleWave", 6, 6, this.ringTex(256, 6, GLACIER), 0, cy, 0.3, 9);
+    // working: a turning arc on a faint track
+    const track = this.quad(root, "LinkTrack", 6, 6, this.ringTex(256, 10, [120, 183, 212, 70]), 0, cy, 0.3, 9);
+    const arc = this.quad(root, "LinkArc", 6, 6, this.ringTex(256, 10, GLACIER, 0, 110), 0, cy);
+    // trouble: a warm ring
+    const alarm = this.quad(root, "LinkAlarm", 6, 6, this.ringTex(256, 10, ALPENGLOW), 0, cy);
+    const centre = this.text(root, "", 30, FOG, 0, cy);
+    const title = this.text(root, "", 17, FOG, 0, -2.3);
+    const line1 = this.text(root, "", 13, GLACIER, 0, -3.5);
+    const line2 = this.text(root, "", 13, GLACIER, 0, -4.5);
+    // search progress
+    const BAR = 7;
+    const dot = (c: RGBA) => { const p = new Paint(4, 4); p.rect(0, 0, 4, 4, c); return p.toTexture(); };
+    const barBack = this.quad(root, "BarBack", BAR, 0.22, dot([120, 183, 212, 80]), 0, -5.5, 0.3, 9);
+    const barFill = this.quad(root, "BarFill", BAR, 0.22, dot(GLACIER), 0, -5.5);
+    // retry
+    const cp = new Paint(176, 64);
+    cp.roundRect(0, 0, 176, 64, 30, ALPENGLOW);
+    cp.roundRect(4, 4, 168, 56, 26, [86, 44, 40, 255]);
+    const retry = this.quad(root, "Retry", 4.4, 1.6, cp.toTexture(), 0, -6.0);
+    this.text(retry, "RETRY", 14, FOG, 0, 0, 0.2);
+    makeTappable(retry, 4.4, 1.6, () => this.retryLink());
+
+    const name = this.deviceName.toUpperCase();
+    let shown = "";
+    const setTexts = (st: string) => {
+      const L = this.link;
+      const key = st + "/" + (L ? L.attempt + "/" + L.error : "");
+      if (key === shown) return;
+      shown = key;
+      const texts = (c: string, t: string, a: string, b: string, tc: RGBA, lc: RGBA) => {
+        centre.text = c; title.text = t; line1.text = a; line2.text = b;
+        centre.textFill.color = v4(tc); title.textFill.color = v4(tc);
+        line1.textFill.color = v4(lc); line2.textFill.color = v4(lc);
+      };
+      switch (st) {
+        case "live": texts("TAP", "READER CONNECTED", "HOLD A TAG ON THE READER", "", FOG, GLACIER); title.textFill.color = v4(MOSS); break;
+        case "searching": texts("", "LOOKING FOR " + name, "SCAN " + L.attempt + " OF " + L.tries, "", FOG, GLACIER); break;
+        case "connecting": texts("", "FOUND " + name, "CONNECTING", "", FOG, GLACIER); break;
+        case "subscribing": texts("", "CONNECTED", "OPENING THE TAP CHANNEL", "", FOG, GLACIER); break;
+        case "lost": texts("", "READER LOST", "SEARCHING AGAIN, SCAN " + L.attempt + " OF " + L.tries, "", HIVIS, GLACIER); break;
+        case "notfound": texts("!", name + " NOT FOUND", "IS THE READER ON AND BLINKING BLUE?", "SOLID GREEN: ANOTHER DEVICE HOLDS IT", ALPENGLOW, FOG); break;
+        case "failed": texts("!", "COULD NOT REACH THE READER", this.fit(L.error || "unknown error", 44), "CHECK BLUETOOTH, THEN RETRY", ALPENGLOW, FOG); break;
+        default: texts("", "STARTING BLUETOOTH", "", "", FOG, GLACIER);
+      }
+    };
+
     return {
       root,
-      start: () => {},
+      start: () => { shown = ""; },
       update: (t) => {
-        const k = (t * 0.6) % 1;
-        const s = 1 + k * 0.7;
-        wave.getTransform().setLocalScale(new vec3(s, s, 1));
-        this.tint(wave, 0.8 * (1 - k));
-        this.tint(ring, 0.75 + 0.25 * Math.sin(t * 2.4));
+        const L = this.link, st = L ? L.state : "idle";
+        setTexts(st);
+        const ready = st === "live", bad = st === "notfound" || st === "failed", working = !ready && !bad;
+        ring.enabled = wave.enabled = ready;
+        track.enabled = arc.enabled = working;
+        alarm.enabled = retry.enabled = bad;
+        const scanning = st === "searching" || st === "lost";
+        barBack.enabled = barFill.enabled = scanning;
+        if (ready) {
+          const k = (t * 0.6) % 1, s = 1 + k * 0.7;
+          wave.getTransform().setLocalScale(new vec3(s, s, 1));
+          this.tint(wave, 0.8 * (1 - k));
+          this.tint(ring, 0.75 + 0.25 * Math.sin(t * 2.4));
+        } else if (working) {
+          arc.getTransform().setLocalRotation(quat.angleAxis(-t * 220 * DEG, vec3.forward()));
+          if (scanning) {
+            const p = Math.max(0.02, L.searchProgress);
+            barFill.getTransform().setLocalScale(new vec3(p, 1, 1));
+            barFill.getTransform().setLocalPosition(new vec3(-BAR / 2 + (BAR * p) / 2, -5.5, 0.4));
+          }
+        } else {
+          this.tint(alarm, 0.7 + 0.3 * Math.sin(t * 3.2));
+        }
       },
     };
   }

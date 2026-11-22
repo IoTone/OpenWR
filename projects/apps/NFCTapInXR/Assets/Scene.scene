@@ -6434,10 +6434,6 @@
     deviceName: true
     distance: true
     drop: true
-    cardTag: true
-    signInTag: true
-    modelTag: true
-    fareTag: true
     modelPrefab: true
     modelScale: true
     previewDemo: true
@@ -6452,10 +6448,10 @@
       deviceName: NFCTapIn
       distance: !<float> 85.000000
       drop: !<float> 3.000000
-      cardTag: ""
-      signInTag: ""
-      modelTag: ""
-      fareTag: ""
+      cardTag: "04:3D:FF:AA:3B:2B:80 "
+      signInTag: "04:FC:53:5A:E5:36:80"
+      modelTag: "04:90:73:CA:F1:38:80"
+      fareTag: "04:3D:7B:12:22:68:81"
       modelPrefab: !<reference.ObjectPrefab> 00000000-0000-0000-0000-000000000000
       modelScale: !<float> 1.000000
       previewDemo: true

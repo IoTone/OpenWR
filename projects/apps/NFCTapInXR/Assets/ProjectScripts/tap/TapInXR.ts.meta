@@ -74,10 +74,10 @@
     - "// @input string deviceName = \"NFCTapIn\" {\"hint\":\"The reader's advertised name\"}"
     - // @input float distance = 85
     - // @input float drop
-    - '// @input string cardTag {"hint":"Tag ID (hex) that plays the trading card; empty = learn from taps"}'
-    - '// @input string signInTag {"hint":"Tag ID that plays the sign-in; empty = learn"}'
-    - '// @input string modelTag {"hint":"Tag ID that plays the 3D model; empty = learn"}'
-    - '// @input string fareTag {"hint":"Tag ID that plays the fare; empty = learn"}'
+    - '// @input string cardTag {"hint":"Extra tag ID(s) for the trading card, comma-separated; see TapTags.ts"}'
+    - '// @input string signInTag {"hint":"Extra tag ID(s) for the sign-in; see TapTags.ts"}'
+    - '// @input string modelTag {"hint":"Extra tag ID(s) for the 3D model; see TapTags.ts"}'
+    - '// @input string fareTag {"hint":"Extra tag ID(s) for the fare; see TapTags.ts"}'
     - '// @input Asset.ObjectPrefab modelPrefab {"hint":"Optional 3D model to materialize; empty = a built-in crystal"}'
     - '// @input float modelScale = 1 {"hint":"Size the model prefab is scaled by"}'
     - '// @input bool previewDemo = true {"hint":"In the editor preview (no Bluetooth), play the scenes in turn"}'

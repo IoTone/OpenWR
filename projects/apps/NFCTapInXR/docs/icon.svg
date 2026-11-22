@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <!-- NFCTapInXR lens icon: glasses, contactless waves, a tag. Rendered to ../icon.png. -->
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="40%" r="62%">
+      <stop offset="0" stop-color="#132a55"/>
+      <stop offset="0.55" stop-color="#0a1530"/>
+      <stop offset="1" stop-color="#03060f"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4ff3ff"/>
+      <stop offset="0.5" stop-color="#7a7dff"/>
+      <stop offset="1" stop-color="#ff4fd8"/>
+    </linearGradient>
+    <linearGradient id="lens" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4ff3ff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7a7dff" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="tag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff4fd8"/>
+      <stop offset="1" stop-color="#8a4dff"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <clipPath id="disc"><circle cx="160" cy="160" r="148"/></clipPath>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0H0V20" fill="none" stroke="#4ff3ff" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- disc, grid, horizon -->
+  <circle cx="160" cy="160" r="156" fill="#03060f"/>
+  <circle cx="160" cy="160" r="148" fill="url(#bg)"/>
+  <g clip-path="url(#disc)">
+    <rect width="320" height="320" fill="url(#grid)"/>
+    <ellipse cx="160" cy="250" rx="150" ry="40" fill="#7a7dff" opacity="0.18" filter="url(#soft)"/>
+    <!-- circuit traces -->
+    <g fill="none" stroke="#4ff3ff" stroke-opacity="0.28" stroke-width="1.5">
+      <path d="M20 205 H70 L86 189 H104"/>
+      <path d="M300 205 H262 L250 217 H232"/>
+      <path d="M40 92 H74 L84 102"/>
+      <path d="M282 92 H246 L236 102"/>
+    </g>
+    <g fill="#4ff3ff" fill-opacity="0.55">
+      <circle cx="104" cy="189" r="2.5"/><circle cx="232" cy="217" r="2.5"/>
+      <circle cx="84" cy="102" r="2.5"/><circle cx="236" cy="102" r="2.5"/>
+    </g>
+  </g>
+  <circle cx="160" cy="160" r="152" fill="none" stroke="url(#rim)" stroke-width="4" filter="url(#glow)"/>
+
+  <!-- glasses -->
+  <g filter="url(#glow)" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M58 118 Q46 116 40 128" fill="none" stroke="#4ff3ff" stroke-width="5"/>
+    <path d="M262 118 Q274 116 280 128" fill="none" stroke="#4ff3ff" stroke-width="5"/>
+    <path d="M60 112 H146 Q150 112 150 118 V134 Q150 160 122 160 H86 Q60 160 60 134 Z"
+          fill="url(#lens)" stroke="#4ff3ff" stroke-width="5"/>
+    <path d="M170 112 H256 Q260 112 260 118 V134 Q260 160 234 160 H198 Q170 160 170 134 Z"
+          fill="url(#lens)" stroke="#4ff3ff" stroke-width="5"/>
+    <path d="M150 122 Q160 114 170 122" fill="none" stroke="#4ff3ff" stroke-width="5"/>
+    <!-- lens glints -->
+    <path d="M74 122 L92 122" stroke="#e8fdff" stroke-width="3" opacity="0.8"/>
+    <path d="M184 122 L202 122" stroke="#e8fdff" stroke-width="3" opacity="0.8"/>
+    <!-- camera dots at the corners -->
+    <circle cx="66" cy="112" r="3" fill="#e8fdff" stroke="none"/>
+    <circle cx="254" cy="112" r="3" fill="#e8fdff" stroke="none"/>
+  </g>
+
+  <!-- contactless waves, rising from the tag to the glasses -->
+  <g fill="none" stroke-linecap="round" filter="url(#glow)" transform="translate(196 214) rotate(-28)">
+    <path d="M-16 -18 A24 24 0 0 1 16 -18" stroke="#ff4fd8" stroke-width="5"/>
+    <path d="M-28 -30 A40 40 0 0 1 28 -30" stroke="#c35bff" stroke-width="5" opacity="0.85"/>
+    <path d="M-40 -42 A57 57 0 0 1 40 -42" stroke="#8a6dff" stroke-width="5" opacity="0.6"/>
+  </g>
+
+  <!-- tag: a rounded card with an antenna coil and chip -->
+  <g filter="url(#glow)" transform="translate(48 2) rotate(-22 160 236)">
+    <rect x="122" y="210" width="76" height="52" rx="10" fill="#1a0f33" stroke="url(#tag)" stroke-width="4"/>
+    <rect x="132" y="219" width="56" height="34" rx="6" fill="none" stroke="#ff4fd8" stroke-opacity="0.55" stroke-width="2"/>
+    <rect x="140" y="226" width="40" height="20" rx="4" fill="none" stroke="#ff4fd8" stroke-opacity="0.35" stroke-width="2"/>
+    <rect x="153" y="230" width="14" height="12" rx="2" fill="#ffd36b"/>
+  </g>
+</svg>
