@@ -5,6 +5,8 @@ scenes captured on Spectacles, and an end screen with the link to this code.
 Laid out like the earlier Laser Duck promo: Blender cuts the picture, Python
 makes the sound, ffmpeg puts them together.
 
+Published: https://youtu.be/uXBH_5CcVdo
+
 | File | Does |
 |---|---|
 | `render.py` | Blender 5.0 video-sequencer edit: captions, fades, the neon end screen -> `renders/frames/` and `NFCTapInXR_Promo.blend` |

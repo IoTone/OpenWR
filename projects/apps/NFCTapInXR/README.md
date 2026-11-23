@@ -5,6 +5,8 @@ as a copy of `../SpecsSwitchbackXR` and keeps that project's Bluetooth hub and
 drawing helpers; the Switchback views (Pulse, Remote, Roll, Pin, Snap, Links)
 are still in the scene but switched off.
 
+**Watch it:** [30 s video on YouTube](https://youtu.be/uXBH_5CcVdo)
+
 The reader is an M5 ATOM Matrix with a PN532, advertising as `NFCTapIn` and
 notifying `TAP <id hex>` over the Nordic UART service, with no bonding. Its
 Arduino (PlatformIO) code is in
@@ -189,7 +191,7 @@ with `PERMISSION_DENIED` (see `../SpecsSwitchbackXR/BLE-NOTES.md`).
 
 ## Promo video
 
-A 30 s YouTube explainer is built from `promo/` (Blender picture, synthesized
+The 30 s explainer is on YouTube: https://youtu.be/uXBH_5CcVdo. It is built from `promo/` (Blender picture, synthesized
 music, ffmpeg mix); see `promo/README.md`.
 
 ## Status (2026-11-22)
