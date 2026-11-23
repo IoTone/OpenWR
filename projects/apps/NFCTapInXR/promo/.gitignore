@@ -1,0 +1,7 @@
+# Trimmed Spectacles clips (cut from the captures, see README) and everything generated
+assets/*.mp4
+renders/
+audio/
+*.blend
+*.blend1
+*.mp4

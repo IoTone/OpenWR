@@ -181,6 +181,11 @@ scenes in turn every 5 seconds (`previewDemo`). On the glasses it searches for
 Keep the lens Bluetooth-only: with the WebView demos enabled the scan fails
 with `PERMISSION_DENIED` (see `../SpecsSwitchbackXR/BLE-NOTES.md`).
 
+## Promo video
+
+A 30 s YouTube explainer is built from `promo/` (Blender picture, synthesized
+music, ffmpeg mix); see `promo/README.md`.
+
 ## Status (2026-11-22)
 
 Compiles and runs in the Lens Studio preview; the four scenes and every link
