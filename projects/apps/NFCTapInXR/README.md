@@ -31,7 +31,7 @@ and `RESET`, which forgets the learned tags and restores the balance to $20.00.
 | PN532 NFC RFID Module V3 (red board) | the NFC reader, used in serial (HSU) mode; the kit comes with two MIFARE Classic tags (a white card and a key fob) | [Elechouse](https://www.elechouse.com/elechouse/images/product/PN532_module_V3/), [Makerfabs](https://makerfabs.com/pn532-nfc-module-v3.html), [Elecrow](https://elecrow.com/pn532-nfc-module-pn532-rfid-v3-module.html) |
 | 4 female-female jumper wires | VCC, GND, TX, RX | any |
 | USB-C cable | power and flashing for the ATOM | any |
-| 4 NFC tags, one per scene | NTAG213/215/216 stickers or cards are the easy choice (see below) | e.g. [GoToTags NTAG215 sticker](https://store.gototags.com/nfc-sticker-ntag215-25-mm-circle/); any NTAG21x multipack |
+| 4 NFC tags, one per scene | NTAG213/215/216 stickers or cards are the easy choice (see below) | [Tagstand NXP tags](https://www.tagstand.com/?s=nxp&post_type=product) (stickers, cards, fobs); also [GoToTags NTAG215 sticker](https://store.gototags.com/nfc-sticker-ntag215-25-mm-circle/), or any NTAG21x multipack |
 | A phone with NFC (optional) | to read tag IDs with NFC Tools | [NFC Tools for iOS](https://apps.apple.com/us/app/nfc-tools/id1252962749), [NFC Tools for Android](https://play.google.com/store/apps/details?id=com.wakdev.wdnfc) |
 
 The reader firmware, wiring and LED states are in
@@ -46,6 +46,8 @@ from the `ON KE` lettering) before powering it:
 
 ## Tags that work
 
+Buy NXP tags (NTAG21x, MIFARE) from
+[Tagstand](https://www.tagstand.com/?s=nxp&post_type=product).
 The lens only needs a tag's ID (UID). Nothing has to be written to the tag,
 so blank tags are fine and tags already holding a URL or other data work too.
 

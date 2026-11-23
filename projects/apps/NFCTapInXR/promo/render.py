@@ -86,8 +86,8 @@ text("tagline", "TAP A TAG.  SEE IT IN XR.", 4, 0.45, 2.5, 0.5, 0.215, 38, MONO,
 PX = 1478 / W                                   # panel text left edge
 SECTIONS = [
     # t0, t1, label, title, body
-    (2.5, 4.9, "THE TAGS", "Four NFC tags", "Stickers and cards. The lens only needs each tag's UID."),
-    (4.9, 6.5, "ATOM MATRIX + PN532", "The reader", "An M5 ATOM Matrix (ESP32) reads each tap and sends the UID over Bluetooth LE."),
+    (2.5, 5.0, "THE TAGS", "NFC tags", ""),          # chip list below
+    (5.0, 6.5, "ATOM MATRIX + PN532", "The reader", "An M5 ATOM Matrix (ESP32) reads each tap and sends the UID over Bluetooth LE."),
     (6.5, 9.5, "SPECTACLES", "Connect + tap", "The lens finds the reader over BLE. Hold a tag to the reader."),
     (9.5, 13.5, "TAG 1 / 4", "3D model", "A model materializes in the room."),
     (13.5, 17.5, "TAG 2 / 4", "Transit fare", "$2.75 is taken and the card balance counts down."),
@@ -97,11 +97,21 @@ SECTIONS = [
 for i, (t0, t1, label, title, body) in enumerate(SECTIONS):
     text("lab%d" % i, label, 5, t0, t1, PX, 0.80, 30, MONO, PINK if label.startswith("TAG") else CYAN)
     text("tit%d" % i, title, 6, t0, t1, PX, 0.735, 70, DIN, WHITE)
-    text("bod%d" % i, body, 7, t0, t1, PX, 0.62, 34, SANS, SOFT)
+    if body:
+        text("bod%d" % i, body, 7, t0, t1, PX, 0.62, 34, SANS, SOFT)
+
+# The tags panel: which chips the PN532 reads, which it can't, where to buy.
+CHIPS = "NTAG213 / 215 / 216\nMIFARE Ultralight\nMIFARE Classic 1K / 4K\nMIFARE DESFire"
+text("chips_h", "WORKS WITH (ISO14443A)", 7, 2.5, 5.0, PX, 0.635, 22, MONO, SOFT, wrap=0.23)
+text("chips", CHIPS, 11, 2.5, 5.0, PX, 0.595, 34, DIN, WHITE, wrap=0.23)
+text("chips_no", "Not ST25TV / ISO15693", 12, 2.5, 5.0, PX, 0.40, 26, SANS, PINK, wrap=0.23)
+text("buy_h", "BUY NXP TAGS", 13, 2.5, 5.0, PX, 0.315, 22, MONO, SOFT, wrap=0.23)
+text("buy", "tagstand.com", 14, 2.5, 5.0, PX, 0.28, 36, MONO, CYAN, wrap=0.23)
 
 # The media for those sections.
-image("cards", "cards.png", 2, 2.5, 4.9, scale=0.80, dx=-240)
-image("wiring", "wiring.png", 2, 4.9, 6.5, scale=1.08, dx=-240)
+image("cards", "cards.png", 2, 2.5, 5.0, scale=0.80, dx=-240)
+image("kit", "pn532_kit.png", 2, 5.0, 6.5, scale=0.80, dx=360 - 960)          # left half of the box
+image("wiring", "wiring.png", 3, 5.0, 6.5, scale=0.75, dx=1080 - 960)        # right half
 for t0, path in ((6.5, "s1_tap.mp4"), (9.5, "s2_model.mp4"), (13.5, "s3_fare.mp4"), (17.5, "s4_signin.mp4"), (22.0, "s5_card.mp4")):
     movie(path, path, 2, t0)
 
