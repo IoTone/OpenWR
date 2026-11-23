@@ -5,9 +5,11 @@ as a copy of `../SpecsSwitchbackXR` and keeps that project's Bluetooth hub and
 drawing helpers; the Switchback views (Pulse, Remote, Roll, Pin, Snap, Links)
 are still in the scene but switched off.
 
-The reader is `../../prototypes/NFCTapInXR_AtomMatrix_proto1`: an M5 ATOM
-Matrix with a PN532, advertising as `NFCTapIn` and notifying `TAP <id hex>`
-over the Nordic UART service, with no bonding.
+The reader is an M5 ATOM Matrix with a PN532, advertising as `NFCTapIn` and
+notifying `TAP <id hex>` over the Nordic UART service, with no bonding. Its
+Arduino (PlatformIO) code is in
+[`projects/prototypes/NFCTapInXR_AtomMatrix_proto1`](https://github.com/IoTone/OpenWR/tree/dev/projects/prototypes/NFCTapInXR_AtomMatrix_proto1)
+(`src/main.cpp`).
 
 ## Scenes
 
@@ -34,8 +36,10 @@ and `RESET`, which forgets the learned tags and restores the balance to $20.00.
 | 4 NFC tags, one per scene | NTAG213/215/216 stickers or cards are the easy choice (see below) | [Tagstand NXP tags](https://www.tagstand.com/?s=nxp&post_type=product) (stickers, cards, fobs); also [GoToTags NTAG215 sticker](https://store.gototags.com/nfc-sticker-ntag215-25-mm-circle/), or any NTAG21x multipack |
 | A phone with NFC (optional) | to read tag IDs with NFC Tools | [NFC Tools for iOS](https://apps.apple.com/us/app/nfc-tools/id1252962749), [NFC Tools for Android](https://play.google.com/store/apps/details?id=com.wakdev.wdnfc) |
 
-The reader firmware, wiring and LED states are in
-`../../prototypes/NFCTapInXR_AtomMatrix_proto1/README.md`. Short version:
+The reader firmware ([`src/main.cpp`](https://github.com/IoTone/OpenWR/blob/dev/projects/prototypes/NFCTapInXR_AtomMatrix_proto1/src/main.cpp)),
+wiring and LED states are in the
+[reader README](https://github.com/IoTone/OpenWR/blob/dev/projects/prototypes/NFCTapInXR_AtomMatrix_proto1/README.md). Build and flash it
+with PlatformIO from that folder: `pio run -t upload`. Short version:
 
 ![ATOM Matrix to PN532 wiring](docs/images/wiring-atom-pn532.png)
 
