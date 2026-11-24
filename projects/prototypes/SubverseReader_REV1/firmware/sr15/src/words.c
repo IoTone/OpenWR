@@ -17,6 +17,7 @@
  *   led            ( f -- )
  *   keys@          ( -- mask ) bit 1 up, 2 down, 3 ok, 4 menu, 5 exit
  *   epd-ctl!       ( n -- )    panel controller: 0 auto-detect, 1 SSD1683, 2 UC81xx (NVS)
+ *   sr-bat         ( -- )      battery: voltage, %, USB, charging (needs the IO3 divider)
  *   sd-recv        ( -- )      USB loader: receive one file into /sd/packs (tools/sr_push.py)
  *   sd-rm          ( i -- )    delete pack i
  *
@@ -32,6 +33,7 @@
 #include "driver/uart.h"
 #include "esp_rom_crc.h"
 #include "sd.h"
+#include "battery.h"
 #include "forth_core.h"
 #include "console.h"
 #include "pins.h"
@@ -43,6 +45,16 @@ static void w_info(void)   { reader_lock(); reader_info(con_printf); reader_unlo
 static void w_test(void)   { reader_lock(); reader_cmd_test(); reader_unlock(); }
 static void w_rot_store(void) { int r = (int)forth_pop(); reader_lock(); epd_set_rot(r); reader_cmd_test(); reader_unlock(); }
 static void w_ctl(void)    { int c = (int)forth_pop(); reader_lock(); epd_set_ctl(c); reader_cmd_test(); reader_unlock(); }
+static void w_bat(void)
+{
+    battery_t b = battery_read();
+    char t[40];
+    con_printf("%s  cell %d mV  usb %s\n", battery_text(&b, t, sizeof t), b.mv,
+               b.usb == 1 ? "in" : "not seen (out, or no IO9 divider)");
+    if (!b.wired) con_printf("Fit 100k from BAT (pad P5) to IO3 (header pin 1) and 100k from IO3 to GND (pin 7).\n");
+}
+static void w_adc(void)   { int g = (int)forth_pop(); forth_push(battery_probe(g, false)); }
+static void w_adcpd(void) { int g = (int)forth_pop(); forth_push(battery_probe(g, true)); }
 static void w_rot(void)    { forth_push(epd_rot()); }
 static void w_shelf(void)  { reader_lock(); reader_cmd_shelf(); reader_unlock(); }
 static void w_open(void)   { int i = (int)forth_pop(); reader_lock(); reader_cmd_open(i); reader_unlock(); }
@@ -127,7 +139,7 @@ void words_register(void)
         { "sr-shelf", w_shelf }, { "sr-open", w_open }, { "sr-page", w_page }, { "sr-next", w_next },
         { "sr-prev", w_prev }, { "sr-badge", w_badge }, { "sr-full", w_full }, { "sr-sleep!", w_sleep_store },
         { "sr-full-every!", w_full_every }, { "sr-sleep", w_sleep }, { "led", w_led }, { "keys@", w_keys },
-        { "sd-recv", w_recv }, { "epd-ctl!", w_ctl }, { "sd-rm", w_rm },
+        { "sd-recv", w_recv }, { "epd-ctl!", w_ctl }, { "sr-bat", w_bat }, { "adc@", w_adc }, { "adc-pd@", w_adcpd }, { "sd-rm", w_rm },
     };
     for (unsigned i = 0; i < sizeof w / sizeof w[0]; i++) forth_register_word(w[i].name, w[i].fn);
 }

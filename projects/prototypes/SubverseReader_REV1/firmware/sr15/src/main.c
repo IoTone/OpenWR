@@ -27,6 +27,7 @@
 #include "sd.h"
 #include "reader.h"
 #include "ble_console.h"
+#include "battery.h"
 
 #define SR15_VERSION "0.1.0"
 void words_register(void);
@@ -101,6 +102,7 @@ void app_main(void)
         con_printf("============================================\n");
     }
 
+    battery_init();
     keys_init();                     /* first, so the key that woke us is seen as held */
     if (epd_init() != ESP_OK) con_printf("e-paper init failed\n");
     if (sd_mount() != ESP_OK) con_printf("no microSD card\n");

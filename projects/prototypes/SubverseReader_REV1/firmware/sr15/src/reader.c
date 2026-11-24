@@ -6,9 +6,11 @@
  *   page   dial right = next page, left = previous, push = next page,
  *          MENU = page number and title, EXIT = back to the shelf.
  *          Hold MENU: go to the first page. Hold EXIT: sleep now.
- *   any    hold MENU + EXIT: open a 3-minute Bluetooth sync window. A banner
- *          at the top shows SYNC while the phone may connect, PHONE while
- *          it is connected. The pass never sleeps while either is up.
+ *   any    hold MENU + EXIT: open a 3-minute Bluetooth sync window. Words at
+ *          the top say SYNC (window open) or PHONE CONNECTED for 7 s, then
+ *          shrink to a corner icon: outlined while the window is open,
+ *          solid while a phone is connected. The pass never sleeps while
+ *          either is up.
  *
  * Page turns are partial refreshes; every Nth turn (and every shelf change
  * back to a page) is a full refresh to clear ghosting.
@@ -22,6 +24,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/semphr.h"
@@ -40,6 +43,7 @@
 #include "pack.h"
 #include "reader.h"
 #include "ble_console.h"
+#include "battery.h"
 
 static const char *TAG = "reader";
 const int g_canvas_w = EPD_CW, g_canvas_h = EPD_CH;
@@ -70,7 +74,12 @@ static volatile int64_t s_last_activity;
 static int s_sleep_s = 120;
 static int s_full_every = 8;
 static char s_msg[96];
-static int s_ble_shown;     /* the ble state the banner shows: 0 none, 1 sync, 2 phone */
+static int s_ble_shown;     /* the ble state on the glass: 0 none, 1 sync window open, 2 phone connected */
+static int64_t s_banner_until;   /* the words show until then; after that only a corner icon */
+static bool s_banner_up;         /* the glass shows the words right now */
+#define BANNER_US (7 * 1000000LL)
+static void line(int x0, int y0, int x1, int y1, int on);
+static void draw_battery(int x, int y);
 
 void reader_activity(void) { s_last_activity = esp_timer_get_time(); }
 int  reader_sleep_s(void) { return s_sleep_s; }
@@ -170,6 +179,7 @@ static void draw_shelf(void)
     if (s_msg[0]) epd_str(10, EPD_CH - 30, s_msg, 1);
     epd_box(0, EPD_CH - 16, EPD_CW, 1, 1);
     epd_str(6, EPD_CH - 11, "dial: choose  push: open  EXIT: badge", 1);
+    draw_battery(EPD_CW - 28, EPD_CH - 13);
 }
 
 static bool draw_page(void)
@@ -187,6 +197,7 @@ static bool draw_page(void)
         epd_box(0, EPD_CH - 40, EPD_CW, 40, 0);
         epd_box(0, EPD_CH - 40, EPD_CW, 2, 1);
         epd_str(8, EPD_CH - 32, a, 1);
+        draw_battery(EPD_CW - 30, EPD_CH - 22);
         epd_str(8, EPD_CH - 18, b, 2);
     }
     return true;
@@ -226,9 +237,60 @@ static void draw_test(void)
     epd_str((EPD_CW - epd_str_w("DIAL", 2)) / 2, EPD_CH - 30, "DIAL", 2);
 }
 
+/* The Bluetooth rune in a 24 px square, top right. Solid: a phone is
+ * connected. Outlined: the sync window is open, nobody connected yet. */
+static void draw_ble_icon(void)
+{
+    const int s = 24, x = EPD_CW - s - 4, y = 4, solid = s_ble_shown == 2;
+    epd_box(x - 2, y - 2, s + 4, s + 4, 0);           /* white margin so it reads over a page */
+    if (solid) epd_box(x, y, s, s, 1);
+    else { epd_frame(x, y, s, s); epd_frame(x + 1, y + 1, s - 2, s - 2); }
+    int ink = solid ? 0 : 1, cx = x + 12, t = y + 4, b = y + 20;
+    line(cx, t, cx, b, ink);                          /* the stem */
+    line(cx, t, cx + 5, t + 4, ink);                  /* upper arrow */
+    line(cx + 5, t + 4, cx - 5, t + 12, ink);
+    line(cx, b, cx + 5, b - 4, ink);                  /* lower arrow */
+    line(cx + 5, b - 4, cx - 5, t + 4, ink);
+}
+
+static void line(int x0, int y0, int x1, int y1, int on)
+{
+    int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1, dy = -abs(y1 - y0), sy = y0 < y1 ? 1 : -1, e = dx + dy;
+    for (;;) {
+        epd_box(x0 - 1, y0 - 1, 2, 2, on);           /* 2 px pen */
+        if (x0 == x1 && y0 == y1) return;
+        int e2 = 2 * e;
+        if (e2 >= dy) { e += dy; x0 += sx; }
+        if (e2 <= dx) { e += dx; y0 += sy; }
+    }
+}
+
+/* A small battery at (x, y), 22 x 11: fill by charge, a bolt while charging,
+ * a question mark when the divider isn't fitted. */
+static char s_bat_shown[24];
+static void draw_battery(int x, int y)
+{
+    battery_t b = battery_read();
+    battery_text(&b, s_bat_shown, sizeof s_bat_shown);
+    epd_box(x - 26, y - 2, 52, 15, 0);
+    epd_frame(x, y, 20, 11);
+    epd_box(x + 20, y + 3, 2, 5, 1);
+    if (!b.wired) { epd_str(x + 7, y + 2, "?", 1); return; }
+    epd_box(x + 2, y + 2, 16 * b.pct / 100, 7, 1);
+    if (b.charging) {                                   /* bolt, white through the fill */
+        line(x + 11, y + 1, x + 8, y + 6, 0); line(x + 8, y + 6, x + 12, y + 5, 0); line(x + 12, y + 5, x + 9, y + 10, 0);
+    }
+    char t[8];
+    snprintf(t, sizeof t, "%d", b.pct);
+    epd_str(x - 3 - epd_str_w(t, 1), y + 2, t, 1);
+}
+
 static void draw_ble_banner(void)
 {
+    s_banner_up = false;
     if (!s_ble_shown) return;
+    if (esp_timer_get_time() >= s_banner_until) { draw_ble_icon(); return; }
+    s_banner_up = true;
     const char *t = s_ble_shown == 2 ? "PHONE CONNECTED" : "SYNC: open the app";
     int w = epd_str_w(t, 2) + 16;
     int x = (EPD_CW - w) / 2;
@@ -321,6 +383,7 @@ static void handle(int ev)
     if (lng && (k == KEY_MENU || k == KEY_EXIT) && (keys_down() & both) == both) {
         ble_pair_window(180);
         s_ble_shown = ble_console_state();
+        s_banner_until = esp_timer_get_time() + BANNER_US;
         show(false);
         return;
     }
@@ -409,9 +472,28 @@ static void reader_task(void *arg)
             xSemaphoreTake(s_lock, portMAX_DELAY);
             bool was_connected = s_ble_shown == 2;
             s_ble_shown = bs;
-            if (!(was_connected && bs == 1)) show(false);   /* not between a drop and a quick reconnect */
+            /* words for news (window opened, phone joined); a phone dropping back
+             * to an open window only swaps the icon */
+            if (!(was_connected && bs == 1) && bs) s_banner_until = esp_timer_get_time() + BANNER_US;
+            show(false);
             if (bs == 0 && s_rtc.screen == SCR_SHELF) go_shelf();   /* packs may have arrived */
             xSemaphoreGive(s_lock);
+        }
+        if (s_banner_up && esp_timer_get_time() >= s_banner_until) {   /* words done: down to the icon */
+            xSemaphoreTake(s_lock, portMAX_DELAY);
+            show(false);
+            xSemaphoreGive(s_lock);
+        }
+        static int64_t next_bat;
+        if (s_rtc.screen == SCR_SHELF && esp_timer_get_time() > next_bat) {
+            next_bat = esp_timer_get_time() + 30 * 1000000LL;
+            battery_t b = battery_read();
+            char t[24];
+            if (strcmp(battery_text(&b, t, sizeof t), s_bat_shown)) {
+                xSemaphoreTake(s_lock, portMAX_DELAY);
+                show(false);
+                xSemaphoreGive(s_lock);
+            }
         }
         if (bs) reader_activity();
         if (s_sleep_s > 0 && keys_down() == 0 &&
