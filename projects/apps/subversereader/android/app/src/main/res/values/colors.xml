@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Xerox Punk: the launch screen is ink black, so the app opens straight into the splash -->
+    <color name="punk_ink">#111111</color>
+</resources>

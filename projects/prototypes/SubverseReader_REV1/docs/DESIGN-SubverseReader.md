@@ -372,6 +372,11 @@ its own controls. Because the controls differ, it is its own pass rather than an
   unknown, so the battery model assumes 60 µA of board overhead until it is measured (7 months
   at 300 pages/day on 1200 mAh). The board has no power switch and no battery sense: SR-15 adds a
   slide switch in the cell lead and a 100k/100k divider to IO3.
+- **Two panel controllers.** Boards with a green round sticker on the back drive the glass with
+  an UltraChip UC81xx (BUSY low while working, register LUTs), not the SSD1683 of Elecrow's main
+  examples, and use GPIO41 as a power enable. The firmware in `firmware/sr15/` tells them apart
+  by the BUSY level after reset (bench board, 2026-11-24: UC81xx). Held portrait, rotation 1 is
+  upright, with the USB-C edge at the top.
 - **Battery socket** is SH1.0 2-pin; the cell plugs in through a JST-PH-to-SH1.0 adapter lead.
 - **USB-C goes through a CH340C**, not the S3's native USB, so there is no USB drive: packs load
   by microSD or the Web Serial loader.
