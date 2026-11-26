@@ -6,7 +6,7 @@
 Every number here is an estimate to be replaced by bench measurements (a Nordic
 PPK2 or Joulescope on the battery lead). The model is deliberately simple:
 
-    daily mAh = pages x E_page + sleep_uA x 24 h + extras (light, sync, NFC)
+    daily mAh = pages x E_page + sleep_uA x 24 h + extras (light, sync, NFC) + timer check-ins
     days      = usable mAh / daily mAh,  usable = 85 % of rated (3.3 V cut-off, ageing)
 
 Self-discharge of a LiPo (~2 %/month) is added to standby figures.
@@ -18,6 +18,10 @@ Auto-off ladder (same on every variant, see docs/DESIGN-SubverseReader.md, Power
   3. after OFF_AFTER_DAYS idle, or below 5 % battery: draw the badge (or a "charge me"
      card), then cut power with the soft latch. Draw is then only the cell protection IC.
   Any key wakes from every level; from level 3 it is a cold boot that reopens the saved page.
+
+SR-16N has no keys and so no key wake: it wakes from deep sleep on a timer (the auto-turn
+interval, or a periodic Bluetooth check-in so the phone can reach it). CHECKIN models the
+check-in as a fixed daily cost that is paid in every profile, standby included.
 """
 import json
 import os
@@ -59,6 +63,11 @@ SYNC_BLE_MAH = 0.15      # one BLE zine sync (~300 KB)
 NFC_TAP_MAH = 0.03       # MFRC522 field ~50 mA for ~2 s average (off on first read)
 WIFI_FETCH_MAH = 0.28    # SR-14W fetch of one zine pack over Wi-Fi
 LIGHT_MA = 25            # SR-6 front light, mid level
+AWAKE_MA = 28            # ESP32 CPU awake, no sleep (the LEFT_ON figure); BLE advertising bursts
+                         # are not added separately: an estimate, MEASURE
+# Passes with no key wake: variant -> (seconds awake with the radio advertising, seconds between
+# wakes). A default, not a measurement; the firmware's real interval replaces it.
+CHECKIN = {"SR-16N": (4, 300)}
 
 CELLS = {  # code: (mAh, thickness mm, footprint, unit @5, unit @100)
     "302540": (250, 3.0, "25x40", 2.80, 1.60),
@@ -91,7 +100,11 @@ V = [
     ("SR-12", "Tour Laminate", "c5", "spi397", BOARD_CUSTOM, ("303450", "603450", "604050"), 12, "", ""),
     ("SR-13", "Hybrid Credential", "s3", "par47", 40, ("503450", "604050", "104050"), 14.5, "", "M5 kit sleep path unknown"),
     ("SR-15", "Dial Pass", "s3", "spi42", 60, ("503450", "603450", "604050"), 16, "", "CrowPanel: RY3420 buck Iq unknown, measure"),
-    ("SR-16", "Setlist", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "", "XIAO C5 + Seeed driver board: measure"),
+    ("SR-16", "Setlist", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "",
+     "XIAO C5 + Seeed driver board: measure; the board's own charging IC and battery switch are in the "
+     "battery path and their sleep draw is not published"),
+    ("SR-16N", "Setlist, no keys", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "",
+     "SR-16 hardware, no key wake: timer wake, 4 s Bluetooth check-in every 5 min assumed; measure"),
     ("SR-14W", "Tap Pass Wi-Fi", "c5", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapw", "10 taps + 2 Wi-Fi fetches a day"),
     ("SR-14B", "Tap Pass tethered", "nrf", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapb", "10 taps + 2 phone fetches a day"),
 ]
@@ -125,16 +138,25 @@ def _extras(kind, mcu):
     return sync
 
 
+def checkin(key):
+    """mAh per day spent on timer check-ins (0 for passes that wake on a key)."""
+    if key not in CHECKIN:
+        return 0.0
+    awake_s, every_s = CHECKIN[key]
+    return MARGIN * AWAKE_MA * awake_s / 3600.0 * (86400 / every_s)
+
+
 def life(row, cell):
     key, name, mcu, panel, extra, tiers, depth, xk, note = row
     mah = CELLS[cell][0] * USABLE
     ep = e_page(mcu, panel)
     sl = sleep_ua(mcu, extra) * 24 / 1000  # mAh/day
     sd = CELLS[cell][0] * SELF_DISCHARGE
-    reader = mah / (300 * ep + sl + sd)               # 300 pages/day, nothing else
-    festival = mah / (150 * ep + sl + sd + extras(xk, mcu))
-    standby = mah / (sl + sd)                          # asleep, never touched
-    bad = mah / (300 * ep + BAD_SLEEP_UA * 24 / 1000 + sd)  # reader, sloppy sleep
+    ci = checkin(key)                                  # timer check-ins, every day, every profile
+    reader = mah / (300 * ep + sl + sd + ci)          # 300 pages/day, nothing else
+    festival = mah / (150 * ep + sl + sd + ci + extras(xk, mcu))
+    standby = mah / (sl + sd + ci)                     # asleep, never touched
+    bad = mah / (300 * ep + BAD_SLEEP_UA * 24 / 1000 + sd + ci)  # reader, sloppy sleep
     off_days = mah / (OFF_UA * 24 / 1000 + sd)        # after the latch cuts power
     return dict(pages=round(mah / ep), reader=reader, festival=festival,
                 standby=standby, off=off_days, bad=bad, e_page=ep, sleep_ua=sleep_ua(mcu, extra))
@@ -143,7 +165,7 @@ def life(row, cell):
 # What auto-off protects against: the pass left in each awake state with no timeout.
 LEFT_ON = [  # (state, mA on C5/S3, mA on nRF52840)
     ("Menu left open, CPU in light sleep", 0.35, 0.004),
-    ("Menu left open, CPU awake (no sleep at all)", 28, 4),
+    ("Menu left open, CPU awake (no sleep at all)", AWAKE_MA, 4),
     ("Sync left running (Wi-Fi / BLE connected)", 90, 6),
     ("SR-6 front light left on (mid)", 25 + 0.35, None),
     ("SR-14 NFC field left on", 50, 50),
@@ -199,6 +221,9 @@ def main():
         stock_t = CELLS[tiers[1]][1]
         js[key] = dict(name=name, sleep_ua=sleep_ua(mcu, extra), e_page=e_page(mcu, panel),
                        note=note, tiers=[])
+        if key in CHECKIN:
+            js[key].update(wake="timer", checkin_awake_s=CHECKIN[key][0], checkin_every_s=CHECKIN[key][1],
+                           checkin_mah_day=round(checkin(key), 2))
         for tag, cell in zip("SML", tiers):
             mah, t, fp, u5, u100 = CELLS[cell]
             r = life(row, cell)
@@ -211,7 +236,35 @@ def main():
             out.append(f"| {key if tag == 'S' else ''} | {tag}{' (stock)' if tag == 'M' else ''} | "
                        f"{cell} ({fp}) | {mah} | {d:g} | ${u5:.2f} | ${u100:.2f} | "
                        f"{fmt_days(r['reader'])} | {fmt_days(r['festival'])} | {r['pages']:,} |")
-    out += ["", "## What auto-off protects against", "",
+    out += ["", "## Passes with no key wake", ""]
+    for row in V:
+        key = row[0]
+        if key not in CHECKIN:
+            continue
+        aw, ev = CHECKIN[key]
+        ci = checkin(key)
+        r = life(row, row[5][1])
+        twin = next(x for x in V if x[0] == key.rstrip("N"))
+        r0 = life(twin, twin[5][1])
+        out += [f"**{key} {row[1]}** has the hardware of {twin[0]} but no keys, so nothing can wake it "
+                "from deep sleep except a timer: the auto-turn interval while reading, or a periodic "
+                "Bluetooth check-in so the phone can reach it. Its standby is therefore not free.", "",
+                f"- Modelled default: every {ev / 60:g} minutes the pass wakes for {aw} s with the radio "
+                f"advertising, at {AWAKE_MA} mA (the CPU-awake figure used below; advertising bursts are not "
+                f"added separately), times the {MARGIN} margin. That is {ci:.1f} mAh a day, an average of "
+                f"{ci / 24 * 1000:.0f} µA, against {r['sleep_ua']:.0f} µA of deep sleep. It is added to every "
+                "profile, including *Asleep*.",
+                f"- Stock cell: reader {fmt_days(r['reader'])} (SR-16: {fmt_days(r0['reader'])}), festival "
+                f"{fmt_days(r['festival'])} ({fmt_days(r0['festival'])}), asleep {fmt_days(r['standby'])} "
+                f"({fmt_days(r0['standby'])}). The check-in, not reading, sets the life.",
+                "- *Page turns per charge* and *mAh/page* are the cell divided by the page-turn energy "
+                f"alone, so they equal {twin[0]}'s; a page turn is costed as one timer wake. Turns sent "
+                "from the phone over a held Bluetooth connection cost more and are not modelled.",
+                f"- With the check-in off (auto-turn only, power switch to start), the figures are {twin[0]}'s.",
+                "- *Sleep µA* in the tables is deep sleep only; the check-in is on top.",
+                f"- The interval and awake time are placeholders (`CHECKIN` in `battery_model.py`), not "
+                "measurements. Doubling the interval roughly doubles the life.", ""]
+    out += ["## What auto-off protects against", "",
             "Time to flat if the pass were left in one awake state with no timeout (1200 mAh "
             "cell, 85 % usable). Every one of these states has its own timeout in firmware.", "",
             "| Left on | ESP32 passes | nRF52840 passes |", "|---|---|---|"]

@@ -18,7 +18,15 @@ class AppState extends ChangeNotifier {
       : catalogUrl = prefs.getString('catalog') ?? kDefaultCatalog,
         profile = PanelProfile.all.firstWhere((PanelProfile p) => p.id == prefs.getString('profile'),
             orElse: () => PanelProfile.sr15),
-        brand = brandById(prefs.getString('brand'));
+        brand = brandById(prefs.getString('brand')) {
+    link.lastId = prefs.getString('pass');
+    link.onConnectedId = (String id) => prefs.setString('pass', id);
+    // A pass says which panel it has; build for that one from now on.
+    link.onProfile = (String id) {
+      final PanelProfile? p = PanelProfile.byId(id);
+      if (p != null && p.id != profile.id) setProfile(p);
+    };
+  }
   final SharedPreferences prefs;
   final PassLink link = PassLink();
   String catalogUrl;

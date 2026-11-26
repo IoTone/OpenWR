@@ -20,13 +20,14 @@ Offline numbers use the BOM snapshot prices (2026-11-06/07) and the vendor table
 | SR-12 | $217.70 | $102.99 | $320.69 | $64.14 | 8 | 2026-12-14 (28 d) | U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=DMG2305UX-7DICT-ND&qty6=5&cref6=Q5&part7=2N7002LT1GOSCT-ND&qty7=5&cref7=Q6&part8=1727-BAT54C215CT-ND&qty8=35&cref8=D1&part9=HFJ124CT-ND&qty9=5&cref9=J3&part10=CKN10504CT-ND&qty10=10&cref10=KEY&part11=HR1941CT-ND&qty11=5&cref11=J4) |
 | SR-13 | $195.25 | $39.99 | $235.24 | $47.05 | 6 | **blocked** | BRD K159: sold out at M5Stack; LilyGo T5 4.7in is the fallback | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=SW400-ND&qty1=15&cref1=KEY&part2=401-2000-ND&qty2=5&cref2=PWR) |
 | SR-15 | $191.35 | $27.99 | $219.34 | $43.87 | 5 | 2026-11-26 (10 d) | BRD Elecrow CrowPanel ESP32 4.2in E-Paper HM (Elecrow: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=401-2000-ND&qty1=5&cref1=PWR) |
-| SR-16 | $184.60 | $42.99 | $227.59 | $45.52 | 6 | 2026-11-26 (10 d) | MCU XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, (Seeed: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=SW400-ND&qty1=15&cref1=KEY&part2=401-2000-ND&qty2=5&cref2=PWR) |
+| SR-16 | $182.35 | $42.99 | $225.34 | $45.07 | 6 | 2026-11-26 (10 d) | MCU XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, (Seeed: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=SW400-ND&qty1=15&cref1=KEY) |
 | SR-1C | $217.25 | $46.99 | $264.24 | $52.85 | 6 | 2026-11-25 (9 d) | EPD GDEY042T81 (buyepaper: in stock) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=1738-DFR1222-ND&qty1=5&cref1=MCU&part2=SW400-ND&qty2=15&cref2=KEY&part3=401-2000-ND&qty3=5&cref3=PWR) |
 | SR-1D | $208.95 | $12.00 | $220.95 | $44.19 | 4 | 2026-11-27 (11 d) | KEY Tact switch 6x6 mm THT (PREV, MENU, NEXT (AliExpress: in stock) | — |
 | SR-14B | $268.90 | $102.99 | $371.89 | $74.38 | 8 | 2026-11-30 (14 d) | U3 RT9080-33GJ5 (broker: genuine Richtek at brokers; HT7833 at LCSC is the 8-day fix) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=HFJ124CT-ND&qty6=5&cref6=J3&part7=DMG2305UX-7DICT-ND&qty7=5&cref7=Q3&part8=CKN10504CT-ND&qty8=5&cref8=KEY&part9=HR1941CT-ND&qty9=5&cref9=J4) |
 | SR-14W | $261.40 | $102.99 | $364.39 | $72.88 | 8 | 2026-12-14 (28 d) | U1 ESP32-C5-WROOM-1-N8R8 (broker: no distributor stock of N8R8; Unikey broker or Espressif samples) | [cart](https://www.digikey.com/classic/ordering/fastadd.aspx?part1=2073-USB4105-GF-ACT-ND&qty1=5&cref1=J1&part2=MCP73831T-2ACI%2FOTCT-ND&qty2=5&cref2=U2&part3=497-5235-1-ND&qty3=5&cref3=U4&part4=DMG2305UX-7DICT-ND&qty4=5&cref4=Q1&part5=455-1749-1-ND&qty5=5&cref5=J2&part6=DMG2305UX-7DICT-ND&qty6=5&cref6=Q5&part7=2N7002LT1GOSCT-ND&qty7=5&cref7=Q6&part8=1727-BAT54C215CT-ND&qty8=20&cref8=D1&part9=HFJ124CT-ND&qty9=5&cref9=J3&part10=DMG2305UX-7DICT-ND&qty10=5&cref10=Q3&part11=CKN10504CT-ND&qty11=5&cref11=KEY&part12=HR1941CT-ND&qty12=5&cref12=J4) |
+| SR-16N | $171.70 | $36.00 | $207.70 | $41.54 | 5 | 2026-11-26 (10 d) | MCU XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, (Seeed: in stock) | — |
 
-**Shipping is the hidden cost at 5 units:** 26% of the landed total across all variants. Ordering every buildable variant together pays each vendor's fee once: parts $3,551.15 + shipping $147.99 (instead of $1,276.86 ordered one variant at a time) for 16 variants, materials in hand 2026-12-14.
+**Shipping is the hidden cost at 5 units:** 26% of the landed total across all variants. Ordering every buildable variant together pays each vendor's fee once: parts $3,720.60 + shipping $150.99 (instead of $1,312.86 ordered one variant at a time) for 17 variants, materials in hand 2026-12-14.
 
 ## How to order a variant
 
@@ -289,7 +290,7 @@ Direct: BRD ×5 Elecrow CrowPanel ESP32 4.2in E-Paper  (Elecrow, $26.90); BAT ×
 | Seeed | 2 | $64.45 | $15.00 | 10 |
 | Elecrow | 1 | $59.50 | $15.00 | 10 |
 | Amazon | 4 | $46.50 | $0.00 | 3 |
-| Distributor | 3 | $9.75 | $6.99 | 5 |
+| Distributor | 2 | $7.50 | $6.99 | 5 |
 | own printer | 2 | $3.65 | $0.00 | 2 |
 | sticker shop | 1 | $0.75 | $6.00 | 8 |
 
@@ -354,3 +355,15 @@ Direct: U1 ×5 MDBT50Q-1MV2 (broker, $7.80); U3 ×5 RT9080-33GJ5 (broker, $0.35)
 DigiKey by MPN (not in the cart link): EPB , KEY PTS815 SJM 250 SMTR LFS
 
 Direct: U1 ×5 ESP32-C5-WROOM-1-N8R8 (broker, $4.50); U3 ×5 RT9080-33GJ5 (broker, $0.35); RC ×5 Passives: 0402/0603 R and C, ~30 parts (LCSC, $0.80); EPD ×5 GDEM0397T81P (buyepaper, $14.70); Y2 ×5 Crystal 27.12 MHz for the reader (LCSC, $0.50); ANT ×5 Reader antenna matching: EMC filter in (LCSC, $0.60); FER ×5 Ferrite sheet 40 x 30 mm, between coil (Amazon, $0.60); PCB ×5 PCB 2-layer 1.0 mm, ~70 x 140 mm incl. (JLCPCB, $2.80); BAT ×5 LiPo 1200 mAh 603450, PCM, JST-PH 2.0  (Amazon, $7.00); LAM ×5 Laminate band: printed vinyl sticker (sticker shop, $0.15); HW ×5 M2x6 screws + M2 heat-set inserts, 4 e (Amazon, $0.40); LNY ×5 Lanyard 20 mm with swivel hook + 25 mm (Amazon, $1.50)
+
+## SR-16N
+
+| Vendor | Lines | Parts | Fee | Days |
+|---|---|---|---|---|
+| Seeed | 2 | $64.45 | $15.00 | 10 |
+| Elecrow | 1 | $59.50 | $15.00 | 10 |
+| Amazon | 3 | $44.00 | $0.00 | 3 |
+| own printer | 1 | $3.00 | $0.00 | 2 |
+| sticker shop | 1 | $0.75 | $6.00 | 8 |
+
+Direct: MCU ×5 XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE  (Seeed, $6.90); DRV ×5 ePaper Driver Board for XIAO V2 (24-pi (Seeed, $5.99); EPD ×5 3.7in e-paper 240x416 B/W, UC8253, par (Elecrow, $11.90); BAT ×5 LiPo 1200 mAh 603450, PCM, JST-PH 2.0  (Amazon, $7.00); LAM ×5 Laminate band: printed vinyl sticker (sticker shop, $0.15); HW ×5 M2x6 pan-head thread-forming screws fo (Amazon, $0.30); LNY ×5 Lanyard 20 mm with swivel hook + 25 mm (Amazon, $1.50)

@@ -2,7 +2,7 @@
 
 Browse a Subverse catalog (OPDS 2.0; default `https://spicemine.iotj.cc/opds`), render zines on the
 phone for an e-paper pass, and send them to it over Bluetooth. `io.iotone.subversereader`, Android
-first. The pass side is `projects/prototypes/SubverseReader_REV1` (SR-15 firmware in `firmware/sr15`).
+first. The pass side is `projects/prototypes/SubverseReader_REV1` (firmware for SR-15 and SR-16 in `firmware/pass`).
 
 - **Subverse tab:** the catalog. Tap a zine to render it for the pass's panel (SR-15 300×400 or
   SR-16 240×416, 1-bit) and preview the exact pages.

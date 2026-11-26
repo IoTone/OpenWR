@@ -110,6 +110,39 @@ raw and roughly 100–200 KB. A 40-page zine for SR-2 is about 300 KB, and
 Positions, bookmarks and "finished" flags live in a small journal file on the
 pass and go back to the phone at sync.
 
+### 6.1 As built (v0), and keeping it small
+
+What `tools/svpk.py`, the app and `firmware/pass` do today: 1-bit pages only, no TOC, and each
+page stored whichever way is smallest of raw, PackBits and **DEFLATE** (RFC 1951, no zlib
+header; compression code 2). The firmware has its own small inflate, so nothing depends on a
+chip's ROM. Measured on the eight zines in the test catalog (2026-11-24):
+
+| | 4.2in (300×400) | 3.7in (240×416) |
+|---|---|---|
+| raw pages | 371 KB | 305 KB |
+| PackBits (what v0 started with) | 198 KB | 132 KB |
+| **DEFLATE** | **117 KB** | **91 KB** |
+| CCITT G4, for comparison | 188 KB | 151 KB |
+
+So 10–30 KB a zine, about 40% under PackBits. G4 only wins on pure type; a row-difference
+filter before DEFLATE made no difference. Dithered photo pages barely compress whatever is used.
+
+**The weight is in the source files, not the packs.** Those same zines are 43 MB of PDF on the
+catalog (one eight-page reading copy is 16 MB, a one-page print copy 11 MB), and the phone
+downloads all of it to make about 100 KB of packs. Three ways to thin that, cheapest first:
+
+1. **Thin reading copies on the catalog.** `svpk.py thin zine.pdf` re-renders every page as a
+   grey JPEG 1200 px on its long edge: 43 MB becomes 2.3 MB (5%), and packs built from the
+   thin copies come out the same size and read the same. It leaves a PDF that is already small
+   alone. This is what the catalog should publish as the "reading copy"; the app already
+   prefers that link.
+2. **Prefer the comic copy when there is no reading copy.** The app does: the CBZ copies are
+   0.3–1.5 MB where the print PDFs are 2–11 MB.
+3. **Ready-made packs from the catalog**, one acquisition link per panel profile
+   (`application/vnd.subverse.svpk`): 10–30 KB a zine and no rendering on the phone. Not built;
+   it needs the catalog to run the renderer. SR-14W needs the same thing, so it is worth doing
+   once the pack format settles.
+
 ## 7. Sync and loading
 
 Three ways in, one pack format. Every pass has USB-C.
@@ -248,7 +281,9 @@ enclosure as rendered; weights are estimates without the lanyard.
 | **SR-8 Quiet Pass** | lanyard | 4.2in 400×300 1-bit | XIAO nRF52840 Plus on Seeed **EE05**, **no Wi-Fi** | 3 keys (on the EE05) | plain | 86 × 138 × 13 | 95 | yes | USB drive + UF2 | $47 | $35 |
 | **SR-9 Roadie** | lanyard | 4.2in 400×300 1-bit | ESP32-C5 PCB | **PSP thumbstick** (Adafruit 444) + OK / BACK | plain | 88 × 149 × 14.5 | 105 | yes | charge, Web Serial | $42 | $25 |
 | **SR-15 Dial Pass** | lanyard | 4.2in 400×300 1-bit | Elecrow CrowPanel 4.2in (ESP32-S3), finished board | **thumb dial** (up / down / push) + MENU + EXIT | plain | 94 × 124 × 13 | 150 | yes | charge, Web Serial (CH340) | $39 | $27 |
-| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 on Seeed's XIAO driver board | 3 keys on the right edge (hand-wired) | plain | 64 × 114 × 17 | 80 | **no** (8 MB flash) | charge, Web Serial | $37 | $24 |
+| **SR-16 Setlist** | lanyard | **3.7in 240×416 portrait** 1-bit, ~130 dpi | XIAO ESP32-C5 (or S3) on Seeed's XIAO driver board | 3 keys on the right edge (hand-wired) | plain | 64 × 120 × 33 at the pod, 13 above | 80 | **no** (8 MB flash) | charge, Web Serial | $39 | $25 |
+| **SR-16N Setlist, no keys** | lanyard | same | same | **none**: the phone app, auto-turn, and the XIAO's BOOT button | plain | 57 × 120 × 33 at the pod, 12 above | 75 | **no** (8 MB flash) | charge, Web Serial | $37 | $25 |
+| **SR-16SD Setlist, card** | lanyard | same | same, plus a microSD breakout on the panel's SPI bus | none, as SR-16N | plain | 57 × 120 × 33 at the pod, 12 above | 80 | **yes**, in the bottom edge (firmware not written) | charge, Web Serial | $44 | $30 |
 
 Depth with pocket/clip included; SR-2/SR-7 are 15.5 mm without the pocket,
 SR-4 13.5 mm, SR-5's body 16 mm.
@@ -374,7 +409,7 @@ its own controls. Because the controls differ, it is its own pass rather than an
   slide switch in the cell lead and a 100k/100k divider to IO3.
 - **Two panel controllers.** Boards with a green round sticker on the back drive the glass with
   an UltraChip UC81xx (BUSY low while working, register LUTs), not the SSD1683 of Elecrow's main
-  examples, and use GPIO41 as a power enable. The firmware in `firmware/sr15/` tells them apart
+  examples, and use GPIO41 as a power enable. The firmware in `firmware/pass/` tells them apart
   by the BUSY level after reset (bench board, 2026-11-24: UC81xx). Held portrait, rotation 1 is
   upright, with the USB-C edge at the top.
 - **Battery socket** is SH1.0 2-pin; the cell plugs in through a JST-PH-to-SH1.0 adapter lead.
@@ -404,18 +439,26 @@ on the long right edge, so there is no key row under the screen.
 - **Boost resistor.** Elecrow's own CrowPanel 3.7in board (schematic on Elecrow-RD's GitHub)
   drives this panel with RESE = 0.47 Ω and an Si1308EDL. Seeed's driver board has 0.47 Ω fixed,
   so the pair should work as-is (on a CFA-10084, short the RESE jumper).
-- **Wiring** is SR-1D's: driver board on D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI; the
-  keys share a Schottky wake line on GPIO3 (back pad) and also go to D4, D5, D9.
+- **Wiring.** Driver board on D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The keys go to
+  **D4 (PREV), D7 (MENU) and D9 (NEXT)**, and on the C5 also share a Schottky wake line on GPIO3
+  (back pad). D5 stays free: Seeed's older XIAO ePaper Breakout Board has BUSY there instead of
+  D2, and the firmware finds which at start, so either board works.
+- **Power.** The driver board has its own charger, a JST battery socket and a battery switch
+  (Seeed's wiki), so the cell plugs in there and no separate slide switch is needed. The
+  XIAO ESP32-C5's battery sense (GPIO6, switched by GPIO26) measures the XIAO's own battery
+  pads; whether it sees a cell on the driver board's socket is not known. Measure.
+- **Either XIAO.** The firmware also builds for a XIAO ESP32-S3 (2.4 GHz only, no battery
+  sense). There PREV, NEXT and BOOT wake the pass by themselves, so the diodes are a C5 part.
 - **Text.** About 110–130 words a page at reading size against ~250 on 4.2in: books take about
   twice the page turns. The battery model counts 300 turns a day like the others (10 months on
   1200 mAh), so a heavy reader should expect closer to half that.
 - **No microSD card.** Nothing on SR-16 holds a card: the XIAO, the driver board and the shell
-  have no slot. Content lives in the XIAO ESP32-C5's 8 MB flash, about 5–6 MB after the
-  firmware. That's a dozen or more books as compressed text plus zines and setlists, but little
-  in pre-rendered images. The phone app swaps what's on the pass; it isn't a library. (SR-15
-  has a slot only because the CrowPanel board has one.) To add a card later, a microSD breakout
-  on the panel's SPI bus needs MISO and a chip-select. D9, the XIAO's usual MISO, is a key, so
-  the pins would need remapping, plus a wall slot and about 1–2 mm of thickness.
+  have no slot. Packs live in a 6.4 MB FAT partition of the XIAO's 8 MB flash. At 10–30 KB a
+  zine (section 6.1) that is two hundred zines or more, not the handful first expected; the
+  app shows the room left. (SR-15 has a slot only because the CrowPanel board has one.) To add
+  a card later, a microSD breakout on the panel's SPI bus needs MISO and a chip-select: D9,
+  the XIAO's usual MISO, is a key, so the pins would need remapping, plus a wall slot and
+  about 1–2 mm of thickness.
 - **Size check.** The listing gives the panel as 53 × 93 × 1 mm but also a 67 × 93.4 × 2.6 mm
   "PCB size" and 50 g, so it may arrive on a carrier board. Measure one before printing; the
   shell in [enclosure/](../enclosure/README.md) assumes the bare panel.
@@ -423,8 +466,166 @@ on the long right edge, so there is no key row under the screen.
   ~12.5 mm and the printed pass 64 × 114 × 17 mm. Soldering the XIAO flat to the driver board
   brings it to ~12.5 mm thick. Measure the board, the stack and which way the XIAO's USB-C faces
   before the final print: Seeed publishes no drawing.
-- **Cost:** $36.92 a pass at 5 ($45.52 landed: Seeed, Elecrow, DigiKey and Amazon orders),
-  $24.32 at 100. The panel rides the same Elecrow order as SR-15's board.
+  **Superseded by the rev D layout below**: the first build showed the stack is taller, the
+  ribbon cannot take the fold and the USB-C must be placed first.
+- **Cost:** $38.92 a pass at 5, $25.43 at 100, with the ribbon coupler and jumper
+  (the jumper's price is an estimate; landed cost not recalculated). The panel rides the same Elecrow order as SR-15's board.
+
+#### SR-16N: the same pass with no keys
+
+Leave the three keys, their diodes and the perfboard out and the pass is two boards, a panel
+and a cell: nothing to hand-wire, a shell 7 mm narrower (57 × 120 mm), about $2 less. It
+is what the bare stack is before any key is soldered, so it is also the first thing to test.
+What replaces the keys:
+
+- **The phone app is the remote.** Its pass screen has PREV and NEXT, opens any zine on the
+  pass, sets auto-turn and puts the pass to sleep.
+- **Auto-turn.** A page every 10 s to 15 min, round and round: a slideshow, a setlist that
+  advances by itself, a zine on a stall. The pass sleeps between turns.
+- **The XIAO's BOOT button** is one key, reached with a paperclip through a pinhole in the
+  back: press for the next page (the first follows the last), hold for the next zine.
+- **Timed check-in.** A sleeping pass with no keys can't be asked to listen, so it wakes every
+  5 minutes (settable, or off), advertises for 5 s without touching the glass, and sleeps
+  again. In the app, *Wait for my pass* keeps scanning and connects the moment it shows. The
+  reset button, or the battery switch off and on, opens the usual 3-minute window at once.
+- **The price is battery.** The check-in costs about 13 mAh a day by the model (not measured):
+  about 2 months on 1200 mAh where SR-16 gets 10. With the check-in off it is SR-16 again,
+  and then only reset or the switch lets the app back in.
+- On the C5, BOOT can't wake the pass (only LP GPIO 0–6 can); on the S3 it does.
+- **Where am I?** Zine pages carry no page number, and a keyless pass has no MENU to ask
+  with. The app's remote shows the title and "page N of M", and its *Show page number* button
+  (`sr-where`) puts the same on the glass for five seconds.
+
+The firmware is one build for both: `3 sr-keys!` says the keys are fitted, `0 sr-keys!` (the
+default) says they are not. See [firmware/README.md](../firmware/README.md).
+
+#### SR-16 layout, rev D: USB-C down a channel, no load on the ribbon
+
+The first build (2026-11-25) showed the rev A shell was wrong in three ways. Rev A put the
+driver board behind the glass and let the panel's own tail fold back onto it.
+
+- **The ribbon is the failure point.** The tail is short (about 7 mm shows between the glass
+  and the connector), and folding it onto a board that stands proud levers it out. It slipped
+  twice in one session: once the picture froze, once the panel would not power up. Both
+  looked like dead hardware.
+- **The stack is 27 mm, not 12.5.** Measured from the tips of the driver board's pins to the
+  top of the XIAO ESP32-C5's USB-C, with the XIAO in its socket on its long pins.
+- **USB-C did not land on an edge.** On the driver board the ribbon connector is at one end
+  and the XIAO's USB-C at the other, pointing away from the glass and 4 mm past the board's
+  end. Laid out straight, the pass is 150 mm long. Folded under, the USB-C ends up in the
+  middle of the back.
+
+Rev C answered these with a pod at the bottom and a ribbon extension. Rev D (the same day) keeps
+that, takes the driver board's dimensions from Seeed's STEP model in place of a photo, and
+stops asking the USB-C to line up with a hole: the port sits 5 mm inside the bottom edge at
+the end of a channel. As generated by `enclosure/make_enclosure.py`:
+
+```
+        front                      side (cut)
+   ┌──────────────┐          ┌─┐
+   │  ( lanyard ) │          │ │ the tail folds once, at the glass edge
+   │ ░░░ tail ░░░ │          │ ├──┐
+   │┌────────────┐│          │ │  │ coupler, flat on the glass
+   ││            ││          │ │  │
+   ││   glass    ││   glass →│ │  │ cell, with the jumper over it     11.6 mm
+   ││            ││          │ │  │
+   ││            ││          │ ├──┴────────┐
+   ││            ││          │ │ tray      │
+   │└────────────┘│          │ │ driver    │ pod                      32.8 mm
+   └────╨USB╨─────┘          └─┴───────╨USB┘   channel, open to the back
+```
+
+1. **The glass is turned so its tail is at the top**, under the lanyard band (`2 epd-rot!`
+   turns the picture to match). That puts the driver board's ribbon end uppermost and its
+   USB end at the bottom, which is the only arrangement that gets USB-C onto an edge with one
+   fold and a straight run.
+2. **USB-C is at the end of a cable channel**, 5 mm inside the bottom edge. The channel is
+   14 mm wide (a plug's grip is about 12.5 × 6.5 mm), cut through the bottom wall and the
+   back, with printed sides and a roof inside. It reaches 4 mm further toward the glass than
+   a plug needs, so the port can be off by millimetres in any direction and still take a
+   cable. The lanyard is at the top, so the pass charges hanging.
+3. **An extension takes the load.** The tail is only 10.15 mm long and is made to fold in
+   one place: a 2 mm bending area that starts 0.5 mm past the glass (Good Display's drawing).
+   It folds there, once, and its last 7 mm lie on the back of the glass in a 24-pin 0.5 mm
+   FFC coupler held in its own fence. A 60 mm jumper runs from the coupler down over the
+   cell, through a doorway in the step, into the driver board. The tail carries no weight
+   and no leverage; the part that flexes when the shell is opened is the jumper, which costs
+   a dollar.
+4. **The back is stepped.** A pod 52 mm tall and 32.8 mm thick covers the driver stack; the
+   rest of the pass is an 11.6 mm shelf over the cell. The pod sits at the bottom, where a
+   hanging pass rests against the body anyway.
+5. **A tray keeps pins off the glass.** A 1 mm printed plate lies on the back of the glass in
+   the pod; the driver board stands on it on its pin tips, between four pegs and four corner
+   stops. The far stops are backed by the step wall and take the push of a plug going in.
+6. **The cell lies across the shelf** (603450 turned sideways, 50 × 34 mm), next to the
+   driver board's battery socket. The XIAO's stick-on antenna (40 × 20 mm on an 80 mm lead)
+   goes on the inside of the pod's left wall, away from the cell.
+
+| Size | SR-16N (no keys) | SR-16 (keys) |
+|---|---|---|
+| W × H | 57.0 × 119.5 mm | 64.0 × 119.5 mm |
+| Thick, pod / shelf | 32.8 / 11.6 mm | 32.8 / 12.7 mm |
+| Printed parts | front, back, tray | the same, and three key caps |
+
+**The pod is as thick as the stack, and the stack is mostly air.** Seeed's models add up to
+14.4 mm (1.5 pin tail, 1.6 board, 4.5 socket, 2.54 header spacer, 1.0 XIAO, 3.2 USB-C), so
+about 12 mm of the 27 measured by ruler is pin that is not in the socket. A XIAO on ordinary
+short headers should give a 14 mm stack and a 20 mm pod; a XIAO soldered straight to a
+carrier with no socket, about 7 mm, at which point the pod disappears into the shelf. Set
+`drv_stack` and rerun. None of these has been tried.
+
+| Added part | For | Note |
+|---|---|---|
+| FFC coupler board, 24-pin, 0.5 mm pitch, top-contact connectors (Adafruit 4524 or the same kind) | joins the tail to the jumper | made for 0.3 mm ribbons, which the tail is; board size assumed 20 × 12 × 3.6 mm |
+| FFC jumper, 24-pin, 0.5 mm, 60 mm, same-side contacts (type A) | the run to the driver board | fingers face the back at both ends |
+| Foam tape, 0.5 mm | behind the cell and on top of the stack | |
+
+Which way round everything faces was worked out on paper, not on the bench. The tail's gold
+fingers are on the display side, so after the fold they face the back; the coupler and the
+driver board both have top-contact connectors and both lie with their connectors facing the
+back; a same-side jumper keeps it that way. The run then is a straight extension, each
+conductor staying on its own side. Adafruit describes its coupler as joining pin 1 to pin
+24, which is the same thing said by the cables' own numbering, but **check it with a meter,
+tail pad to driver-board pad, before power**: the panel's booster runs through this ribbon
+(gate drive, the 0.47 Ω sense line, the pump capacitors). Keep the jumper to 60 mm and check
+the result with `epd-diag`. A healthy panel reads about 50 ms to
+power on, 0.34 s for a quick refresh and 1.0 s for a full one. A power-on that never ends,
+or a full refresh near 0.65 s with no change on the glass, is a ribbon that is not home.
+
+Where the numbers come from:
+
+| Number | Value | From |
+|---|---|---|
+| Stack height | 27 mm | measured on the first build |
+| USB-C past the driver board's end | 2.5 mm | the two board models (about 4 mm by ruler; the channel takes either) |
+| Glass, active area, tail | 53.00 × 92.99 × 1.00 mm; 47.04 × 81.54 mm; tail 10.15 mm long, 13.8 mm wide | Good Display's GDEY037T03 drawing (Elecrow publishes the same one) |
+| BOOT button | 4.4 mm right of centre seen from the front, 19.4 mm above the driver board's USB end | Seeed's KiCad board for the XIAO ESP32-C5 and the driver board's STEP model |
+| Driver board | 25.0 × 42.0 × 1.6 mm; pins 1.5 mm below; sockets 4.5 mm; ribbon connector centred at the far end | Seeed's STEP model of the board |
+| Battery switch | 29.7 mm from the XIAO end, on the board's edge, 14 mm inside the right wall | the STEP model; reached through a window with a toothpick. The board cannot move to the wall: the ribbon cannot step sideways |
+| Coupler board | 20 × 12 × 3.6 mm | assumed |
+
+Only the coupler's size and the stack height still need checking against the parts before a
+final print.
+
+#### SR-16SD: the same pass with a microSD card
+
+SR-16N keeps its zines in 8 MB of flash, about 15 of them, and a C5 cannot show up as a USB
+drive. SR-16SD adds a card: pull it, fill it on a computer, push it back.
+
+- **Part:** a 3 V SPI microSD breakout (Adafruit 4682, 25.4 × 22.8 × 3.5 mm, $3.50).
+- **Wiring:** six wires to the driver board's pad row. SCK = D8 and MOSI = D10 are shared with
+  the panel; MISO = D9, CS = D7, 3V3, GND. D9 is NEXT on SR-16, so the card variant is built
+  on the keyless pass. A card and keys together would need NEXT moved to D5; that is not drawn.
+- **Case:** the SR-16N shell with two changes. The breakout stands on edge in the pod, left of
+  the driver board seen from the front, taped to a fin on the tray, and the card goes in
+  through a slot in the bottom edge, 9 mm from the left side, beside the USB-C channel. The
+  antenna moves to the pod's right wall. Outer size is unchanged: 57.0 × 119.5 × 32.8 mm.
+- **Firmware: not written.** SR-15's card code gives the card a bus of its own; here it shares
+  the panel's. Until that exists the variant runs as SR-16N from flash.
+- **Standby is unmeasured.** The breakout has no power switch and an idle card draws roughly
+  0.1 to 0.3 mA. If that is too much, a load switch on D6 turns the card off in sleep.
+- **Assumed, check on the part:** which edge of the breakout the card enters, where along it,
+  and how far the card stands proud (2.5 mm drawn).
 
 ### SR-9 and the thumbstick
 
@@ -533,6 +734,7 @@ real-world margin on every active figure; details in `../power/README.md`):
 | SR-13 Hybrid Credential | 1500 | ~53,000 | 4 months | 6 months | 3 months |
 | SR-15 Dial Pass | 1200 | ~138,000 | 7 months | 8 months | 3 months |
 | SR-16 Setlist | 1200 | ~161,000 | 10 months | 11 months | 4 months |
+| SR-16N Setlist, no keys (checks in every 5 min) | 1200 | ~161,000 | 2 months | 2 months | 6 weeks |
 | SR-14W Tap Pass Wi-Fi | 1200 | ~140,000 | 10 months | 8 months (10 taps, 2 fetches) | 4 months |
 | SR-14B Tap Pass tethered | 1200 | ~369,000 | 1 yr+ | 1 yr+ | 4 months |
 

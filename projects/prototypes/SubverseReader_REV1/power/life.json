@@ -803,7 +803,7 @@
   "name": "Setlist",
   "sleep_ua": 24,
   "e_page": 0.006333333333333332,
-  "note": "XIAO C5 + Seeed driver board: measure",
+  "note": "XIAO C5 + Seeed driver board: measure; the board's own charging IC and battery switch are in the battery path and their sleep draw is not published",
   "tiers": [
    {
     "opt": "S",
@@ -848,6 +848,60 @@
     "bad": 143
    }
   ]
+ },
+ "SR-16N": {
+  "name": "Setlist, no keys",
+  "sleep_ua": 24,
+  "e_page": 0.006333333333333332,
+  "note": "SR-16 hardware, no key wake: timer wake, 4 s Bluetooth check-in every 5 min assumed; measure",
+  "tiers": [
+   {
+    "opt": "S",
+    "cell": "503450",
+    "mah": 1000,
+    "depth": 11.0,
+    "u5": 4.2,
+    "u100": 2.6,
+    "pages": 134211,
+    "reader": 51,
+    "festival": 52,
+    "standby": 58,
+    "off": 1132,
+    "bad": 39
+   },
+   {
+    "opt": "M",
+    "cell": "603450",
+    "mah": 1200,
+    "depth": 12.0,
+    "u5": 4.8,
+    "u100": 2.8,
+    "pages": 161053,
+    "reader": 61,
+    "festival": 62,
+    "standby": 69,
+    "off": 1154,
+    "bad": 46
+   },
+   {
+    "opt": "L",
+    "cell": "604050",
+    "mah": 1500,
+    "depth": 12.0,
+    "u5": 5.4,
+    "u100": 3.2,
+    "pages": 201316,
+    "reader": 75,
+    "festival": 76,
+    "standby": 85,
+    "off": 1176,
+    "bad": 57
+   }
+  ],
+  "wake": "timer",
+  "checkin_awake_s": 4,
+  "checkin_every_s": 300,
+  "checkin_mah_day": 13.44
  },
  "SR-14W": {
   "name": "Tap Pass Wi-Fi",

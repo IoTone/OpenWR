@@ -35,6 +35,26 @@ class PassLink extends ChangeNotifier {
   String status = 'Not connected';
   String panel = '';
   String reading = '';
+
+  /// From the pass's "pass ..." line (firmware 0.2 on): which panel profile it
+  /// wants, how many keys it has (0 = none: this app is its remote), auto-turn
+  /// and check-in seconds, storage in KB, and the battery in its own words.
+  String profileId = '';
+  int keys = -1;
+  int autoS = 0;
+  int syncS = 0;
+  int storeKb = 0;
+  int freeKb = 0;
+  String battery = '';
+
+  /// Called when a pass says which profile it is, so packs get built for it.
+  void Function(String profileId)? onProfile;
+
+  /// Remembered between runs (set by the app): the pass to reconnect to.
+  String? lastId;
+  void Function(String id)? onConnectedId;
+  bool _waiting = false;
+  bool get waiting => _waiting;
   List<ShelfItem> shelf = <ShelfItem>[];
   final List<ScanResult> found = <ScanResult>[];
 
@@ -83,8 +103,8 @@ class PassLink extends ChangeNotifier {
     _scanSub = FlutterBluePlus.onScanResults.listen((List<ScanResult> rs) {
       for (final ScanResult r in rs) {
         final String n = r.advertisementData.advName.isNotEmpty ? r.advertisementData.advName : r.device.platformName;
-        final bool nus = r.advertisementData.serviceUuids.contains(Nus.service);
-        if (!(n.startsWith('SR-') || nus)) continue;
+        // Name only: other gear (mesh radios, bike sensors) offers the same serial service.
+        if (!n.startsWith('SR-')) continue;
         final int i = found.indexWhere((ScanResult f) => f.device.remoteId == r.device.remoteId);
         if (i >= 0) {
           found[i] = r;
@@ -102,8 +122,52 @@ class PassLink extends ChangeNotifier {
     }
     await _scanSub?.cancel();
     if (state == LinkState.scanning) {
-      _set(LinkState.idle, found.isEmpty ? 'No pass found. Hold MENU + EXIT on the pass, then scan again.' : 'Pick a pass');
+      _set(LinkState.idle, found.isEmpty ? 'No pass found. Open its sync window (see below), then look again.' : 'Pick a pass');
     }
+  }
+
+  /// A pass with no keys can't be asked to listen: it wakes by itself every
+  /// few minutes and advertises for a few seconds. Keep scanning until it (the
+  /// remembered pass, or failing that the first one seen) shows up, then
+  /// connect at once.
+  Future<void> waitForPass({Duration limit = const Duration(minutes: 16)}) async {
+    if (state == LinkState.scanning || state == LinkState.connecting || connected) return;
+    if (!await _permissions()) {
+      _set(LinkState.idle, 'Bluetooth permission refused');
+      return;
+    }
+    found.clear();
+    _waiting = true;
+    _set(LinkState.scanning, 'Waiting for the pass to check in…');
+    await _scanSub?.cancel();
+    ScanResult? hit;
+    _scanSub = FlutterBluePlus.onScanResults.listen((List<ScanResult> rs) {
+      for (final ScanResult r in rs) {
+        final String n = r.advertisementData.advName.isNotEmpty ? r.advertisementData.advName : r.device.platformName;
+        if (!n.startsWith('SR-')) continue;
+        if (lastId != null && r.device.remoteId.str != lastId) continue;
+        hit ??= r;
+      }
+      if (hit != null) FlutterBluePlus.stopScan();
+    });
+    try {
+      await FlutterBluePlus.startScan(timeout: limit, androidScanMode: AndroidScanMode.lowLatency);
+      await FlutterBluePlus.isScanning.where((bool s) => !s).first;
+    } catch (e) {
+      status = 'Scan failed: $e';
+    }
+    await _scanSub?.cancel();
+    _waiting = false;
+    if (hit != null) {
+      await connect(hit!);
+    } else if (state == LinkState.scanning) {
+      _set(LinkState.idle, 'The pass did not check in. Press its reset button, or switch it off and on.');
+    }
+  }
+
+  Future<void> stopWaiting() async {
+    if (!_waiting) return;
+    await FlutterBluePlus.stopScan();
   }
 
   Future<void> connect(ScanResult r) async {
@@ -144,6 +208,8 @@ class PassLink extends ChangeNotifier {
         }
       });
       _set(LinkState.connected, 'Connected to $name');
+      lastId = d.remoteId.str;
+      onConnectedId?.call(lastId!);
       await refresh();
     } catch (e) {
       _cleanup();
@@ -188,9 +254,11 @@ class PassLink extends ChangeNotifier {
     final DateTime end = DateTime.now().add(t);
     while (DateTime.now().isBefore(end)) {
       final String s = _in.toString();
-      for (final String m in marks) {
-        final int i = s.indexOf(m, from);
-        if (i >= 0) return s;
+      if (s.length >= from) {
+        // (indexOf throws if `from` is past the end: the echo may not be in yet)
+        for (final String m in marks) {
+          if (s.indexOf(m, from) >= 0) return s;
+        }
       }
       await Future<void>.delayed(const Duration(milliseconds: 30));
     }
@@ -232,12 +300,27 @@ class PassLink extends ChangeNotifier {
       final RegExpMatch? pm = RegExp(r'panel (\S+)').firstMatch(l);
       if (pm != null) panel = pm.group(1)!.replaceAll(',', '');
       if (l.startsWith('open:')) reading = l.substring(5).trim();
+      final RegExpMatch? ps = RegExp(
+              r'^pass (\S+) \d+x\d+ keys (\d+) auto (\d+) sync (\d+) store (\d+)/(\d+) KB bat (.*)$')
+          .firstMatch(l.trim());
+      if (ps != null) {
+        profileId = ps.group(1)!;
+        keys = int.parse(ps.group(2)!);
+        autoS = int.parse(ps.group(3)!);
+        syncS = int.parse(ps.group(4)!);
+        storeKb = int.parse(ps.group(5)!);
+        freeKb = int.parse(ps.group(6)!);
+        battery = ps.group(7)!.trim();
+        onProfile?.call(profileId);
+      }
     }
+    // The pass keeps the last zine loaded while it shows the shelf: go by the screen it names.
+    if (!r.contains('open:') || r.contains('screen shelf')) reading = '';
     shelf = items;
     notifyListeners();
   }
 
-  /// Send a pack to the pass's card. onProgress gets 0..1.
+  /// Send a pack to the pass (its card, or its flash). onProgress gets 0..1.
   Future<void> sendPack(String fileName, Uint8List data, {void Function(double)? onProgress}) {
     final Completer<void> done = Completer<void>();
     _busy = _busy.then((_) async {
@@ -279,6 +362,40 @@ class PassLink extends ChangeNotifier {
   Future<void> open(ShelfItem it) async {
     await command('${it.index} sr-open', timeout: const Duration(seconds: 15));
     await refresh();
+  }
+
+  // The remote: what a pass with no keys is driven by. Works on any pass.
+  Future<void> turn(int d) async {
+    await command(d > 0 ? 'sr-next' : 'sr-prev', timeout: const Duration(seconds: 15));
+    await refresh();
+  }
+
+  /// Put the title and "page N of M" on the glass for a few seconds.
+  Future<void> showWhere() async {
+    await command('sr-where', timeout: const Duration(seconds: 15));
+  }
+
+  Future<void> showShelf() async {
+    await command('sr-shelf', timeout: const Duration(seconds: 15));
+    await refresh();
+  }
+
+  Future<void> setAuto(int seconds) async {
+    await command('$seconds sr-auto!');
+    await refresh();
+  }
+
+  Future<void> setSync(int seconds) async {
+    await command('$seconds sr-sync!');
+    await refresh();
+  }
+
+  /// Let the pass sleep now; it keeps what it shows.
+  Future<void> sleepNow() async {
+    try {
+      await _write(utf8.encode('sr-sleep\r'), withResponse: true);
+    } catch (_) {}
+    await disconnect();
   }
 
   Future<void> remove(ShelfItem it) async {

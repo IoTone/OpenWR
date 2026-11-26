@@ -34,6 +34,7 @@ class Publication {
     required this.description,
     required this.acquisition,
     required this.collection,
+    this.copies = const <Acquisition>[],
   });
   final String id;
   final String title;
@@ -42,6 +43,9 @@ class Publication {
   final String? cover;
   final String description;
   final Acquisition? acquisition;
+
+  /// Every copy the app can read, best first: when a link is dead the next one is tried.
+  final List<Acquisition> copies;
   final String collection;
 }
 
@@ -83,6 +87,10 @@ Publication _pub(Map<String, dynamic> p, Uri base) {
         ? null
         : Acquisition(base.resolve('${best['href']}').toString(), '${best['type']}', '${best['title'] ?? ''}'),
     collection: coll,
+    copies: <Acquisition>[
+      for (final Map<String, dynamic> l in acq)
+        if (_rank(l) < 9) Acquisition(base.resolve('${l['href']}').toString(), '${l['type']}', '${l['title'] ?? ''}'),
+    ],
   );
 }
 

@@ -623,54 +623,164 @@ variant("SR-15", "SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its t
         usb="charge, console (CH340), Web Serial loader")
 
 
+# SR-16 and SR-16N share one electronics stack; SR-16N drops the key column.
+SR16_LINES = [
+    L("MCU", "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)", "Seeed", "", "", "",
+      "Seeed 100010048", 6.90, 6.50, 1, "vendor",
+      "Seeed $6.90 (2026-11-09); RobotShop pre-soldered $8.31. A XIAO ESP32-S3 fits the same socket "
+      "and runs the same firmware (2.4 GHz only)"),
+    L("DRV", "ePaper Driver Board for XIAO V2 (24-pin SPI, boost, charging IC, JST 2-pin battery "
+      "connector, battery switch)", "Seeed", "", "", "",
+      "Seeed 114993558", 5.99, 4.90, 1, "vendor",
+      "RESE fixed at 0.47 ohm, the value Elecrow's own 3.7in CrowPanel uses with this panel; "
+      "the cell plugs into its JST and its switch is the battery disconnect"),
+    L("EPD", "3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; "
+      "Good Display GDEY037T03 class), panel 53 x 93 x 1 mm", "Elecrow", "", "", "",
+      "Elecrow DIE04037S", 11.90, 8.00, 1, "vendor",
+      "Elecrow $11.90 in stock 2026-11-10; same order as SR-15's board"),
+    L("KEY", "Tact switch 6x6 mm THT (PREV, MENU, NEXT)", "Omron", "B3F-1000",
+      "SW400-ND", "653-B3F-1000", "", 0.35, 0.12, 3, "estimate",
+      "on the long right edge; PREV = D4, MENU = D7, NEXT = D9"),
+    L("DIO", "Schottky diode 1N5817, any-key wake line", "Diodes Inc", "1N5817-T", "", "", "",
+      0.15, 0.05, 3, "estimate", "Schottky, not 1N4148: the drop must stay under the C5's low threshold; "
+      "only needed with the C5, leave them out with a XIAO ESP32-S3"),
+    L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "", 0.50, 0.20, 1, "estimate", ""),
+    bat(1200, "603450", 4.80, 2.80),
+    L("FFX", "FFC coupler board, 24-pin 0.5 mm, two top-contact connectors (extends the panel's ribbon)",
+      "Adafruit", "4524", "", "", "Adafruit 4524", 0.95, 0.76, 1, "vendor",
+      "Adafruit $0.95, $0.76 at 100, in stock 2026-11-25; for 0.3 mm ribbons, used with a same-side "
+      "(type A) jumper. The panel's own 10 mm tail must not carry the fold to the driver board: it "
+      "slipped out twice on the first build"),
+    L("FFC", "FFC jumper, 24-pin 0.5 mm pitch, 60 mm, same-side contacts (type A)", "", "", "", "",
+      "Amazon/Ali", 1.00, 0.30, 1, "estimate",
+      "check the run is a straight extension with a meter before power: it carries the panel's high voltages"),
+    L("FOAM", "Foam tape 0.5 mm: under the coupler, behind the cell, on top of the driver stack", "", "", "", "",
+      "", 0.20, 0.05, 1, "estimate", ""),
+    L("ENC", "Enclosure, 3D-printed PETG, front + stepped back + tray, 64 x 120 mm, 33 mm at the pod, "
+      "13 mm above (~45 g)", "", "", "",
+      "", "own printer", 1.00, 0.70, 1, "estimate",
+      "enclosure/SR-16/*.stl, rev D; the back shell prints with supports under the shelf"),
+    L("CAP", "Key caps (PREV, MENU, NEXT), printed PETG with the shell", "", "", "", "", "own printer",
+      0.03, 0.01, 1, "estimate", ""),
+    ENCLOSURE[2],
+    L("HW", "M2x6 pan-head thread-forming screws for plastic, 4", "", "", "", "", "Amazon/Ali", 0.30, 0.10, 1,
+      "estimate", "self-tap into the printed bosses; no inserts (the bosses are too small for them)"),
+    LANYARD,
+]
+SR16N_ENC = L("ENC", "Enclosure, 3D-printed PETG, front + stepped back + tray, 57 x 120 mm, 33 mm at the "
+              "pod, 12 mm above (~38 g)", "", "", "",
+              "", "own printer", 0.90, 0.65, 1, "estimate",
+              "enclosure/SR-16N/*.stl, rev D; the back shell prints with supports under the shelf")
+# SR-16 minus the keys, wake diodes, perfboard and key caps, with the narrower shell.
+SR16N_LINES = [SR16N_ENC if l[0] == "ENC" else l for l in SR16_LINES
+               if l[0] not in ("KEY", "DIO", "PRF", "CAP")]
+# SR-16N plus a microSD breakout on the panel's SPI bus, in its own shell.
+SR16SD_ENC = L("ENC", "Enclosure, 3D-printed PETG, front + stepped back + tray with card fin, 57 x 120 mm, "
+               "33 mm at the pod, 12 mm above (~39 g)", "", "", "",
+               "", "own printer", 0.90, 0.65, 1, "estimate",
+               "enclosure/SR-16SD/*.stl, rev D; the back shell prints with supports under the shelf")
+SR16SD_LINES = [SR16SD_ENC if l[0] == "ENC" else l for l in SR16N_LINES] + [
+    L("SD", "microSD breakout, 3 V, SPI (Adafruit 4682, 25.4 x 22.8 x 3.5 mm)", "Adafruit", "4682", "", "",
+      "Adafruit 4682", 3.50, 2.80, 1, "vendor",
+      "Adafruit $3.50, $2.80 at 100, in stock 2026-11-25; no regulator or level shifter, which is right "
+      "for a 3.3 V XIAO. Stands on edge in the pod"),
+    L("CARD", "microSD card, 8 to 32 GB, FAT32", "", "", "", "", "Amazon/Ali", 4.00, 2.50, 1, "estimate",
+      "any card; a zine is 30 to 100 KB, so the smallest card you can buy holds thousands"),
+    L("WIRE", "30 AWG wire, 6 x 40 mm (3V3, GND, SCK, MOSI, MISO, CS)", "", "", "", "", "", 0.10, 0.05, 1,
+      "estimate", ""),
+]
+
+
+def sr16_notes(width):
+    """Notes that hold for both SR-16 builds."""
+    return [
+        "Battery: Seeed's wiki for the driver board (114993558) lists a built-in charging IC, a JST 2-pin "
+        "battery connector and a battery power switch. The cell plugs into the driver board's JST and "
+        "the driver board's switch disconnects it; there is no separate slide switch. Check the plug and "
+        "its polarity against the board. The switch is about 14 mm inside the shell's right wall, behind "
+        "a window: work it with a toothpick.",
+        "Battery sense, MEASURE: the XIAO ESP32-C5 has its own (GPIO6, enabled by GPIO26), but it reads "
+        "the XIAO's own battery pads. Whether it sees a cell plugged into the driver board's JST is "
+        "unverified.",
+        "Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 "
+        "(240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.",
+        "RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm "
+        "and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its "
+        "RESE jumper (0.47 ohm).",
+        f"Size: the panel is the bare glass, 53 x 93 x 1 mm (Good Display's GDEY037T03 drawing); the "
+        f"{width} mm width below follows from it.",
+        "Ribbon: the panel's 10 mm tail does not reach the driver board. It folds once at the glass edge "
+        "into the coupler (FFX) on the back of the glass, and the 60 mm jumper (FFC) carries on to the "
+        "driver board. Check the run with a meter, tail pad to driver-board pad, before power.",
+        "USB-C: the port sits 5 mm inside the bottom edge at the end of a 14 mm channel that is open to "
+        "the back, so it does not have to line up with a hole.",
+        "Thickness: the first build measured 27 mm from the driver board's pin tips to the top of the "
+        "XIAO's USB-C (XIAO on long pins), which makes the pod 33 mm. Seeed's models put a XIAO on "
+        "standard pins at 14.4 mm, for a pod of about 20 mm; set drv_stack in "
+        "enclosure/make_enclosure.py and rerun.",
+        "Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes "
+        "about twice the page turns; the battery figures assume the same 300 turns a day as the others.",
+    ]
+
+
 variant("SR-16", "SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass",
         "The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's "
         "XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, "
-        "half the width of SR-1. No custom PCB; hand-wired keys as on SR-1D.",
-        [L("MCU", "XIAO ESP32-C5 (Wi-Fi 6 2.4/5 GHz, BLE 5, charger on board)", "Seeed", "", "", "",
-           "Seeed 100010048", 6.90, 6.50, 1, "vendor", "Seeed $6.90 (2026-11-09); RobotShop pre-soldered $8.31"),
-         L("DRV", "ePaper Driver Board for XIAO V2 (24-pin SPI, boost)", "Seeed", "", "", "",
-           "Seeed 114993558", 5.99, 4.90, 1, "vendor",
-           "RESE fixed at 0.47 ohm, the value Elecrow's own 3.7in CrowPanel uses with this panel"),
-         L("EPD", "3.7in e-paper 240x416 B/W, UC8253, partial refresh, 24-pin FPC (Elecrow DIE04037S; "
-           "Good Display GDEY037T03 class), panel 53 x 93 x 1 mm", "Elecrow", "", "", "",
-           "Elecrow DIE04037S", 11.90, 8.00, 1, "vendor",
-           "Elecrow $11.90 in stock 2026-11-10; same order as SR-15's board"),
-         L("KEY", "Tact switch 6x6 mm THT (PREV, MENU, NEXT)", "Omron", "B3F-1000",
-           "SW400-ND", "653-B3F-1000", "", 0.35, 0.12, 3, "estimate", "on the long right edge"),
-         L("DIO", "Schottky diode 1N5817, any-key wake line", "Diodes Inc", "1N5817-T", "", "", "",
-           0.15, 0.05, 3, "estimate", "Schottky, not 1N4148: the drop must stay under the C5's low threshold"),
-         L("PWR", "Slide switch, battery disconnect", "C&K", "JS102011SAQN",
-           "401-2000-ND", "611-JS102011SAQN", "", 0.45, 0.20, 1, "estimate", ""),
-         L("PRF", "Perfboard scrap + 30 AWG wire", "", "", "", "", "", 0.50, 0.20, 1, "estimate", ""),
-         bat(1200, "603450", 4.80, 2.80),
-         L("ENC", "Enclosure, 3D-printed PETG, front + back shell, 64 x 114 x 17 mm (~25 g)", "", "", "",
-           "", "own printer", 0.70, 0.50, 1, "estimate",
-           "enclosure/SR-16/*.stl; measure the panel and driver stack first: see notes"),
-         L("CAP", "Key caps (PREV, MENU, NEXT), printed PETG with the shell", "", "", "", "", "own printer",
-           0.03, 0.01, 1, "estimate", ""),
-         ENCLOSURE[2],
-         L("HW", "M2x6 pan-head thread-forming screws for plastic, 4", "", "", "", "", "Amazon/Ali", 0.30, 0.10, 1,
-           "estimate", "self-tap into the printed bosses; no inserts (the bosses are too small for them)"),
-         LANYARD],
-        ["Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. "
-         "The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys "
-         "also go to D4, D5 and D9 so the firmware can tell them apart.",
-         "Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 "
-         "(240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.",
-         "RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm "
-         "and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its "
-         "RESE jumper (0.47 ohm).",
-         "Size: the listing gives a 53 x 93 x 1 mm panel but also a 67 x 93.4 x 2.6 mm 'PCB size' and "
-         "50 g, so it may come on a carrier board. Measure one before printing; the 64 mm width below "
-         "assumes the bare panel.",
-         "Thickness: the driver board takes the XIAO in a socket, so the stack behind the glass is about "
-         "12.5 mm and the shell 16.8 mm. Soldering the XIAO flat to the driver board (no socket) brings the "
-         "stack to ~6.5 mm and the pass to ~12.5 mm; set drv_stack in enclosure/make_enclosure.py and rerun.",
-         "Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes "
-         "about twice the page turns; the battery figures assume the same 300 turns a day as the others."],
-        dims="64 x 114 x 17", grams=80, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        "half the width of SR-1. No custom PCB; three hand-wired keys. SR-16N is the same pass "
+        "without the keys.",
+        SR16_LINES,
+        ["Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. Keys: "
+         "PREV = D4, MENU = D7, NEXT = D9. D5 stays free: another Seeed breakout uses it for BUSY. "
+         "With the C5, the any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key.",
+         "XIAO ESP32-S3 option: the same firmware runs on a XIAO ESP32-S3 in place of the C5 (2.4 GHz "
+         "only). On the S3 the keys wake the pass directly, so the three Schottky diodes are only "
+         "needed with the C5. The BOM and prices here are for the C5.",
+         *sr16_notes(64)],
+        dims="64 x 120 x 33 (13 above the pod)", grams=95, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
         sd="no", usb="charge, console, Web Serial loader")
+
+variant("SR-16N", "SR-16N Setlist, no keys: SR-16 without the key column, turned from the phone",
+        "SR-16 with no keys on it: the same panel, driver board, XIAO ESP32-C5 and cell in a shell "
+        "7 mm narrower. Pages turn from the phone app over Bluetooth (which also picks the zine), on "
+        "an auto-turn timer, or with the XIAO's own BOOT button as a single next-page button. No "
+        "keys, wake diodes, perfboard or key caps, so nothing is hand-wired.",
+        SR16N_LINES,
+        ["Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. Nothing else "
+         "is wired.",
+         "Waking: there is no key wake. The pass wakes on a timer (the auto-turn interval, or a periodic "
+         "Bluetooth check-in so the phone can reach it), so standby is not free as it is on SR-16. The "
+         "battery figures assume a 4 s check-in with the radio advertising every 5 minutes: see "
+         "power/README.md.",
+         "BOOT button: reached with a paperclip through a 1.8 mm pinhole in the back shell, placed from "
+         "Seeed's KiCad board for the XIAO and its STEP model of the driver board.",
+         "XIAO ESP32-S3 option: the same firmware runs on a XIAO ESP32-S3 in place of the C5 (2.4 GHz "
+         "only). The BOM and prices here are for the C5.",
+         *sr16_notes(57)],
+        dims="57 x 120 x 33 (12 above the pod)", grams=90, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        sd="no", usb="charge, console, Web Serial loader")
+
+variant("SR-16SD", "SR-16SD Setlist, card: SR-16N with a microSD card in the bottom edge",
+        "SR-16N with a microSD breakout wired to the panel's SPI bus, so zines live on a card "
+        "you can pull and fill on a computer; the 8 MB of flash holds about 15. The card goes in "
+        "through the bottom edge, next to the USB-C channel. Six wires to solder. The firmware for "
+        "the card on this board is not written yet.",
+        SR16SD_LINES,
+        ["Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The card "
+         "shares SCK (D8) and MOSI (D10) and adds MISO = D9 and CS = D7, plus 3V3 and GND, soldered to "
+         "the driver board's pad row. D9 is NEXT on SR-16, so a card and keys together need NEXT moved "
+         "to D5 and are not drawn.",
+         "Firmware: not written. SR-15's card code (store_sd.c) uses a bus of its own; here the card "
+         "has to share the panel's SPI bus. Until then this variant runs the SR-16N firmware from flash.",
+         "Standby, MEASURE: the breakout has no power switch, and an idle card draws roughly 0.1 to "
+         "0.3 mA, which would set the standby time. If that is too much, switch the card's 3V3 with a "
+         "load switch on D6.",
+         "Breakout, MEASURE: 25.4 x 22.8 x 3.5 mm is Adafruit's overall figure. Which edge the card "
+         "enters and how far it stands proud are assumed (sd in enclosure/make_enclosure.py).",
+         "Waking and BOOT: as SR-16N.",
+         "XIAO ESP32-S3 option: as SR-16N.",
+         *sr16_notes(57)],
+        dims="57 x 120 x 33 (12 above the pod)", grams=95, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        sd="yes", usb="charge, console, Web Serial loader")
 
 
 # ---------------------------------------------------------------- availability
@@ -801,7 +911,7 @@ def write_availability(summary):
     for k, (r, where, mit) in order:
         if k not in used:
             continue
-        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBCD")), x)))
+        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBCDNS")), x)))
         out.append(f"| {k} | **{r}** | {where} | {mit or '—'} | {vs} |")
     out += ["", "Changes made after this check: Seeed 105990172 (discontinued) became 114993558; "
             "MFRC522 (EOL) became CLRC663 plus; ESP32-C5-WROOM-1-N8R4 (not an orderable code) "
@@ -832,7 +942,7 @@ def main():
         total, t100 = write(key, v)
         summary.append((key, v, total, total / BUILDS, t100))
     out = ["# SubverseReader REV1 BOMs", "",
-           "Bills of materials for the sixteen SubverseReader variants (nineteen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every "
+           "Bills of materials for the sixteen SubverseReader variants (twenty-one BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds; SR-16N is SR-16 without keys and SR-16SD is SR-16N with a microSD card). `make_bom.py` generates every "
            "file here; edit it, not the CSVs.", "",
            "**Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are "
            "seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the "

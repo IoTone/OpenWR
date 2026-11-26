@@ -1,0 +1,63 @@
+SR-16SD Setlist, card enclosure
+
+Outer size 57.0 x 119.5 x 32.8 mm (W x H incl. lanyard ear x T)
+Z: back -31.40, split -1.50, front 1.40
+Screws: 4x M2 pan head, thread-forming for plastic, through the back into the front bosses: M2x6 at the top (shelf), M2x6 at the bottom down the pod's deep counterbores
+
+front          57.0 x  119.5 x   2.9 mm on the bed,  5.68 cm3 (~ 7.2 g PETG solid), non-manifold edges 0
+back           57.0 x  119.5 x  29.9 mm on the bed, 21.82 cm3 (~27.7 g PETG solid), non-manifold edges 0
+tray           53.2 x   48.5 x  24.4 mm on the bed,  3.38 cm3 (~ 4.3 g PETG solid), non-manifold edges 0
+
+Interference (part vs reference electronics, mm3; 0 = clear). References: box stand-ins defined in this script.
+  front  x ref-glass              0.01
+  front  x ref-driver-pcb         0.00
+  front  x ref-xiao               0.00
+  front  x ref-usb-c              0.00
+  front  x ref-usb-plug           0.00
+  front  x ref-drv-switch         0.00
+  front  x ref-drv-jst            0.00
+  front  x ref-drv-fpc            0.00
+  front  x ref-cell               0.00
+  front  x ref-coupler            0.00
+  front  x ref-sd-board           0.00
+  front  x ref-sd-card            0.00
+  back   x ref-glass              0.00
+  back   x ref-driver-pcb         0.00
+  back   x ref-xiao               0.00
+  back   x ref-usb-c              0.00
+  back   x ref-usb-plug           0.00
+  back   x ref-drv-switch         0.00
+  back   x ref-drv-jst            0.00
+  back   x ref-drv-fpc            0.00
+  back   x ref-cell               0.00
+  back   x ref-coupler            0.00
+  back   x ref-sd-board           0.00
+  back   x ref-sd-card            0.00
+
+Assembly:
+- Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm double-sided tape, with its ribbon tail at the TOP (set `2 epd-rot!` on the pass).
+- Tail: fold it once over the top edge of the glass, in its marked bending area (0.5 to 2.5 mm past the edge), so its last 7 mm lie on the back with the gold fingers facing the back.
+- Coupler (20 x 12 mm, 24-pin 0.5 mm, top-contact connectors, e.g. Adafruit 4524): on the back of the glass on foam tape, connectors facing the back, its top edge 4 mm below the top of the glass, between the two fences; the back shell's pads press it down. The tail goes in its top connector, the jumper in its bottom one.
+- Jumper: 24-pin 0.5 mm FFC, 60 mm, same-side contacts (type A), fingers facing the back at both ends. From the coupler it runs down OVER the cell, through the doorway in the step, into the driver board's (top-contact) connector. The run must be a straight extension: each conductor stays on its own side. Check that with a meter, tail pad to driver-board pad, before power: this ribbon carries the panel's high voltages.
+- Tray: 1 mm plate on the back of the glass in the pod, pegs up. The driver board stands on it on its pin tips, between the pegs and the corner stops, component side to the back, USB-C toward the bottom edge.
+- USB-C: the port is 5 mm inside the bottom edge, at the end of a channel 14 mm wide that is open to the back. Lay the plug in the channel and push. The channel reaches 4 mm further toward the glass than a plug needs, so a shorter stack still lines up.
+- Cell: 603450 lying across the shelf against the glass, plugged into the driver board's JST. The driver board's own switch disconnects it.
+- Thickness: 32.8 mm over the pod (bottom 52 mm), 11.6 mm over the shelf. The pod is as deep as the measured 27 mm stack. Seeed's models put a XIAO on standard short pins at 14.4 mm, which would make the pod about 20 mm: set drv_stack and rerun.
+- Antenna: the XIAO ESP32-C5's stick-on antenna (40 x 20 mm, 80 mm lead) goes on the inside of the pod's right wall (seen from the front), toward the back, clear of the switch window.
+- microSD: the breakout (22.8 x 25.4 mm, e.g. Adafruit 4682) stands on edge on the tray, left of the driver board seen from the front, socket toward the left wall, card end against the bottom wall, stuck to the tray's fin with 0.5 mm foam tape. The card goes in through the slot in the bottom edge, 9.2 mm from the left side. Wires to the driver board's pad row: 3V3, GND, SCK = D8, MOSI = D10, MISO = D9, CS = D7.
+- No keys: pages turn from the phone over Bluetooth, on the auto-turn timer, or with the XIAO's BOOT button as a single next-page button.
+- BOOT pinhole: d1.8 mm in the back of the pod, 4.4 mm right of the centreline seen from the front (mirrored when you look at the back) and 26.9 mm above the bottom edge. Press with a paperclip.
+- Battery-switch window: 10 x 5 mm in the right wall (seen from the front), centred 37.2 mm above the bottom edge. The switch is about 14 mm inside: work it with a toothpick.
+
+Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed). Back shell back down: the pod sits on the bed and the shelf hangs 21.2 mm above it, so turn on supports touching the bed only (they come off the flat shelf back cleanly). Tray plate down.
+
+MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py.
+- glass, aa_border, tail: from Good Display's GDEY037T03 drawing, not from the part
+- cell: 603450 pouch, swells to about 6.3 mm
+- drv, drv_pcb_z, drv_switch: from Seeed's STEP model of the driver board, not from the part
+- drv_stack: 27 mm measured by ruler with the XIAO ESP32-C5 on long pins; the models give 14.4 mm on standard pins. Re-measure for another XIAO
+- usb_over: USB-C 2.5 mm past the board's end from the two board models (about 4 by ruler); the channel takes either
+- coupler: FFC coupler board size, assumed 20 x 12 x 3.6, and that the tail reaches its mouth (tail_reach)
+- boot_pin: from Seeed's KiCad board for the XIAO and the driver board's STEP model
+- sd: the breakout's size is Adafruit's overall figure; which edge the card enters, where along it, how far the card stands proud and the socket height are assumed
+- battery sense: the XIAO ESP32-C5 reads its own battery pads (GPIO6, enabled by GPIO26); whether that sees a cell on the driver board's JST is unverified

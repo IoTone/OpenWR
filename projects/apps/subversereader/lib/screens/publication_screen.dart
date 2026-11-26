@@ -45,11 +45,23 @@ class _PublicationScreenState extends State<PublicationScreen> {
         _pack = null;
         _previews = <Uint8List>[];
       });
-      final Acquisition a = widget.pub.acquisition!;
-      final Uint8List src = await download(a.href);
-      setState(() => _stage = 'Rendering for ${p.label}…');
-      final List<img.Image> grey = await renderSource(src, a.kind, p,
-          onPage: (int d, int t) => setState(() => _progress = d / t));
+      // A catalog link can be dead or a file unreadable: try each copy, best first.
+      final List<Acquisition> copies =
+          widget.pub.copies.isNotEmpty ? widget.pub.copies : <Acquisition>[widget.pub.acquisition!];
+      late Uint8List src;
+      late List<img.Image> grey;
+      for (int i = 0; i < copies.length; i++) {
+        try {
+          setState(() => _stage = i == 0 ? 'Downloading…' : 'That copy is missing. Trying another…');
+          src = await download(copies[i].href);
+          setState(() => _stage = 'Rendering for ${p.label}…');
+          grey = await renderSource(src, copies[i].kind, p,
+              onPage: (int d, int t) => setState(() => _progress = d / t));
+          break;
+        } catch (_) {
+          if (i == copies.length - 1) rethrow;
+        }
+      }
       final List<PackPage> pages = <PackPage>[for (final img.Image g in grey) toOneBit(g, p)];
       final Uint8List pack = buildPack(
           profile: p,

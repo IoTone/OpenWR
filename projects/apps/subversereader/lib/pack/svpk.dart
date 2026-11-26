@@ -8,9 +8,12 @@
 //     u8 orientation, u16 flags, u32 pages, u32 table offset, u32 0,
 //     sha256[32], title[64], author[64], source[64], u32 unix time
 //   table: per page u32 offset, u32 length, u8 compression (0 raw,
-//     1 PackBits), u8 hint (0 text, 1 image), u16 0
+//     1 PackBits, 2 DEFLATE with no zlib header), u8 hint (0 text, 1 image),
+//     u16 0. Each page is stored whichever way is smallest: DEFLATE is about
+//     40% smaller than PackBits on real zines.
 //   pages: rows top to bottom, MSB first, 1 = black ink
 import 'dart:convert';
+import 'dart:io' show ZLibCodec;
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart' show sha256;
@@ -28,6 +31,14 @@ class PanelProfile {
   static const PanelProfile sr15 = PanelProfile('sr15', 300, 400, 'SR-15 Dial Pass (4.2in, 300×400)');
   static const PanelProfile sr16 = PanelProfile('sr16', 240, 416, 'SR-16 Setlist (3.7in, 240×416)');
   static const List<PanelProfile> all = <PanelProfile>[sr15, sr16];
+
+  /// The profile a pass names in its sr-info line ("sr16"), if we know it.
+  static PanelProfile? byId(String id) {
+    for (final PanelProfile p in all) {
+      if (p.id == id) return p;
+    }
+    return null;
+  }
 }
 
 /// One 1-bit page: [bits] is stride*height bytes, 1 = black.
@@ -63,6 +74,9 @@ Uint8List packBits(Uint8List data) {
   return out.toBytes();
 }
 
+/// RFC 1951 with no wrapper: what the pass's inflate reads.
+Uint8List deflateRaw(Uint8List data) => Uint8List.fromList(ZLibCodec(raw: true, level: 9).encode(data));
+
 Uint8List _fixed(String? s, int n) {
   final Uint8List out = Uint8List(n);
   List<int> b = utf8.encode(s ?? '');
@@ -88,8 +102,13 @@ Uint8List buildPack({
 }) {
   final List<(Uint8List, int, int)> blobs = <(Uint8List, int, int)>[];
   for (final PackPage p in pages) {
-    final Uint8List comp = packBits(p.bits);
-    blobs.add(comp.length < p.bits.length ? (comp, 1, p.image ? 1 : 0) : (p.bits, 0, p.image ? 1 : 0));
+    final int hint = p.image ? 1 : 0;
+    (Uint8List, int, int) best = (p.bits, 0, hint);
+    final Uint8List pb = packBits(p.bits);
+    if (pb.length < best.$1.length) best = (pb, 1, hint);
+    final Uint8List df = deflateRaw(p.bits);
+    if (df.length < best.$1.length) best = (df, 2, hint);
+    blobs.add(best);
   }
   const int hdr = 256;
   final int tableOff = hdr;

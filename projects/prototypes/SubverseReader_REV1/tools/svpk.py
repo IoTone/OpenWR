@@ -9,6 +9,7 @@ tested without the phone app (design doc section 12, step 2).
     svpk.py build https://spicemine.iotj.cc/opds/zines -o /Volumes/SDCARD/packs
     svpk.py build zine.pdf -o packs/                        # a local PDF or CBZ
     svpk.py show  packs/zine-joblow.svpk --png out/         # check a pack, dump pages
+    svpk.py thin  zine-read.pdf -o zine-thin.pdf            # a small reading copy for the catalog
 
 Needs pypdfium2 and Pillow:  uv pip install pypdfium2 pillow
 
@@ -31,11 +32,12 @@ Pack format v0 (little-endian; the firmware reads it with a table lookup):
     188 char[64]  source URL (truncated)
     252 u32      unix time the pack was built
   page table: page count x 12 bytes
-    u32 offset, u32 length, u8 compression (0 raw, 1 PackBits), u8 hint (0 text, 1 image), u16 0
+    u32 offset, u32 length, u8 compression (0 raw, 1 PackBits, 2 DEFLATE), u8 hint (0 text, 1 image), u16 0
+    DEFLATE is a bare RFC 1951 stream (no zlib header): about 40% smaller than PackBits on real zines.
   pages: rows top to bottom, MSB first, 1 = black ink, (width+7)/8 bytes a row
 """
 
-import argparse, hashlib, io, json, os, re, struct, sys, time, urllib.parse, urllib.request, zipfile
+import argparse, hashlib, io, json, os, re, struct, sys, time, urllib.parse, urllib.request, zipfile, zlib
 
 PROFILES = {
     # name: (width, height, bpp, orientation, description)
@@ -89,6 +91,18 @@ def best_acquisition(pub):
         return 9
     acq.sort(key=rank)
     return acq[0] if acq and rank(acq[0]) < 9 else None
+
+
+def acquisitions(pub):
+    """Every copy this builder can read, best first: a dead link falls through to the next."""
+    best, rest = best_acquisition(pub), []
+    for l in pub.get("links", []):
+        t = l.get("type", "")
+        if "acquisition" in l.get("rel", "") and l is not best and (t == "application/pdf" or "comicbook" in t):
+            rest.append(l)
+    # after the best: comic copy, then any PDF, print sheets last
+    rest.sort(key=lambda l: (0 if "comicbook" in l.get("type", "") else 2 if "print" in l.get("title", "").lower() else 1))
+    return ([best] if best else []) + rest
 
 
 # ---------------------------------------------------------------- rendering
@@ -166,6 +180,17 @@ def packbits(data):
     return bytes(out)
 
 
+def deflate(data):
+    c = zlib.compressobj(9, zlib.DEFLATED, -15)
+    return c.compress(data) + c.flush()
+
+
+def page_bytes(blob, comp, size):
+    if comp == 1: return unpackbits(blob, size)
+    if comp == 2: return zlib.decompress(blob, -15)
+    return blob
+
+
 def unpackbits(data, size):
     out, i = bytearray(), 0
     while len(out) < size and i < len(data):
@@ -189,8 +214,8 @@ def write_pack(path, profile, pages, title, author, source_url, sha):
     blobs = []
     for img, hint in pages:
         raw = pack_bits(img)
-        comp = packbits(raw)
-        blobs.append((comp, 1, hint) if len(comp) < len(raw) else (raw, 0, hint))
+        best = min(((raw, 0), (packbits(raw), 1), (deflate(raw), 2)), key=lambda c: len(c[0]))
+        blobs.append((best[0], best[1], hint))
     table_off = HDR
     off = table_off + 12 * len(blobs)
     table = b""
@@ -245,15 +270,22 @@ def cmd_build(a):
         pubs = opds_publications(src)
         print(f"{len(pubs)} publications in {src}")
         for p in pubs:
-            m, acq = p["metadata"], best_acquisition(p)
-            if not acq:
+            m, acqs = p["metadata"], acquisitions(p)
+            if not acqs:
                 print(f"  skip {m.get('title')}: no PDF or CBZ"); continue
-            data = get(urllib.parse.urljoin(src, acq["href"]))
-            kind = "cbz" if "comicbook" in acq["type"] else "pdf"
             author = ", ".join(x.get("name", "") for x in m.get("author", []))
             ident = m.get("identifier", "")
-            build_one(data, kind, a.profile, a.out, m.get("title", "untitled"), author, ident,
-                      slug(os.path.splitext(os.path.basename(urllib.parse.urlparse(ident).path))[0] or m.get("title", "")))
+            for acq in acqs:      # one bad link or bad file must not stop the rest of the catalog
+                try:
+                    data = get(urllib.parse.urljoin(src, acq["href"]))
+                    kind = "cbz" if "comicbook" in acq["type"] else "pdf"
+                    build_one(data, kind, a.profile, a.out, m.get("title", "untitled"), author, ident,
+                              slug(os.path.splitext(os.path.basename(urllib.parse.urlparse(ident).path))[0] or m.get("title", "")))
+                    break
+                except Exception as e:
+                    print(f"  {m.get('title')}: {acq.get('title') or acq['type']} failed ({e})")
+            else:
+                print(f"  skip {m.get('title')}: no copy could be read")
         return
     data = get(src) if src.startswith("http") else open(src, "rb").read()
     kind = "cbz" if src.lower().endswith(".cbz") else "pdf"
@@ -268,13 +300,51 @@ def cmd_show(a):
     stride = (p["w"] + 7) // 8
     for i, (off, ln, comp, hint, _) in enumerate(p["pages"]):
         blob = p["data"][off:off + ln]
-        raw = unpackbits(blob, stride * p["h"]) if comp == 1 else blob
-        print(f"  page {i + 1}: {ln} bytes, {'packbits' if comp else 'raw'}, {'image' if hint else 'text'}")
+        raw = page_bytes(blob, comp, stride * p["h"])
+        print(f"  page {i + 1}: {ln} bytes, {('raw', 'packbits', 'deflate')[comp]}, {'image' if hint else 'text'}")
         if a.png:
             from PIL import Image
             os.makedirs(a.png, exist_ok=True)
             Image.frombytes("1", (p["w"], p["h"]), bytes(b ^ 0xFF for b in raw)).save(
                 os.path.join(a.png, f"page{i + 1:03d}.png"))
+
+
+def cmd_thin(a):
+    """Re-render a PDF (or CBZ) as a small one: every page a grey JPEG of --long pixels on its long
+    edge. Zine scans are often 2-15 MB for eight pages; a pass shows 300 x 400 dots, and a phone
+    screen about 1200. The thin copy is what a catalog should offer as the reading copy."""
+    import pypdfium2 as pdfium
+    from PIL import Image
+    src = a.source
+    data = get(src) if src.startswith("http") else open(src, "rb").read()
+    pages = []
+    if src.lower().split("?")[0].endswith(".cbz"):
+        z = zipfile.ZipFile(io.BytesIO(data))
+        for name in sorted(n for n in z.namelist() if re.search(r"\.(png|jpe?g|webp|gif)$", n, re.I)):
+            img = Image.open(z.open(name)).convert("L")
+            s = min(1.0, a.long / max(img.size))
+            pages.append((img.resize((max(1, round(img.width * s)), max(1, round(img.height * s))), Image.LANCZOS), 150))
+    else:
+        doc = pdfium.PdfDocument(data)
+        for i in range(len(doc)):
+            pw, ph = doc[i].get_size()                  # points
+            scale = a.long / max(pw, ph)
+            img = doc[i].render(scale=scale * 2, grayscale=True).to_pil().convert("L")
+            img = img.resize((max(1, img.width // 2), max(1, img.height // 2)), Image.LANCZOS)
+            pages.append((img, img.width / (pw / 72)))  # dpi that keeps the page's paper size
+    if not pages:
+        raise SystemExit("svpk: no pages")
+    if a.bw:                                            # line art only: 1-bit, CCITT G4 inside the PDF
+        pages = [(img.point(lambda v: 255 if v > 160 else 0).convert("1", dither=Image.NONE), dpi) for img, dpi in pages]
+    out = a.out or re.sub(r"(\.pdf|\.cbz)?$", "-thin.pdf", os.path.basename(urllib.parse.urlparse(src).path), count=1)
+    pages[0][0].save(out, "PDF", save_all=True, append_images=[p for p, _ in pages[1:]],
+                     resolution=pages[0][1], quality=a.quality, optimize=True)
+    n = os.path.getsize(out)
+    if n >= len(data) and data[:5] == b"%PDF-":          # already small (vector art, type): keep it
+        open(out, "wb").write(data)
+        print(f"{out}: already small, kept as is ({len(data) / 1024:.0f} KB)")
+        return
+    print(f"{out}: {len(pages)} pages, {len(data) / 1024:.0f} KB -> {n / 1024:.0f} KB ({100 * n / len(data):.0f}%)")
 
 
 def main():
@@ -287,6 +357,12 @@ def main():
     b.add_argument("--title"); b.add_argument("--author"); b.set_defaults(fn=cmd_build)
     s = sub.add_parser("show", help="describe a pack"); s.add_argument("pack"); s.add_argument("--png")
     s.set_defaults(fn=cmd_show)
+    th = sub.add_parser("thin", help="write a small reading-copy PDF from a PDF or CBZ (file or URL)")
+    th.add_argument("source"); th.add_argument("-o", "--out")
+    th.add_argument("--long", type=int, default=1200, help="pixels on a page's long edge (default 1200)")
+    th.add_argument("--quality", type=int, default=50, help="JPEG quality (default 50)")
+    th.add_argument("--bw", action="store_true", help="1-bit pages (line art and type only; much smaller)")
+    th.set_defaults(fn=cmd_thin)
     a = ap.parse_args()
     a.fn(a)
 

@@ -1,6 +1,6 @@
 # SubverseReader REV1 BOMs
 
-Bills of materials for the sixteen SubverseReader variants (nineteen BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds). `make_bom.py` generates every file here; edit it, not the CSVs.
+Bills of materials for the sixteen SubverseReader variants (twenty-one BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds; SR-16N is SR-16 without keys and SR-16SD is SR-16N with a microSD card). `make_bom.py` generates every file here; edit it, not the CSVs.
 
 **Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the `*.digikey-import.csv` or `*.mouser-import.csv` file into the distributor's BOM tool for today's price; AliExpress, LCSC and vendor-direct lines are not in the import files.
 
@@ -30,7 +30,9 @@ Target: **$50 or less per unit.**
 | SR-14 Tap Pass, Wi-Fi build: ESP32-C5 + NFC reader, 80 x 155 mm | $261 | $52.28 | $31.92 | at volume | [`SR-14W.csv`](SR-14W.csv) |
 | SR-14 Tap Pass, tethered build: nRF52840 + NFC reader, 80 x 155 mm | $269 | $53.78 | $33.28 | at volume | [`SR-14B.csv`](SR-14B.csv) |
 | SR-15 Dial Pass: Elecrow CrowPanel 4.2in (ESP32-S3) with its thumb dial | $191 | $38.27 | $26.63 | yes | [`SR-15.csv`](SR-15.csv) |
-| SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass | $185 | $36.92 | $24.32 | yes | [`SR-16.csv`](SR-16.csv) |
+| SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass | $195 | $38.92 | $25.43 | yes | [`SR-16.csv`](SR-16.csv) |
+| SR-16N Setlist, no keys: SR-16 without the key column, turned from the phone | $184 | $36.79 | $24.66 | yes | [`SR-16N.csv`](SR-16N.csv) |
+| SR-16SD Setlist, card: SR-16N with a microSD card in the bottom edge | $222 | $44.39 | $30.01 | yes | [`SR-16SD.csv`](SR-16SD.csv) |
 
 ## Size, radios and storage
 
@@ -56,7 +58,9 @@ Dimensions are the enclosure as rendered (width x height x depth, mm). Weights a
 | SR-14W | 80 x 155 x 12.5 | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5, NFC reader + tag | yes | charge, console, Web Serial loader |
 | SR-14B | 80 x 155 x 12.5 | 95 | BLE 5 only, NFC reader + tag | yes | charge, USB drive, UF2 updates |
 | SR-15 | 94 x 124 x 13 | 150 | Wi-Fi 4 2.4 GHz, BLE 5 | yes | charge, console (CH340), Web Serial loader |
-| SR-16 | 64 x 114 x 17 | 80 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
+| SR-16 | 64 x 120 x 33 (13 above the pod) | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
+| SR-16N | 57 x 120 x 33 (12 above the pod) | 90 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | no | charge, console, Web Serial loader |
+| SR-16SD | 57 x 120 x 33 (12 above the pod) | 95 | Wi-Fi 6 2.4 + 5 GHz, BLE 5 | yes | charge, console, Web Serial loader |
 
 ## Battery
 
@@ -83,6 +87,7 @@ Stock cell (M) as in the BOM, with the thin (S) and extended (L) options. *Reade
 | SR-14B | 500 mAh, 9.5 mm | 1200 mAh, 12.5 mm | 2000 mAh, 16.5 mm | 1 yr+ | 1 yr+ | 368,675 |
 | SR-15 | 1000 mAh, 15 mm | 1200 mAh, 16 mm | 1500 mAh, 16 mm | 7 mo | 8 mo | 138,305 |
 | SR-16 | 1000 mAh, 11 mm | 1200 mAh, 12 mm | 1500 mAh, 12 mm | 10 mo | 11 mo | 161,053 |
+| SR-16N | 1000 mAh, 11 mm | 1200 mAh, 12 mm | 1500 mAh, 12 mm | 2 mo | 2 mo | 161,053 |
 
 ## SR-1 Laminate: XIAO ESP32-S3 Plus on the Seeed EE05 board + 4.2in, no custom PCB
 
@@ -297,15 +302,66 @@ Files: [`SR-15.csv`](SR-15.csv) · [`SR-15.digikey-import.csv`](SR-15.digikey-im
 
 ## SR-16 Setlist: XIAO ESP32-C5 + Elecrow 3.7in 240x416 portrait, slim pass
 
-The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, half the width of SR-1. No custom PCB; hand-wired keys as on SR-1D.
+The slim reader: a 3.7in portrait panel (Elecrow DIE04037S, UC8253, ~130 dpi) on Seeed's XIAO driver board, the size of a real backstage laminate. About half a 4.2in page of text, half the width of SR-1. No custom PCB; three hand-wired keys. SR-16N is the same pass without the keys.
 
-**64 x 114 x 17 mm · ~80 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
+**64 x 120 x 33 (13 above the pod) mm · ~95 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
 
-- Pins, as SR-1D: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key; the keys also go to D4, D5 and D9 so the firmware can tell them apart.
+- Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. Keys: PREV = D4, MENU = D7, NEXT = D9. D5 stays free: another Seeed breakout uses it for BUSY. With the C5, the any-key wake line goes to GPIO3 (MTDI, back pad) through one Schottky per key.
+- XIAO ESP32-S3 option: the same firmware runs on a XIAO ESP32-S3 in place of the C5 (2.4 GHz only). On the S3 the keys wake the pass directly, so the three Schottky diodes are only needed with the C5. The BOM and prices here are for the C5.
+- Battery: Seeed's wiki for the driver board (114993558) lists a built-in charging IC, a JST 2-pin battery connector and a battery power switch. The cell plugs into the driver board's JST and the driver board's switch disconnects it; there is no separate slide switch. Check the plug and its polarity against the board. The switch is about 14 mm inside the shell's right wall, behind a window: work it with a toothpick.
+- Battery sense, MEASURE: the XIAO ESP32-C5 has its own (GPIO6, enabled by GPIO26), but it reads the XIAO's own battery pads. Whether it sees a cell plugged into the driver board's JST is unverified.
 - Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 (240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.
 - RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its RESE jumper (0.47 ohm).
-- Size: the listing gives a 53 x 93 x 1 mm panel but also a 67 x 93.4 x 2.6 mm 'PCB size' and 50 g, so it may come on a carrier board. Measure one before printing; the 64 mm width below assumes the bare panel.
-- Thickness: the driver board takes the XIAO in a socket, so the stack behind the glass is about 12.5 mm and the shell 16.8 mm. Soldering the XIAO flat to the driver board (no socket) brings the stack to ~6.5 mm and the pass to ~12.5 mm; set drv_stack in enclosure/make_enclosure.py and rerun.
+- Size: the panel is the bare glass, 53 x 93 x 1 mm (Good Display's GDEY037T03 drawing); the 64 mm width below follows from it.
+- Ribbon: the panel's 10 mm tail does not reach the driver board. It folds once at the glass edge into the coupler (FFX) on the back of the glass, and the 60 mm jumper (FFC) carries on to the driver board. Check the run with a meter, tail pad to driver-board pad, before power.
+- USB-C: the port sits 5 mm inside the bottom edge at the end of a 14 mm channel that is open to the back, so it does not have to line up with a hole.
+- Thickness: the first build measured 27 mm from the driver board's pin tips to the top of the XIAO's USB-C (XIAO on long pins), which makes the pod 33 mm. Seeed's models put a XIAO on standard pins at 14.4 mm, for a pod of about 20 mm; set drv_stack in enclosure/make_enclosure.py and rerun.
 - Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes about twice the page turns; the battery figures assume the same 300 turns a day as the others.
 
 Files: [`SR-16.csv`](SR-16.csv) · [`SR-16.digikey-import.csv`](SR-16.digikey-import.csv) · [`SR-16.mouser-import.csv`](SR-16.mouser-import.csv)
+
+## SR-16N Setlist, no keys: SR-16 without the key column, turned from the phone
+
+SR-16 with no keys on it: the same panel, driver board, XIAO ESP32-C5 and cell in a shell 7 mm narrower. Pages turn from the phone app over Bluetooth (which also picks the zine), on an auto-turn timer, or with the XIAO's own BOOT button as a single next-page button. No keys, wake diodes, perfboard or key caps, so nothing is hand-wired.
+
+**57 x 120 x 33 (12 above the pod) mm · ~90 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: no · USB-C: charge, console, Web Serial loader**
+
+- Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. Nothing else is wired.
+- Waking: there is no key wake. The pass wakes on a timer (the auto-turn interval, or a periodic Bluetooth check-in so the phone can reach it), so standby is not free as it is on SR-16. The battery figures assume a 4 s check-in with the radio advertising every 5 minutes: see power/README.md.
+- BOOT button: reached with a paperclip through a 1.8 mm pinhole in the back shell, placed from Seeed's KiCad board for the XIAO and its STEP model of the driver board.
+- XIAO ESP32-S3 option: the same firmware runs on a XIAO ESP32-S3 in place of the C5 (2.4 GHz only). The BOM and prices here are for the C5.
+- Battery: Seeed's wiki for the driver board (114993558) lists a built-in charging IC, a JST 2-pin battery connector and a battery power switch. The cell plugs into the driver board's JST and the driver board's switch disconnects it; there is no separate slide switch. Check the plug and its polarity against the board. The switch is about 14 mm inside the shell's right wall, behind a window: work it with a toothpick.
+- Battery sense, MEASURE: the XIAO ESP32-C5 has its own (GPIO6, enabled by GPIO26), but it reads the XIAO's own battery pads. Whether it sees a cell plugged into the driver board's JST is unverified.
+- Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 (240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.
+- RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its RESE jumper (0.47 ohm).
+- Size: the panel is the bare glass, 53 x 93 x 1 mm (Good Display's GDEY037T03 drawing); the 57 mm width below follows from it.
+- Ribbon: the panel's 10 mm tail does not reach the driver board. It folds once at the glass edge into the coupler (FFX) on the back of the glass, and the 60 mm jumper (FFC) carries on to the driver board. Check the run with a meter, tail pad to driver-board pad, before power.
+- USB-C: the port sits 5 mm inside the bottom edge at the end of a 14 mm channel that is open to the back, so it does not have to line up with a hole.
+- Thickness: the first build measured 27 mm from the driver board's pin tips to the top of the XIAO's USB-C (XIAO on long pins), which makes the pod 33 mm. Seeed's models put a XIAO on standard pins at 14.4 mm, for a pod of about 20 mm; set drv_stack in enclosure/make_enclosure.py and rerun.
+- Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes about twice the page turns; the battery figures assume the same 300 turns a day as the others.
+
+Files: [`SR-16N.csv`](SR-16N.csv) · [`SR-16N.digikey-import.csv`](SR-16N.digikey-import.csv) · [`SR-16N.mouser-import.csv`](SR-16N.mouser-import.csv)
+
+## SR-16SD Setlist, card: SR-16N with a microSD card in the bottom edge
+
+SR-16N with a microSD breakout wired to the panel's SPI bus, so zines live on a card you can pull and fill on a computer; the 8 MB of flash holds about 15. The card goes in through the bottom edge, next to the USB-C channel. Six wires to solder. The firmware for the card on this board is not written yet.
+
+**57 x 120 x 33 (12 above the pod) mm · ~95 g · Wi-Fi 6 2.4 + 5 GHz, BLE 5 · microSD: yes · USB-C: charge, console, Web Serial loader**
+
+- Pins: the driver board takes D0 RST, D1 CS, D2 BUSY, D3 DC, D8 SCK, D10 MOSI. The card shares SCK (D8) and MOSI (D10) and adds MISO = D9 and CS = D7, plus 3V3 and GND, soldered to the driver board's pad row. D9 is NEXT on SR-16, so a card and keys together need NEXT moved to D5 and are not drawn.
+- Firmware: not written. SR-15's card code (store_sd.c) uses a bus of its own; here the card has to share the panel's SPI bus. Until then this variant runs the SR-16N firmware from flash.
+- Standby, MEASURE: the breakout has no power switch, and an idle card draws roughly 0.1 to 0.3 mA, which would set the standby time. If that is too much, switch the card's 3V3 with a load switch on D6.
+- Breakout, MEASURE: 25.4 x 22.8 x 3.5 mm is Adafruit's overall figure. Which edge the card enters and how far it stands proud are assumed (sd in enclosure/make_enclosure.py).
+- Waking and BOOT: as SR-16N.
+- XIAO ESP32-S3 option: as SR-16N.
+- Battery: Seeed's wiki for the driver board (114993558) lists a built-in charging IC, a JST 2-pin battery connector and a battery power switch. The cell plugs into the driver board's JST and the driver board's switch disconnects it; there is no separate slide switch. Check the plug and its polarity against the board. The switch is about 14 mm inside the shell's right wall, behind a window: work it with a toothpick.
+- Battery sense, MEASURE: the XIAO ESP32-C5 has its own (GPIO6, enabled by GPIO26), but it reads the XIAO's own battery pads. Whether it sees a cell plugged into the driver board's JST is unverified.
+- Controller is a UC8253 (UltraChip), not a Solomon part. GxEPD2 driver: GxEPD2_370_GDEY037T03 (240x416, partial ~350 ms, full ~1.5 s per the driver). Same 24-pin pinout as the other panels.
+- RESE: Elecrow's CrowPanel 3.7in schematic (GitHub, Elecrow-RD) drives this panel with 0.47 ohm and an Si1308EDL, the same as Seeed's driver board. If you use a CFA-10084 instead, short its RESE jumper (0.47 ohm).
+- Size: the panel is the bare glass, 53 x 93 x 1 mm (Good Display's GDEY037T03 drawing); the 57 mm width below follows from it.
+- Ribbon: the panel's 10 mm tail does not reach the driver board. It folds once at the glass edge into the coupler (FFX) on the back of the glass, and the 60 mm jumper (FFC) carries on to the driver board. Check the run with a meter, tail pad to driver-board pad, before power.
+- USB-C: the port sits 5 mm inside the bottom edge at the end of a 14 mm channel that is open to the back, so it does not have to line up with a hole.
+- Thickness: the first build measured 27 mm from the driver board's pin tips to the top of the XIAO's USB-C (XIAO on long pins), which makes the pod 33 mm. Seeed's models put a XIAO on standard pins at 14.4 mm, for a pod of about 20 mm; set drv_stack in enclosure/make_enclosure.py and rerun.
+- Text per page: ~110-130 words at reading size (a 4.2in page holds ~250), so a book takes about twice the page turns; the battery figures assume the same 300 turns a day as the others.
+
+Files: [`SR-16SD.csv`](SR-16SD.csv) · [`SR-16SD.digikey-import.csv`](SR-16SD.digikey-import.csv) · [`SR-16SD.mouser-import.csv`](SR-16SD.mouser-import.csv)

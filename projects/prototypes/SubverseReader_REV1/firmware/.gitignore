@@ -1,5 +1,7 @@
 # Elecrow's factory image: not ours to publish (no licence). Kept locally to restore a board.
 backup/
-sr15/.pio/
-sr15/sdkconfig.*
-!sr15/sdkconfig.defaults
+pass/.pio/
+pass/sdkconfig.sr15
+pass/sdkconfig.sr16_s3
+pass/sdkconfig.sr16_c5
+pass/dependencies.lock

@@ -1,6 +1,6 @@
-"""Printable shells for SR-15 Dial Pass and SR-16 Setlist.
+"""Printable shells for SR-15 Dial Pass, SR-16 Setlist and SR-16N Setlist, no keys.
 
-    /Applications/Blender.app/Contents/MacOS/Blender -b -P make_enclosure.py -- [SR-15] [SR-16] [--ref DIR]
+    /Applications/Blender.app/Contents/MacOS/Blender -b -P make_enclosure.py -- [SR-15] [SR-16] [SR-16N] [--ref DIR]
 
 Writes enclosure/<variant>/:
     <variant>-front.stl, <variant>-back.stl, <variant>-keycap.stl ...  print-oriented, millimetres
@@ -49,24 +49,96 @@ SR15 = dict(
 
 # ----------------------------------------------------------------------------------- SR-16
 # Bare Elecrow 3.7in panel (DIE04037S) on Seeed's ePaper Driver Board for XIAO V2 with a XIAO
-# ESP32-C5, three B3F-1000 keys on the right edge, 603450 cell. Nothing here comes from a
+# ESP32-C5 (or a XIAO ESP32-S3: same footprint, same shell), three B3F-1000 keys on the right
+# edge (PREV = D4, MENU = D7, NEXT = D9), 603450 cell plugged into the driver board's JST
+# connector and switched by the driver board's own battery switch. Nothing here comes from a
 # drawing: MEASURE every part before the final print.
 SR16 = dict(
     key="SR-16", name="Setlist",
-    glass=(53.0, 93.0, 1.0),             # MEASURE: listing 53 x 93 x 1 (Elecrow STEP 53 x 93.8 incl. FPC)
-    # Active area 47.04 x 81.54. MEASURE: borders assumed 2.98 left/right, 3.0 top, 8.46 FPC (bottom).
-    aa_border=(2.98, 2.98, 3.0, 8.46),   # left, right, top, bottom
-    cell=(34.0, 50.0, 6.0),              # 603450 W x H x T (MEASURE: pouch cells swell to ~6.3)
-    drv=(43.0, 26.0),                    # MEASURE: RobotShop lists 43 x 26 x 8 mm
-    drv_stack=12.5,                      # MEASURE: driver board + XIAO socket + XIAO + USB-C
-    usb_z_from_back=1.8,                 # MEASURE: USB-C centre above the back of the stack
+    # Rev D layout (2026-11-25; rev C plus Seeed's STEP model of the driver board and a cable
+    # channel in place of a snug USB-C hole). Seen from the front:
+    #   - the glass is turned so its ribbon tail is at the TOP, under the lanyard band
+    #     (firmware: `2 epd-rot!`);
+    #   - the tail folds once, in its own marked bending area at the glass edge, onto a 24-pin
+    #     FFC coupler held flat against the back of the glass; a 24-pin jumper runs down over
+    #     the cell to the driver board, so nothing levers on the panel's own tail;
+    #   - the driver board + socketed XIAO sit behind the bottom of the glass, component side
+    #     to the back, the XIAO's USB-C pointing at the BOTTOM edge but set back from it: a
+    #     channel one plug wide, open to the back, runs from the edge to the port, so the port
+    #     does not have to line up with a hole;
+    #   - the back is stepped: a deep pod over the driver stack, a thin shelf over the cell.
+    # From Good Display's GDEY037T03 drawing (Elecrow publishes the same one for DIE04037S):
+    glass=(53.0, 92.99, 1.0),            # 53.00 +/-0.20 x 92.99 +/-0.20 x 1.00 +/-0.10
+    # Active area 47.04 x 81.54: 2.98 from each long edge and the far end, 8.47 from the tail
+    # end. With the tail at the top: left, right, top (tail), bottom.
+    aa_border=(2.98, 2.98, 8.47, 2.98),
+    tail_w=13.8,                         # tail neck 13.8 (12.5 at the contacts); it is 10.15 long
+    tail_reach=4.0,                      # the coupler's mouth, below the glass's top edge: the tail's
+                                         # bending area is 0.5-2.5 mm past the edge, so ~7.5 mm of it
+                                         # lies on the back and ~3.5 goes into the connector
+    cell=(50.0, 34.0, 6.0),              # 603450 lying across the pass (MEASURE: pouches swell to ~6.3)
+    # Driver board, from Seeed's STEP model ("ePaper Driver Board for Seeed Studio XIAO v1.step"):
+    # PCB 25.00 x 42.00 x 1.6; pins 1.5 below it; sockets 4.5 tall, centred across the board,
+    # starting 1.45 mm from the XIAO end; JST 6.3 x 8.2 x 4.8 tall; ribbon connector 15.5 wide,
+    # 2.0 tall, at the far end, centred; slide switch on the long edge, 0.8 mm past it.
+    drv=(25.0, 42.0),
+    drv_stack=27.0,                      # MEASURED 2026-11-25: tips of the driver board's pins to the top
+                                         # of the XIAO ESP32-C5's USB-C, XIAO in its socket on long pins
+    drv_pcb_z=3.1,                       # top face of the driver board above its pin tips: 1.5 tail + 1.6 board
+    usb_over=2.5,                        # USB-C past the driver board's end, from the two board models: the
+                                         # XIAO's edge is 0.24 past it, the USB-C 2.3 past that (4 by ruler)
+    usb_recess=5.0,                      # the USB-C's mouth, inside the outer face of the bottom wall
+    usb_channel=(14.0, 4.0),             # cable channel: width (a USB-C plug's grip is ~12.5 x 6.5), and how
+                                         # far it reaches toward the glass past the plug, for a shorter stack
+    usb_z_from_back=1.6,                 # USB-C centre below the top of the stack (receptacle 3.2 tall)
+    usb_dx=0.0,                          # MEASURE: USB-C centre off the driver board's centreline
+    coupler=(20.0, 12.0, 3.6),           # MEASURE: FFC coupler board (Adafruit 4524 class: two top-contact
+                                         # 24-pin connectors, 18.3 mm long each), across x along the pass x thick
     wall=1.6, corner_r=3.0, bezel=1.3,
-    key_zone=7.0,                        # right margin for the key column
+    keys=3,                              # 3 = PREV / MENU / NEXT column on the right edge, 0 = none
+    key_zone=7.0,                        # right margin for the key column (dropped when keys=0)
     key_pitch=14.0,
+    # The driver board's battery switch, from the STEP model: on the board's edge that faces the
+    # RIGHT wall seen from the front, 29.7 mm from the board's XIAO end. The board has to stay on
+    # the glass's centreline (the ribbon cannot step sideways), so the switch is ~14 mm inside
+    # the wall: the opening is a tool window, not a slider.
+    # wall "L" or "R" (seen from the front), y = centre above the board's USB end, w x h = window
+    # along the wall x through the thickness. None = no opening.
+    drv_switch=dict(wall="R", y=29.7, w=10.0, h=5.0),
+    # Paperclip pinhole in the back over the XIAO's BOOT button: (x from the board centreline,
+    # right + seen from the front; y above the driver board's USB end; hole diameter). From
+    # Seeed's KiCad board for the XIAO ESP32-C5: BOOT (K2) is 19.59 mm from the XIAO's USB edge
+    # and 4.42 mm off the centreline toward the D7-D10 row, which is the right-hand side seen
+    # from the front when the components face the back. The XIAO's first pin is 2.96 mm from
+    # that edge and the driver board's first socket 2.72 mm from its end (STEP), so the XIAO's
+    # edge is 0.24 mm past the driver board's end.
+    boot_pin=None,
+    sd=None,                             # microSD breakout (SR-16SD)
     back_wall=1.4,
-    band_top=11.0,                       # lanyard band above the panel
-    band_bottom=6.0,                     # below the panel (USB-C, label)
+    band_top=14.0,                       # above the glass: the tail's fold, then the lanyard slot
+    band_bottom=9.0,                     # below the glass
 )
+
+# ---------------------------------------------------------------------------------- SR-16N
+# SR-16 without the key column: turned from the phone over Bluetooth, by the auto-turn timer and
+# by the XIAO's own BOOT button through a paperclip pinhole in the back. The shell is narrower by
+# key_zone.
+SR16N = dict(SR16, key="SR-16N", name="Setlist, no keys", keys=0,
+             boot_pin=(4.4, 19.35, 1.8))
+
+# --------------------------------------------------------------------------------- SR-16SD
+# SR-16N with a microSD card. The breakout (Adafruit 4682: 25.4 x 22.8 x 3.5 mm overall, 3 V
+# only, SPI) stands on edge in the pod beside the driver board, on the left seen from the front,
+# taped to a fin on the tray, so the card goes in through the BOTTOM edge next to the USB-C
+# channel. Wires: 3V3, GND, SCK = D8 and MOSI = D10 (shared with the panel), MISO = D9, CS = D7.
+#   pcb = (along the pass, through the thickness, board thickness). The card enters the end that
+#         faces the bottom wall, an edge pcb[1] long, at its middle (MEASURE: which edge of the
+#         breakout the card enters, and where along it)
+#   socket = height of the card socket on the board; x = socket-side face of the board, from
+#   the inside of the left wall; slot = (card slot length, width) in the bottom wall;
+#   proud = how far the card sticks out past the breakout's edge (MEASURE)
+SR16SD = dict(SR16N, key="SR-16SD", name="Setlist, card",
+              sd=dict(pcb=(22.8, 25.4, 1.6), socket=1.9, x=8.5, slot=(12.5, 2.6), proud=2.5))
 
 # --------------------------------------------------------------------------- mesh helpers
 
@@ -351,11 +423,14 @@ def build_sr15(v, ref_dir):
 def build_sr16(v, ref_dir):
     gw, gh, gt = v["glass"]
     w, cr = v["wall"], v["corner_r"]
-    # X layout: wall | 0.3 | glass | 0.5 | key zone | wall
+    K = v["key"]
+    nkeys = v.get("keys", 3)
+    assert nkeys in (0, 3), "keys must be 0 or 3"
+    # X layout: wall | 0.3 | glass | 0.5 | key zone (only with keys) | wall
     ix0 = 0.0
     gx0 = ix0 + 0.3
     gx1 = gx0 + gw
-    ix1 = gx1 + 0.5 + v["key_zone"]
+    ix1 = gx1 + 0.5 + (v["key_zone"] if nkeys else 0.0)
     # Y layout: wall | band_bottom | glass | 0.3 | band_top | wall
     iy0 = 0.0
     gy0 = iy0 + v["band_bottom"]
@@ -367,61 +442,92 @@ def build_sr16(v, ref_dir):
     iy0, iy1, gy0, gy1 = iy0 + dy, iy1 + dy, gy0 + dy, gy1 + dy
     ox0, ox1, oy0, oy1 = ix0 - w, ix1 + w, iy0 - w, iy1 + w
     gcx = (gx0 + gx1) / 2
-    # Z: glass front at 0, bezel over it, stack behind it.
+    # Z: glass front at 0, bezel over it, everything else behind it.
     zf = 0.1
     ztop = zf + v["bezel"]
     zg = -gt                                   # glass back
     zst = zg - 0.3                             # foam, then the electronics
-    depth = max(v["drv_stack"], v["cell"][2] + 0.3)
-    zbi = zst - depth - 0.2
-    zbo = zbi - v["back_wall"]
     zs = zg - 0.5                              # split plane just behind the glass
+    # The pod: deep, over the driver stack. The stack stands on a printed tray (1.0 mm) so the
+    # pin tips never touch the glass.
+    tray_t = 1.0
+    zpod = zst - tray_t - v["drv_stack"] - 0.5 - 0.2      # pod floor (inside)
+    zbo = zpod - v["back_wall"]
+    # The shelf: thin, over the cell (against the glass), the jumper (over the cell) and the coupler.
+    cw, ch, ct = v["cell"]
+    cplw, cplh, cplt = v["coupler"]
+    shelf_depth = max(ct + 0.3 + 1.0, cplt + 0.6, 8.4 if nkeys else 0.0)
+    zsh = zst - shelf_depth - 0.2              # shelf floor (inside)
+    zsho = zsh - v["back_wall"]
 
     def profile(name, z0, z1):
         return rrect(name, ox0, ox1, oy0, oy1, z0, z1, cr)
 
-    # lanyard slot through the top band, centred on the glass column
-    slot_y = (gy1 + 0.3 + iy1) / 2
-    # bosses: four corners, M2 thread-forming, front boss from split to bezel.
+    # lanyard slot high in the top band; the tail folds in the 5 mm under it
+    slot_y = iy1 - 4.5
     bx = (ox0 + w + 2.0, ox1 - w - 2.0)
     by = (oy0 + w + 2.0, oy1 - w - 2.0)
-    # driver board: bottom of the glass column, USB-C facing down (MEASURE: orientation).
+    # driver board: on the glass's centreline, USB-C set back from the bottom edge
     dw, dh = v["drv"]
+    yport = oy0 + v["usb_recess"]              # the USB-C's mouth
+    d0y = yport + v["usb_over"]                # the board's USB end
+    d1y = d0y + dh                             # its ribbon-connector end
     d0x, d1x = gcx - dw / 2, gcx + dw / 2
-    d0y, d1y = iy0 + 0.3, iy0 + 0.3 + dh
-    usb_z = zbi + 0.2 + v["usb_z_from_back"]
-    # cell above it
-    cw, ch, ct = v["cell"]
+    usb_x = gcx + v["usb_dx"]
+    usb_z = zst - tray_t - v["drv_stack"] + v["usb_z_from_back"]
+    zpcb = zst - tray_t - v["drv_pcb_z"]       # the board's component face (it looks at the back)
+    ystep = d1y + 1.2                          # the pod ends here (inside); the step wall is w thick
+    # cell on the shelf, against the glass
     c0x, c1x = gcx - cw / 2, gcx + cw / 2
-    c1y = gy1 - 1.0
-    c0y = c1y - ch
-    # keys on the right wall
-    keys_y = [(gy0 + gy1) / 2 + v["key_pitch"] * k for k in (1, 0, -1)]     # PREV, MENU, NEXT
-    kz = zbi + 4.0                              # key centre (6 mm switch on an 8 mm perf strip)
+    c0y = ystep + w + 0.4
+    c1y = c0y + ch
+    # coupler flat on the back of the glass, just under the tail's fold
+    q1y = gy1 - v["tail_reach"]
+    q0y = q1y - cplh
+    q0x, q1x = gcx - cplw / 2, gcx + cplw / 2
+    assert c1y + 0.5 <= q0y, "cell and coupler collide: shorten the cell or lengthen the glass column"
+    # keys on the right wall of the shelf
+    kyc = (ystep + w + iy1 - v["band_top"]) / 2
+    keys_y = [kyc + v["key_pitch"] * k for k in (1, 0, -1)] if nkeys else []   # PREV, MENU, NEXT
+    kz = zsh + 4.0                              # key centre (6 mm switch on an 8 mm perf strip)
     perf_x1 = ix1 - 0.8 - 0.1 - 4.3            # perf face: wall - flange - gap - switch height
     perf_x0 = perf_x1 - 1.6
 
+    sw = v.get("drv_switch")
+    boot = v.get("boot_pin")
+    chw, chx = v["usb_channel"]
+    zch = usb_z + 3.25 + chx                   # the channel's roof (toward the glass)
+    zstk = zst - tray_t                        # the tray's top: what the electronics in the pod stand on
+    sd = v.get("sd")
+    if sd:
+        sdl, sdh, sdt = sd["pcb"]
+        sdx0 = ix0 + sd["x"]                   # board: sdx0..sdx0+sdt, socket on the wall side of it
+        sd0y, sd1y = iy0 + 0.3, iy0 + 0.3 + sdl
+        sdz0, sdz1 = zstk - sdh, zstk          # standing on the tray
+        cardx, cardz = sdx0 - 0.95, zstk - sdh / 2
+
     def common_cuts(ob):
         tl = [rrect("slot", gcx - 7.0, gcx + 7.0, slot_y - 1.5, slot_y + 1.5, zbo - 1, ztop + 1, 1.5),
-              edge_cut("usb", "Y", gcx, usb_z, 9.8, 3.9, oy0 - 1, iy0 + EPS, 1.6),
-              edge_cut("usbr", "Y", gcx, usb_z, 12.8, 7.0, oy0 - 1, oy0 + 1.0, 2.6)]
+              # cable channel: through the bottom wall and the back, from the edge to the port
+              rrect("usbch", usb_x - chw / 2, usb_x + chw / 2, oy0 - 4, yport + 0.5, zbo - 1, zch, 2.0)]
         for y in keys_y:
             tl.append(along(cyl("khole", 0, 0, 2.0, 0, 1, 40), "X"))
             tl[-1].data.transform(Matrix.Diagonal((w + 2, 1, 1, 1)))
             tl[-1].data.transform(Matrix.Translation((ix1 - EPS - 0.0, y, kz)))
-        # slide switch on the left wall (MEASURE JS102011SAQN), level with the cell
-        sy = (c0y + c1y) / 2
-        tl.append(box("swslot", ox0 - 1, ix0 + EPS, sy - 2.5, sy + 2.5, zbi + 0.8, zbi + 2.8))
-        tl.append(box("swrec", ox0 - 1, ox0 + 0.6, sy - 4.5, sy + 4.5, zbi - 0.2, zbi + 3.8))
+        if sw:                                  # window onto the driver board's battery switch
+            a0, a1 = (ox0 - 1, ix0 + EPS) if sw["wall"] == "L" else (ix1 - EPS, ox1 + 1)
+            tl.append(edge_cut("drvsw", "X", d0y + sw["y"], zpcb - 1.5, sw["w"], sw["h"], a0, a1, 1.5))
         cut(ob, *tl)
 
     a_l, a_r, a_t, a_b = v["aa_border"]
     ax0, ax1, ay0, ay1 = gx0 + a_l, gx1 - a_r, gy0 + a_b, gy1 - a_t
 
-    front = profile("SR-16-front", zs, ztop)
+    front = profile(K + "-front", zs, ztop)
     cut(front,
         rrect("cav", ix0, ix1, iy0, iy1, zs - 1, zg + EPS, 1.0),
-        rrect("cav_glass", gx0 - 0.0, gx1 + 0.3, gy0 - 0.3, gy1 + 0.3, zg - EPS, zf, 0.5))
+        rrect("cav_glass", gx0 - 0.0, gx1 + 0.3, gy0 - 0.3, gy1 + 0.3, zg - EPS, zf, 0.5),
+        # room for the tail to leave the glass and turn back
+        box("cav_tail", gcx - v["tail_w"] / 2 - 1.0, gcx + v["tail_w"] / 2 + 1.0, gy1, gy1 + 5.0, zg - EPS, zf))
     for x in bx:
         for y in by:
             add(front, cyl("boss", x, y, 1.8, zs, zf + EPS, 32))
@@ -433,58 +539,182 @@ def build_sr16(v, ref_dir):
             cut(front, cyl("pilot", x, y, 0.8, zs - 1, zf + 0.9, 24))
     common_cuts(front)
 
-    back = profile("SR-16-back", zbo, zs)
-    cut(back, rrect("cav", ix0, ix1, iy0, iy1, zbi, zs + 1, 1.0))
+    back = profile(K + "-back", zbo, zs)
+    cut(back,
+        rrect("cav_pod", ix0, ix1, iy0, ystep, zpod, zs + 1, 1.0),
+        rrect("cav_shelf", ix0, ix1, ystep + w, iy1, zsh, zs + 1, 1.0),
+        # the jumper's doorway through the step wall, level with the board's connector
+        box("door", gcx - v["tail_w"] / 2 - 2.0, gcx + v["tail_w"] / 2 + 2.0, ystep - EPS, ystep + w + EPS,
+            zsh, zs + 1),
+        # the outside of the shelf: everything behind its floor comes off
+        box("step", ox0 - 1, ox1 + 1, ystep + w, oy1 + 1, zbo - 1, zsho))
     feats = []
     for x in bx:
-        for y in by:
-            feats.append(cyl("bboss", x, y, 2.8, zbi - EPS, zs, 40))
-    feats.append(rrect("slotboss", gcx - 9.0, gcx + 9.0, slot_y - 3.5, slot_y + 3.5, zbi - EPS, zs, 2.0))
-    # perf-strip rail for the keys (strip 1.6 thick, 8 mm tall, 40 long), glued to this rib
-    feats.append(box("rail", perf_x0 - 1.0, perf_x0, keys_y[2] - 20, keys_y[0] + 20, zbi - EPS, zbi + 3.0))
-    # cell ribs
-    for rb in ((c0x - 1.0, c0x - 0.2, c0y, c1y), (c1x + 0.2, c1x + 1.0, c0y, c1y),
-               (c0x + 5, c1x - 5, c0y - 1.0, c0y - 0.2)):
-        feats.append(box("rib", rb[0], rb[1], rb[2], rb[3], zbi - EPS, zbi + 2.0))
-    # switch cradle
-    sy = (c0y + c1y) / 2
-    feats.append(box("swc", ix0 + 3.6, ix0 + 4.6, sy - 4.3, sy + 4.3, zbi - EPS, zbi + 2.5))
+        feats.append(cyl("bboss", x, by[0], 2.8, zpod - EPS, zs, 40))
+        feats.append(cyl("bboss", x, by[1], 2.8, zsh - EPS, zs, 40))
+    feats.append(rrect("slotboss", gcx - 9.0, gcx + 9.0, slot_y - 3.5, slot_y + 3.5, zsh - EPS, zs, 2.0))
+    # the cable channel's two sides and its roof, so a plug cannot wander into the pod
+    for x0, x1 in ((usb_x - chw / 2 - 1.2, usb_x - chw / 2), (usb_x + chw / 2, usb_x + chw / 2 + 1.2)):
+        feats.append(box("chside", x0, x1, iy0 - EPS, yport + 0.5, zpod - EPS, zch + 1.2))
+    feats.append(box("chroof", usb_x - chw / 2 - 1.2, usb_x + chw / 2 + 1.2, iy0 - EPS, yport + 0.5, zch, zch + 1.2))
+    if nkeys:                                   # perf-strip rail for the keys, glued to this rib
+        feats.append(box("rail", perf_x0 - 1.0, perf_x0, kyc - 20, kyc + 20, zsh - EPS, zsh + 3.0))
+    # cell fence (the cell lies against the glass; the jumper passes over it through the gap at x = centre)
+    zrib = zst - ct + 1.0
+    for rb in ((c0x - 1.0, c0x - 0.2, c0y + 4, c1y - 4), (c1x + 0.2, c1x + 1.0, c0y + 4, c1y - 4),
+               (c0x + 4, gcx - 10, c1y + 0.2, c1y + 1.0), (gcx + 10, c1x - 4, c1y + 0.2, c1y + 1.0)):
+        if rb[1] <= ix1 and rb[0] >= ix0:
+            feats.append(box("rib", rb[0], rb[1], rb[2], rb[3], zsh - EPS, zrib))
+    # coupler: two pads press it to the glass, a fence on three sides holds it against the ribbon's pull
+    zq = zst - cplt - 0.2
+    feats += [box("qpad", q0x + 1.0, q0x + 4.0, q0y + 2.0, q1y - 2.0, zsh - EPS, zq),
+              box("qpad", q1x - 4.0, q1x - 1.0, q0y + 2.0, q1y - 2.0, zsh - EPS, zq),
+              box("qfence", q0x - 1.0, q0x - 0.2, q0y, q1y, zsh - EPS, zst - 1.0),
+              box("qfence", q1x + 0.2, q1x + 1.0, q0y, q1y, zsh - EPS, zst - 1.0)]
     add(back, *feats)
     keep(back, profile("trim", zbo - 1, zs + 1))
     for x in bx:
         for y in by:
             cut(back, cyl("clear", x, y, 1.15, zbo - 1, zs + 1, 24),
                 cyl("cbore", x, y, 1.95, zbo - 1, zs - 4.0, 32))     # M2x6 tip stops 0.9 under the bezel face
-    cut(back, rrect("lam", gcx - 22, gcx + 22, oy0 + 6, oy0 + 40, zbo - 1, zbo + 0.4, 3.0))
+    # laminate sticker recess on the shelf, 0.4 deep
+    lam_y0 = ystep + w + 3.0
+    lam_h = min(34.0, slot_y - 4.5 - lam_y0)
+    cut(back, rrect("lam", gcx - 22, gcx + 22, lam_y0, lam_y0 + lam_h, zsho - 1, zsho + 0.4, 3.0))
+    if boot:                                    # paperclip pinhole over the XIAO's BOOT button
+        cut(back, cyl("bootpin", gcx + boot[0], d0y + boot[1], boot[2] / 2, zbo - 1, zpod + 1, 24))
+    if sd:                                      # card slot in the bottom wall, with a thumbnail relief
+        sl, sw_ = sd["slot"]
+        cut(back, box("sdslot", cardx - sw_ / 2, cardx + sw_ / 2, oy0 - 1, iy0 + EPS, cardz - sl / 2, cardz + sl / 2),
+            box("sdnail", cardx - 3.0, cardx + 3.0, oy0 - 1, oy0 + 0.8, cardz - 3.5, cardz + 3.5))
     common_cuts(back)
+
+    # tray: stands the driver board's pin tips off the glass and locates the board's corners
+    tx0, tx1, ty0, ty1 = ix0 + 0.3, ix1 - 0.3, iy0 + 0.3, ystep - 0.3
+    tray = box(K + "-tray", tx0, tx1, ty0, ty1, zst - tray_t, zst)
+    pegs = []
+    for x0, x1 in ((d0x - 1.6, d0x - 0.2), (d1x + 0.2, d1x + 1.6)):
+        for y0, y1 in ((d0y + 1.0, d0y + 5.0), (d1y - 5.0, d1y - 1.0)):
+            pegs.append(box("peg", x0, x1, y0, y1, zpcb, zst - tray_t + EPS))
+    # end stops at the board's corners, outside the XIAO and the ribbon connector: the far pair
+    # is backed by the step wall and takes the push of a plug going in
+    for x0, x1 in ((d0x, d0x + 2.5), (d1x - 2.5, d1x)):
+        pegs.append(box("stop", x0, x1, d0y - 1.6, d0y - 0.2, zpcb, zst - tray_t + EPS))
+        pegs.append(box("stop", x0, x1, d1y + 0.2, ty1, zpcb, zst - tray_t + EPS))
+    if sd:                                      # fin the card breakout is taped to, and its foot
+        fx = sdx0 + sdt + 0.5
+        pegs.append(box("sdfin", fx, fx + 1.4, sd0y + 1.0, sd1y, sdz0 + 2.0, zst - tray_t + EPS))
+        pegs.append(box("sdfoot", fx, fx + 4.0, sd0y + 1.0, sd0y + 2.4, zstk - 8.0, zst - tray_t + EPS))
+    add(tray, *pegs)
+    for x in bx:                                # clear of the two lower screw bosses
+        cut(tray, cyl("tclear", x, by[0], 3.2, zst - tray_t - 1, zst + 1, 32))
 
     # key caps: flange d6.4 x 0.8 inside the wall, stem d3.6 through the d4.0 hole, 1.0 proud.
     caps = {}
     for n, y in zip(("prev", "menu", "next"), keys_y):
-        c = cyl(f"SR-16-keycap-{n}", 0, 0, 3.2, 0, 0.8, 40)
+        c = cyl(f"{K}-keycap-{n}", 0, 0, 3.2, 0, 0.8, 40)
         add(c, cyl("st", 0, 0, 1.8, 0.8 - EPS, 0.8 + w + 1.0, 40))
         c.matrix_world = Matrix.Translation((ix1 - 0.8, y, kz)) @ Matrix.Rotation(math.radians(90), 4, "Y")
         caps["keycap-" + n] = c
 
     refs = [box("ref-glass", gx0, gx1, gy0, gy1, zg, 0.0),
-            box("ref-driver+xiao", d0x, d1x, d0y, d1y, zst - v["drv_stack"], zst),
-            box("ref-cell", c0x, c1x, c0y, c1y, zbi, zbi + ct),
-            box("ref-perf", perf_x0, perf_x1, keys_y[2] - 20, keys_y[0] + 20, zbi, zbi + 8.0),
-            box("ref-switch", ix0, ix0 + 3.5, sy - 4.3, sy + 4.3, zbi, zbi + 3.6)]
+            box("ref-driver-pcb", d0x, d1x, d0y, d1y, zpcb, zpcb + 1.6),
+            box("ref-xiao", usb_x - 8.9, usb_x + 8.9, d0y - 0.24, d0y + 20.76, zstk - v["drv_stack"] + 3.2, zpcb - 4.5),
+            box("ref-usb-c", usb_x - 4.5, usb_x + 4.5, d0y - v["usb_over"], d0y + 5.0,
+                zstk - v["drv_stack"], zstk - v["drv_stack"] + 3.2),
+            # a plug in the port: 12.4 x 6.5 grip, 20 long
+            box("ref-usb-plug", usb_x - 6.2, usb_x + 6.2, yport - 20.0, yport, usb_z - 3.25, usb_z + 3.25),
+            box("ref-drv-switch", d1x - 3.2, d1x + 0.8, d0y + 26.3, d0y + 33.1, zpcb - 1.42, zpcb),
+            box("ref-drv-jst", d0x + 3.85, d0x + 10.14, d0y + 25.5, d0y + 33.7, zpcb - 4.8, zpcb),
+            box("ref-drv-fpc", d0x + 4.76, d0x + 20.28, d0y + 36.2, d0y + 41.1, zpcb - 2.0, zpcb),
+            box("ref-cell", c0x, c1x, c0y, c1y, zst - ct, zst),
+            box("ref-coupler", q0x, q1x, q0y, q1y, zst - cplt, zst)]
+    if sd:
+        refs.append(box("ref-sd-board", sdx0 - sd["socket"], sdx0 + sdt, sd0y, sd1y, sdz0, sdz1))
+        refs.append(box("ref-sd-card", cardx - 0.5, cardx + 0.5, sd0y - sd["proud"], sd0y + 12.5,
+                        cardz - 5.5, cardz + 5.5))
+    if nkeys:
+        refs.append(box("ref-perf", perf_x0, perf_x1, kyc - 20, kyc + 20, zsh, zsh + 8.0))
     for y in keys_y:
         refs.append(box("ref-key", perf_x1, perf_x1 + 3.5, y - 3, y + 3, kz - 3, kz + 3))
-    parts = dict(front=front, back=back, **caps)
+    parts = dict(front=front, back=back, tray=tray, **caps)
+    pod_t, shelf_t = ztop - zbo, ztop - zsho
+    notes = ["Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm "
+             "double-sided tape, with its ribbon tail at the TOP (set `2 epd-rot!` on the pass).",
+             "Tail: fold it once over the top edge of the glass, in its marked bending area (0.5 to 2.5 mm "
+             "past the edge), so its last 7 mm lie on the back with the gold fingers facing the back.",
+             f"Coupler ({cplw:.0f} x {cplh:.0f} mm, 24-pin 0.5 mm, top-contact connectors, e.g. Adafruit "
+             f"4524): on the back of the glass on foam tape, connectors facing the back, its top edge "
+             f"{v['tail_reach']:.0f} mm below the top of the glass, between the two fences; the back shell's "
+             "pads press it down. The tail goes in its top connector, the jumper in its bottom one.",
+             "Jumper: 24-pin 0.5 mm FFC, 60 mm, same-side contacts (type A), fingers facing the back at "
+             "both ends. From the coupler it runs down OVER the cell, through the doorway in the step, into "
+             "the driver board's (top-contact) connector. The run must be a straight extension: each "
+             "conductor stays on its own side. Check that with a meter, tail pad to driver-board pad, "
+             "before power: this ribbon carries the panel's high voltages.",
+             "Tray: 1 mm plate on the back of the glass in the pod, pegs up. The driver board stands on it "
+             "on its pin tips, between the pegs and the corner stops, component side to the back, USB-C "
+             "toward the bottom edge.",
+             f"USB-C: the port is {v['usb_recess']:.0f} mm inside the bottom edge, at the end of a channel "
+             f"{chw:.0f} mm wide that is open to the back. Lay the plug in the channel and push. The channel "
+             f"reaches {chx:.0f} mm further toward the glass than a plug needs, so a shorter stack still "
+             "lines up.",
+             f"Cell: 603450 lying across the shelf against the glass, plugged into the driver board's JST. "
+             "The driver board's own switch disconnects it.",
+             f"Thickness: {pod_t:.1f} mm over the pod (bottom {ystep + w - oy0:.0f} mm), {shelf_t:.1f} mm over "
+             "the shelf. The pod is as deep as the measured 27 mm stack. Seeed's models put a XIAO on "
+             "standard short pins at 14.4 mm, which would make the pod about 20 mm: set drv_stack and rerun.",
+             "Antenna: the XIAO ESP32-C5's stick-on antenna (40 x 20 mm, 80 mm lead) goes on the inside of "
+             + ("the pod's right wall (seen from the front), toward the back, clear of the switch window."
+                if sd else "the pod's left wall (seen from the front), away from the cell and the board.")]
+    if sd:
+        notes.append(f"microSD: the breakout ({sdl:.1f} x {sdh:.1f} mm, e.g. Adafruit 4682) stands on edge on "
+                     "the tray, left of the driver board seen from the front, socket toward the left wall, "
+                     "card end against the bottom wall, stuck to the tray's fin with 0.5 mm foam tape. The "
+                     f"card goes in through the slot in the bottom edge, {cardx - ox0:.1f} mm from the left "
+                     "side. Wires to the driver board's pad row: 3V3, GND, SCK = D8, MOSI = D10, MISO = D9, "
+                     "CS = D7.")
+    if nkeys:
+        notes.append("Keys: three B3F-1000 (PREV = D4, MENU = D7, NEXT = D9) on an 8 x 40 mm perfboard strip "
+                     "glued to the rail on the shelf, plungers against the printed caps in the right wall.")
+    else:
+        notes.append("No keys: pages turn from the phone over Bluetooth, on the auto-turn timer, or with the "
+                     "XIAO's BOOT button as a single next-page button.")
+    if boot:
+        notes.append(f"BOOT pinhole: d{boot[2]:.1f} mm in the back of the pod, {abs(boot[0]):.1f} mm "
+                     f"{'right' if boot[0] >= 0 else 'left'} of the centreline seen from the front "
+                     f"(mirrored when you look at the back) and {d0y + boot[1] - oy0:.1f} mm above the bottom "
+                     "edge. Press with a paperclip.")
+    if sw:
+        notes.append(f"Battery-switch window: {sw['w']:.0f} x {sw['h']:.0f} mm in the "
+                     f"{'left' if sw['wall'] == 'L' else 'right'} wall (seen from the front), centred "
+                     f"{d0y + sw['y'] - oy0:.1f} mm above the bottom edge. The switch is about "
+                     f"{(ix1 - d1x) if sw['wall'] == 'R' else (d0x - ix0):.0f} mm inside: work it with a toothpick.")
+    measure = ["glass, aa_border, tail: from Good Display's GDEY037T03 drawing, not from the part",
+               "cell: 603450 pouch, swells to about 6.3 mm",
+               "drv, drv_pcb_z, drv_switch: from Seeed's STEP model of the driver board, not from the part",
+               "drv_stack: 27 mm measured by ruler with the XIAO ESP32-C5 on long pins; the models give "
+               "14.4 mm on standard pins. Re-measure for another XIAO",
+               "usb_over: USB-C 2.5 mm past the board's end from the two board models (about 4 by ruler); "
+               "the channel takes either",
+               "coupler: FFC coupler board size, assumed 20 x 12 x 3.6, and that the tail reaches its mouth "
+               "(tail_reach)"]
+    if boot:
+        measure.append("boot_pin: from Seeed's KiCad board for the XIAO and the driver board's STEP model")
+    if sd:
+        measure.append("sd: the breakout's size is Adafruit's overall figure; which edge the card enters, "
+                       "where along it, how far the card stands proud and the socket height are assumed")
+    measure.append("battery sense: the XIAO ESP32-C5 reads its own battery pads (GPIO6, enabled by GPIO26); "
+                   "whether that sees a cell on the driver board's JST is unverified")
     info = dict(outer=(ox1 - ox0, oy1 - oy0, ztop - zbo), z=(zbo, zs, ztop),
-                screws="4x M2x6 pan head, thread-forming for plastic, through the back into the front bosses",
-                notes=["Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm "
-                       "double-sided tape (it is not clamped from behind).",
-                       "Driver board + XIAO at the bottom behind the glass, USB-C out of the bottom edge; "
-                       "the panel FPC folds back onto the driver board's connector.",
-                       "Keys: three B3F-1000 on an 8 x 40 mm perfboard strip glued to the rail, plungers "
-                       "against the printed caps in the right wall.",
-                       f"Driver stack assumed {v['drv_stack']} mm (XIAO in its socket). Soldering the XIAO flat "
-                       "to the driver board instead brings it to about 6.5 mm: set drv_stack and rerun for a "
-                       "~12 mm pass."])
+                screws="4x M2 pan head, thread-forming for plastic, through the back into the front bosses: "
+                       "M2x6 at the top (shelf), M2x6 at the bottom down the pod's deep counterbores",
+                notes=notes, measure=measure,
+                print="PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed). "
+                      "Back shell back down: the pod sits on the bed and the shelf hangs "
+                      f"{zsho - zbo:.1f} mm above it, so turn on supports touching the bed only (they come "
+                      "off the flat shelf back cleanly). Tray plate down"
+                      + ("; key caps flange down." if nkeys else "."))
     return parts, refs, info
 
 
@@ -497,7 +727,7 @@ def print_pose(ob, part):
     if not part.startswith("keycap"):          # key caps are modelled flange-down already
         c.data.transform(c.matrix_world)
     c.matrix_world = Matrix.Identity(4)
-    if part == "front":                         # face down: flip so the bezel face is on the bed
+    if part in ("front", "tray"):               # face down: bezel face (or the tray's plate) on the bed
         c.data.transform(Matrix.Rotation(math.radians(180), 4, "X"))
     zs = [vv.co.z for vv in c.data.vertices]
     c.data.transform(Matrix.Translation((0, 0, -min(zs))))
@@ -596,10 +826,17 @@ def run(v, builder, ref_dir):
             flag = "" if ov < 0.5 else "   <-- CHECK"
             lines.append(f"  {n:6s} x {r.name:18s} {ov:8.2f}{flag}")
     lines += ["", "Assembly:"] + ["- " + n for n in info["notes"]]
-    lines += ["", "Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed),",
-              "back shell back down; key caps flange down. No supports, except the USB-C and lanyard",
+    has_caps = any(n.startswith("keycap") for n in parts)
+    if info.get("print"):
+        lines += ["", "Print: " + info["print"], "",
+                  "MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py."]
+    else:
+      lines += ["", "Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down (bezel on the bed),",
+              "back shell back down; key caps flange down. No supports, except the USB-C and lanyard"
+              if has_caps else "back shell back down. No supports, except the USB-C and lanyard",
               "slot bridges if your printer sags over 14 mm.", "",
               "MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py."]
+    lines += ["- " + m for m in info.get("measure", [])]
     with open(os.path.join(out, f"{v['key']}-report.txt"), "w") as f:
         f.write("\n".join(lines) + "\n")
     print("\n".join(lines))
@@ -620,8 +857,12 @@ def main():
     ref_dir = None
     if "--ref" in argv:
         i = argv.index("--ref"); ref_dir = argv[i + 1]; del argv[i:i + 2]
-    todo = argv or ["SR-15", "SR-16"]
-    table = {"SR-15": (SR15, build_sr15), "SR-16": (SR16, build_sr16)}
+    table = {"SR-15": (SR15, build_sr15), "SR-16": (SR16, build_sr16), "SR-16N": (SR16N, build_sr16),
+             "SR-16SD": (SR16SD, build_sr16)}
+    todo = argv or list(table)
+    unknown = [k for k in todo if k not in table]
+    if unknown:
+        sys.exit(f"unknown variant {', '.join(unknown)}; choose from {', '.join(table)}")
     bad = 0
     for k in todo:
         bad += run(*table[k], ref_dir)

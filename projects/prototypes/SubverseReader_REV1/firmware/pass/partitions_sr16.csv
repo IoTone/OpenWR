@@ -1,0 +1,6 @@
+# SR-16 on a XIAO (8 MB flash, no card slot): one 1.5 MB app, the rest is the pack store (FAT).
+# Name,     Type, SubType, Offset,   Size
+nvs,        data, nvs,     0x9000,   0x6000
+phy_init,   data, phy,     0xf000,   0x1000
+factory,    app,  factory, 0x10000,  0x180000
+packs,      data, fat,     0x190000, 0x670000
