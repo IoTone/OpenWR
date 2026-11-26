@@ -19,7 +19,7 @@ Auto-off ladder (same on every variant, see docs/DESIGN-SubverseReader.md, Power
      card), then cut power with the soft latch. Draw is then only the cell protection IC.
   Any key wakes from every level; from level 3 it is a cold boot that reopens the saved page.
 
-SR-16N has no keys and so no key wake: it wakes from deep sleep on a timer (the auto-turn
+SR-16N and SR-16SD have no keys and so no key wake: it wakes from deep sleep on a timer (the auto-turn
 interval, or a periodic Bluetooth check-in so the phone can reach it). CHECKIN models the
 check-in as a fixed daily cost that is paid in every profile, standby included.
 """
@@ -67,7 +67,9 @@ AWAKE_MA = 28            # ESP32 CPU awake, no sleep (the LEFT_ON figure); BLE a
                          # are not added separately: an estimate, MEASURE
 # Passes with no key wake: variant -> (seconds awake with the radio advertising, seconds between
 # wakes). A default, not a measurement; the firmware's real interval replaces it.
-CHECKIN = {"SR-16N": (4, 300)}
+CHECKIN = {"SR-16N": (4, 300), "SR-16L": (4, 300), "SR-16SD": (4, 300)}
+TWIN = {"SR-16N": "SR-16", "SR-16L": "SR-16", "SR-16SD": "SR-16"}
+SD_IDLE_UA = 150           # an idle microSD card on an unswitched rail: 100-250 uA, MEASURE
 
 CELLS = {  # code: (mAh, thickness mm, footprint, unit @5, unit @100)
     "302540": (250, 3.0, "25x40", 2.80, 1.60),
@@ -105,6 +107,10 @@ V = [
      "battery path and their sleep draw is not published"),
     ("SR-16N", "Setlist, no keys", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "",
      "SR-16 hardware, no key wake: timer wake, 4 s Bluetooth check-in every 5 min assumed; measure"),
+    ("SR-16L", "Setlist, long", "c5", "spi37", 12, ("503450", "603450", "604050"), 12, "",
+     "SR-16N electronics, unstacked: the same figures; measure"),
+    ("SR-16SD", "Setlist, card", "c5", "spi37", 12 + SD_IDLE_UA, ("503450", "603450", "604050"), 12, "",
+     "SR-16N plus a microSD card on an unswitched rail: 150 uA idle assumed; measure"),
     ("SR-14W", "Tap Pass Wi-Fi", "c5", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapw", "10 taps + 2 Wi-Fi fetches a day"),
     ("SR-14B", "Tap Pass tethered", "nrf", "spi397", BOARD_CUSTOM, ("303450", "603450", "103450"), 12.5, "tapb", "10 taps + 2 phone fetches a day"),
 ]
@@ -244,11 +250,14 @@ def main():
         aw, ev = CHECKIN[key]
         ci = checkin(key)
         r = life(row, row[5][1])
-        twin = next(x for x in V if x[0] == key.rstrip("N"))
+        twin = next(x for x in V if x[0] == TWIN[key])
         r0 = life(twin, twin[5][1])
         out += [f"**{key} {row[1]}** has the hardware of {twin[0]} but no keys, so nothing can wake it "
                 "from deep sleep except a timer: the auto-turn interval while reading, or a periodic "
-                "Bluetooth check-in so the phone can reach it. Its standby is therefore not free.", "",
+                "Bluetooth check-in so the phone can reach it. Its standby is therefore not free."
+                + (f" Its microSD card is always powered: {SD_IDLE_UA} µA assumed idle, inside the sleep "
+                   "figure below. A load switch on the card's supply would remove it."
+                   if key == "SR-16SD" else ""), "",
                 f"- Modelled default: every {ev / 60:g} minutes the pass wakes for {aw} s with the radio "
                 f"advertising, at {AWAKE_MA} mA (the CPU-awake figure used below; advertising bursts are not "
                 f"added separately), times the {MARGIN} margin. That is {ci:.1f} mAh a day, an average of "
@@ -260,7 +269,8 @@ def main():
                 "- *Page turns per charge* and *mAh/page* are the cell divided by the page-turn energy "
                 f"alone, so they equal {twin[0]}'s; a page turn is costed as one timer wake. Turns sent "
                 "from the phone over a held Bluetooth connection cost more and are not modelled.",
-                f"- With the check-in off (auto-turn only, power switch to start), the figures are {twin[0]}'s.",
+                f"- With the check-in off (auto-turn only, power switch to start), the figures are {twin[0]}'s"
+                + (", less the card's idle draw." if key == "SR-16SD" else "."),
                 "- *Sleep µA* in the tables is deep sleep only; the check-in is on top.",
                 f"- The interval and awake time are placeholders (`CHECKIN` in `battery_model.py`), not "
                 "measurements. Doubling the interval roughly doubles the life.", ""]

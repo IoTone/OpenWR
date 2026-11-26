@@ -1,0 +1,66 @@
+SR-16L Setlist, long enclosure
+
+Outer size 57.0 x 156.8 x 15.1 mm (W x H incl. lanyard ear x T)
+Z: back -10.20, split -1.50, front 1.40
+Screws: 4x M2x6 pan head, thread-forming for plastic, through the back into the front bosses
+
+front          57.0 x  156.8 x   2.9 mm on the bed,  5.29 cm3 (~ 6.7 g PETG solid), non-manifold edges 0
+back           57.0 x  156.8 x   8.7 mm on the bed, 18.83 cm3 (~23.9 g PETG solid), non-manifold edges 0
+chincap        53.0 x   49.4 x   6.4 mm on the bed,  3.97 cm3 (~ 5.0 g PETG solid), non-manifold edges 0
+
+Interference (part vs reference electronics, mm3; 0 = clear). References: box stand-ins defined in this script.
+  front  x ref-glass              0.01
+  front  x ref-tail               0.00
+  front  x ref-driver-pcb         0.00
+  front  x ref-drv-socket         0.00
+  front  x ref-drv-socket.001     0.00
+  front  x ref-drv-switch         0.00
+  front  x ref-drv-jst            0.00
+  front  x ref-drv-fpc            0.00
+  front  x ref-xiao               0.00
+  front  x ref-usb-c              0.00
+  front  x ref-cell               0.00
+  back   x ref-glass              0.00
+  back   x ref-tail               0.00
+  back   x ref-driver-pcb         0.00
+  back   x ref-drv-socket         0.00
+  back   x ref-drv-socket.001     0.00
+  back   x ref-drv-switch         0.00
+  back   x ref-drv-jst            0.00
+  back   x ref-drv-fpc            0.00
+  back   x ref-xiao               0.00
+  back   x ref-usb-c              0.05
+  back   x ref-cell               0.00
+  chincap x ref-glass              0.00
+  chincap x ref-tail               0.00
+  chincap x ref-driver-pcb         0.00
+  chincap x ref-drv-socket         0.00
+  chincap x ref-drv-socket.001     0.00
+  chincap x ref-drv-switch         0.00
+  chincap x ref-drv-jst            0.00
+  chincap x ref-drv-fpc            0.00
+  chincap x ref-xiao               0.00
+  chincap x ref-usb-c              0.00
+  chincap x ref-cell               0.00
+
+Assembly:
+- Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm double-sided tape, with its ribbon tail at the BOTTOM (rotation 0, the firmware's default).
+- Chin cap: drop it into the front shell from behind, dome through the opening, before the driver board. Its flange sits under the frame; nothing else holds it but the board behind it.
+- Driver board: components toward the FRONT, ribbon connector toward the glass. Slide the tail straight into the connector (3.5 mm, no fold, no bend) and latch it, then lay the board on the cap's three rests. The back shell's posts and fence hold it there.
+- XIAO: a bare XIAO ESP32-C5 with NO pin headers, on 0.2 mm foam tape on the back of the glass, components to the back, USB-C through the right wall (seen from the front), 64.8 mm above the bottom edge.
+- Wires, 30 AWG, about 45 mm, XIAO pad to the same-named pad in the driver board's two pad rows: 5V, GND, 3V3, D0, D1, D2, D3, D8, D10. Solder them to the back of the driver board.
+- Cell: 603450 lying across, behind the glass above the XIAO, plugged into the driver board's socket. Its lead goes round the board's edge into the cap.
+- Battery switch: the driver board's own, through the slot in the chin cap, with a toothpick.
+- BOOT and RESET pinholes: d1.8 mm in the back, 6.4 mm right of the centreline seen from the front, 69.2 mm (BOOT) and 60.4 mm (RESET) above the bottom edge.
+- Antenna: the stick-on antenna goes on the inside of the back, above the cell.
+- Thickness: 11.6 mm, and 15.1 mm at the chin, whose cap stands 3.5 mm proud of the bezel.
+
+Print: PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down, back shell back down, chin cap dome down. No supports.
+
+MEASURE before the final print: see the MEASURE notes at the top of make_enclosure.py.
+- tail_z, fpc_slot: where the tail leaves the glass and how high the connector's slot is above the board. Together they set the board's depth; a wrong figure bends the tail
+- tail_in: how far the tail goes into the connector, which sets the gap between glass and board
+- xiao, xiao_usb: from Seeed's KiCad board; the USB-C hole has no channel, so check it
+- the XIAO must be bare: one with headers soldered on does not fit this shell
+- driver board: from Seeed's STEP model; which pads are CN1/CN2 is read from the schematic, not checked on the board
+- cell: 603450 pouch, swells to about 6.3 mm

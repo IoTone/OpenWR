@@ -759,6 +759,37 @@ variant("SR-16N", "SR-16N Setlist, no keys: SR-16 without the key column, turned
         dims="57 x 120 x 33 (12 above the pod)", grams=90, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
         sd="no", usb="charge, console, Web Serial loader")
 
+# SR-16N unstacked: no coupler or jumper (the tail goes straight into the driver board), nine wires.
+SR16L_ENC = L("ENC", "Enclosure, 3D-printed PETG, front + flat back + chin cap, 57 x 157 mm, 12 mm thick, "
+              "15 mm at the chin (~36 g)", "", "", "",
+              "", "own printer", 0.90, 0.65, 1, "estimate",
+              "enclosure/SR-16L/*.stl; prints without supports")
+SR16L_LINES = [SR16L_ENC if l[0] == "ENC" else l for l in SR16N_LINES if l[0] not in ("FFX", "FFC")] + [
+    L("WIRE", "30 AWG wire, 9 x 45 mm (5V, GND, 3V3, D0, D1, D2, D3, D8, D10)", "", "", "", "", "", 0.15, 0.05, 1,
+      "estimate", "XIAO pads to the driver board's two pad rows"),
+]
+variant("SR-16L", "SR-16L Setlist, long: SR-16N unstacked, long instead of thick",
+        "SR-16N with nothing stacked. The driver board lies in a chin below the glass and takes the "
+        "panel's tail straight in, with no fold and no extender; a bare XIAO lies flat behind the glass, "
+        "wired to the driver board's pad rows. 12 mm thick where SR-16N's pod is 33, and 37 mm longer. "
+        "Nine wires to solder. Runs the SR-16N firmware unchanged, at rotation 0.",
+        SR16L_LINES,
+        ["Pins: as SR-16N. The XIAO is not in the driver board's socket: wire 5V, GND, 3V3, D0, D1, D2, "
+         "D3, D8 and D10 from the XIAO's pads to the same-named pads of the driver board's two pad rows "
+         "(CN1/CN2 on Seeed's schematic).",
+         "XIAO: buy it bare, without pin headers soldered. One with headers does not fit.",
+         "Battery: on the driver board's socket and switch, as SR-16N. The board's ETA9740 charges the "
+         "cell from the XIAO's 5 V pin and boosts the cell back onto it, so the 5V wire carries both.",
+         "MEASURE: the tail's plane behind the glass front and the height of the connector's slot above "
+         "the board (tail_z, fpc_slot in enclosure/make_enclosure.py) set how deep the board sits. A "
+         "wrong figure bends the tail, which is the fault this layout is meant to remove.",
+         "Chin: the driver board's parts face the front and stand 4.8 mm tall, so the chin's cap stands "
+         "3.5 mm proud of the bezel.",
+         "Waking, BOOT and the XIAO ESP32-S3 option: as SR-16N. RESET has a pinhole too.",
+         *[n for n in sr16_notes(57) if not n.startswith(("Ribbon:", "USB-C:", "Thickness:"))]],
+        dims="57 x 157 x 12 (15 at the chin)", grams=85, radio="Wi-Fi 6 2.4 + 5 GHz, BLE 5",
+        sd="no", usb="charge, console, Web Serial loader")
+
 variant("SR-16SD", "SR-16SD Setlist, card: SR-16N with a microSD card in the bottom edge",
         "SR-16N with a microSD breakout wired to the panel's SPI bus, so zines live on a card "
         "you can pull and fill on a computer; the 8 MB of flash holds about 15. The card goes in "
@@ -911,7 +942,7 @@ def write_availability(summary):
     for k, (r, where, mit) in order:
         if k not in used:
             continue
-        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBCDNS")), x)))
+        vs = ", ".join(sorted(used[k], key=lambda x: (int(x[3:].rstrip("WBCDNSL")), x)))
         out.append(f"| {k} | **{r}** | {where} | {mit or '—'} | {vs} |")
     out += ["", "Changes made after this check: Seeed 105990172 (discontinued) became 114993558; "
             "MFRC522 (EOL) became CLRC663 plus; ESP32-C5-WROOM-1-N8R4 (not an orderable code) "
@@ -942,7 +973,7 @@ def main():
         total, t100 = write(key, v)
         summary.append((key, v, total, total / BUILDS, t100))
     out = ["# SubverseReader REV1 BOMs", "",
-           "Bills of materials for the sixteen SubverseReader variants (twenty-one BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds; SR-16N is SR-16 without keys and SR-16SD is SR-16N with a microSD card). `make_bom.py` generates every "
+           "Bills of materials for the sixteen SubverseReader variants (twenty-two BOMs: SR-14 has two builds; SR-1C and SR-1D are alternative SR-1 builds; SR-16N is SR-16 without keys, SR-16L is SR-16N made long and thin, SR-16SD is SR-16N with a microSD card). `make_bom.py` generates every "
            "file here; edit it, not the CSVs.", "",
            "**Before ordering:** prices are 2026-11-06/07 snapshots; panels and XIAO boards are "
            "seller listings from 2026-11-07, see [AVAILABILITY.md](AVAILABILITY.md). Lines marked `estimate` have no live figure. Import the "

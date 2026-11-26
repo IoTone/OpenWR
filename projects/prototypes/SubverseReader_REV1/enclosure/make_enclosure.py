@@ -706,7 +706,16 @@ def build_sr16(v, ref_dir):
                        "where along it, how far the card stands proud and the socket height are assumed")
     measure.append("battery sense: the XIAO ESP32-C5 reads its own battery pads (GPIO6, enabled by GPIO26); "
                    "whether that sees a cell on the driver board's JST is unverified")
-    info = dict(outer=(ox1 - ox0, oy1 - oy0, ztop - zbo), z=(zbo, zs, ztop),
+    layout = dict(outer=(ox0, ox1, oy0, oy1), z=(zbo, zsho, zs, ztop), ystep=ystep + w,
+                  screws=[(x, y) for x in bx for y in by], lanyard=(gcx - 7.0, gcx + 7.0, slot_y - 1.5, slot_y + 1.5),
+                  window=(ax0 - 0.4, ax1 + 0.4, ay0 - 0.4, ay1 + 0.4),
+                  tray=(tx0, tx1, ty0, ty1, zst - tray_t, zst),
+                  channel=(usb_x - chw / 2, usb_x + chw / 2, oy0, yport, zbo, zch),
+                  jumper=(gcx - 6.25, gcx + 6.25, d1y, q0y + 3.0, zst - ct - 0.6, zst - ct - 0.3),
+                  boot=(gcx + boot[0], d0y + boot[1]) if boot else None,
+                  switch_win=((d0y + sw["y"], sw["w"], sw["wall"]) if sw else None),
+                  sdslot=((cardx, cardz, sd["slot"][0], sd["slot"][1]) if sd else None))
+    info = dict(layout=layout, outer=(ox1 - ox0, oy1 - oy0, ztop - zbo), z=(zbo, zs, ztop),
                 screws="4x M2 pan head, thread-forming for plastic, through the back into the front bosses: "
                        "M2x6 at the top (shelf), M2x6 at the bottom down the pod's deep counterbores",
                 notes=notes, measure=measure,
@@ -715,6 +724,222 @@ def build_sr16(v, ref_dir):
                       f"{zsho - zbo:.1f} mm above it, so turn on supports touching the bed only (they come "
                       "off the flat shelf back cleanly). Tray plate down"
                       + ("; key caps flange down." if nkeys else "."))
+    return parts, refs, info
+
+
+# ---------------------------------------------------------------------------------- SR-16L
+# SR-16N made long instead of thick. Nothing is stacked:
+#   - the glass keeps its ribbon tail at the BOTTOM (no `epd-rot!`); the tail runs straight,
+#     unfolded, into the driver board, which lies in a chin below the glass with its components
+#     facing the FRONT (the tail's contacts face the front, the connector is top-contact);
+#   - the XIAO is not plugged into the driver board. A bare XIAO (no pin headers) lies flat
+#     behind the bottom of the glass, components to the back, USB-C out of the side wall, wired
+#     to the driver board's two pad rows (CN1/CN2 on Seeed's schematic carry every XIAO pin):
+#     5V, GND, 3V3, D0, D1, D2, D3, D8, D10;
+#   - the cell stays on the driver board's socket and switch (its ETA9740 charges from the
+#     XIAO's 5 V pin and boosts the cell back to it);
+#   - the driver board's parts stand 4.8 mm in front of its face, so the chin has a printed cap
+#     that stands proud of the bezel. No coupler, no jumper, no tray.
+SR16L = dict(SR16N, key="SR-16L", name="Setlist, long", keys=0,
+             aa_border=(2.98, 2.98, 2.98, 8.47),   # tail at the bottom: left, right, top, bottom
+             band_top=9.0,
+             tail_len=10.15, tail_in=3.5,          # the tail, and how much of it the connector takes
+             tail_z=-0.5,                          # MEASURE: the tail's plane behind the glass front
+             fpc_slot=1.0,                         # MEASURE: the connector's slot above the board's face
+             xiao=(21.0, 17.8, 1.0),               # XIAO ESP32-C5 board: along its USB axis, across, thick
+             xiao_usb=2.3,                         # its USB-C past the board's edge (KiCad)
+             xiao_y=3.0,                           # XIAO's lower edge above the glass's lower edge
+             usb_wall="R",                         # wall the USB-C comes out of, seen from the front
+             boot_pin=None, drv_switch=None, sd=None)
+
+
+def build_sr16_long(v, ref_dir):
+    gw, gh, gt = v["glass"]
+    w, cr = v["wall"], v["corner_r"]
+    K = v["key"]
+    dw, dh = v["drv"]
+    gap = v["tail_len"] - v["tail_in"] - 0.86          # glass edge to the board's ribbon end
+    chin = 3.5 + dh + gap                              # inside length of the chin
+    ix0 = 0.0; gx0 = 0.3; gx1 = gx0 + gw; ix1 = gx1 + 0.5
+    iy0 = 0.0; gy0 = chin; gy1 = gy0 + gh; iy1 = gy1 + 0.3 + v["band_top"]
+    dx, dy = -(ix0 + ix1) / 2, -(iy0 + iy1) / 2
+    ix0, ix1, gx0, gx1 = ix0 + dx, ix1 + dx, gx0 + dx, gx1 + dx
+    iy0, iy1, gy0, gy1 = iy0 + dy, iy1 + dy, gy0 + dy, gy1 + dy
+    ox0, ox1, oy0, oy1 = ix0 - w, ix1 + w, iy0 - w, iy1 + w
+    gcx = (gx0 + gx1) / 2
+    zf = 0.1; ztop = zf + v["bezel"]; zg = -gt; zst = zg - 0.3; zs = zg - 0.5
+    cw, ch, ct = v["cell"]
+    zfl = zst - (ct + 1.3) - 0.2                       # back floor (inside)
+    zbo = zfl - v["back_wall"]
+    # driver board, components to the front
+    zpt = v["tail_z"] - v["fpc_slot"]                  # its component face
+    zpb = zpt - 1.6                                    # its back
+    d1y = gy0 - gap; d0y = d1y - dh
+    d0x, d1x = gcx - dw / 2, gcx + dw / 2
+    zci = zpt + 4.8 + 0.4                              # chin cap, inside
+    zco = zci + 1.2
+    # opening in the front frame for the cap, and the cap
+    px0, px1, py0, py1 = ix0 + 5.0, ix1 - 5.0, iy0 + 1.5, gy0 - 2.5
+    # XIAO flat behind the glass, components to the back
+    xl, xw, xt = v["xiao"]
+    right = v["usb_wall"] == "R"
+    xe = (ix1 - 1.0) if right else (ix0 + 1.0)         # its USB edge, 1 mm inside the wall
+    xa0, xa1 = (xe - xl, xe) if right else (xe, xe + xl)
+    xb0 = gy0 + v["xiao_y"]; xb1 = xb0 + xw; xcy = (xb0 + xb1) / 2
+    zxf = zst - 0.2; zxb = zxf - xt                    # XIAO board front, back
+    usb_z = zxb - 1.6
+    sgn = -1 if right else 1                           # from the USB edge into the board
+    boot = (xe + sgn * 19.59, xcy + (4.4 if right else -4.4))
+    rst = (xe + sgn * 19.59, xcy - (4.4 if right else -4.4))
+    # cell above the XIAO
+    c0x, c1x = gcx - cw / 2, gcx + cw / 2
+    c0y = xb1 + 2.0; c1y = c0y + ch
+    assert c1y + 3.0 <= gy1, "cell runs off the glass"
+    slot_y = iy1 - 4.5
+    bx = (ox0 + w + 2.0, ox1 - w - 2.0); by = (oy0 + w + 2.0, oy1 - w - 2.0)
+    # the driver board's switch, seen from the front: left edge, 26.3-33.1 from the XIAO end
+    swx, swy = d0x + 1.2, d0y + 29.7
+    rests = [(d0x, d0x + 2.5, d1y - 2.5, d1y), (d1x - 2.5, d1x, d1y - 2.5, d1y),
+             (d0x + 9.0, d0x + 16.0, d0y, d0y + 1.2)]  # bare corners of the board, and its end between the sockets
+
+    def profile(name, z0, z1):
+        return rrect(name, ox0, ox1, oy0, oy1, z0, z1, cr)
+
+    def common_cuts(ob):
+        a0, a1 = (ix1 - EPS, ox1 + 1) if right else (ox0 - 1, ix0 + EPS)
+        r0, r1 = (ox1 - 1.0, ox1 + 1) if right else (ox0 - 1, ox0 + 1.0)
+        cut(ob, rrect("slot", gcx - 7.0, gcx + 7.0, slot_y - 1.5, slot_y + 1.5, zbo - 1, ztop + 1, 1.5),
+            edge_cut("usb", "X", xcy, usb_z, 9.8, 3.9, a0, a1, 1.6),
+            edge_cut("usbr", "X", xcy, usb_z, 12.8, 7.0, r0, r1, 2.6))
+
+    a_l, a_r, a_t, a_b = v["aa_border"]
+    ax0, ax1, ay0, ay1 = gx0 + a_l, gx1 - a_r, gy0 + a_b, gy1 - a_t
+    front = profile(K + "-front", zs, ztop)
+    cut(front,
+        rrect("cav", ix0, ix1, iy0, iy1, zs - 1, zg + EPS, 1.0),
+        rrect("cav_glass", gx0, gx1 + 0.3, gy0 - 0.3, gy1 + 0.3, zg - EPS, zf, 0.5),
+        rrect("cav_chin", ix0, ix1, iy0, gy0 - 1.3, zg - EPS, zf, 1.0),
+        box("cav_tail", gcx - v["tail_w"] / 2 - 1.0, gcx + v["tail_w"] / 2 + 1.0, gy0 - 1.4, gy0 - 0.2, zg - EPS, zf))
+    for x in bx:
+        for y in by:
+            add(front, cyl("boss", x, y, 1.8, zs, zf + EPS, 32))
+    add(front, rrect("slotboss", gcx - 9.0, gcx + 9.0, slot_y - 3.5, slot_y + 3.5, zs, zf + EPS, 2.0))
+    keep(front, profile("trim", zs - 1, ztop + 1))
+    cut(front, frustum("window", ax0 - 0.4, ax1 + 0.4, ay0 - 0.4, ay1 + 0.4, 0.9, zf - EPS, ztop + EPS),
+        rrect("capwin", px0, px1, py0, py1, zf - 1, ztop + 1, 2.0))
+    for x in bx:
+        for y in by:
+            cut(front, cyl("pilot", x, y, 0.8, zs - 1, zf + 0.9, 24))
+    common_cuts(front)
+
+    # chin cap: a flange held under the front frame, a dome through its opening, rests for the board
+    cap = rrect(K + "-chincap", ix0 + 0.4, ix1 - 0.4, iy0 + 0.3, gy0 - 1.6, zf - 1.0, zf, 1.0)
+    add(cap, rrect("dome", px0 + 0.25, px1 - 0.25, py0 + 0.25, py1 - 0.25, zf - EPS, zco, 1.8))
+    cut(cap, rrect("capcav", px0 + 1.45, px1 - 1.45, py0 + 1.45, py1 - 1.45, zf - 2, zci, 1.0),
+        box("captail", gcx - 9.0, gcx + 9.0, py1 - 1.6, gy0, zf - 2, zf + EPS),
+        rrect("swslot", swx - 2.0, swx + 2.0, swy - 5.5, swy + 5.5, zci - 1, zco + 1, 1.0))
+    for x in bx:
+        cut(cap, cyl("capboss", x, by[0], 2.3, zf - 2, zf + 1, 32))
+    add(cap, *[box("rest", r[0], r[1], r[2], r[3], zpt, zci + EPS) for r in rests])
+
+    back = profile(K + "-back", zbo, zs)
+    cut(back, rrect("cav", ix0, ix1, iy0, iy1, zfl, zs + 1, 1.0))
+    feats = []
+    for x in bx:
+        for y in by:
+            feats.append(cyl("bboss", x, y, 2.8, zfl - EPS, zs, 40))
+    feats.append(rrect("slotboss", gcx - 9.0, gcx + 9.0, slot_y - 3.5, slot_y + 3.5, zfl - EPS, zs, 2.0))
+    # the driver board: posts under the three rests, a fence round its outline
+    feats += [box("post", r[0], r[1], r[2], r[3], zfl - EPS, zpb) for r in rests]
+    for x0, x1 in ((d0x - 1.6, d0x - 0.3), (d1x + 0.3, d1x + 1.6)):
+        for y0, y1 in ((d0y + 1.0, d0y + 6.0), (d1y - 6.0, d1y - 1.0)):
+            feats.append(box("fence", x0, x1, y0, y1, zfl - EPS, zpt - 0.2))
+    feats.append(box("stop", d0x + 9.0, d0x + 16.0, d0y - 1.5, d0y - 0.3, zfl - EPS, zpt - 0.2))
+    for x0, x1 in ((d0x, d0x + 3.5), (d1x - 3.5, d1x)):
+        feats.append(box("stop", x0, x1, d1y + 0.3, d1y + 1.5, zfl - EPS, zpt - 0.2))
+    # the XIAO: a fence on three sides; foam tape holds it to the glass, the wall hole takes the USB-C
+    fx0, fx1 = (xa0 + 3.0, xa0 + 12.0)
+    feats += [box("xfence", fx0, fx1, xb0 - 1.1, xb0 - 0.3, zfl - EPS, zxb + 0.4),
+              box("xfence", fx0, fx1, xb1 + 0.3, xb1 + 1.1, zfl - EPS, zxb + 0.4)]
+    ex = (xa0 - 1.1, xa0 - 0.3) if right else (xa1 + 0.3, xa1 + 1.1)
+    feats.append(box("xfence", ex[0], ex[1], xcy - 4.0, xcy + 4.0, zfl - EPS, zxb + 0.4))
+    # cell fence
+    zrib = zst - ct + 1.0
+    feats += [box("rib", c0x + 6, c1x - 6, c1y + 0.2, c1y + 1.0, zfl - EPS, zrib),
+              box("rib", c0x - 1.0, c0x - 0.2, c0y + 6, c1y - 6, zfl - EPS, zrib),
+              box("rib", c1x + 0.2, c1x + 1.0, c0y + 6, c1y - 6, zfl - EPS, zrib)]
+    feats = [f for f in feats if True]
+    add(back, *feats)
+    keep(back, profile("trim", zbo - 1, zs + 1))
+    for x in bx:
+        for y in by:
+            cut(back, cyl("clear", x, y, 1.15, zbo - 1, zs + 1, 24), cyl("cbore", x, y, 1.95, zbo - 1, zs - 4.0, 32))
+    cut(back, cyl("bootpin", boot[0], boot[1], 0.9, zbo - 1, zfl + 1, 24),
+        cyl("rstpin", rst[0], rst[1], 0.9, zbo - 1, zfl + 1, 24))
+    common_cuts(back)
+
+    refs = [box("ref-glass", gx0, gx1, gy0, gy1, zg, 0.0),
+            box("ref-tail", gcx - v["tail_w"] / 2, gcx + v["tail_w"] / 2, d1y - 0.86 - v["tail_in"], gy0,
+                v["tail_z"] - 0.15, v["tail_z"] + 0.15),
+            box("ref-driver-pcb", d0x, d1x, d0y, d1y, zpb, zpt),
+            box("ref-drv-socket", d0x + 19.27, d0x + 21.81, d0y + 1.45, d0y + 19.25, zpt, zpt + 4.5),
+            box("ref-drv-socket", d0x + 3.41, d0x + 5.95, d0y + 1.45, d0y + 19.25, zpt, zpt + 4.5),
+            box("ref-drv-switch", d0x - 0.8, d0x + 3.2, d0y + 26.3, d0y + 33.1, zpt, zpt + 1.42),
+            box("ref-drv-jst", d0x + 14.86, d0x + 21.15, d0y + 25.5, d0y + 33.7, zpt, zpt + 4.8),
+            box("ref-drv-fpc", d0x + 4.72, d0x + 20.24, d0y + 36.2, d0y + 41.1, zpt, zpt + 2.0),
+            box("ref-xiao", xa0, xa1, xb0, xb1, zxb - 2.4, zxf),
+            box("ref-usb-c", (xe - 5.0) if right else (xe - v["xiao_usb"]), (xe + v["xiao_usb"]) if right else (xe + 5.0),
+                xcy - 4.5, xcy + 4.5, zxb - 3.2, zxb),
+            box("ref-cell", c0x, c1x, c0y, c1y, zst - ct, zst)]
+    parts = dict(front=front, back=back, chincap=cap)
+    T, Tc = ztop - zbo, zco - zbo
+    side = "right" if right else "left"
+    notes = ["Glass drops into the front shell face-down, taped to the bezel border with 0.2 mm "
+             "double-sided tape, with its ribbon tail at the BOTTOM (rotation 0, the firmware's default).",
+             "Chin cap: drop it into the front shell from behind, dome through the opening, before the "
+             "driver board. Its flange sits under the frame; nothing else holds it but the board behind it.",
+             "Driver board: components toward the FRONT, ribbon connector toward the glass. Slide the "
+             f"tail straight into the connector ({v['tail_in']:.1f} mm, no fold, no bend) and latch it, then "
+             "lay the board on the cap's three rests. The back shell's posts and fence hold it there.",
+             "XIAO: a bare XIAO ESP32-C5 with NO pin headers, on 0.2 mm foam tape on the back of the glass, "
+             f"components to the back, USB-C through the {side} wall (seen from the front), "
+             f"{xcy - oy0:.1f} mm above the bottom edge.",
+             "Wires, 30 AWG, about 45 mm, XIAO pad to the same-named pad in the driver board's two pad "
+             "rows: 5V, GND, 3V3, D0, D1, D2, D3, D8, D10. Solder them to the back of the driver board.",
+             "Cell: 603450 lying across, behind the glass above the XIAO, plugged into the driver board's "
+             "socket. Its lead goes round the board's edge into the cap.",
+             "Battery switch: the driver board's own, through the slot in the chin cap, with a toothpick.",
+             f"BOOT and RESET pinholes: d1.8 mm in the back, {abs(boot[0] - gcx):.1f} mm "
+             f"{'left' if boot[0] < gcx else 'right'} of the centreline seen from the front, "
+             f"{boot[1] - oy0:.1f} mm (BOOT) and {rst[1] - oy0:.1f} mm (RESET) above the bottom edge.",
+             "Antenna: the stick-on antenna goes on the inside of the back, above the cell.",
+             f"Thickness: {T:.1f} mm, and {Tc:.1f} mm at the chin, whose cap stands {zco - ztop:.1f} mm proud "
+             "of the bezel."]
+    measure = ["tail_z, fpc_slot: where the tail leaves the glass and how high the connector's slot is above "
+               "the board. Together they set the board's depth; a wrong figure bends the tail",
+               "tail_in: how far the tail goes into the connector, which sets the gap between glass and board",
+               "xiao, xiao_usb: from Seeed's KiCad board; the USB-C hole has no channel, so check it",
+               "the XIAO must be bare: one with headers soldered on does not fit this shell",
+               "driver board: from Seeed's STEP model; which pads are CN1/CN2 is read from the schematic, "
+               "not checked on the board",
+               "cell: 603450 pouch, swells to about 6.3 mm"]
+    marks = [("Battery switch slot, in the chin cap", "4 x 11 mm", (swx - 2.0, swx + 2.0, swy - 5.5, swy + 5.5)),
+             ("USB-C opening, in the side wall", "9.8 x 3.9 mm",
+              ((ox1 - 1.2, ox1 + 1.2) if right else (ox0 - 1.2, ox0 + 1.2)) + (xcy - 4.9, xcy + 4.9)),
+             ("BOOT pinhole, through the back", "d1.8 mm", (boot[0] - 1, boot[0] + 1, boot[1] - 1, boot[1] + 1)),
+             ("RESET pinhole, through the back", "d1.8 mm", (rst[0] - 1, rst[0] + 1, rst[1] - 1, rst[1] + 1))]
+    layout = dict(outer=(ox0, ox1, oy0, oy1), z=(zbo, zbo, zs, ztop),
+                  profile=[(ztop, oy1), (zbo, oy1), (zbo, oy0), (ztop, oy0), (ztop, py0), (zco, py0), (zco, py1),
+                           (ztop, py1)],
+                  screws=[(x, y) for x in bx for y in by], lanyard=(gcx - 7.0, gcx + 7.0, slot_y - 1.5, slot_y + 1.5),
+                  window=(ax0 - 0.4, ax1 + 0.4, ay0 - 0.4, ay1 + 0.4), marks=marks,
+                  cap=(px0, px1, py0, py1),
+                  caption=f"{T:.1f} mm thick, {Tc:.1f} mm at the chin; {oy1 - oy0:.1f} mm tall")
+    info = dict(layout=layout, outer=(ox1 - ox0, oy1 - oy0, Tc), z=(zbo, zs, ztop),
+                screws="4x M2x6 pan head, thread-forming for plastic, through the back into the front bosses",
+                notes=notes, measure=measure,
+                print="PETG, 0.2 mm layers, 4 walls, 25% gyroid. Front shell face down, back shell back down, "
+                      "chin cap dome down. No supports.")
     return parts, refs, info
 
 
@@ -727,7 +952,7 @@ def print_pose(ob, part):
     if not part.startswith("keycap"):          # key caps are modelled flange-down already
         c.data.transform(c.matrix_world)
     c.matrix_world = Matrix.Identity(4)
-    if part in ("front", "tray"):               # face down: bezel face (or the tray's plate) on the bed
+    if part in ("front", "tray", "chincap"):               # face down: bezel face (or the tray's plate) on the bed
         c.data.transform(Matrix.Rotation(math.radians(180), 4, "X"))
     zs = [vv.co.z for vv in c.data.vertices]
     c.data.transform(Matrix.Translation((0, 0, -min(zs))))
@@ -791,6 +1016,146 @@ def render_fit(path, parts, refs, info):
         o.hide_render = False
 
 
+LAYOUT_PARTS = [  # ref name prefix, label, fill
+    ("ref-glass", "E-paper glass", "#9db4c8"), ("ref-tail", "Glass ribbon tail, straight", "#e8b04a"), ("ref-cell", "Battery, 603450 LiPo", "#e0a84a"),
+    ("ref-coupler", "FFC coupler board (ribbon extender)", "#c77dd1"),
+    ("ref-driver-pcb", "ePaper driver board", "#4f9a63"), ("ref-xiao", "XIAO ESP32-C5", "#d96a5a"),
+    ("ref-usb-c", "USB-C port", "#8a8a8a"), ("ref-drv-fpc", "Ribbon connector", "#e8e2c8"),
+    ("ref-drv-jst", "Battery socket (JST)", "#f1efe6"), ("ref-drv-switch", "Battery switch", "#3b3b3b"),
+    ("ref-drv-socket", "XIAO sockets (unused)", "#2a2a2a"),
+    ("ref-sd-board", "microSD breakout, on edge", "#4a7fd0"), ("ref-sd-card", "microSD card", "#20304a"),
+    ("ref-perf", "Key strip (perfboard)", "#b08b5a"), ("ref-key", "Key", "#555555"),
+]
+
+def layout_svg(path, v, refs, info):
+    """Mechanical layout: the pass seen from the back with the back shell removed, and a side
+    section, every component outlined to scale and numbered against a legend."""
+    L = info["layout"]
+    ox0, ox1, oy0, oy1 = L["outer"]
+    zbo, zsho, zs, ztop = L["z"]
+    K, M = 5.0, 14.0                             # px per mm, margin in mm
+    W, H, T = ox1 - ox0, oy1 - oy0, ztop - zbo
+    bxo, sxo = M, M + W + 22.0                   # left edge of the back view, of the side view
+    def bx_(x): return (bxo + (ox1 - x)) * K     # back view: x mirrored, the way you look at the back
+    def y_(y): return (M + 8 + (oy1 - y)) * K
+    zfront = max([ztop] + [z for z, _ in (L.get("profile") or [])])
+    def sx_(z): return (sxo + (zfront - z)) * K  # side view: front (glass) on the left
+    out, items = [], []
+    def rect(x0, x1, y0, y1, fill, stroke="#222", sw=1.0, dash="", op=1.0):
+        xa, xb, ya, yb = min(x0, x1), max(x0, x1), min(y0, y1), max(y0, y1)
+        out.append(f'<rect x="{xa:.1f}" y="{ya:.1f}" width="{xb - xa:.1f}" height="{yb - ya:.1f}" fill="{fill}" '
+                   f'fill-opacity="{op}" stroke="{stroke}" stroke-width="{sw}"'
+                   + (f' stroke-dasharray="{dash}"' if dash else "") + "/>")
+    def text(x, y, s, size=12, anchor="start", weight="normal", fill="#111"):
+        out.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" text-anchor="{anchor}" font-weight="{weight}" '
+                   f'fill="{fill}">{s}</text>')
+    def tag(x, y, n):
+        out.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="8" fill="#fff" stroke="#111" stroke-width="1"/>')
+        text(x, y + 4, str(n), 11, "middle", "bold")
+    # shells
+    rect(bx_(ox0), bx_(ox1), y_(oy0), y_(oy1), "#f4f4f1", "#111", 1.6)
+    if L.get("ystep") is not None:
+        rect(bx_(ox0), bx_(ox1), y_(oy0), y_(L["ystep"]), "#e2e2dc", "#111", 1.0, "6 3")
+    prof = L.get("profile") or [(ztop, oy1), (zsho, oy1), (zsho, L["ystep"]), (zbo, L["ystep"]), (zbo, oy0), (ztop, oy0)]
+    out.append('<path d="M' + " L".join(f"{sx_(z):.1f},{y_(y):.1f}" for z, y in prof)
+               + ' Z" fill="#f4f4f1" stroke="#111" stroke-width="1.6"/>')
+    if L.get("cap"):
+        cp = L["cap"]; rect(bx_(cp[0]), bx_(cp[1]), y_(cp[2]), y_(cp[3]), "#e2e2dc", "#111", 1.0, "6 3")
+    out.append(f'<line x1="{sx_(zs):.1f}" y1="{y_(oy0):.1f}" x2="{sx_(zs):.1f}" y2="{y_(oy1):.1f}" stroke="#111" '
+               'stroke-width="0.8" stroke-dasharray="2 3"/>')
+    a = L["window"]; rect(bx_(a[0]), bx_(a[1]), y_(a[2]), y_(a[3]), "none", "#3a6ea5", 1.0, "3 3")
+    extra = []
+    if L.get("tray"):
+        t5 = L["tray"]; rect(bx_(t5[0]), bx_(t5[1]), y_(t5[2]), y_(t5[3]), "#d9c9a8", "#7a6a48", 0.8, "", 0.55)
+        rect(sx_(t5[4]), sx_(t5[5]), y_(t5[2]), y_(t5[3]), "#d9c9a8", "#7a6a48", 0.8)
+        c = L["channel"]; rect(bx_(c[0]), bx_(c[1]), y_(c[2]), y_(c[3]), "#ffffff", "#c0392b", 1.2, "4 2")
+        rect(sx_(c[4]), sx_(c[5]), y_(c[2]), y_(c[3]), "#ffffff", "#c0392b", 1.2, "4 2")
+        j = L["jumper"]; rect(bx_(j[0]), bx_(j[1]), y_(j[2]), y_(j[3]), "#f0d9a0", "#a07a20", 0.8, "", 0.8)
+        rect(sx_(j[4]), sx_(j[5]), y_(j[2]), y_(j[3]), "#f0d9a0", "#a07a20", 0.8)
+        extra = [("Tray (printed)", "#d9c9a8", t5[:4]), ("USB-C cable channel, open to the back", "#ffffff", c[:4]),
+                 ("FFC jumper, 60 mm, over the battery", "#f0d9a0", j[:4])]
+    n = 0
+    for pref, label, fill in LAYOUT_PARTS:
+        hits = [r for r in refs if r.name.startswith(pref)]
+        if not hits:
+            continue
+        n += 1
+        for i, r in enumerate(hits):
+            co = [r.matrix_world @ vv.co for vv in r.data.vertices]
+            x0, x1 = min(p.x for p in co), max(p.x for p in co)
+            y0, y1 = min(p.y for p in co), max(p.y for p in co)
+            z0, z1 = min(p.z for p in co), max(p.z for p in co)
+            rect(bx_(x0), bx_(x1), y_(y0), y_(y1), fill, "#222", 0.9, "", 0.9)
+            rect(sx_(z0), sx_(z1), y_(y0), y_(y1), fill, "#222", 0.9, "", 0.9)
+            if i == 0:
+                tag(bx_((x0 + x1) / 2), y_((y0 + y1) / 2), n)
+                tag(sx_((z0 + z1) / 2), y_((y0 + y1) / 2), n)
+                items.append((n, label, fill, f"{x1 - x0:.1f} x {y1 - y0:.1f} x {z1 - z0:.1f} mm"))
+    for label, fill, b in extra:
+        n += 1
+        tag(bx_(b[1]) + 14 if "Tray" in label else bx_((b[0] + b[1]) / 2), y_(b[2]) - 12 if "Tray" in label else y_((b[2] + b[3]) / 2), n)
+        items.append((n, label, fill, f"{b[1] - b[0]:.1f} x {b[3] - b[2]:.1f} mm"))
+    n += 1
+    for x, y in L["screws"]:
+        out.append(f'<circle cx="{bx_(x):.1f}" cy="{y_(y):.1f}" r="{1.0 * K:.1f}" fill="#fff" stroke="#111" stroke-width="1.2"/>')
+        out.append(f'<path d="M{bx_(x) - 4:.1f},{y_(y):.1f} h8 M{bx_(x):.1f},{y_(y) - 4:.1f} v8" stroke="#111" stroke-width="1"/>')
+    tag(bx_(L["screws"][0][0]) - 16, y_(L["screws"][0][1]) - 14, n)
+    items.append((n, "Screws, 4 x M2x6 thread-forming", "#ffffff", "through the back into the front"))
+    n += 1
+    a = L["lanyard"]; rect(bx_(a[0]), bx_(a[1]), y_(a[2]), y_(a[3]), "#ffffff", "#111", 1.2)
+    tag(bx_(a[0]) + 16, y_((a[2] + a[3]) / 2), n); items.append((n, "Lanyard slot", "#ffffff", "14 x 3 mm"))
+    for label, dims, b in L.get("marks", []):
+        n += 1
+        rect(bx_(b[0]), bx_(b[1]), y_(b[2]), y_(b[3]), "#ffffff", "#c0392b", 1.5)
+        tag(bx_(b[0]) + 16, y_((b[2] + b[3]) / 2), n); items.append((n, label, "#ffffff", dims))
+    if L.get("cap"):
+        n += 1; cp = L["cap"]
+        tag(bx_(cp[0]) - 12, y_(cp[3]) + 12, n)
+        items.append((n, "Chin cap (printed), dashed", "#e2e2dc", f"{cp[1] - cp[0]:.1f} x {cp[3] - cp[2]:.1f} mm"))
+    if L.get("boot"):
+        n += 1
+        out.append(f'<circle cx="{bx_(L["boot"][0]):.1f}" cy="{y_(L["boot"][1]):.1f}" r="4.5" fill="#fff" stroke="#c0392b" stroke-width="1.5"/>')
+        tag(bx_(L["boot"][0]) + 18, y_(L["boot"][1]), n)
+        items.append((n, "BOOT pinhole, through the back", "#ffffff", "d1.8 mm"))
+    if L.get("switch_win"):
+        n += 1
+        yc, wl, wall = L["switch_win"]
+        xw = ox1 if wall == "R" else ox0
+        rect(bx_(xw) - 4, bx_(xw) + 4, y_(yc - wl / 2), y_(yc + wl / 2), "#ffffff", "#c0392b", 1.5)
+        tag(bx_(xw) + (16 if wall == "R" else -16), y_(yc), n)
+        items.append((n, "Window to the battery switch, in the side wall", "#ffffff", f"{wl:.0f} x 5 mm"))
+    if L.get("sdslot"):
+        n += 1
+        cx, cz, sl, sw_ = L["sdslot"]
+        rect(bx_(cx - sw_ / 2), bx_(cx + sw_ / 2), y_(oy0) - 4, y_(oy0) + 4, "#ffffff", "#c0392b", 1.5)
+        rect(sx_(cz - sl / 2), sx_(cz + sl / 2), y_(oy0) - 4, y_(oy0) + 4, "#ffffff", "#c0392b", 1.5)
+        tag(bx_(cx), y_(oy0) + 20, n); items.append((n, "Card slot, in the bottom edge", "#ffffff", f"{sl:.1f} x {sw_:.1f} mm"))
+    # titles, dimensions, legend
+    text(M * K, 24, f"{v['key']} {v['name']}: mechanical layout, rev D", 18, "start", "bold")
+    text(bx_(ox1), y_(oy1) - 10, "BACK VIEW, back shell off", 12, "start", "bold")
+    text(bx_(ox1), y_(oy1) - 26, "left and right are swapped against the front", 11, "start", "normal", "#555")
+    text(sx_(ztop), y_(oy1) - 10, "SIDE SECTION, glass on the left", 12, "start", "bold")
+    text((bx_(ox0) + bx_(ox1)) / 2, y_(oy0) + 44, f"{W:.1f} mm wide", 12, "middle")
+    text(sx_(max(z for z, _ in prof) if L.get("profile") else ztop), y_(oy0) + 44,
+         L.get("caption") or f"{T:.1f} mm at the pod, {ztop - zsho:.1f} mm above it; {H:.1f} mm tall", 12)
+    if L.get("ystep") is not None:
+        text(bx_(ox1) + 6, y_(L["ystep"]) - 6, "pod (dashed): below this line", 11, "start", "normal", "#444")
+    lx, ly = (sxo + (zfront - zbo) + 16) * K, y_(oy1) + 6
+    for num, label, fill, dims in items:
+        out.append(f'<rect x="{lx:.1f}" y="{ly - 11:.1f}" width="14" height="14" fill="{fill}" stroke="#222" stroke-width="0.8"/>')
+        text(lx + 22, ly, f"{num}", 12, "start", "bold"); text(lx + 44, ly, label, 12)
+        text(lx + 44, ly + 14, dims, 11, "start", "normal", "#555")
+        ly += 34
+    text(lx, ly + 8, "Blue dashes: the panel's active area.", 11, "start", "normal", "#3a6ea5")
+    text(lx, ly + 24, "Red: openings in the shell.", 11, "start", "normal", "#c0392b")
+    text(lx, ly + 40, "Stand-in boxes, to scale; see the report for sources.", 11, "start", "normal", "#555")
+    tw, th = lx + 330, max(y_(oy0) + 60, ly + 56)
+    with open(path, "w") as f:
+        f.write(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {tw:.0f} {th:.0f}" width="{tw:.0f}" height="{th:.0f}" '
+                'font-family="Helvetica, Arial, sans-serif">\n'
+                f'<rect width="{tw:.0f}" height="{th:.0f}" fill="#ffffff"/>\n' + "\n".join(out) + "\n</svg>\n")
+
+
 def run(v, builder, ref_dir):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     s = bpy.context.scene
@@ -819,7 +1184,7 @@ def run(v, builder, ref_dir):
            else "box stand-ins defined in this script")
     lines += ["", f"Interference (part vs reference electronics, mm3; 0 = clear). References: {src}."]
     for n, ob in parts.items():
-        if not n.startswith(("front", "back")):
+        if not n.startswith(("front", "back", "chincap", "tray")):
             continue
         for r in refs:
             ov = overlap(ob, r)
@@ -846,6 +1211,11 @@ def run(v, builder, ref_dir):
         for c in r.users_collection:
             c.objects.unlink(r)
         coll.objects.link(r)
+    if info.get("layout"):
+        layout_svg(os.path.join(out, f"{v['key']}-layout.svg"), v, refs, info)
+    for r in refs:                              # things that plug in from outside were only there for
+        if r.name in ("ref-usb-plug", "ref-sd-card"):   # the interference check: keep them out of sight
+            r.hide_viewport = r.hide_render = True
     render_fit(os.path.join(out, f"{v['key']}-fit.png"), parts, refs, info)
     bpy.context.preferences.filepaths.save_version = 0
     bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out, f"{v['key']}.blend"))
@@ -858,7 +1228,7 @@ def main():
     if "--ref" in argv:
         i = argv.index("--ref"); ref_dir = argv[i + 1]; del argv[i:i + 2]
     table = {"SR-15": (SR15, build_sr15), "SR-16": (SR16, build_sr16), "SR-16N": (SR16N, build_sr16),
-             "SR-16SD": (SR16SD, build_sr16)}
+             "SR-16SD": (SR16SD, build_sr16), "SR-16L": (SR16L, build_sr16_long)}
     todo = argv or list(table)
     unknown = [k for k in todo if k not in table]
     if unknown:
